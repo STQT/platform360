@@ -80,25 +80,26 @@ public function search(Request $search, $categories) {
   if (Cookie::has('city')) {
     $defaultlocation = Cookie::get('city');
   } else {
-  $defaultlocation = "1";
+    $defaultlocation = "1";
 
     Cookie::queue(Cookie::forever('city', '1'));
   }
 
-$search = request()->route('search');
-if (request()->route('search') == "noresult") {
-  $categories = array_map('intval', explode(',', request()->route('categories')));
-$results = Location::where('city_id','=', $defaultlocation)->whereIN('category_id', $categories)->get();
-} else {
+  $search = request()->route('search');
+  if (request()->route('search') == "noresult") {
+    $categories = array_map('intval', explode(',', request()->route('categories')));
+    $results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->whereIN('category_id', $categories)->get();
+  } else {
 
 if (request()->route('categories') == 0)  {
+  $results = Location::where('city_id','=', $defaultlocation)
+    ->where('name', 'LIKE', '%' . $search . '%')
+    ->whereNull('podlocparent_id')
+    ->get();
 
-$results = Location::where('city_id','=', $defaultlocation)->where('name', 'LIKE', '%' . $search . '%')->get();
-
-}
-else {
-$categories = array_map('intval', explode(',', request()->route('categories')));
-$results = Location::where('city_id', '=', $defaultlocation)->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
+} else {
+  $categories = array_map('intval', explode(',', request()->route('categories')));
+  $results = Location::where('city_id', '=', $defaultlocation)->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->whereNull('podlocparent_id')->get();
 }
 }
 
