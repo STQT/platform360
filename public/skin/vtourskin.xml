@@ -1,0 +1,101 @@
+﻿<krpano>
+
+
+
+
+
+
+
+
+<layer name="icon_360" url="/assets/icon_360.png" align="middle" keep="true" x="0" y="0" alpha="1" scale="0.5" onloaded="tween(layer[icon_360].alpha, 0,5);delayedcall(10, set(layer[icon_360].visible,false));" enabled="false"/>
+    <layer name="plusbutton" keep="true"
+           url="/assets/icons/icon-plus.png"
+           align="bottom"
+           x="-125"
+           y="10"
+           ondown="set(fov_moveforce,-1);"
+           onup="set(fov_moveforce,0);"
+           width="35px"
+           height="35px"
+           alpha="0.5"
+           onover="set(alpha,1.0)"
+		   onhover=""
+		   onout="set(alpha,0.5)"
+    />
+
+    <layer name="minusbutton" keep="true"
+           url="/assets/icons/icon-minus.png"
+           align="bottom"
+           x="-75"
+           y="10"
+           ondown="set(fov_moveforce,+1);"
+           onup="set(fov_moveforce,0);"
+           width="35px"
+           height="35px"
+           alpha="0.5"
+           onover="set(alpha,1.0)"
+		   onhover=""
+		   onout="set(alpha,0.5)"
+    />
+
+    <layer name="leftbutton" keep="true"
+           url="/assets/icons/icon-left.png"
+           align="bottom"
+           x="-25"
+           y="10"
+           ondown="set(hlookat_moveforce,-1);"
+           onup="set(hlookat_moveforce,0);"
+           width="35px"
+           height="35px"
+           alpha="0.5"
+           onover="set(alpha,1.0)"
+		   onhover=""
+		   onout="set(alpha,0.5)"
+    />
+
+    <layer name="rightbutton" keep="true"
+           url="/assets/icons/icon-right.png"
+           align="bottom"
+           x="+25"
+           y="10"
+           ondown="set(hlookat_moveforce,+1);"
+           onup="set(hlookat_moveforce,0);"
+           width="35px"
+           height="35px"
+           alpha="0.5"
+           onover="set(alpha,1.0)"
+		   onhover=""
+		   onout="set(alpha,0.5)"
+    />
+
+    <layer name="upbutton" keep="true"
+           url="/assets/icons/icon-up.png"
+           align="bottom"
+           x="+75"
+           y="10"
+           ondown="set(vlookat_moveforce,-1);"
+           onup="set(vlookat_moveforce,0);"
+           width="35px"
+           height="35px"
+           alpha="0.5"
+           onover="set(alpha,1.0)"
+		   onhover=""
+		   onout="set(alpha,0.5)"
+    />
+
+    <layer name="downbutton" keep="true"
+           url="/assets/icons/icon-down.png"
+           align="bottom"
+           x="+125"
+           y="10"
+           ondown="set(vlookat_moveforce,+1);"
+           onup="set(vlookat_moveforce,0);"
+           width="35px"
+           height="35px"
+           alpha="0.5"
+           onover="set(alpha,1.0)"
+		   onhover=""
+		   onout="set(alpha,0.5)"
+    />
+
+</krpano>

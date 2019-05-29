@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>.cls-1{fill:#fff;}</style>
+  </defs>
+  <title>ic_hotel</title>
+  <circle class="cls-1" cx="24" cy="7" r="2" />
+  <circle class="cls-1" cx="36" cy="7" r="2" />
+  <circle class="cls-1" cx="30" cy="7" r="2" />
+  <circle class="cls-1" cx="12" cy="7" r="2" />
+  <circle class="cls-1" cx="18" cy="7" r="2" />
+  <path class="cls-1" d="M37,41V39H35V11H13V39H11v2H9v2H39V41ZM18,32H15V29h3Zm0-5H15V24h3Zm0-5H15V19h3Zm0-5H15V14h3Zm5,22H20V34h3Zm0-7H20V29h3Zm0-5H20V24h3Zm0-5H20V19h3Zm0-5H20V14h3Zm5,22H25V34h3Zm0-7H25V29h3Zm0-5H25V24h3Zm0-5H25V19h3Zm0-5H25V14h3Zm5,15H30V29h3Zm0-5H30V24h3Zm0-5H30V19h3Zm0-5H30V14h3Z" />
+</svg>
