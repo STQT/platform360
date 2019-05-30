@@ -151,6 +151,9 @@ public static  function folderNames($loc)
     {
         return $this->hasMany('App\Hotspot', 'location_id');
     }
-
+    public function sublocations()
+    {
+        return $this->hasMany('App\Location', 'podlocparent_id');
+    }
 
 }

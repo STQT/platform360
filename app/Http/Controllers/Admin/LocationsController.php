@@ -536,6 +536,15 @@ foreach($krhotspotinfo as $key2=>$value2){
 
         return $locations;
     }
+
+    public function apiSublocations($id)
+    {
+        $location = Location::find($id);
+        $locations = $location->sublocations()->orderBy('created_at', 'DESC')->paginate(10);
+
+        return $locations;
+    }
+
     public function getcitydefaultlocation($id)
     {
 

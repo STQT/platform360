@@ -73,6 +73,7 @@ Route::post('admin/podloc/store/', 'Admin\\PodlocController@store');
 
 
 Route::get('/locations/{id}', 'Admin\\LocationsController@apiLocations');
+Route::get('/sublocations/{id}', 'Admin\\LocationsController@apiSublocations');
 Route::get('/getcitydefaultlocation/{id}', 'Admin\\LocationsController@getcitydefaultlocation');
        Route::post('/locations/add', 'Admin\\LocationsController@apiAddhotspot');
 
