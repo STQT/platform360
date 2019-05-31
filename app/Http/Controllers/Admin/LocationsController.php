@@ -532,7 +532,8 @@ foreach($krhotspotinfo as $key2=>$value2){
     {
         $category = Category::findOrFail($id);
 
-        $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(10);
+        // $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(10);
+        $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(999);
 
         return $locations;
     }
