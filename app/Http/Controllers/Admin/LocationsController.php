@@ -541,7 +541,7 @@ foreach($krhotspotinfo as $key2=>$value2){
     public function apiSublocations($id)
     {
         $location = Location::find($id);
-        $locations = $location->sublocations()->orderBy('created_at', 'DESC')->paginate(10);
+        $locations = $location->sublocations()->orderBy('created_at', 'DESC')->paginate(999);
 
         return $locations;
     }
