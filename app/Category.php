@@ -8,7 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Category extends Model
 {
     use LogsActivity;
-    
+
 
     /**
      * The database table used by the model.
@@ -29,13 +29,13 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg'];
-  
+    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color'];
+
     public function locations()
     {
         return $this->hasMany('App\Location', 'category_id');
     }
-    
+
 
     /**
      * Change activity log event description

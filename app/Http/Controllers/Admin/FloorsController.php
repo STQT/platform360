@@ -141,6 +141,15 @@ class FloorsController extends Controller
 
       return view('admin.floors.show', ['floor' => $Floor, 'locations'=> $locations]);
     }
+    public function tochkiupdate(Request $request, $id)
+    {
+      $requestData = $request->all();
+          
+
+    Floors::where('id', $id)->update(array('code' => $requestData['codeetaj']));
+
+      return redirect('admin/floors/'.$requestData['parrentid'].'')->with('flash_message', 'Этаж обновлен!');
+    }
     /**
      * Show the form for editing the specified resource.
      *

@@ -151,9 +151,9 @@ public static  function folderNames($loc)
     {
         return $this->hasMany('App\Hotspot', 'location_id');
     }
-    public function sublocations()
+    public function etaji()
     {
-        return $this->hasMany('App\Location', 'podlocparent_id');
+        return $this->hasMany('App\Floors', 'parrentid');
     }
 
 }

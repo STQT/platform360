@@ -32,6 +32,10 @@ $defaultlocation = "1";
 
 $cities =  DB::select(DB::raw("SELECT * FROM cities"));
 $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->firstOrFail();
+$etaji = $location->etaji;
+
+
+
 if(empty($location->is_sky)) {
 
 if(!empty($location->sky_id)) {
@@ -44,7 +48,7 @@ if(!empty($location->sky_id)) {
 }}   else { $sky = "no";};
 
 $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
-$locationscordinate = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon, c.cat_icon_svg
+$locationscordinate = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE l.city_id = $defaultlocation
 AND l.onmap = 'on'
@@ -60,7 +64,7 @@ foreach($locationscordinate as $key=>$value){
 }
 
 
-$isfeatured = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg
+$isfeatured = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE l.isfeatured = 'on'
 AND l.onmap = 'on'
@@ -69,7 +73,7 @@ AND c.id = l.category_id
 ORDER BY RAND()
 LIMIT 8
 "));
-$isnew = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg
+$isnew = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE l.onmap = 'on'
 AND l.city_id = $defaultlocation
@@ -100,13 +104,14 @@ foreach($isfeatured as $key=>$value){
 }
 $caticon = Category::where('id', $location->category_id)->firstOrFail();
 $location->cat_icon = $caticon->cat_icon;
+$location->color = $caticon->color;
 $location->cat_icon_svg = $caticon->cat_icon_svg;
 $krhotspots =
- DB::select(DB::raw("SELECT l.name, l.slug, h.*, c.cat_icon, c.cat_icon_svg
+ DB::select(DB::raw("SELECT l.name, l.slug, h.*, c.cat_icon, c.cat_icon_svg, c.color
 FROM locations l, hotspots h, categories c
 WHERE h.location_id = ".$location->id."
 AND c.id = l.category_id"));
-$otherlocations =  DB::select(DB::raw("SELECT l.name, l.id, l.lat, l.lng, l.slug, l.panorama, c.cat_icon_svg
+$otherlocations =  DB::select(DB::raw("SELECT l.name, l.id, l.lat, l.lng, l.slug, l.panorama, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE c.id = l.category_id
 AND l.city_id = $defaultlocation
@@ -127,7 +132,7 @@ $array = array_column($krhotspots, 'destination_id');
 
 $krhotspotinfo =DB::table('locations')
                 ->join('categories', 'categories.id', '=', 'locations.category_id')
-                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg')
+                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
                 ->whereIn('locations.id', $array)
                 ->get();
 
@@ -146,7 +151,8 @@ foreach($krhotspotinfo as $key2=>$value2){
  $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
  $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
  $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->cat_icon;
- $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->cat_icon_svg;}
+ $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->cat_icon_svg;
+$krhotspots[$key]->color = $krhotspotinfo[$key2]->color;}
 
 }
 
@@ -154,7 +160,7 @@ foreach($krhotspotinfo as $key2=>$value2){
 }
         $categories = Category::orderBy('id', 'ASC')->get();
 
-        return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew ]);
+        return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji ]);
     }
 
     public function loadScene($id) {

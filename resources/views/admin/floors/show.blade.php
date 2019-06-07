@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+  <form action="https://dev2.uzbekistan360.uz/admin/floors/tochki/{{$floor->id}}" method="POST">
   <div class="container">
       <div class="row">
               @include('admin.sidebar')  <div class="col-md-9">
@@ -13,7 +14,9 @@
     	<div class="container-fluid">
 
 
-    		<form role="form" class="form">
+
+          {{ csrf_field() }}
+          <input type="hidden" name="parrentid" value="{{$floor->parrentid}}"/>
     			<div class="btn-group" data-toggle="buttons">
     				<label class="btn btn-lg btn-default active">
     					<input type="radio" name="radio-editor-mode" id="radio-editor-mode-edit" checked>Edit
@@ -21,19 +24,19 @@
     				<label style="display:none"class="btn btn-lg btn-default" id="radio-editor-mode-preview-label">
     					<input type="radio" name="radio-editor-mode" id="radio-editor-mode-preview">Preview
     				</label>
-    				<label class="btn btn-lg btn-default" id="radio-editor-mode-jquery-label">
+    				<label class="btn btn-lg btn-default" id="radio-editor-mode-jquery-label" style="display:none">
     					<input type="radio" name="radio-editor-mode" id="radio-editor-mode-jquery">jQuery Code
     				</label>
-    				<label  class="btn btn-lg btn-default" id="radio-editor-mode-load-label">
+    				<label  class="btn btn-lg btn-default" id="radio-editor-mode-load-label" style="display:none">
     					<input type="radio" name="radio-editor-mode" id="radio-editor-mode-load">Load
     				</label>
     			</div>
-    		</form>
+
 
     		<div class="panel panel-default" id="panel-editor">
     			<div class="panel-body" id="panel-canvas">
     				<div class="ndd-drawable-canvas">
-    					<img src="/storage/floors/{{$floor->image}}" class="ndd-drawable-canvas-image">
+    					<img src="/storage/floors/{{$floor->image}}" class="ndd-drawable-canvas-image" >
     					<div class="ndd-drawables-container"></div>
     				</div>
     			</div>
@@ -45,12 +48,6 @@
     			</div>
     		</div>
 
-    		<div class="panel panel-default" id="panel-jquery">
-    			<div class="panel-body">
-    				<label class="btn btn-primary" id="button-select-jquery">Select All</label><br><br>
-    				<div class="well" id="well-jquery"></div>
-    			</div>
-    		</div>
 
     		<div class="panel panel-default" id="panel-load">
     			<div class="panel-body">
@@ -60,7 +57,7 @@
     		</div>
 
 
-        <div class="form-group">
+        <div class="form-group">  				<div class="well" id="well-jquery"></div>
           <label class="col-md-3 control-label">Локация</label>
 
 
@@ -86,6 +83,7 @@
         									<label class="btn btn-danger" data-toggle="modal" data-target="#modal-delete">Удалить</label>
 
         								</div>
+                        <div class="form-group"><input type="submit" value="Update" id="etajupdatee" class="btn btn-primary"></div>
     		<div class="row" style="position:fixed;top:-1000px">
 
     			<!-- Popups -->
@@ -97,7 +95,6 @@
     					<div class="panel-heading">Annotations</div>
     					<div class="panel-body">
 
-    						<form role="form" class="form-horizontal">
 
     							<div class="col-md-6 col-sm-6">
     								<!-- Content Type -->
@@ -334,8 +331,6 @@
     							</div>
 
 
-    						</form>
-
 
     					</div>
     				</div>
@@ -347,7 +342,7 @@
     				<div class="panel panel-default">
     					<div class="panel-heading">Navigation</div>
     					<div class="panel-body">
-    						<form role="form" class="form-horizontal">
+
 
     							<!-- Width -->
 
@@ -469,7 +464,7 @@
     								</div>
     							</div>
 
-    						</form>
+
     					</div>
     				</div>
     			</div>
@@ -506,7 +501,11 @@
 
                 </div>
             </div>
-</div></div></div>
+</div></div></div></form>
+@if (!empty($floor->code))
+<textarea name="oldone" id="oldone" style="position:absolute;left:-1000px;">$("#the-img-tag").annotatorPro({
+      {{$floor->code}}
+});</textarea> @endif
 @endsection
 @push('styles')
   <link rel="stylesheet" type="text/css" href="/flooreditor/css/lib/bootstrap-yeti.min.css">
@@ -519,5 +518,11 @@
   <script src="/flooreditor/js/lib/bootstrap.min.js"></script>
 <script src="/flooreditor/js/annotator-pro-editor.js"></script>
 <script src="/flooreditor/js/annotator-pro.js"></script>
+<script>
+
+
+
+
+</script>
 
 @endpush

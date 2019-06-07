@@ -117,8 +117,8 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
     // Create the defaults once
     var annotatorPro = "annotatorPro",
     defaults = {
-        frameWidth : 640,
-        frameHeight : 480,
+        frameWidth : $(window).width()-500,
+        frameHeight : $(window).height()-250,
         maxZoom : "auto",
         navigator : false,
         navigatorImagePreview : false,
@@ -1365,7 +1365,7 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             // events
 
             $(self.obj_spot).on('mousemove', function() {
-                self.show();
+                alert('ok');
             });
 
             $(self.obj_spot).on('mouseout', function(e) {

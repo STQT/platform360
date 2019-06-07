@@ -5,7 +5,8 @@
         <div class="overlay"></div>
         <div class="modal-wrap">
             <span class="modal-close">x</span>
-            <div class="categories">
+
+            <div class="categories">          <div id="deletehotspot" onclick="deletehotspot()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
                 <ul class="category-list">
                     @foreach($categories as $category)
                         <li>
@@ -43,12 +44,13 @@
 @endsection
 
 @section('scripts')
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
         var hcoordinate;
         var vcoordinate;
-
+var hotspotid;
+var hotspotname;
         $(function () {
             $('body').on('click', '.locationItem', function () {
                 var _this = $(this);
@@ -99,23 +101,7 @@
                                 var panos = JSON.parse(data.data[i].panorama);
 
                                 if(panos.length == 1) {
-                                    if (data.data[i].podlocparent_id == null) {
-                                        $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '</a><ul></ul></li>');
-                                    }
-
-                                    $.get('/api/sublocations/' + data.data[i].id).done(function (data) {
-                                        for (var i = 0; i < data.data.length; i++) {
-                                            var panos = JSON.parse(data.data[i].panorama);
-
-                                            if(panos.length == 1) {
-                                                xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
-                                                $preview = $( xmlDoc ).find('preview');
-                                                console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
-                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a></li>');
-                                            }
-                                        }
-                                    });
-
+                                    $('.info-list').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '</a></li>');
                                 }
                                 else {
                                     for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
@@ -150,12 +136,12 @@
 
             setTimeout(function() {
                 @foreach($location->hotspots as $hotspot)
-                    add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }});
+                    add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, {{$hotspot->id}});
                 @endforeach
             }, 3000);
         }
 
-        function add_exist_hotspot(h, v) {
+        function add_exist_hotspot(h, v, id) {
             if (krpano) {
                 var hs_name = "hs" + ((Date.now() + Math.random()) | 0);
 
@@ -168,6 +154,8 @@
                 if (krpano.get("device.html5")) {
                     // for HTML5 it's possible to assign JS functions directly to krpano events
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                      hotspotid =  id;
+    hotspotname =  hs_name;
                         hcoordinate = h;
                         vcoordinate = v;
                         $('#adminModal').fadeIn();
@@ -183,7 +171,28 @@
                 krpano.call("loadpano(" + xmlname + ", null, MERGE, BLEND(0.5));");
             }
         }
+        function deletehotspot() {
 
+krpano.call("removehotspot("+hotspotname+")");
+ if(hotspotid  != "new") {
+
+  $.get('/api/deletehotspot/' + hotspotid).done(function (data) {
+    $('.modal').fadeOut();
+    alert('Удалили точку: '+ hotspotid);
+  });
+
+
+
+
+ } else {
+
+      $('.modal').fadeOut();
+          alert('Удалили точку');
+ }
+
+
+
+        }
         function add_hotspot() {
          $('body').dblclick(function() {
             if (krpano) {
@@ -201,6 +210,8 @@
                 if (krpano.get("device.html5")) {
                     // for HTML5 it's possible to assign JS functions directly to krpano events
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                      hotspotid =  'new';
+                      hotspotname =  hs_name;
                         hcoordinate = pt.x;
                         vcoordinate = pt.y;
                         $('#adminModal').fadeIn();
@@ -213,10 +224,4 @@
     <script>
         embedpano({target: "pano", id: "pano1", xml: "/admin/krpano/{{ $location->id }}", onready: krpano_onready_callback});
     </script>
-
-    <style>
-        .cotegory-info {
-            overflow: scroll;
-        }
-    </style>
 @endsection

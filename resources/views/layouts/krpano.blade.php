@@ -24,7 +24,7 @@
     <link href="/assets/app.22400e48.css?033f3b348c8154cd9ec6" rel="stylesheet">
     <link href="/assets/slick-carousel/slick.css" rel="stylesheet">
     <link href="/assets/slick-carousel/slick-theme.css" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" href="/flooreditor/css/annotator-pro.min.css">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/assets/favicons/apple-icon-72x72.png">
@@ -89,10 +89,15 @@
 
 <script src="/krpano.js"></script>
 <script src="/assets/jquery.min.js"></script>
+{{-- <script src="/flooreditor/js/lib/jquery.min.js"></script> --}}
+<script src="/flooreditor/js/annotator-pro.js"></script>
 <script src="/assets/jquery-resizable.js"></script>
 <script src="/assets/slick-carousel/slick.min.js"></script>
 <script src="/assets/google-maps.js"></script>
 <script src="/assets/main.js"></script>
+
+
+
 
 <script type="text/javascript" async="" src="https://maps.google.com/maps/api/js?v=3.30&key=AIzaSyCuukKz6F0pH77lK5jgKdNEHa7AFqPMh4k&callback=initMap"></script>
 @yield('scripts')

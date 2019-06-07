@@ -16,7 +16,7 @@
 <div style="opacity:0"  class="currentlocationcordinates" @if($location->onmap = 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}" @else data-map="no" @endif ></div>
                 <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <header class="dubai360-header">
-                    <div class="dubai360-header__logo-languaje" onclick="location.href='/';"><img src="/assets/360.svg" class="" width="100%"></div>
+                    <div class="dubai360-header__logo-languaje" onclick="location.href='/';"><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
                     <div class="dubai360-header__icons">
                         <div class="wrapper-button" id="hubviewlink" @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
@@ -39,7 +39,10 @@
                             <div class="dubai360-tooltip"><span>Помощь</span></div>
                         </div>
                     </div>
-                    <div class="dubai360-header__aloneicon">
+
+                    @if(empty($etaji)) {}
+                    @else
+                    <div class="dubai360-header__aloneicon" id="buttonetaj0">
                         <div class="wrapper-button active">
                             <span class="icon-ic_floorplan wrapper-button__icon" data-pannel="floorplanPanel"></span>
                             <div class="dubai360-tooltip">
@@ -47,6 +50,7 @@
                             </div>
                         </div>
                     </div>
+                  @endif
                     <div class="dubai360-header__description">
                         <div><span><span><span id="location_name">{{ $location->name }}</span></span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
 
@@ -263,7 +267,7 @@ right: 13px;" fill="#1a90d2">
 
                                         <div class="icon-wrapper fade--in">
                                             <div class="js-icon icon-wrapper__icon" data-category="{{ $category->id }}">
-                                                <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175); margin-right: 10px; margin-left: 10px;"><img src="/storage/cat_icons/{{$category->cat_icon_svg}}"></div>
+                                                <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;"><img src="/storage/cat_icons/{{$category->cat_icon_svg}}"></div>
                                                 <span class="icon-wrapper__text">{{ $category->name }}</span>
                                             </div>
                                         </div>
@@ -373,11 +377,11 @@ right: 13px;" fill="#1a90d2">
                                 <span class="section-help__content__title"><span>Welcome</span></span>
                                 <div class="section-help__content__message">
                                     <div class="section-help__content__message__text">
-                                        <p><span>Вращайте и масштабируйте изображение с помощью элементов управления внизу, мыши или сенсорного экрана.
-</span></p>
-<p><span>Используйте горячие точки на изображении для навигации между различными фотографиями и видео. Вы также можете перемещаться с помощью карты или категорий.</span></p>
+                                        <p><span>Dubai360 contains 360° photos and videos.</span></p>
+                                        <p><span>Rotate and zoom the image using the controls on the bottom, mouse or touch screen.</span></p>
+                                        <p><span>Use the hotspots on the image to navigate between different photos and videos. You can also navigate using the map or thumbnails.</span></p>
                                     </div>
-                                    {{-- <img src="assets/image_mouse.cec9e28c.png"> --}}
+                                    <img src="assets/image_mouse.cec9e28c.png">
                                 </div>
                             </div>
                         </div>
@@ -550,7 +554,7 @@ right: 13px;" fill="#1a90d2">
                     <img class="wrapper-panel-close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="infoPanel">
                         <div class="infoPanel__current-categories">
-                            <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(237, 68, 104);"><img src="/storage/cat_icons/{{$location->cat_icon_svg}}"></div>
+                            <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$location->color}}"><img src="/storage/cat_icons/{{$location->cat_icon_svg}}"></div>
                             <div class="clock_time"> <div class="infoPanel__title" id="location_name2">{{ $location->name }}</div></div>
 
 
@@ -624,7 +628,7 @@ right: 13px;" fill="#1a90d2">
 
                                             <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$otherlocation->img}}/thumb.jpg" class="listItem__img--scene"></div>
                                             <div class="listItem__icon-category">
-                                                <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/{{$otherlocation->cat_icon_svg}}"></div>
+                                                <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$otherlocation->color}}"><img src="/storage/cat_icons/{{$otherlocation->cat_icon_svg}}"></div>
 
                                             </div>
                                             <div class="listItem__text">
@@ -646,7 +650,7 @@ right: 13px;" fill="#1a90d2">
                     <div class="wrapper-panel--main-container">
                         <span class="wrapper-panel-expand icon-ic_doble_arrow_left"></span>
                         <div class="floorplan fade--in">
-                            <span class="floorplan__recommended__title"><span>You may also like...</span></span>
+                            <span class="floorplan__recommended__title"><span>Вам будет интересно...</span></span>
                             <div class="floorplan__listContainer">
                                 <div class="virtualizedGrid__content " style="position: relative;">
                                     <div style="overflow: visible; height: 0px; width: 0px;">
@@ -701,44 +705,39 @@ right: 13px;" fill="#1a90d2">
                     <div style="width: calc(100% - 289px);">
                         <div class="floorplan-viewer">
                             <div class="floorplan-viewer__header">
-                                <span class="floorplan-viewer__header__name">Mall Of The Emirates, L1</span>
+                                <span class="floorplan-viewer__header__name">{{$location->name}}</span>
                                 <div class="floorplan-viewer__header__actions">
                                     <div class="floorplan-viewer__header__img"><span class="icon-ic_mouse floorplan-viewer__header__img--icon"></span><span class="floorplan-viewer__header__img--text"><span>Zoom in for more hotspots</span></span></div>
                                     <div class="icon-wrapper"><span class="icon-ic_close close"></span></div>
                                 </div>
                             </div>
 
-                            @php
-                                $panoramas = json_decode($location->panorama);
-                            @endphp
 
                             <div class="krpano-floorplan">
                                 <div id="floor-krpano" class="krpano">
-                                    @foreach($panoramas as $i => $floor)
-                                        @if(!empty($floor->plan))
+        @foreach($etaji as $i => $etaj)
                                             <div id="floorplan-tab{{ $i }}" class="floorplan-tab" tabindex="-1" style="display: none;">
                                                 <div class="plan">
-                                                    <img class="planClass" style="border: 1px dotted black;" src="/storage/{{ $floor->plan }}">
+                                                    <img class="planClass" id="floorid{{$etaj->id}}"  src="/storage/floors/{{$etaj->image}}">
 
-                                                    @foreach($floor->panoramas as $hotspot)
-                                                        <span onclick="loadpano('axmad4ik:{{ $location->id }}', {{ $i }});" class="planHotspot" style="position: absolute; left: {{ $hotspot->x }}; top: {{ $hotspot->y }};"></span>
-                                                    @endforeach
+
+                                                        <span ></span>
+
                                                 </div>
                                             </div>
-                                        @endif
-                                    @endforeach
+    @endforeach
                                 </div>
 
                             </div>
 
                             <ul class="floorplan-viewer__footer">
-                                @foreach($panoramas as $i => $floor)
-                                    @if(!empty($floor->plan))
-                                        <li class="floorplan-viewer__footer__element" data-tab="{{ $i }}">
+                                @foreach($etaji as $i => $etaj)
+
+                                        <li class="floorplan-viewer__footer__element" data-tab="{{ $i }}"' id="buttonetaj{{$i}}"'>
                                             <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">
-                                            <span class="floorplan-viewer__footer__element__name">{{ $floor->name }}</span>
+                                            <span class="floorplan-viewer__footer__element__name">{{ $etaj->name }}</span>
                                         </li>
-                                    @endif
+
                                 @endforeach
                             </ul>
                         </div>
@@ -746,7 +745,7 @@ right: 13px;" fill="#1a90d2">
                 </div>
                 <div class="wrapper-panel  top right ProjectionsPannel hidden expand">
                     <div class="projection">
-                        <div class="title-projection"><span>Режимы просмотра</span></div>
+                        <div class="title-projection"><span>Projection</span></div>
                         <ul>
                             <li class="selected" onclick="skin_view_normal()"><span>Прямолинейный</span></li>
                             <li onclick="skin_view_littleplanet()"><span>Маленькая планета</span></li>
@@ -828,7 +827,7 @@ right: 13px;" fill="#1a90d2">
                                 <div class="listItem">
                                   <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg" class="listItem__img--scene"></div>
                                   <div class="listItem__icon-category">
-                                    <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(67, 151, 101);"><img src="/storage/cat_icons/{{$featured->cat_icon_svg}}"></div>
+                                    <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$featured->color}}"><img src="/storage/cat_icons/{{$featured->cat_icon_svg}}"></div>
                                   </div>
                                   <div class="listItem__text">
                                     <div><span>{{$featured->name}}</span></div>
@@ -859,7 +858,7 @@ right: 13px;" fill="#1a90d2">
                                 <div class="listItem">
                                   <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg" class="listItem__img--scene"></div>
                                   <div class="listItem__icon-category">
-                                    <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(67, 151, 101);"><img src="/storage/cat_icons/{{$new->cat_icon_svg}}"></div>
+                                    <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$new->color}}"><img src="/storage/cat_icons/{{$new->cat_icon_svg}}"></div>
                                   </div>
                                   <div class="listItem__text">
                                     <div><span>{{$new->name}}</span></div>
@@ -915,6 +914,24 @@ right: 13px;" fill="#1a90d2">
 
 @section('scripts')
     <script>
+
+    @foreach ($etaji as $i => $etaj)
+    @if(!empty($etaj->code))
+    $("#buttonetaj{{$i}}").click(function(){
+
+      setTimeout(function(){
+      $("#floorid{{$etaj->id}}").annotatorPro({
+          maxZoom : 4,
+          navigator : false,
+          navigatorImagePreview : false,
+
+          fullscreen : true,
+          {!!$etaj->code!!}
+      });},500);
+    });
+    @endif
+    @endforeach
+
 
             function isMobile() {
               try{ document.createEvent("TouchEvent"); return true; }
@@ -1011,7 +1028,7 @@ $("#Feedbackstatus").text('Спасибо за ваше сообщение!');
 
             setTimeout(function() {
                 @foreach($krhotspots as $index => $hotspot)
-                add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, "{{ $hotspot->name }}", "{{$hotspot ->cat_icon_svg}}","{{$hotspot->cat_icon}}","{{$hotspot->img}}","uzbekistan:{{ $hotspot->destination_id }}", {{ $index }}, "{{$hotspot->slug}}");
+                add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, "{{ $hotspot->name }}", "{{$hotspot ->cat_icon_svg}}","{{$hotspot->cat_icon}}","{{$hotspot->img}}","uzbekistan:{{ $hotspot->destination_id }}", {{ $index }}, "{{$hotspot->slug}}", "{{$hotspot->color}}");
                 @endforeach
             }, 3000);
         }
@@ -1129,7 +1146,7 @@ closerejimwindow();
         {
             if (krpano)
             {
-          
+
           originalxmlnam = xmlname;
           originalxmlname = originalxmlnam.match(/\d/g);
 originalxmlname = originalxmlname.join("");
@@ -1204,7 +1221,7 @@ if (data.is_sky == "on") {
 
 
                     for(var i = 0; i < data.length; i++) {
-                        add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug);
+                        add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug, data[i].color);
                     }
                 });
             }
@@ -1215,7 +1232,7 @@ if (data.is_sky == "on") {
 
 
 
-        function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug) {
+        function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color) {
             if (krpano) {
 
                 krpano.call("addhotspot(" + hs_name + ")");
@@ -1296,6 +1313,7 @@ if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
 
                 hotspottext.text(name);
                 hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
+                  hotspoticon.css("background-color", color)
                hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
                     });
 
@@ -1496,7 +1514,8 @@ smoothlyAnimatePanTo(map, new google.maps.LatLng(curlatmark,curlngmark)); }
           icon: icon,
 maphotspotname: value.name,
 maphotspoticon: value.cat_icon_svg,
-maphotspotimg: value.img
+maphotspotimg: value.img,
+maphotspotcolor: value.color
     });
 
     function getPixelLocation(currentLatLng) {
@@ -1526,6 +1545,7 @@ maphotspotimg: value.img
   var maphotspotname = this.maphotspotname;
   var maphotspoticon = this.maphotspoticon;
   var maphotspotimg = this.maphotspotimg;
+  var maphotspotcolor = this.maphotspotcolor;
   $( ".hotspotPreview-wrapper" ).show();
   hotspottext=$('.hotspotPreview__text');
   hotspoticon=$('.uzbhotspoticon');
@@ -1593,6 +1613,7 @@ maphotspotimg: value.img
 
     hotspottext.text(maphotspotname);
     hotspoticon.attr("src","/storage/cat_icons/"+maphotspoticon+"");
+      hotspoticon.css("background-color", maphotspotcolor)
     hotspotimg.attr("src","/storage/panoramas/unpacked/"+maphotspotimg+"/thumb.jpg");
 
 

@@ -80,26 +80,25 @@ public function search(Request $search, $categories) {
   if (Cookie::has('city')) {
     $defaultlocation = Cookie::get('city');
   } else {
-    $defaultlocation = "1";
+  $defaultlocation = "1";
 
     Cookie::queue(Cookie::forever('city', '1'));
   }
 
-  $search = request()->route('search');
-  if (request()->route('search') == "noresult") {
-    $categories = array_map('intval', explode(',', request()->route('categories')));
-    $results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->whereIN('category_id', $categories)->get();
-  } else {
+$search = request()->route('search');
+if (request()->route('search') == "noresult") {
+  $categories = array_map('intval', explode(',', request()->route('categories')));
+$results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->whereIN('category_id', $categories)->get();
+} else {
 
 if (request()->route('categories') == 0)  {
-  $results = Location::where('city_id','=', $defaultlocation)
-    ->where('name', 'LIKE', '%' . $search . '%')
-    ->whereNull('podlocparent_id')
-    ->get();
 
-} else {
-  $categories = array_map('intval', explode(',', request()->route('categories')));
-  $results = Location::where('city_id', '=', $defaultlocation)->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->whereNull('podlocparent_id')->get();
+$results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->where('name', 'LIKE', '%' . $search . '%')->get();
+
+}
+else {
+$categories = array_map('intval', explode(',', request()->route('categories')));
+$results = Location::where('city_id', '=', $defaultlocation)->whereNull('podlocparent_id')->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
 }
 }
 
@@ -111,6 +110,7 @@ if (request()->route('categories') == 0)  {
 foreach($results as $key2=>$value2){
     $caticon = Category::where('id', $results[$key2]->category_id)->firstOrFail();
 $results[$key2]->cat_icon = $caticon->cat_icon;
+$results[$key2]->color = $caticon->color;
 $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
 }
 
@@ -363,7 +363,7 @@ $location = Location::findOrFail($id);
 
        $location = Location::where('slug', $slug)->firstOrFail();
 
-
+$etaji = $location->etaji;
 
        if(empty($location->is_sky)) {
 
@@ -378,7 +378,7 @@ $location = Location::findOrFail($id);
 
 
         $caticon = Category::where('id', $location->category_id)->firstOrFail();
-
+$location->color = $caticon->color;
         $location->cat_icon = $caticon->cat_icon;
         $location->cat_icon_svg = $caticon->cat_icon_svg;
 
@@ -389,7 +389,7 @@ WHERE location_id = ".$location->id."
 "));
 
 
-$otherlocations =  DB::select(DB::raw("SELECT l.name, l.id, l.lat, l.lng, l.slug, l.panorama, c.cat_icon_svg
+$otherlocations =  DB::select(DB::raw("SELECT l.name, l.id, l.lat, l.lng, l.slug, l.panorama, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE c.id = l.category_id
 AND l.city_id = $defaultlocation
@@ -397,7 +397,7 @@ ORDER BY RAND()
 LIMIT 7
 "));
 
-$isfeatured = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg
+$isfeatured = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE l.isfeatured = 'on'
 AND l.onmap = 'on'
@@ -406,7 +406,7 @@ AND c.id = l.category_id
 ORDER BY RAND()
 LIMIT 8
 "));
-$isnew = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg
+$isnew = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE l.onmap = 'on'
 AND l.city_id = $defaultlocation
@@ -426,7 +426,7 @@ foreach($isnew as $key=>$value){
     }
 }
 $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
-$locationscordinate = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon, c.cat_icon_svg
+$locationscordinate = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon, c.cat_icon_svg, c.color
 FROM locations l, categories c
 WHERE l.city_id = $defaultlocation
 AND l.onmap = 'on'
@@ -473,7 +473,7 @@ $array = array_column($krhotspots, 'destination_id');
 
 $krhotspotinfo =DB::table('locations')
                 ->join('categories', 'categories.id', '=', 'locations.category_id')
-                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg')
+                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
                 ->whereIn('locations.id', $array)
                 ->get();
 
@@ -500,6 +500,7 @@ foreach($krhotspotinfo as $key2=>$value2){
  $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
  $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
  $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->cat_icon;
+ $krhotspots[$key]->color = $krhotspotinfo[$key2]->color;
  $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->cat_icon_svg;}
 
 }
@@ -512,7 +513,7 @@ foreach($krhotspotinfo as $key2=>$value2){
 
 
         if($location->count()) {
-            return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots,'defaultlocation'=> $defaultlocation, 'otherlocations' => $otherlocations, 'isfeatured'=>$isfeatured, 'cities'=>$cities,  'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky' => $sky, 'isnew' => $isnew]);
+            return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots,'defaultlocation'=> $defaultlocation, 'otherlocations' => $otherlocations, 'isfeatured'=>$isfeatured, 'cities'=>$cities,  'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky' => $sky, 'isnew' => $isnew, 'etaji' => $etaji]);
         }
         else {
             return response()->json([]);
@@ -532,20 +533,10 @@ foreach($krhotspotinfo as $key2=>$value2){
     {
         $category = Category::findOrFail($id);
 
-        // $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(10);
-        $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(999);
+        $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(10);
 
         return $locations;
     }
-
-    public function apiSublocations($id)
-    {
-        $location = Location::find($id);
-        $locations = $location->sublocations()->orderBy('created_at', 'DESC')->paginate(999);
-
-        return $locations;
-    }
-
     public function getcitydefaultlocation($id)
     {
 
@@ -585,7 +576,7 @@ $array = array_column($krhotspots, 'destination_id');
 
 $krhotspotinfo =DB::table('locations')
                 ->join('categories', 'categories.id', '=', 'locations.category_id')
-                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg')
+                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
                 ->whereIn('locations.id', $array)
                 ->get();
 
@@ -610,6 +601,7 @@ foreach($krhotspotinfo as $key2=>$value2){
  $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
  $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
  $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->cat_icon;
+ $krhotspots[$key]->color = $krhotspotinfo[$key2]->color;
  $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->cat_icon_svg;}
 
 }

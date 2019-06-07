@@ -29,9 +29,12 @@ class Floors extends Model
      *
      * @var array
      */
-    protected $fillable = ['parrentid', 'name', 'image'];
+    protected $fillable = ['parrentid', 'name', 'image', 'code'];
 
-
+    public function location()
+    {
+        return $this->belongsTo('App\Location', 'parrentid', 'id');
+    }
 
     /**
      * Change activity log event description

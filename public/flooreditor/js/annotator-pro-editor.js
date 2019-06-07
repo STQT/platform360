@@ -1,5 +1,15 @@
 ;(function ( $, window, document, undefined ) {
 
+
+setTimeout(function(){
+		if (	load_jquery($('#oldone').val())) {
+
+
+		} else {
+
+		}
+
+},900);
 	// VARIABLES
 	var selected_drawable;
 	var canvas;
@@ -869,7 +879,7 @@
 			self.obj_content.append('<h1>'+ self.title +'</h1><p>'+ self.text +'</p>');
 		},
 		show : function() {
-		
+
 		},
 		hide : function() {
 			var self = this;
@@ -1142,7 +1152,7 @@
 			}
 		});
 
-		$('#radio-editor-mode-jquery-label').on('click', function() {
+		$('#etajupdatee').on('click', function() {
 			generate_jquery();
 		});
 
@@ -1842,7 +1852,7 @@
 var floorid = $("#floorid").val();
 floorid = "#floorid"+floorid+"";
 
-		var result = '$('+floorid+').annotatorPro({';
+		var result = '';
 		var has_canvas_option = false;
 
 		// frame width
@@ -1935,7 +1945,7 @@ floorid = "#floorid"+floorid+"";
 				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title : " + '"' + title + '"' + ',';
 			}
 			if (location != annotation_defaults.location) {
-				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title : " + '"' + location + '"' + ',';
+				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location : " + '"' + location + '"' + ',';
 			}
 
 			if (spot_left != annotation_defaults.spot_left) {
@@ -1957,10 +1967,10 @@ floorid = "#floorid"+floorid+"";
 			result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;]";
 		}
 
-		result += '<br>});';
+		result += '';
 
 		$('#well-jquery').html(result);
-		$('#well-jquery').wrapInner('<code></code>');
+		$('#well-jquery').wrapInner('<textarea name="codeetaj"></textarea>');
 	}
 
 	function generate_preview() {

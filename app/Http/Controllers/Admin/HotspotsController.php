@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Hotspot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HotspotsController extends Controller
 {
@@ -17,7 +18,7 @@ class HotspotsController extends Controller
      */
     public function index(Request $request)
     {
-      
+
     }
 
     /**
@@ -46,7 +47,7 @@ class HotspotsController extends Controller
 			'v' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         Hotspot::create($requestData);
 
         return redirect('admin/hotspots')->with('flash_message', 'Hotspot added!');
@@ -97,7 +98,7 @@ class HotspotsController extends Controller
 			'v' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         $hotspot = Hotspot::findOrFail($id);
         $hotspot->update($requestData);
 
@@ -111,6 +112,14 @@ class HotspotsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+     public function deletehotspot($id) {
+       if (Auth::check()) {
+         Hotspot::destroy($id);
+         return 'ok';
+       } else {
+         return 'no';
+       }
+     }
     public function destroy($id)
     {
         Hotspot::destroy($id);
