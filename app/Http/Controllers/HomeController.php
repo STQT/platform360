@@ -33,7 +33,28 @@ $defaultlocation = "1";
 $cities =  DB::select(DB::raw("SELECT * FROM cities"));
 $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->firstOrFail();
 $etaji = $location->etaji;
+if (!empty($etaji)) {
+  $code = "";
+foreach ($etaji as $ss => $etaj) {
+  $code .= $etaji[$ss]->code;
+}
 
+preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
+
+$etajlocations =DB::table('locations')
+                ->join('categories', 'categories.id', '=', 'locations.category_id')
+                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
+                ->whereIn('locations.id', $matches[1])
+                ->get();
+                foreach($etajlocations as $key=>$value){
+
+                 $test = json_decode($etajlocations[$key]->panorama)[0]->panoramas[0]->panorama;
+                    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+                    $filename = $test . '/' . $old[2];
+                    $etajlocations[$key]->img = $filename;
+                }
+
+}
 
 
 if(empty($location->is_sky)) {
@@ -160,7 +181,7 @@ $krhotspots[$key]->color = $krhotspotinfo[$key2]->color;}
 }
         $categories = Category::orderBy('id', 'ASC')->get();
 
-        return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji ]);
+        return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
     }
 
     public function loadScene($id) {

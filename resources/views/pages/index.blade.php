@@ -15,6 +15,7 @@
                 <div></div>
 <div style="opacity:0"  class="currentlocationcordinates" @if($location->onmap = 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}" @else data-map="no" @endif ></div>
                 <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
+                <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div>
                 <header class="dubai360-header">
                     <div class="dubai360-header__logo-languaje" onclick="location.href='/';"><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
                     <div class="dubai360-header__icons">
@@ -245,7 +246,7 @@ right: 13px;" fill="#1a90d2">
                 <div class="wrapper-panel  top left search hidden expand">
                     <img class="wrapper-panel-close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="searchPanel">
-                        <div class="searchPanel__input"><input type="text" class="dubai360-input search-input" placeholder="Поиск"></div>
+                        <div class="searchPanel__input" id="search_adress"><input type="text" class="dubai360-input search-input" placeholder="Поиск"></div>
                         <div class="searchPanel__filtered ">
                             <span class="searchPanel__filtered__title">Фильтр</span>
                             <span class="icon-ic_arrow_up chevron-mobile"></span>
@@ -281,8 +282,9 @@ right: 13px;" fill="#1a90d2">
 
                             </div>
                         </div>
+
                         <div class="searchPanel__results"><span class="color-opacity">Найдено 0 результатов</span></div>
-                        <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div>
+                        <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
                         <div class="searchPanel__resultscontainer">
                             <div class="virtualizedGrid__content " style="position: relative;">
                                 <div style="overflow: visible; width: 0px;">
@@ -357,16 +359,38 @@ right: 13px;" fill="#1a90d2">
                                 </div>
                             </div>
                         </div>
-                        <div class="feedbackPanel__wrapper-inputs"><input type="email" name="email" class="feedbackPanel__wrapper-inputs--input" placeholder="Ваш email-адрес" required=""></div>
-                        <div class="feedbackPanel__wrapper-inputs "><textarea name="message" class="feedbackPanel__wrapper-inputs--textarea" placeholder="Ваше сообщение" required="" id="feedbacktext"></textarea></div>
+                        <div class="feedbackPanel__wrapper-inputs mail_inp">
+                            <input type="email" id="mailll" name="email" class="feedbackPanel__wrapper-inputs--input" placeholder="Ваш email-адрес" required>
+                        </div>
+
+                        <div class="feedbackPanel__wrapper-inputs mail_inp2">
+                            <textarea name="message" class="feedbackPanel__wrapper-inputs--textarea" placeholder="Ваше сообщение" required id="feedbacktext"></textarea>
+                        </div>
                         <div class="feedbackPanel__buttons">
                             <span id="Feedbackstatus">
 
                             </span>
-                            <button class="btn btn--normal">
-                                <span>Отправить</span>
-                            </button>
+
+
+
+                            <button type="submit" class="send_form_btn">Отправить</button>
+
+                            <div class="block_thanks">
+                                <div class="text_thks">
+                                    <p>Ваш отзыв был отправлен. Спасибо!</p>
+                                </div>
+                                <div class="form_submit">
+                                    <button type="button" id="sendinggg" class="btn btn--normal">
+                                        <span>OK</span>
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
+
+
+
+
                     </form>
                 </div>
                 <div class="wrapper-panel  top left helpPannel hidden expand">
@@ -648,47 +672,38 @@ right: 13px;" fill="#1a90d2">
                 </div>
                 <div class="wrapper-panel  top left floorplanPanel hidden expand">
                     <div class="wrapper-panel--main-container">
-                        <span class="wrapper-panel-expand icon-ic_doble_arrow_left"></span>
+
                         <div class="floorplan fade--in">
-                            <span class="floorplan__recommended__title"><span>Вам будет интересно...</span></span>
+                            <span class="floorplan__recommended__title"><span>Объекты</span></span>
                             <div class="floorplan__listContainer">
-                                <div class="virtualizedGrid__content " style="position: relative;">
+                                <div class="virtualizedGrid__content " style="position: relative;overflow-y: scroll;overflow-x:hidden">
                                     <div style="overflow: visible; height: 0px; width: 0px;">
-                                        <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid" role="grid" tabindex="0" style="box-sizing: border-box; direction: ltr; height: 546px; position: relative; width: 273px; will-change: transform; overflow: hidden auto;">
-                                            <div class="ReactVirtualized__Grid__innerScrollContainer" role="rowgroup" style="width: 240px; height: 3900px; max-width: 240px; max-height: 3900px; overflow: hidden; position: relative;">
-                                                <div class="listItem-wrapper" style="height: 260px; left: 0px; position: absolute; top: 0px; width: 240px;">
+                                        <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid" role="grid" tabindex="0" style="box-sizing: border-box; direction: ltr;  position: relative; width: 273px; will-change: transform; overflow: hidden auto;">
+                                            <div class="ReactVirtualized__Grid__innerScrollContainer" role="rowgroup" style="width: 240px; max-width: 240px; max-height: 3900px; overflow: hidden; position: relative;">
+
+
+
+
+
+@foreach ($etajlocations as $key => $etajlocation)
+
+
+
+                                                <div class="listItem-wrapper" style="height: 260px;" onclick="loadpano('uzbekistan:{{$etajlocation->id}}', {{$i}}, '{{$etajlocation->slug}}')">
                                                     <div class="listItem" style="width: 224px; height: 244px;">
-                                                        <div class="listItem__img"><img src="https://d360-cdn-prod.azureedge.net/b69d5230-4abc-4a1c-92b7-f90402a09872/input.tiles/thumb_200_100.jpg" class="listItem__img--scene"></div>
+                                                        <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$etajlocation->img}}/thumb.jpg" class="listItem__img--scene"></div>
                                                         <div class="listItem__icon-category">
-                                                            <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(237, 68, 104);"><img src="https://d360-cdn-prod.azureedge.net/assets/82d3fa8f-cede-4ef2-bd7d-a14eda2a176e.svg"></div>
+                                                            <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$etajlocation->color}}"><img src="/storage/cat_icons/{{$etajlocation->cat_icon_svg}}"></div>
                                                         </div>
                                                         <div class="listItem__text">
-                                                            <div><span><span><span>01 Mall Of The Emirates -</span><br><span>Ground Floor - Al Halabi</span></span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                                                            <div><span>{{$etajlocation->name}}</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="listItem-wrapper" style="height: 260px; left: 0px; position: absolute; top: 260px; width: 240px;">
-                                                    <div class="listItem" style="width: 224px; height: 244px;">
-                                                        <div class="listItem__img"><img src="https://d360-cdn-prod.azureedge.net/9f068e63-826d-4a07-a4c8-60d4a40c1c0e/input.tiles/thumb_200_100.jpg" class="listItem__img--scene"></div>
-                                                        <div class="listItem__icon-category">
-                                                            <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(237, 68, 104);"><img src="https://d360-cdn-prod.azureedge.net/assets/82d3fa8f-cede-4ef2-bd7d-a14eda2a176e.svg"></div>
-                                                        </div>
-                                                        <div class="listItem__text">
-                                                            <div><span><span><span>Mall Of The Emirates -</span><br><span>Ground Floor - Burj Al</span><br><span>Hamam</span></span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="listItem-wrapper" style="height: 260px; left: 0px; position: absolute; top: 520px; width: 240px;">
-                                                    <div class="listItem" style="width: 224px; height: 244px;">
-                                                        <div class="listItem__img"><img src="https://d360-cdn-prod.azureedge.net/06e41b36-9d23-4a3a-9913-aff43177fbeb/input.tiles/thumb_200_100.jpg" class="listItem__img--scene"></div>
-                                                        <div class="listItem__icon-category">
-                                                            <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(237, 68, 104);"><img src="https://d360-cdn-prod.azureedge.net/assets/82d3fa8f-cede-4ef2-bd7d-a14eda2a176e.svg"></div>
-                                                        </div>
-                                                        <div class="listItem__text">
-                                                            <div><span><span><span>Mall Of The Emirates -</span><br><span>Ground Floor - Atrium</span></span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @endforeach
+
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -707,7 +722,7 @@ right: 13px;" fill="#1a90d2">
                             <div class="floorplan-viewer__header">
                                 <span class="floorplan-viewer__header__name">{{$location->name}}</span>
                                 <div class="floorplan-viewer__header__actions">
-                                    <div class="floorplan-viewer__header__img"><span class="icon-ic_mouse floorplan-viewer__header__img--icon"></span><span class="floorplan-viewer__header__img--text"><span>Zoom in for more hotspots</span></span></div>
+                                    <div class="floorplan-viewer__header__img"><span class="icon-ic_mouse floorplan-viewer__header__img--icon"></span><span class="floorplan-viewer__header__img--text"><span>Зум колесом мышки</span></span></div>
                                     <div class="icon-wrapper"><span class="icon-ic_close close"></span></div>
                                 </div>
                             </div>
@@ -933,13 +948,16 @@ right: 13px;" fill="#1a90d2">
     @endforeach
 
 
-            function isMobile() {
-              try{ document.createEvent("TouchEvent"); return true; }
-              catch(e){ return false; }
-            }
-            if (isMobile()) {
+
+            var isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+            var isIpad = window.matchMedia("only screen and (min-width: 768px)").matches;
+
+            if (isMobile) {
               var hotspotsize = "0.65";
-            } else {var hotspotsize = "0.35"; }
+            }
+            if (isIpad) {
+                    var hotspotsize = "0.4";
+            }
 $(window).on('popstate', function(event) {
   var pathname = window.location.pathname;
   if (pathname == "/") {
@@ -983,37 +1001,60 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
 
 });
         $('#feedbackForm').on('submit', function(e) {
-          $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            e.preventDefault();
+            var ln = $('#mailll').val();
+            var textarea = $('.feedbackPanel__wrapper-inputs textarea').val();
 
 
-          e.preventDefault();
+            if (ln.length > 0 && ln.indexOf("@") != -1 && textarea.length > 0) {
+               $('.mail_inp').removeClass("red_color")
+               $('.mail_inp2').removeClass("red_color")
+
+               $('.send_form_btn').css('display', 'none')
+               $('.block_thanks').css('display', 'flex')
+
+               $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+               e.preventDefault();
+               var message =$('textarea#feedbacktext').val();
+               var select = $( "#feedbackselect option:selected" ).text();;
+               var email = $("input[name=email]").val();
+               $.ajax({
+
+                   type:'POST',
+
+                   url:'/form/1',
+
+                   data:{message:message, select:select, email:email},
+
+                   success:function(data){
+
+
+                       // $("#Feedbackstatus").text('Спасибо за ваше сообщение!');
+                   }
+
+               });
 
 
 
-                  var message =$('textarea#feedbacktext').val();
+               $('#sendinggg').click(function() {
+                   $('.wrapper-panel-close').trigger('click')
 
-                  var select = $( "#feedbackselect option:selected" ).text();;
-
-                  var email = $("input[name=email]").val();
-
-
-
-                  $.ajax({
-
-                         type:'POST',
-
-                         url:'/form/1',
-
-                         data:{message:message, select:select, email:email},
-
-                         success:function(data){
+                   setTimeout(function(){
+                       $('#feedbackselect option:eq(0)').attr('selected', 'selected');
+                       $('#mailll').val('');
+                       $('.mail_inp2 textarea').val('');
+                       $('.block_thanks').css('display', 'none')
+                       $('.send_form_btn').css('display', 'block')
+                   }, 500);
 
 
-$("#Feedbackstatus").text('Спасибо за ваше сообщение!');
-                         }
 
-                      });
 
+               });
+           }else{
+            $('.mail_inp').addClass("red_color")
+            $('.mail_inp2').addClass("red_color")
+        }
 
 
 

@@ -67,7 +67,7 @@
                @foreach($locations as $location)
 
 
-                 <option value="{{$location->id}}">{{$location->name}}</option>
+                 <option value="{{$location->id}}" data-slug="{{$location->slug}}" data-icon="{{$location->locscats[0]->cat_icon}}">{{$location->name}}</option>
 
 
 

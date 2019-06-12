@@ -35,6 +35,8 @@ setTimeout(function(){
         content_type : "text", // or "custom-html"
         title : "Annotation",
 				location: "1",
+				slug: "1",
+				icon: "1",
         text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         text_color : "#ffffff",
         html : "",
@@ -841,6 +843,8 @@ setTimeout(function(){
 
 		this.title = drawable.settings.title;
 		this.location = drawable.settings.location;
+		this.slug = drawable.settings.slug;
+		this.icon = drawable.settings.icon;
 		this.text = drawable.settings.text;
 		this.html = drawable.settings.html;
 		this.content_type = drawable.settings.content_type;
@@ -1027,6 +1031,8 @@ setTimeout(function(){
 			// content
 			self.title = new_settings.title;
 			self.location = new_settings.location;
+			self.slug = new_settings.slug;
+			self.icon = new_settings.icon;
 			self.text = new_settings.text;
 			self.html = new_settings.html;
 			self.content_type = new_settings.content_type;
@@ -1525,6 +1531,8 @@ setTimeout(function(){
 		// Title
 		$('#input-title').val(settings.title);
 		$('#input-location').val(settings.location);
+		$('#input-location').data('slug', settings.slug);
+		$('#input-location').data('icon', settings.icon);
 
 		// Text
 		$('#textarea-text').val(settings.text);
@@ -1761,6 +1769,8 @@ setTimeout(function(){
 			// Title
 			current_settings.title = $('#input-title').val();
 			current_settings.location = $('#input-location').val();
+			current_settings.slug =$("#input-location option:selected").attr('data-slug');
+			current_settings.icon =$("#input-location option:selected").attr('data-icon');
 
 			// Text
 			current_settings.text = $('#textarea-text').val();
@@ -1917,6 +1927,8 @@ floorid = "#floorid"+floorid+"";
 			var content_type = annotations[i].content_type;
 			var title = annotations[i].title;
 			var location = annotations[i].location;
+			var slug = annotations[i].slug;
+			var icon = annotations[i].icon;
 			var text = annotations[i].text;
 			var text_color = annotations[i].text_color;
 			var html = escapeHTML(annotations[i].html);
@@ -1940,12 +1952,16 @@ floorid = "#floorid"+floorid+"";
 
 			result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{";
 
-
+			if (id != annotation_defaults.id) {
+							result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id : " + '"' + id + '"' + ',';
+						}
 			if (title != annotation_defaults.title) {
 				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title : " + '"' + title + '"' + ',';
 			}
 			if (location != annotation_defaults.location) {
 				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location : " + '"' + location + '"' + ',';
+				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slug : " + '"' + slug + '"' + ',';
+				result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icon : " + '"' + icon + '"' + ',';
 			}
 
 			if (spot_left != annotation_defaults.spot_left) {
@@ -2035,6 +2051,8 @@ floorid = "#floorid"+floorid+"";
 				content_type : annotations[i].content_type,
 				title : annotations[i].title,
 				location : annotations[i].location,
+				slug : annotations[i].slug,
+				icon : annotations[i].icon,
 				text : annotations[i].text,
 				text_color : annotations[i].text_color,
 				html : annotations[i].html,
@@ -2174,6 +2192,12 @@ floorid = "#floorid"+floorid+"";
 						}
 						if (annotation.location != undefined) {
 							drawable_settings.location = annotation.location;
+						}
+						if (annotation.slug != undefined) {
+							drawable_settings.slug = annotation.slug;
+						}
+						if (annotation.icon != undefined) {
+							drawable_settings.icon = annotation.icon;
 						}
 						if (annotation.text != undefined) {
 							drawable_settings.text = annotation.text;

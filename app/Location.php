@@ -151,6 +151,10 @@ public static  function folderNames($loc)
     {
         return $this->hasMany('App\Hotspot', 'location_id');
     }
+    public function locscats()
+    {
+        return $this->hasMany('App\Category', 'id', 'category_id');
+    }
     public function etaji()
     {
         return $this->hasMany('App\Floors', 'parrentid');

@@ -24,7 +24,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th>Actions</th><th></th>
+                                        <th>#</th><th>Name</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,9 +47,6 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
-                                        </td>
-                                        <td>
-                                            <img src="/storage/panoramas/unpacked/{{\App\Location::folderNames([$item])[0]}}/thumb.jpg" width="150">
                                         </td>
                                     </tr>
                                 @endforeach

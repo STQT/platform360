@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Cities;
 use App\Hotspot;
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use App\Location;
+use App\Cities;
 use App\Sky;
-use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cookie;
+use DB;
 class LocationsController extends Controller
 {
     /**
@@ -254,12 +253,6 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
         $categories = Category::all();
         $sky = Location::where('is_sky', 'on')->get();
         $cities = Cities::all();
-
-        $returnUrl = Input::get('returnUrl');
-
-        // if ($returnUrl)
-        //   return redirect(urldecode($returnUrl));
-
         return view('admin.locations.edit', compact('location', 'sky','categories', 'cities'));
     }
 
@@ -328,17 +321,9 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
 $location = Location::findOrFail($id);
       $location->update($requestData);
 
-            
 
-            // return back()->withInput();
 
-      dd(Url::previous());
-
-            // if ($returnUrl) {
-            //   return redirect(urldecode($returnUrl))->with('flash_message', 'Локация отредактирована');
-            // } else {
-            //   return redirect('admin/locations')->with('flash_message', 'Локация отредактирована!');
-            // }
+            return redirect('admin/locations')->with('flash_message', 'Локация отредактирована!');
         }
         else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');

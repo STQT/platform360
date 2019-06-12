@@ -61,6 +61,7 @@ Route::get('admin/floors/edit/{id}', 'Admin\\FloorsController@edit');
 Route::match(['put', 'patch'],'admin/floors/update/{id}', 'Admin\\FloorsController@update');
 Route::delete('admin/floors/delete/{id}', 'Admin\\FloorsController@destroy');
 Route::get('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochki');
+Route::post('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochkiupdate');
 
 
 Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');
@@ -71,9 +72,8 @@ Route::post('admin/podloc/store/', 'Admin\\PodlocController@store');
 
     Route::group(['prefix' => 'api'], function() {
 
-
+Route::get('/deletehotspot/{id}', 'Admin\\HotspotsController@deletehotspot');
 Route::get('/locations/{id}', 'Admin\\LocationsController@apiLocations');
-Route::get('/sublocations/{id}', 'Admin\\LocationsController@apiSublocations');
 Route::get('/getcitydefaultlocation/{id}', 'Admin\\LocationsController@getcitydefaultlocation');
        Route::post('/locations/add', 'Admin\\LocationsController@apiAddhotspot');
 

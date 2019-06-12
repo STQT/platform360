@@ -6,11 +6,15 @@ $(function() {
     }, 1000);
 
     function isMobile() {
-      try{ document.createEvent("TouchEvent"); return true; }
-      catch(e){ return false; }
+        try {
+            document.createEvent("TouchEvent");
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
     if (isMobile()) {
-      $('.mytab2').fadeOut();
+        $('.mytab2').fadeOut();
     }
     // modals
 
@@ -26,8 +30,8 @@ $(function() {
         if (_this.hasClass('is-active')) {
             _this.removeClass('is-active');
             curModal.removeClass('visible').addClass('hidden');
-            if(_this.find('.wrappersvg').length !== 0) {
-              _this.find('.wrappersvg').attr("fill","#1a90d2");
+            if (_this.find('.wrappersvg').length !== 0) {
+                _this.find('.wrappersvg').attr("fill", "#1a90d2");
             };
         } else {
             $('.wrapper-button__icon').removeClass('is-active');
@@ -38,11 +42,8 @@ $(function() {
 
 
 
-
-
-
-            if(_this.find('.wrappersvg').length !== 0) {
-              _this.find('.wrappersvg').attr("fill","#c23691");
+            if (_this.find('.wrappersvg').length !== 0) {
+                _this.find('.wrappersvg').attr("fill", "#c23691");
             };
         }
 
@@ -57,6 +58,46 @@ $(function() {
             }
         }
     });
+
+
+    // ******************** TImberland SCripts ************************
+
+    $('.wrapper-panel-close').click(function() {
+        $('.searchPanel__button').css('display', 'none');
+
+        $('.js-icon').removeClass('icon-wrapper--selected')
+        $('.js-icon').addClass('icon-wrapper__icon')
+
+    });
+
+    $('.searchPanel__button').click(function() {
+        $(this).css('display', 'none');
+    });
+
+
+
+
+    if ($(window).width() > 1300) {
+
+
+    } else {
+
+        $('.icon-ic_glass').click(function() {
+            $('#search_adress input').focus();
+            // $('.searchPanel__input').trigger('click'); 
+        });
+
+    }
+
+
+    $('.icon-ic_glass').click(function() {
+    	$('.searchPanel__results').css("display", 'none');
+
+    });
+
+
+
+    // ****************************************************************
 
     // feedback modal close
     $('.close-btn').on('click', function() {
@@ -78,7 +119,9 @@ $(function() {
     $('.mybtn').click(function() {
 
     })
-$('.mybtn').on('touchstart click', function(){$('.fullScreenPanel_filter').fadeIn();});
+    $('.mybtn').on('touchstart click', function() {
+        $('.fullScreenPanel_filter').fadeIn();
+    });
     $('.myclose').on('click', function() {
         $('.fullScreenPanel_filter').fadeOut();
     })
@@ -156,11 +199,13 @@ $('.mybtn').on('touchstart click', function(){$('.fullScreenPanel_filter').fadeI
 
 
 
-// При клике на категории :: ПОИСК
+    // При клике на категории :: ПОИСК
 
 
     $('.js-icon').on('click', function() {
 
+        // $(".searchPanel__button").css("display", "block")
+        
 
         if ($(this).hasClass('icon-wrapper__icon')) {
             $(this).removeClass('icon-wrapper__icon').addClass('icon-wrapper--selected');
@@ -169,90 +214,106 @@ $('.mybtn').on('touchstart click', function(){$('.fullScreenPanel_filter').fadeI
         }
 
 
-    	var _this = $('.search-input');
-    	var categoryId =
-    	$('.js-icon.icon-wrapper--selected').map(function() {
-    		return $(this).data('category');
-    	}).get().join(",");
+        var _this = $('.search-input');
+        var categoryId =
+            $('.js-icon.icon-wrapper--selected').map(function() {
+                return $(this).data('category');
+            }).get().join(",");
 
- if ($('.js-icon').hasClass('icon-wrapper--selected')) {
-        if (_this.val() != "") {
-            $.get(
-                "/search/" + _this.val() + '/' + categoryId,
-                onAjaxSuccess
-            ); } else {
+        if ($('.js-icon').hasClass('icon-wrapper--selected')) {
+            if (_this.val() != "") {
+                $.get(
+                    "/search/" + _this.val() + '/' + categoryId,
+                    onAjaxSuccess
+                );
 
-              $.get(
-                  "/search/noresult/" + categoryId,
-                  onAjaxSuccess
-              );
+            } else {
+                
+                $.get(
+                    "/search/noresult/" + categoryId,
+                    onAjaxSuccess
+                );
 
             }
         } else {
-        	if (_this.val() != "") {
-            $.get(
-                "/search/" + _this.val() + '/0',
-                onAjaxSuccess
-            );}
-        }
-//Дебильная функция
-    	function onAjaxSuccess(data) {
-        	if (data=== 'Null') {
-
-
-            $('#searchContainer').empty();
-
-            $('.searchPanel__resultscontainer').hide();
- $('.searchPanel__results span').text('Объект не найден');
-            $('.searchPanel__button').text('Объект не найден');
-        	} else {
-            if (screen.width >= 1025) {
-                $('.searchPanel__results span').text('Результаты: ' + data.length + '');
-            } else {
-                $('.searchPanel__button').text('Результаты: ' + data.length + '');
+            if (_this.val() != "") {
+                $.get(
+                    "/search/" + _this.val() + '/0',
+                    onAjaxSuccess
+                );
+                $('.searchPanel__results').fadeIn();
             }
-
-var searchItem="";
-var img ="";
-
-for (i = 0; i < data.length; i++) {
-
-
-var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama, async: false}).responseText;
+        }
+        //Дебильная функция
+        function onAjaxSuccess(data) {
+            if (data === 'Null') {
 
 
- if (screen.width >= 1025) {
-                         searchItem += `
-			      	<div class="listItem-wrapper" onclick="loadpano('uzbekistan:`+data[i].id+`', `+ i +`, '`+data[i].slug +`')">
-		              <div class="listItem">
-		                  <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img  + `/thumb.jpg" class="listItem__img--scene"></div>
-		                  <div class="listItem__icon-category">
-		                      <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175);"><img src="/storage/cat_icons/`+ data[i].cat_icon_svg+`"></div>
-		                  </div>
-		                  <div class="listItem__text">
-	                      <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-		                  </div>
-		              </div>
-		          </div>
-			      `;
+                $('#searchContainer').empty();
+
+                $('.searchPanel__resultscontainer').hide();
+                $('.searchPanel__results span').text('Объект не найден');
+                $('.searchPanel__button').text('Объект не найден');
+            } else {
+                if (screen.width >= 1024) {
+                    $('.searchPanel__results span').text('Результаты: ' + data.length + '');
+                } else {
+                    $('.searchPanel__button').text('Результаты: ' + data.length + '');
+                }
+
+                var searchItem = "";
+                var img = "";
+
+                for (i = 0; i < data.length; i++) {
+
+
+                    var img = $.ajax({
+                        type: "GET",
+                        url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
+                        async: false
+                    }).responseText;
+
+
+                    if (screen.width >= 1024) {
+                        searchItem += `
+                      <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
+                      <div class="listItem">
+                          <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                          <div class="listItem__icon-category">
+                              <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                          </div>
+                          <div class="listItem__text">
+                          <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                          </div>
+                      </div>
+                  </div>
+                  `;
 
                     } else {
-                        searchItem +=`
-			      	<div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` +data[i].id+`', `+ i +`, '`+data[i].slug +`')">
-							  <div class="listItem" style="width: 170px; height: 192px;">
-							    <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img  + `/thumb.jpg" class="listItem__img--scene"></div>
-							    <div class="listItem__icon-category">
-							      <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/`+ data[i].cat_icon_svg+`"></div>
-							    </div>
-	                  <div class="listItem__text">
-	                    <div><span><span>` + data[i].name  + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-	                  </div>
-							  </div>
-							</div>
-			      `;
+                        searchItem += `
+                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
+                              <div class="listItem" style="width: 170px; height: 192px;">
+                                <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                                <div class="listItem__icon-category">
+                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                                </div>
+                      <div class="listItem__text">
+                        <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                      </div>
+                              </div>
+                            </div>
+                  `;
                     }
 
-                    if (screen.width >= 1025) {
+                    if (screen.width >= 1024) {
+                        $('#searchContainer').empty().append(searchItem);
+                        $('.searchPanel__resultscontainer').show();
+                    } else {
+                        $('#searchContainerMobile').empty().append(searchItem);
+                        $('.searchPanel__button').show();
+                    }
+
+                    if (screen.width <= 1024) {
                         $('#searchContainer').empty().append(searchItem);
                         $('.searchPanel__resultscontainer').show();
                     } else {
@@ -263,40 +324,18 @@ var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].pano
 
 
 
-}
+                }
 
 
 
 
-
-
-
-
-
-
-}
-
-
-
-
-
+            }
 
 
 
 
         }
-//КОНЕЦ Дебильная функция
-
-
-
-
-
-
-
-
-
-
-
+        //КОНЕЦ Дебильная функция
 
 
 
@@ -310,7 +349,7 @@ var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].pano
             $('.searchPanel__resultscontainer').hide();
         }
     });
-// КОНЕЦ При клике на категории :: ПОИСК
+    // КОНЕЦ При клике на категории :: ПОИСК
 
 
     // mobile search result panel
@@ -330,84 +369,88 @@ var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].pano
             }).get().join(",");
 
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
-            	if (_this.val() != "") {
-            $.get(
-                "/search/" + _this.val() + '/' + categoryId,
-                onAjaxSuccess
-            ); }
+            if (_this.val() != "") {
+                $.get(
+                    "/search/" + _this.val() + '/' + categoryId,
+                    onAjaxSuccess
+                );
+            }
         } else {
-        	if (_this.val() != "") {
-            $.get(
-                "/search/" + _this.val() + '/0',
-                onAjaxSuccess
-            );}
+            if (_this.val() != "") {
+                $.get(
+                    "/search/" + _this.val() + '/0',
+                    onAjaxSuccess
+                );
+            }
         }
 
         function onAjaxSuccess(data) {
-        	if (data=== 'Null') {
+            if (data === 'Null') {
 
 
-            $('#searchContainer').empty();
+                $('#searchContainer').empty();
 
-            $('.searchPanel__resultscontainer').hide();
- $('.searchPanel__results span').text('Объект не найден');
-            $('.searchPanel__button').text('Объект не найден');
-        	} else {
-            if (screen.width >= 1025) {
-                $('.searchPanel__results span').text('Результат: ' + data.length + '');
+                $('.searchPanel__resultscontainer').hide();
+                $('.searchPanel__results span').text('Объект не найден');
+                $('.searchPanel__button').text('Объект не найден');
             } else {
-                $('.searchPanel__button').text('Результаты: ' + data.length + '');
-            }
+                if (screen.width >= 1024) {
+                    $('.searchPanel__results span').text('Результат: ' + data.length + '');
+                } else {
+                    $('.searchPanel__button').text('Результаты: ' + data.length + '');
+                }
 
-var searchItem="";
-var img ="";
+                var searchItem = "";
+                var img = "";
 
-for (i = 0; i < data.length; i++) {
-
-
-var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama, async: false}).responseText;
-
-
+                for (i = 0; i < data.length; i++) {
 
 
- if (screen.width >= 1025) {
+                    var img = $.ajax({
+                        type: "GET",
+                        url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
+                        async: false
+                    }).responseText;
+
+
+
+
+                    if (screen.width >= 1024) {
                         searchItem += `
-			      	<div class="listItem-wrapper" onclick="loadpano('uzbekistan:`+data[i].id+`', `+ i +`, '`+data[i].slug +` ')">
-		              <div class="listItem">
-		                  <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img  + `/thumb.jpg" class="listItem__img--scene"></div>
-		                  <div class="listItem__icon-category">
-		                      <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175);"><img src="/storage/cat_icons/`+ data[i].cat_icon_svg+`"></div>
-		                  </div>
-		                  <div class="listItem__text">
-	                      <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-		                  </div>
-		              </div>
-		          </div>
-			      `;
+                      <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + ` ')">
+                      <div class="listItem">
+                          <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                          <div class="listItem__icon-category">
+                              <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                          </div>
+                          <div class="listItem__text">
+                          <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                          </div>
+                      </div>
+                  </div>
+                  `;
 
 
                     } else {
-                        searchItem +=`
-			      	<div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` +data[i].id+`', `+ i +`, '`+data[i].slug +`')">
-							  <div class="listItem" style="width: 170px; height: 192px;">
-							    <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img  + `/thumb.jpg" class="listItem__img--scene"></div>
-							    <div class="listItem__icon-category">
-							      <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/`+ data[i].cat_icon_svg+`"></div>
-							    </div>
-	                  <div class="listItem__text">
-	                    <div><span><span>` + data[i].name  + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-	                  </div>
-							  </div>
-							</div>
-			      `;
+                        searchItem += `
+                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
+                              <div class="listItem" style="width: 170px; height: 192px;">
+                                <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                                <div class="listItem__icon-category">
+                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                                </div>
+                      <div class="listItem__text">
+                        <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                      </div>
+                              </div>
+                            </div>
+                  `;
                     }
 
 
 
 
-
-
-                    if (screen.width >= 1025) {
+                    if (screen.width >= 1024) {
                         $('#searchContainer').empty().append(searchItem);
                         $('.searchPanel__resultscontainer').show();
                     } else {
@@ -418,23 +461,12 @@ var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].pano
 
 
 
-}
+                }
 
 
 
 
-
-
-
-
-
-
-}
-
-
-
-
-
+            }
 
 
 
@@ -472,8 +504,8 @@ var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].pano
 
     $('.cotegory-slick_sec').slick({
         dots: false,
-         draggable: false,
-            swipe: false,
+        draggable: false,
+        swipe: false,
         infinite: false,
         speed: 500,
         fade: true,
@@ -577,20 +609,18 @@ var img = $.ajax({type: "GET", url: "/getDirectories/" + JSON.parse(data[i].pano
 
 
 
-
-
     // ********************* CLOSE SEARCH BLOCK ******************************************
 
-    $('body').on('click', '.listItem-wrapper', function(){
+    $('body').on('click', '.listItem-wrapper', function() {
 
-      setTimeout(function(){
-      $('.wrapper-panel-close').trigger('click')
-      }, 1000)
+        setTimeout(function() {
+            $('.wrapper-panel-close').trigger('click')
+        }, 1000)
     });
 
 
 
-$('.listItem-wrapper').on('click', function() {
+    $('.listItem-wrapper').on('click', function() {
         var _this = $(this);
         var curModal = $('.' + _this.data('pannel')).eq(0);
 
@@ -608,9 +638,6 @@ $('.listItem-wrapper').on('click', function() {
         }
 
     });
-
-
-
 
 
 

@@ -117,8 +117,8 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
     // Create the defaults once
     var annotatorPro = "annotatorPro",
     defaults = {
-        frameWidth : $(window).width()-500,
-        frameHeight : $(window).height()-250,
+        frameWidth : 900,
+        frameHeight : 700,
         maxZoom : "auto",
         navigator : false,
         navigatorImagePreview : false,
@@ -1308,15 +1308,12 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             // spot
 
             if (self.options.spot_circle) {
-                self.obj_parent.append('<div id="spot-'+self.id+'" class="ndd-spot"></div>');
+                self.obj_parent.append('<div id="spot-'+self.id+'"  class="ndd-spot"></div>');
                 self.obj_spot = self.obj_parent.find('#spot-' + self.id);
 
-                if (self.options.style > 4) {
-                    var i = self.options.style - 4;
-                    self.obj_spot.append('<div class="ndd-marker-container ndd-marker-style-'+ self.options.style +'"><img src="img/icon_loc_0'+ i +'.png"></div>');
-                } else {
-                    self.obj_spot.append('<div class="ndd-marker-container ndd-marker-style-'+ self.options.style +'"><div class="ndd-marker-main"></div><div class="ndd-marker-border"></div></div>');
-                }
+
+                    self.obj_spot.append('<div class="ndd-marker-container ndd-marker-style-4"><img style="width: 45px;" src="/storage/cat_icons/'+self.options.icon+'"></div>');
+
             } else {
                 self.obj_parent.append('<div id="spot-'+self.id+'" class="ndd-spot-rect"></div>');
                 self.obj_spot = self.obj_parent.find('#spot-' + self.id);
@@ -1365,9 +1362,18 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             // events
 
             $(self.obj_spot).on('mousemove', function() {
-                alert('ok');
-            });
 
+            });
+          $(self.obj_spot).on('click', function() {
+
+            var locationid = self.options.location;
+            var locationslug = self.options.slug;
+          
+            $('.icon-ic_close').trigger('click')
+
+            loadpano('uzbekistan:'+locationid+'', 0, locationslug);
+
+          });
             $(self.obj_spot).on('mouseout', function(e) {
                 var toElement = e.toElement;
 
@@ -1397,17 +1403,17 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             });
 
             // touch events
-            $(self.obj_spot).on('touchstart', function(e) {
-                if (e.originalEvent.touches.length == 1) {
-                    var timestamp = new Date().getTime();
-                    self.touch_start_time = timestamp;
-
-                    self.touch_x = e.originalEvent.touches[0].pageX;
-                    self.touch_y = e.originalEvent.touches[0].pageY;
-
-                    log(e)
-                }
-            });
+            // $(self.obj_spot).on('touchstart', function(e) {
+            //     if (e.originalEvent.touches.length == 1) {
+            //         var timestamp = new Date().getTime();
+            //         self.touch_start_time = timestamp;
+            //
+            //         self.touch_x = e.originalEvent.touches[0].pageX;
+            //         self.touch_y = e.originalEvent.touches[0].pageY;
+            //
+            //         log(e)
+            //     }
+            // });
 
             $(self.obj_spot).on('touchend', function(e) {
                 var timestamp = new Date().getTime();
@@ -1437,9 +1443,7 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             self.obj_spot.find('.ndd-marker-main').css({
                 background : self.options.tint_color
             });
-   self.obj_spot.click(function(){
-    alert(self.options.title);
-   })
+
             self.obj_spot.find('.ndd-marker-border').css({
                 "border-color" : self.options.tint_color
             });
