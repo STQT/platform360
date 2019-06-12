@@ -155,6 +155,10 @@ public static  function folderNames($loc)
     {
         return $this->hasMany('App\Category', 'id', 'category_id');
     }
+    public function sublocations()
+    {
+        return $this->hasMany('App\Location', 'podlocparent_id');
+    }
     public function etaji()
     {
         return $this->hasMany('App\Floors', 'parrentid');

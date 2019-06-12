@@ -19,7 +19,8 @@
     <meta property="og:image" content="/assets/socialpreview.jpg">
     <meta property="og:description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta property="og:site_name" content="Uzbekistan360">
-
+    <meta name="yandex-verification" content="2a64127fe16ccd91" />
+    
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="/assets/app.22400e48.css?033f3b348c8154cd9ec6" rel="stylesheet">
     <link href="/assets/slick-carousel/slick.css" rel="stylesheet">

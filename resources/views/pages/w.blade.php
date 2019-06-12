@@ -541,9 +541,12 @@
                                 <span class="section-help__content__title"><span>Welcome</span></span>
                                 <div class="section-help__content__message">
                                     <div class="section-help__content__message__text">
-                                        <p><span>Dubai360 contains 360° photos and videos.</span></p>
-                                        <p><span>Rotate and zoom the image using the controls on the bottom, mouse or touch screen.</span></p>
-                                        <p><span>Use the hotspots on the image to navigate between different photos and videos. You can also navigate using the map or thumbnails.</span></p>
+                                        <p><span>Вращайте и масштабируйте изображение с помощью элементов управления внизу, мыши или сенсорного экрана.
+                                        </span></p>
+                                        <p><span>Используйте горячие точки на изображении для навигации между различными фотографиями и видео. Вы также можете перемещаться с помощью карты или категорий.</span></p>
+                                        <p><span>По вопросам сотрудничества:<br> 
+                                        +998971310023
+                                        </span></p>
                                     </div>
                                     <img src="/assets/image_mouse.cec9e28c.png">
                                 </div>
