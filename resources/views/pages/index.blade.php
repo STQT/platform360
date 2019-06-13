@@ -13,7 +13,8 @@
         <div class="root">
             <div class="root ">
                 <div></div>
-<div style="opacity:0"  class="currentlocationcordinates" @if($location->onmap = 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}" @else data-map="no" @endif ></div>
+
+<div style="opacity:0"  class="currentlocationcordinates" @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}" @else data-map="no" @endif ></div>
                 <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div>
                 <header class="dubai360-header">
@@ -43,7 +44,7 @@
 
                     @if(empty($etaji)) {}
                     @else
-                    <div class="dubai360-header__aloneicon" id="buttonetaj0">
+                    <div class="dubai360-header__aloneicon buttonetaj0 headermainetajicon">
                         <div class="wrapper-button active">
                             <span class="icon-ic_floorplan wrapper-button__icon" data-pannel="floorplanPanel"></span>
                             <div class="dubai360-tooltip">
@@ -83,9 +84,34 @@
                             <span class="icon-ic_share wrapper-button__icon "  data-pannel="sharePannel" ></span>
                             <div class="dubai360-tooltip"><span>Поделиться</span></div>
                         </div>
-                        <div class="wrapper-button" onclick="krpanoautorotate();">
+                        <div class="wrapper-button" id="autotourbutton" onclick="krpanoautorotate();">
                             <span class="icon-ic_autoplay wrapper-button__icon "></span>
                             <div class="dubai360-tooltip"><span>Тур режим</span></div>
+                        </div>
+                        <div class="wrapper-button" id="ipadcity" style="display:none">
+                          <span class="wrapper-button__icon" data-pannel="cityPannel"  >
+            <svg version="1.1" id="Layer_1" class="wrappersvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               viewBox="0 0 511.999 511.999"  style="width: 28px;
+          position: absolute;
+          top: 11px;left:10px;
+        " fill="#1a90d2">
+
+
+        <g>
+                      <path d="M207.904,468.1c-48.9-83.2-132.1-233-132.1-299.6c0-92.6,75.9-168.5,168.5-168.5s168.5,75.9,168.5,168.5
+                          c0,66.6-83.2,216.4-132.1,299.6C261.704,497.6,223.104,493.2,207.904,468.1z M244.304,40.5c-70.7,0-128,57.2-128,128
+                          c0,40.6,46.8,144.6,126.9,278.8c0,1,2.1,1,2.1,0c79.1-134.2,127-238.3,127-278.8C372.304,97.7,315.004,40.5,244.304,40.5z"/>
+                  </g>
+                  <g>
+                      <path d="M244.304,226.7c-38.5,0-69.7-31.2-69.7-69.7s31.2-68.7,69.7-68.7s69.7,31.2,69.7,69.7S282.804,226.7,244.304,226.7z
+                           M244.304,128.9c-15.6,0-29.1,12.5-29.1,29.1s12.5,29.1,29.1,29.1s29.1-12.5,29.1-29.1S259.904,128.9,244.304,128.9z"/>
+                  </g>
+
+
+
+            </svg>
+          </span>
+
                         </div>
                         <div class="wrapper-button" onclick="krpanofullscreen()">
                             <span class="icon-ic_fullscreen wrapper-button__icon "></span>
@@ -107,14 +133,14 @@
 
 
   <g>
-  				<path d="M207.904,468.1c-48.9-83.2-132.1-233-132.1-299.6c0-92.6,75.9-168.5,168.5-168.5s168.5,75.9,168.5,168.5
-  					c0,66.6-83.2,216.4-132.1,299.6C261.704,497.6,223.104,493.2,207.904,468.1z M244.304,40.5c-70.7,0-128,57.2-128,128
-  					c0,40.6,46.8,144.6,126.9,278.8c0,1,2.1,1,2.1,0c79.1-134.2,127-238.3,127-278.8C372.304,97.7,315.004,40.5,244.304,40.5z"/>
-  			</g>
-  			<g>
-  				<path d="M244.304,226.7c-38.5,0-69.7-31.2-69.7-69.7s31.2-68.7,69.7-68.7s69.7,31.2,69.7,69.7S282.804,226.7,244.304,226.7z
-  					 M244.304,128.9c-15.6,0-29.1,12.5-29.1,29.1s12.5,29.1,29.1,29.1s29.1-12.5,29.1-29.1S259.904,128.9,244.304,128.9z"/>
-  			</g>
+                <path d="M207.904,468.1c-48.9-83.2-132.1-233-132.1-299.6c0-92.6,75.9-168.5,168.5-168.5s168.5,75.9,168.5,168.5
+                    c0,66.6-83.2,216.4-132.1,299.6C261.704,497.6,223.104,493.2,207.904,468.1z M244.304,40.5c-70.7,0-128,57.2-128,128
+                    c0,40.6,46.8,144.6,126.9,278.8c0,1,2.1,1,2.1,0c79.1-134.2,127-238.3,127-278.8C372.304,97.7,315.004,40.5,244.304,40.5z"/>
+            </g>
+            <g>
+                <path d="M244.304,226.7c-38.5,0-69.7-31.2-69.7-69.7s31.2-68.7,69.7-68.7s69.7,31.2,69.7,69.7S282.804,226.7,244.304,226.7z
+                     M244.304,128.9c-15.6,0-29.1,12.5-29.1,29.1s12.5,29.1,29.1,29.1s29.1-12.5,29.1-29.1S259.904,128.9,244.304,128.9z"/>
+            </g>
 
 
 
@@ -152,40 +178,60 @@
                     <div class="wrapper-button"><span class="icon-ic_glass wrapper-button__icon " data-pannel="search"></span></div>
                     <div class="wrapper-button"><span class="icon-ic_share wrapper-button__icon " onclick="krpanoscreenshot();" data-pannel="sharePannel"></span></div>
                     <div class="wrapper-button"><span class=" wrapper-button__icon " data-pannel="gyroPannel">
-    <svg version="1.1" id="Layer_1" class="wrappersvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    	 viewBox="0 0 511.999 511.999"  style="width:25px;position: absolute; top: 12px;
-right: 13px;" fill="#1a90d2">
+                        <svg version="1.1" id="Layer_1" class="wrappersvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 511.999 511.999"  style="width:25px;position: absolute; top: 12px;
+                        right: 13px;" fill="#1a90d2">
 
-    	<g >
-    		<path d="M436.921,75.079C389.413,27.571,326.51,1.066,259.464,0.18C258.296,0.074,257.137,0,255.999,0s-2.297,0.074-3.465,0.18
-    			C185.488,1.065,122.585,27.57,75.077,75.078C26.752,123.405,0.138,187.657,0.138,255.999s26.614,132.595,74.94,180.921
-    			c47.508,47.508,110.41,74.013,177.457,74.898c1.168,0.107,2.327,0.18,3.464,0.18c1.138,0,2.297-0.074,3.465-0.18
-    			c67.047-0.885,129.95-27.39,177.457-74.898c48.325-48.325,74.939-112.577,74.939-180.921
-    			C511.861,187.657,485.247,123.405,436.921,75.079z M96.586,96.587c27.181-27.181,60.086-46.552,95.992-57.018
-    			c-8.093,9.317-15.96,20.033-23.282,31.908c-9.339,15.146-17.425,31.562-24.196,48.919H75.865
-    			C82.165,112.063,89.071,104.102,96.586,96.587z M56.486,150.813h78.373c-8.15,28.522-12.97,58.908-14.161,89.978H31.071
-    			C33.176,208.987,41.865,178.465,56.486,150.813z M56.487,361.186c-14.623-27.652-23.312-58.174-25.417-89.978h89.627
-    			c1.191,31.071,6.011,61.457,14.161,89.978H56.487z M96.587,415.412c-7.517-7.515-14.423-15.475-20.722-23.809h69.236
-    			c6.771,17.357,14.856,33.773,24.196,48.919c7.322,11.875,15.189,22.591,23.282,31.908
-    			C156.674,461.964,123.769,442.593,96.587,415.412z M240.79,475.322c-12.671-8.29-29.685-24.946-45.605-50.764
-    			c-6.385-10.354-12.124-21.382-17.197-32.954h62.801V475.322z M240.79,361.186h-74.195c-8.888-28.182-14.163-58.651-15.459-89.978
-    			h89.654V361.186z M240.79,240.791h-89.654c1.295-31.327,6.57-61.797,15.459-89.978h74.195V240.791z M240.79,120.395h-62.801
-    			c5.073-11.572,10.812-22.6,17.197-32.954c15.919-25.818,32.934-42.475,45.605-50.764V120.395z M455.512,150.813
-    			c14.623,27.653,23.311,58.174,25.416,89.978H391.3c-1.191-31.071-6.011-61.457-14.161-89.978H455.512z M415.413,96.587
-    			c7.515,7.515,14.421,15.476,20.721,23.809h-69.235c-6.771-17.357-14.856-33.773-24.196-48.919
-    			c-7.322-11.875-15.188-22.591-23.282-31.908C355.326,50.035,388.231,69.406,415.413,96.587z M271.208,36.677
-    			c12.671,8.29,29.685,24.946,45.605,50.764c6.385,10.354,12.124,21.382,17.197,32.954h-62.801V36.677z M271.208,150.813h74.195
-    			c8.889,28.182,14.164,58.653,15.459,89.978h-89.654V150.813z M360.861,271.208c-1.295,31.327-6.57,61.797-15.459,89.978h-74.195
-    			v-89.978H360.861z M271.208,475.322v-83.718h62.801c-5.073,11.572-10.812,22.6-17.197,32.954
-    			C300.893,450.377,283.879,467.032,271.208,475.322z M415.413,415.413c-27.182,27.181-60.086,46.551-95.992,57.018
-    			c8.093-9.317,15.96-20.033,23.282-31.908c9.339-15.146,17.425-31.562,24.196-48.919h69.235
-    			C429.835,399.937,422.928,407.898,415.413,415.413z M455.512,361.186h-78.373c8.15-28.521,12.971-58.907,14.161-89.978h89.627
-    			C478.822,303.012,470.133,333.534,455.512,361.186z"/>
-    	</g>
+                        <g >
+                          <path d="M436.921,75.079C389.413,27.571,326.51,1.066,259.464,0.18C258.296,0.074,257.137,0,255.999,0s-2.297,0.074-3.465,0.18
+                          C185.488,1.065,122.585,27.57,75.077,75.078C26.752,123.405,0.138,187.657,0.138,255.999s26.614,132.595,74.94,180.921
+                          c47.508,47.508,110.41,74.013,177.457,74.898c1.168,0.107,2.327,0.18,3.464,0.18c1.138,0,2.297-0.074,3.465-0.18
+                          c67.047-0.885,129.95-27.39,177.457-74.898c48.325-48.325,74.939-112.577,74.939-180.921
+                          C511.861,187.657,485.247,123.405,436.921,75.079z M96.586,96.587c27.181-27.181,60.086-46.552,95.992-57.018
+                          c-8.093,9.317-15.96,20.033-23.282,31.908c-9.339,15.146-17.425,31.562-24.196,48.919H75.865
+                          C82.165,112.063,89.071,104.102,96.586,96.587z M56.486,150.813h78.373c-8.15,28.522-12.97,58.908-14.161,89.978H31.071
+                          C33.176,208.987,41.865,178.465,56.486,150.813z M56.487,361.186c-14.623-27.652-23.312-58.174-25.417-89.978h89.627
+                          c1.191,31.071,6.011,61.457,14.161,89.978H56.487z M96.587,415.412c-7.517-7.515-14.423-15.475-20.722-23.809h69.236
+                          c6.771,17.357,14.856,33.773,24.196,48.919c7.322,11.875,15.189,22.591,23.282,31.908
+                          C156.674,461.964,123.769,442.593,96.587,415.412z M240.79,475.322c-12.671-8.29-29.685-24.946-45.605-50.764
+                          c-6.385-10.354-12.124-21.382-17.197-32.954h62.801V475.322z M240.79,361.186h-74.195c-8.888-28.182-14.163-58.651-15.459-89.978
+                          h89.654V361.186z M240.79,240.791h-89.654c1.295-31.327,6.57-61.797,15.459-89.978h74.195V240.791z M240.79,120.395h-62.801
+                          c5.073-11.572,10.812-22.6,17.197-32.954c15.919-25.818,32.934-42.475,45.605-50.764V120.395z M455.512,150.813
+                          c14.623,27.653,23.311,58.174,25.416,89.978H391.3c-1.191-31.071-6.011-61.457-14.161-89.978H455.512z M415.413,96.587
+                          c7.515,7.515,14.421,15.476,20.721,23.809h-69.235c-6.771-17.357-14.856-33.773-24.196-48.919
+                          c-7.322-11.875-15.188-22.591-23.282-31.908C355.326,50.035,388.231,69.406,415.413,96.587z M271.208,36.677
+                          c12.671,8.29,29.685,24.946,45.605,50.764c6.385,10.354,12.124,21.382,17.197,32.954h-62.801V36.677z M271.208,150.813h74.195
+                          c8.889,28.182,14.164,58.653,15.459,89.978h-89.654V150.813z M360.861,271.208c-1.295,31.327-6.57,61.797-15.459,89.978h-74.195
+                          v-89.978H360.861z M271.208,475.322v-83.718h62.801c-5.073,11.572-10.812,22.6-17.197,32.954
+                          C300.893,450.377,283.879,467.032,271.208,475.322z M415.413,415.413c-27.182,27.181-60.086,46.551-95.992,57.018
+                          c8.093-9.317,15.96-20.033,23.282-31.908c9.339-15.146,17.425-31.562,24.196-48.919h69.235
+                          C429.835,399.937,422.928,407.898,415.413,415.413z M455.512,361.186h-78.373c8.15-28.521,12.971-58.907,14.161-89.978h89.627
+                          C478.822,303.012,470.133,333.534,455.512,361.186z"/>
+                      </g>
 
-    </svg>
-</div>
+                  </svg>
+              </div>
+
+
+
+
+                   @if(empty($etaji)) {}
+                    @else
+                    <div class="dubai360-header__aloneicon buttonetaj0">
+                        <div class="wrapper-button active">
+                            <span class="icon-ic_floorplan wrapper-button__icon" data-pannel="floorplanPanel"></span>
+                            <div class="dubai360-tooltip">
+                                <span>Этажи</span>
+                            </div>
+                        </div>
+                    </div>
+                  @endif
+
+
                 </footer>
+
+
+
                 <div class="wrapper-panel  top right sharePannel hidden expand">
                     <img class="wrapper-panel-close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="sharePanel">
@@ -602,7 +648,22 @@ right: 13px;" fill="#1a90d2">
                         <!-- <div class="infoPanel__title2">{{ $location->number}}</div> -->
       @isset($location->description)
                         <div class="infoPanel__description">
-                            <div class="infoPanel__description__message"><span id="location_description">{{$location->description}}</span></div>
+                            <div class="infoPanel__description__message">
+                                <span id="location_description">{{$location->description}}</span>
+
+
+                            </div>
+                            <div class="dotsss">
+                                <div class="svg_blockk">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 60 60" xml:space="preserve">
+                                    <path d="M8,22c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S12.411,22,8,22z"/>
+                                    <path d="M52,22c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S56.411,22,52,22z"/>
+                                    <path d="M30,22c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S34.411,22,30,22z"/>
+                                </svg>
+
+                                </div>
+                            </div>
                         </div>
                       @endisset
                         @isset($location->address)
@@ -720,7 +781,7 @@ right: 13px;" fill="#1a90d2">
                             </div>
                         </div>
                     </div>
-                    <div style="width: calc(100% - 289px);">
+                    <div class="responsivee" style="width: calc(100% - 289px);">
                         <div class="floorplan-viewer">
                             <div class="floorplan-viewer__header">
                                 <span class="floorplan-viewer__header__name">{{$location->name}}</span>
@@ -751,7 +812,7 @@ right: 13px;" fill="#1a90d2">
                             <ul class="floorplan-viewer__footer">
                                 @foreach($etaji as $i => $etaj)
 
-                                        <li class="floorplan-viewer__footer__element" data-tab="{{ $i }}"' id="buttonetaj{{$i}}"'>
+                                        <li class="floorplan-viewer__footer__element buttonetaj{{$i}}" data-tab="{{ $i }}">
                                             <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">
                                             <span class="floorplan-viewer__footer__element__name">{{ $etaj->name }}</span>
                                         </li>
@@ -935,14 +996,16 @@ right: 13px;" fill="#1a90d2">
 
     @foreach ($etaji as $i => $etaj)
     @if(!empty($etaj->code))
-    $("#buttonetaj{{$i}}").click(function(){
+    $(".buttonetaj{{$i}}").click(function(){
 
       setTimeout(function(){
       $("#floorid{{$etaj->id}}").annotatorPro({
-          maxZoom : 4,
+        maxZoom: 2,
           navigator : false,
           navigatorImagePreview : false,
-
+          frameWidth: "auto",
+          iconsize: "15px",
+    frameHeight: $(window).height()-300,
           fullscreen : true,
           {!!$etaj->code!!}
       });},500);
@@ -1092,16 +1155,23 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
               }
             }
         });@endif
+
         function krpanofullscreen () {
+
+
             krpano.call("set(fullscreen,true);");
             $('#logo2').css('display', 'block');
             $('#pano1').append(`<div id="logo2" onclick="krpanofullscreenexit()" class="icon-ic_windowed fullScreenIcon" style="display: block; position: absolute; z-index: 99999;"></div>`);
+
         }
         function krpanofullscreenexit ()  {
             krpano.call("set(fullscreen,false);");
             $('.icon-ic_fullscreen').removeClass('is-active')
           $('#logo2').remove();
         }
+
+
+
 
 function closerejimwindow() {
   var _this = $('.icon-ic_eye');
@@ -1393,101 +1463,101 @@ clickableIcons: false
     map.setZoom(14);
     var locations = <?php print_r(json_encode($locationscordinate)) ?>;
     function project(latLng) {
-    	var TILE_SIZE = 256
+        var TILE_SIZE = 256
 
-    	var siny = Math.sin(latLng.lat() * Math.PI / 180)
+        var siny = Math.sin(latLng.lat() * Math.PI / 180)
 
 
-    	siny = Math.min(Math.max(siny, -0.9999), 0.9999)
+        siny = Math.min(Math.max(siny, -0.9999), 0.9999)
 
-    	return new google.maps.Point(
-    		TILE_SIZE * (0.5 + latLng.lng() / 360),
-    		TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)))
+        return new google.maps.Point(
+            TILE_SIZE * (0.5 + latLng.lng() / 360),
+            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)))
     }
     function getMapDimenInPixels(map) {
-    	var zoom = map.getZoom()
-    	var bounds = map.getBounds()
-    	var southWestPixel = getPixel(bounds.getSouthWest(), zoom)
-    	var northEastPixel = getPixel(bounds.getNorthEast(), zoom)
-    	return {
-    		width: Math.abs(southWestPixel.x - northEastPixel.x),
-    		height: Math.abs(southWestPixel.y - northEastPixel.y)
-    	}
+        var zoom = map.getZoom()
+        var bounds = map.getBounds()
+        var southWestPixel = getPixel(bounds.getSouthWest(), zoom)
+        var northEastPixel = getPixel(bounds.getNorthEast(), zoom)
+        return {
+            width: Math.abs(southWestPixel.x - northEastPixel.x),
+            height: Math.abs(southWestPixel.y - northEastPixel.y)
+        }
     }
     function getPixel(latLng, zoom) {
-    	var scale = 1 << zoom
-    	var worldCoordinate = project(latLng)
-    	return new google.maps.Point(
+        var scale = 1 << zoom
+        var worldCoordinate = project(latLng)
+        return new google.maps.Point(
                 Math.floor(worldCoordinate.x * scale),
                 Math.floor(worldCoordinate.y * scale))
     }
 
     function willAnimatePanTo(map, destLatLng, optionalZoomLevel) {
-    	var dimen = getMapDimenInPixels(map)
+        var dimen = getMapDimenInPixels(map)
 
-    	var mapCenter = map.getCenter()
-    	optionalZoomLevel = !!optionalZoomLevel ? optionalZoomLevel : map.getZoom()
+        var mapCenter = map.getCenter()
+        optionalZoomLevel = !!optionalZoomLevel ? optionalZoomLevel : map.getZoom()
 
-    	var destPixel = getPixel(destLatLng, optionalZoomLevel)
-    	var mapPixel = getPixel(mapCenter, optionalZoomLevel)
-    	var diffX = Math.abs(destPixel.x - mapPixel.x)
-    	var diffY = Math.abs(destPixel.y - mapPixel.y)
+        var destPixel = getPixel(destLatLng, optionalZoomLevel)
+        var mapPixel = getPixel(mapCenter, optionalZoomLevel)
+        var diffX = Math.abs(destPixel.x - mapPixel.x)
+        var diffY = Math.abs(destPixel.y - mapPixel.y)
 
-    	return diffX < dimen.width && diffY < dimen.height
+        return diffX < dimen.width && diffY < dimen.height
     }
     function getOptimalZoomOut(latLng, currentZoom) {
-    	if(willAnimatePanTo(map, latLng, currentZoom - 1)) {
-    		return currentZoom - 1
-    	} else if(willAnimatePanTo(map, latLng, currentZoom - 2)) {
-    		return currentZoom - 2
-    	} else {
-    		return currentZoom - 3
-    	}
+        if(willAnimatePanTo(map, latLng, currentZoom - 1)) {
+            return currentZoom - 1
+        } else if(willAnimatePanTo(map, latLng, currentZoom - 2)) {
+            return currentZoom - 2
+        } else {
+            return currentZoom - 3
+        }
     }
     function smoothlyAnimatePanToWorkarround(map, destLatLng, optionalAnimationEndCallback) {
-  	var initialZoom = map.getZoom(), listener
+    var initialZoom = map.getZoom(), listener
 
-  	function zoomIn() {
-  		if(map.getZoom() < initialZoom) {
-  			map.setZoom(Math.min(map.getZoom() + 3, initialZoom))
-  		} else {
-  			google.maps.event.removeListener(listener)
+    function zoomIn() {
+        if(map.getZoom() < initialZoom) {
+            map.setZoom(Math.min(map.getZoom() + 3, initialZoom))
+        } else {
+            google.maps.event.removeListener(listener)
 
-  			map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false})
+            map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false})
 
-  			if(!!optionalAnimationEndCallback) {
-  				optionalAnimationEndCallback()
-  			}
-  		}
-  	}
+            if(!!optionalAnimationEndCallback) {
+                optionalAnimationEndCallback()
+            }
+        }
+    }
 
-  	function zoomOut() {
-  		if(willAnimatePanTo(map, destLatLng)) {
-  			google.maps.event.removeListener(listener)
-  			listener = google.maps.event.addListener(map, 'idle', zoomIn)
-  			map.panTo(destLatLng)
-  		} else {
-  			map.setZoom(getOptimalZoomOut(destLatLng, map.getZoom()))
-  		}
-  	}
+    function zoomOut() {
+        if(willAnimatePanTo(map, destLatLng)) {
+            google.maps.event.removeListener(listener)
+            listener = google.maps.event.addListener(map, 'idle', zoomIn)
+            map.panTo(destLatLng)
+        } else {
+            map.setZoom(getOptimalZoomOut(destLatLng, map.getZoom()))
+        }
+    }
 
-  	map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true})
-  	map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
-  	listener = google.maps.event.addListener(map, 'idle', zoomOut)
+    map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true})
+    map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
+    listener = google.maps.event.addListener(map, 'idle', zoomOut)
   }
 
 
   function smoothlyAnimatePanTo(map, destLatLng) {
-  	if(willAnimatePanTo(map, destLatLng)) {
-  		map.panTo(destLatLng)
-  	} else {
-  		smoothlyAnimatePanToWorkarround(map, destLatLng)
-  	}
+    if(willAnimatePanTo(map, destLatLng)) {
+        map.panTo(destLatLng)
+    } else {
+        smoothlyAnimatePanToWorkarround(map, destLatLng)
+    }
   }
 
 
   $('.slick-block3').on('afterChange', function(event, slick, currentSlide, nextSlide){
- if(window.innerWidth < 768){
+ if(window.innerWidth < 1025){
            var realslide =  $(".slick-active", this);
 var slidbox = $(".featuredloctionbox", realslide);
 
@@ -1501,7 +1571,7 @@ var slidbox = $(".featuredloctionbox", realslide);
 
   });
   $('.slick-block2').on('afterChange', function(event, slick, currentSlide, nextSlide){
- if(window.innerWidth < 768){
+ if(window.innerWidth < 1025){
            var realslide =  $(".slick-active", this);
 var slidbox = $(".featuredloctionbox", realslide);
 
@@ -1528,7 +1598,7 @@ $('.icon-ic_explore').click(function(){
   var curmapchecl = currentlocationcordinates.data('map');
   var curlatmark = currentlocationcordinates.data('lat');
   var curlngmark = currentlocationcordinates.data('lng');
-  if (curlatmark != "no" && curlngmark != "no" && curlatmark != "0" && curlngmark != "0") {
+  if (curmapchecl !== "no" && curlatmark != "0" && curlngmark != "0") {
 
   var curlatmark = currentlocationcordinates.data('lat');
   var curlngmark = currentlocationcordinates.data('lng');

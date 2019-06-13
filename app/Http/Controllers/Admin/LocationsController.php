@@ -362,8 +362,31 @@ $location = Location::findOrFail($id);
         $cities =  DB::select(DB::raw("SELECT * FROM cities"));
 
        $location = Location::where('slug', $slug)->firstOrFail();
+       $etaji = $location->etaji;
+       if (!empty($etaji)) {
+         $code = "";
+       foreach ($etaji as $ss => $etaj) {
+         $code .= $etaji[$ss]->code;
+       }
 
-$etaji = $location->etaji;
+       preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
+
+       $etajlocations =DB::table('locations')
+                       ->join('categories', 'categories.id', '=', 'locations.category_id')
+                       ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
+                       ->whereIn('locations.id', $matches[1])
+                       ->get();
+                       foreach($etajlocations as $key=>$value){
+
+                        $test = json_decode($etajlocations[$key]->panorama)[0]->panoramas[0]->panorama;
+                           $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+                           $filename = $test . '/' . $old[2];
+                           $etajlocations[$key]->img = $filename;
+                       }
+
+       }
+
+
 
        if(empty($location->is_sky)) {
 
@@ -513,7 +536,7 @@ foreach($krhotspotinfo as $key2=>$value2){
 
 
         if($location->count()) {
-            return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots,'defaultlocation'=> $defaultlocation, 'otherlocations' => $otherlocations, 'isfeatured'=>$isfeatured, 'cities'=>$cities,  'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky' => $sky, 'isnew' => $isnew, 'etaji' => $etaji]);
+            return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots,'defaultlocation'=> $defaultlocation, 'otherlocations' => $otherlocations, 'isfeatured'=>$isfeatured, 'cities'=>$cities,  'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky' => $sky, 'isnew' => $isnew, 'etaji' => $etaji, 'etajlocations'=> $etajlocations]);
         }
         else {
             return response()->json([]);
@@ -545,6 +568,7 @@ foreach($krhotspotinfo as $key2=>$value2){
 
         return $locations;
     }
+    
     public function getcitydefaultlocation($id)
     {
 

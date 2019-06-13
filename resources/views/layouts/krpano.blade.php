@@ -19,8 +19,7 @@
     <meta property="og:image" content="/assets/socialpreview.jpg">
     <meta property="og:description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta property="og:site_name" content="Uzbekistan360">
-    <meta name="yandex-verification" content="2a64127fe16ccd91" />
-    
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="/assets/app.22400e48.css?033f3b348c8154cd9ec6" rel="stylesheet">
     <link href="/assets/slick-carousel/slick.css" rel="stylesheet">
@@ -94,14 +93,16 @@
 <script src="/flooreditor/js/annotator-pro.js"></script>
 <script src="/assets/jquery-resizable.js"></script>
 <script src="/assets/slick-carousel/slick.min.js"></script>
+
+
 <script src="/assets/google-maps.js"></script>
 <script src="/assets/main.js"></script>
 
-
+@yield('scripts')
 
 
 <script type="text/javascript" async="" src="https://maps.google.com/maps/api/js?v=3.30&key=AIzaSyCuukKz6F0pH77lK5jgKdNEHa7AFqPMh4k&callback=initMap"></script>
-@yield('scripts')
+
 
 {{--
 <script>

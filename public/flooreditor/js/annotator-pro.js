@@ -566,6 +566,7 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             {
                 // mouse events
                 if (e.type == "mousedown") {
+
                     interfaceInteraction = true;
                     if ($(e.target).hasClass('ndd-annotator-navigator') || $(e.target).hasClass('ndd-annotator-navigator-image') || $(e.target).hasClass('ndd-annotator-navigator-window')) {
                         self.navigator_window_start_dragging(e.pageX, e.pageY);
@@ -1312,7 +1313,7 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
                 self.obj_spot = self.obj_parent.find('#spot-' + self.id);
 
 
-                    self.obj_spot.append('<div class="ndd-marker-container ndd-marker-style-4"><img style="width: 45px;" src="/storage/cat_icons/'+self.options.icon+'"></div>');
+                    self.obj_spot.append('<div class="ndd-marker-container ndd-marker-style-4"><img class="floorhotspoticon"  src="/storage/cat_icons/'+self.options.icon+'"></div>');
 
             } else {
                 self.obj_parent.append('<div id="spot-'+self.id+'" class="ndd-spot-rect"></div>');
@@ -1362,18 +1363,17 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             // events
 
             $(self.obj_spot).on('mousemove', function() {
+            });
+            $(self.obj_spot).click(function() {
+
+              var locationid = self.options.location;
+              var locationslug = self.options.slug;
+
+              $('.icon-ic_close').trigger('click');
+
+              loadpano('uzbekistan:'+locationid+'', 0, locationslug);
 
             });
-          $(self.obj_spot).on('click', function() {
-
-            var locationid = self.options.location;
-            var locationslug = self.options.slug;
-          
-            $('.icon-ic_close').trigger('click')
-
-            loadpano('uzbekistan:'+locationid+'', 0, locationslug);
-
-          });
             $(self.obj_spot).on('mouseout', function(e) {
                 var toElement = e.toElement;
 
@@ -1403,17 +1403,14 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
             });
 
             // touch events
-            // $(self.obj_spot).on('touchstart', function(e) {
-            //     if (e.originalEvent.touches.length == 1) {
-            //         var timestamp = new Date().getTime();
-            //         self.touch_start_time = timestamp;
-            //
-            //         self.touch_x = e.originalEvent.touches[0].pageX;
-            //         self.touch_y = e.originalEvent.touches[0].pageY;
-            //
-            //         log(e)
-            //     }
-            // });
+            $(self.obj_spot).on('touchstart', function(e) {
+              var locationid = self.options.location;
+              var locationslug = self.options.slug;
+
+              $('.icon-ic_close').trigger('click');
+
+              loadpano('uzbekistan:'+locationid+'', 0, locationslug);
+            });
 
             $(self.obj_spot).on('touchend', function(e) {
                 var timestamp = new Date().getTime();

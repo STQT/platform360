@@ -101,7 +101,7 @@ var hotspotname;
                                 var panos = JSON.parse(data.data[i].panorama);
 
                                 if(panos.length == 1) {
-                                    if (data.data[i].podlocparent_id == null) {
+                                   if (data.data[i].podlocparent_id == null) {
                                         $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '</a><ul></ul></li>');
                                     }
 

@@ -1,5 +1,9 @@
 $(function() {
 
+    $("body").click(function(event) {
+        console.log(event)
+    });
+
     // preloader
     setTimeout(function() {
         $('.loading').fadeOut('slow');
@@ -21,6 +25,10 @@ $(function() {
     $('.searchPanel__filtered__clear').on('click', function() {
 
     });
+
+
+
+
     $('.wrapper-button__icon').on('click', function() {
         var _this = $(this);
         var curModal = $('.' + _this.data('pannel')).eq(0);
@@ -59,8 +67,45 @@ $(function() {
         }
     });
 
+  
+
+
 
     // ******************** TImberland SCripts ************************
+
+
+    $('.svg_blockk').click(function() {
+    	var height = $('#location_description').height();
+        $('.infoPanel__description__message').toggleClass('show');
+
+
+        if ($('.infoPanel__description__message').hasClass('show')) {
+        	$('.infoPanel__description__message').css('height', height);
+        }else{
+        	$('.infoPanel__description__message').removeAttr('style');
+        }
+
+    	
+    	
+    });
+
+    $('.wrapper-panel-close').click(function() {
+       $('.infoPanel__description__message').removeAttr('style');
+    });
+
+    // ********************** EXIT FULL SCREEN ************************
+
+    document.addEventListener('fullscreenchange', exitHandler);
+    document.addEventListener('webkitfullscreenchange', exitHandler);
+    document.addEventListener('mozfullscreenchange', exitHandler);
+    document.addEventListener('MSFullscreenChange', exitHandler);
+
+    function exitHandler() {
+        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+
+            $('#logo2').remove();
+        }
+    }  
 
     $('.wrapper-panel-close').click(function() {
         $('.searchPanel__button').css('display', 'none');
@@ -91,7 +136,7 @@ $(function() {
 
 
     $('.icon-ic_glass').click(function() {
-    	$('.searchPanel__results').css("display", 'none');
+    	$('.searchPanel__results').css("display", "none");
 
     });
 
@@ -203,9 +248,10 @@ $(function() {
 
 
     $('.js-icon').on('click', function() {
-
         // $(".searchPanel__button").css("display", "block")
-        
+        // $('.searchPanel__results').fadeIn();
+        $('.searchPanel__results').removeAttr('style');
+
 
         if ($(this).hasClass('icon-wrapper__icon')) {
             $(this).removeClass('icon-wrapper__icon').addClass('icon-wrapper--selected');
@@ -226,9 +272,8 @@ $(function() {
                     "/search/" + _this.val() + '/' + categoryId,
                     onAjaxSuccess
                 );
-
             } else {
-                
+
                 $.get(
                     "/search/noresult/" + categoryId,
                     onAjaxSuccess
@@ -241,7 +286,6 @@ $(function() {
                     "/search/" + _this.val() + '/0',
                     onAjaxSuccess
                 );
-                $('.searchPanel__results').fadeIn();
             }
         }
         //Дебильная функция
@@ -255,12 +299,12 @@ $(function() {
                 $('.searchPanel__results span').text('Объект не найден');
                 $('.searchPanel__button').text('Объект не найден');
             } else {
-                if (screen.width >= 1024) {
+                if (screen.width >= 500) {
                     $('.searchPanel__results span').text('Результаты: ' + data.length + '');
                 } else {
                     $('.searchPanel__button').text('Результаты: ' + data.length + '');
                 }
-
+            
                 var searchItem = "";
                 var img = "";
 
@@ -400,6 +444,8 @@ $(function() {
                     $('.searchPanel__button').text('Результаты: ' + data.length + '');
                 }
 
+
+
                 var searchItem = "";
                 var img = "";
 
@@ -451,6 +497,14 @@ $(function() {
 
 
                     if (screen.width >= 1024) {
+                        $('#searchContainer').empty().append(searchItem);
+                        $('.searchPanel__resultscontainer').show();
+                    } else {
+                        $('#searchContainerMobile').empty().append(searchItem);
+                        $('.searchPanel__button').show();
+                    }
+
+                      if (screen.width <= 1024) {
                         $('#searchContainer').empty().append(searchItem);
                         $('.searchPanel__resultscontainer').show();
                     } else {

@@ -18,7 +18,31 @@
     width: 100%;
   }
 }
+/*
+.etaj{
+	display: none;
+	font-family: 'dubai360-icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
+.etaj:before{
+	 content: '\E923';
+	 display: block;
+	 font-size: 50px;
+	 color: #1a90d2;
+}
+*/
+.floorhotspoticon {
+  /* width:47px; */
+  width:40px;
+}
 .plan {
 
   margin: 0 auto;
@@ -154,7 +178,24 @@
 }
 
 /**********************  TIMBERLAND STYLES *****************************/
+.svg_blockk{
+  width: 25px;
+  height: 25px;
+  position: relative;
+  cursor: pointer;
+}
+.infoPanel__description__message{
+  height: 114px;
 
+}
+.height{
+  height: auto;
+
+}
+
+.svg_blockk svg{
+  fill: #c23691;
+}
 .cotegory-slick{
   width: 100%;
   height: 100%;
@@ -170,7 +211,7 @@
 .block_thanks .text_thks p{
   font-family: Montserrat,sans-serif;
 }
-    
+
 .category-wrapper{
   position: relative;
 }
@@ -1045,7 +1086,9 @@ template {
     background-color: #f3f3f3; }
 
     @media (max-width: 48em) {
-
+.headermainetajicon {
+  display: none !important;
+}
       .wrapper-button:hover {
         background-color: transparent; } }
   .wrapper-button__icon {
@@ -1171,6 +1214,12 @@ margin-right: 15px;
     .dubai360-header__logo-languaje:hover {
       cursor: pointer; }
     @media (max-width: 78em) {
+      #autotourbutton {
+        display: none;
+      }
+      #ipadcity {
+        display: block !important;
+      }
       .dubai360-header__logo-languaje {
         -webkit-box-flex: 0;
             -ms-flex: 0 0 68px;
@@ -1215,8 +1264,8 @@ margin-right: 15px;
             align-items: center;
     height: 100%; }
     @media (max-width: 48em) {
-      .dubai360-header__aloneicon {
-        display: none; } }
+      .dubai360-header .dubai360-header__aloneicon {
+        /*display: none;*/ } }
     .dubai360-header__aloneicon__icon {
       color: #1a90d2;
       font-size: 48px;
@@ -1412,11 +1461,12 @@ margin-right: 15px;
         height: calc(100vh - 126px); } }
     @media (max-width: 30em) {
       .wrapper-panel.floorplanPanel {
-        height: calc(100vh - 126px);
-        top: 54px !important;
-        right: 0;
-        left: 0;
-        z-index: 2005; } }
+       height: calc(100vh - 126px);
+    top: 62px !important;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 2005; } }
     .wrapper-panel.floorplanPanel.expand .wrapper-panel--main-container {
       max-width: 289px; }
   .wrapper-panel.floorplanViewer {
@@ -1520,10 +1570,23 @@ margin-right: 15px;
   overflow: auto; }
   @media (max-width: 30em) {
     .infoPannel {
-      height:100%;
-      left: 0 !important;
-      right: 0 !important;
-      top: 0 !important; } }
+    	width: 95% !important;
+    	margin: 0 auto;
+    	left: 0;
+
+       }
+
+     .clock_time{
+     	padding-left: 0px;
+     	padding-top: 15px;
+
+     }
+     .infoPanel__current-categories{
+     	padding-bottom: 0;
+     }
+
+
+   }
 
 @media (max-width: 30em) {
   .sharePannel {
@@ -1632,6 +1695,7 @@ margin-right: 15px;
     .dubai360-footer {
       display: -webkit-box;
       display: -ms-flexbox;
+      z-index: 9999999999;
       display: flex;
       -ms-flex-pack: distribute;
           justify-content: space-around;
@@ -1775,15 +1839,7 @@ margin-right: 15px;
     .listItem {
       width: 176px;
       height: 192px; } }
-  .listItem:hover {
-    -webkit-box-shadow: 0 12px 18px -6px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 12px 18px -6px rgba(0, 0, 0, 0.2);
-    -webkit-transform: translateY(-10px);
-    -ms-transform: translateY(-10px);
-    transform: translateY(-10px);
-    -webkit-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease; }
+
     @media (max-width: 30em) {
       .listItem:hover {
         -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
@@ -1859,9 +1915,23 @@ margin-right: 15px;
   width: 700px;
   border-radius: 4px;
   padding: 24px 24px 12px 24px; }
+
+
+
+
+
   @media (max-width: 48em) {
-    .infoPanel {
-      width: calc(100vw - 66px); } }
+  	.infoPanel {
+  		width: calc(100vw - 66px);
+  	}
+
+  	.infoPannel {
+  		width: 97.3%;
+  		height: 77%;
+
+  	}
+  }
+
   .infoPanel__current-categories {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4432,7 +4502,10 @@ margin-right: auto;
   background-image: url(icons/icon-down.png);
 }
 
-
+.explore__listContainer .slick-active .listItem__icon-category {
+  border-bottom: 6px solid #da389c;
+  border-radius: 4px;
+}
 @media (max-width: 768px) {
   .wrapper-panel.explorePannel {
     z-index: 2500;
@@ -4457,6 +4530,9 @@ margin-right: auto;
   .infoPanel__overflow {
     display: none;
   }
+  .etaj{
+  	display: block;
+  }
 }
 #location_number a {
   color:#1a90d2;
@@ -4477,7 +4553,22 @@ margin-right: auto;
   }
 }
 
+@media screen and (max-width: 600px){
+	.wrapper-panel--main-container{
+		display: none !important;
+	}
 
-/*@media screen and (max-width: 1024px){
-
-}*/
+	.responsivee{
+		width: 100% !important;
+	}
+	/*.plan{
+		width: 100% !important;
+		height: 270px !important;
+	}*/
+	/*.plan img{
+		width: 150%;
+		height: 200%;
+		position: relative;
+		z-index: 9999999999;
+	}*/
+}
