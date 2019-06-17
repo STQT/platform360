@@ -459,21 +459,21 @@
                             </div>
                         </div>
                         <div id="tab2" class="section-help" style="display: none;">
-                            <div class="section-help__content">
-                                <span class="section-help__content__title"><span>Controls</span></span>
+                                                        <div class="section-help__content">
+                                <span class="section-help__content__title"><span>Подсказки</span></span>
                                 <div class="category-wrapper-mobile">
                                     <div class="section-help__content__icons--controls">
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_aerial icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Go to the nearest hub</span></div>
+                                            <div class="icon-wrapper__text"><span>Перейти к небу города</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_explore icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Explore nearby and related scenes</span></div>
+                                            <div class="icon-wrapper__text"><span>Перейти в карту города</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_share icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Share your current view</span></div>
+                                            <div class="icon-wrapper__text"><span>Поделиться своим видом</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_configuration icon-wrapper__icon--controls"></span>
@@ -481,27 +481,27 @@
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_comment icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Give us your feedback</span></div>
+                                            <div class="icon-wrapper__text"><span> Оставьте свои пожелания или отзыв</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_glass icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Search for panoramas by name or category</span></div>
+                                            <div class="icon-wrapper__text"><span>Поиск панорам по названию или категории</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_info icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Show a description of the current scene</span></div>
+                                            <div class="icon-wrapper__text"><span>Показать информацию</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_autoplay icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Enable automatic tour mode</span></div>
+                                            <div class="icon-wrapper__text"><span>Включить автоматический режим тура</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_eye icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>Change view projection</span></div>
+                                            <div class="icon-wrapper__text"><span>Изменить вид проекции</span></div>
                                         </div>
                                         <div class="icon-wrapper">
                                             <span class="icon-ic_floorplan icon-wrapper__icon--controls"></span>
-                                            <div class="icon-wrapper__text"><span>View scene floorplan</span></div>
+                                            <div class="icon-wrapper__text"><span>Посмотреть план этажей</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1310,12 +1310,15 @@ if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).t
 if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
 if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
 if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
+
 if (data.onmap == "on") {
 
    $('.currentlocationcordinates').data('lat', data.lat);
    $('.currentlocationcordinates').data('lng', data.lng);
 
 } else {
+
+  $('.currentlocationcordinates').data('map', 'no');
   $('.currentlocationcordinates').data('lat', 'no');
   $('.currentlocationcordinates').data('lng', 'no');
 }
