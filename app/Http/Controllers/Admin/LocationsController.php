@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Hotspot;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Location;
 use App\Cities;
+use App\Hotspot;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Location;
 use App\Sky;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cookie;
-use DB;
 class LocationsController extends Controller
 {
     /**
@@ -246,13 +247,19 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $location = Location::findOrFail($id);
 
         $categories = Category::all();
         $sky = Location::where('is_sky', 'on')->get();
         $cities = Cities::all();
+
+        $returnUrl = Input::get('returnUrl');
+
+        if ($returnUrl)
+          $request->session()->put('returnUrl', $returnUrl);
+
         return view('admin.locations.edit', compact('location', 'sky','categories', 'cities'));
     }
 
@@ -317,13 +324,16 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
 
 
         if(!empty($requestData['name'])) {
+            $location = Location::findOrFail($id);
+            $location->update($requestData);
 
-$location = Location::findOrFail($id);
-      $location->update($requestData);
+            $returnUrl = $request->session()->get('returnUrl');
 
-
-
-            return redirect('admin/locations')->with('flash_message', 'Локация отредактирована!');
+            if ($returnUrl) {
+              return redirect(urldecode($returnUrl))->with('flash_message', 'Локация отредактирована!');
+            } else {
+              return redirect('admin/locations')->with('flash_message', 'Локация отредактирована!');
+            }
         }
         else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');
