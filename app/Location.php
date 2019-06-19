@@ -29,7 +29,7 @@ class Location extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id'];
+    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id', 'subdomain'];
 
 
     /**

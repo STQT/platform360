@@ -121,6 +121,13 @@
 </div>
 
 
+<div class="form-group{{ $errors->has('subdomain') ? 'has-error' : ''}}">
+    {!! Form::label('subdomain', 'Субдомен', ['class' => 'control-label']) !!}
+    {!! Form::text('subdomain', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('subdomain', '<p class="help-block">:message</p>') !!}
+</div>
+
+
 
 
 

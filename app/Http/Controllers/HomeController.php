@@ -20,18 +20,36 @@ class HomeController extends Controller
      */
     public function getIndex()
     {
+        if (Cookie::has('city')) {
+          $defaultlocation = Cookie::get('city');
+        } else {
+        $defaultlocation = "1";
+
+          Cookie::queue(Cookie::forever('city', '1'));
+        }
+
+        $cities =  DB::select(DB::raw("SELECT * FROM cities"));
 
 
-if (Cookie::has('city')) {
-  $defaultlocation = Cookie::get('city');
-} else {
-$defaultlocation = "1";
+        $serverName = $_SERVER['HTTP_HOST'];
+        $serverNameArr = explode('.', $serverName);
 
-  Cookie::queue(Cookie::forever('city', '1'));
-}
+        $subdomain = false;
 
-$cities =  DB::select(DB::raw("SELECT * FROM cities"));
-$location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->firstOrFail();
+        if (env('APP_ENV') == 'local') {
+            if (count($serverNameArr) > 1)
+                $subdomain = true;
+        } else {
+            if (count($serverNameArr) > 2)
+                $subdomain = true;
+        }
+
+        if ($subdomain && $serverNameArr[0] != 'dev' && !is_numeric($serverNameArr[0])) {
+            $subdomainName = $serverNameArr[0];
+            $location = Location::where('subdomain', $subdomainName)->firstOrFail();
+        } else {
+            $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->firstOrFail();
+        }
 $etaji = $location->etaji;
 if (!empty($etaji)) {
   $code = "";
