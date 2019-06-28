@@ -324,7 +324,7 @@ $(function() {
                       <div class="listItem">
                           <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
-                              <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                              <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                           </div>
                           <div class="listItem__text">
                           <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
@@ -339,7 +339,7 @@ $(function() {
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
-                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
                       <div class="listItem__text">
                         <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
@@ -467,7 +467,7 @@ $(function() {
                       <div class="listItem">
                           <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
-                              <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(66, 213, 175);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                              <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                           </div>
                           <div class="listItem__text">
                           <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
@@ -483,7 +483,7 @@ $(function() {
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
-                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
                       <div class="listItem__text">
                         <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
