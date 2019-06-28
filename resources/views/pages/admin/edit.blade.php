@@ -52,7 +52,7 @@
 var hotspotid;
 var hotspotname;
         $(function () {
-            $('body').on('click', '.locationItem', function () {
+            $('body').on('click', '.locationItem', function (e) {
                 var _this = $(this);
 
                 $.post('/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
@@ -100,9 +100,11 @@ var hotspotname;
                             for (var i = 0; i < data.data.length; i++) {
                                 var panos = JSON.parse(data.data[i].panorama);
 
+
                                 if(panos.length == 1) {
                                    if (data.data[i].podlocparent_id == null) {
-                                        $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '</a><ul></ul></li>');
+                                        var parentId = data.data[i].id;
+                                        $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
                                     }
 
                                     $.get('/api/sublocations/' + data.data[i].id).done(function (data) {
@@ -239,11 +241,37 @@ krpano.call("removehotspot("+hotspotname+")");
 
     <script>
         embedpano({target: "pano", id: "pano1", xml: "/admin/krpano/{{ $location->id }}", onready: krpano_onready_callback});
+
+        $(document).ready(function() {
+            $('body').on('click', '.expand-subcategories', function(e) {
+                e.preventDefault();
+                $('.info-list li ul').hide();
+                $(this).closest('li').find('ul').slideDown('slow');
+            });
+        });
     </script>
 
     <style>
         .cotegory-info {
             overflow: scroll;
+        }
+        .info-list li {
+            position: relative;
+        }
+/*        .info-list li ul {
+            display: none;
+        }*/
+        .hidden {
+            display: none;
+        }
+        .expand-subcategories {
+            position: absolute;
+            right: 0;
+            top: -3px;
+        }
+
+        .info-list a.expand-subcategories img {
+            height: 27px;
         }
     </style>
 @endsection
