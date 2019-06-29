@@ -110,7 +110,9 @@
 <div class="form-group">
     <input {{ isset($location) ? ($location->isfeatured ? 'checked' : '') : ''}} id="isfeatured" type="checkbox" class="" name="isfeatured"> Избранный?
 </div>
-
+<div class="form-group">
+    <input {{ isset($location) ? ($location->published ? 'checked' : '') : ''}} id="published" type="checkbox" class="" value="1" name="published"> Опубликовано
+</div>
 
 <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
     <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">

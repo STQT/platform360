@@ -5,7 +5,7 @@
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('color') ? 'has-error' : ''}}">
-    {!! Form::label('color', 'Color', ['class' => 'control-label']) !!}
+    {!! Form::label('color', 'Цвет', ['class' => 'control-label']) !!}
     {!! Form::text('color', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
 
     {!! $errors->first('color', '<p class="help-block">:message</p>') !!}

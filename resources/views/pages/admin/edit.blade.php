@@ -102,9 +102,12 @@ var hotspotname;
 
 
                                 if(panos.length == 1) {
-                                   if (data.data[i].podlocparent_id == null) {
+                                    if (data.data[i].podlocparent_id == null) {
+                                        xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
+                                        $preview = $( xmlDoc ).find('preview');
+
                                         var parentId = data.data[i].id;
-                                        $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+                                        $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
                                     }
 
                                     $.get('/api/sublocations/' + data.data[i].id).done(function (data) {
@@ -114,7 +117,7 @@ var hotspotname;
                                             if(panos.length == 1) {
                                                 xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
                                                 $preview = $( xmlDoc ).find('preview');
-                                                console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
+                                                // console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
                                                 $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a></li>');
                                             }
                                         }
@@ -258,9 +261,6 @@ krpano.call("removehotspot("+hotspotname+")");
         .info-list li {
             position: relative;
         }
-/*        .info-list li ul {
-            display: none;
-        }*/
         .hidden {
             display: none;
         }

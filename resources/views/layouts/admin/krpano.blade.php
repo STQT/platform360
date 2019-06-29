@@ -263,7 +263,7 @@
         .category-list a,
         .info-list a {
             padding: 10px;
-            text-align: center;
+            /*text-align: center;*/
             display: block;
         }
 

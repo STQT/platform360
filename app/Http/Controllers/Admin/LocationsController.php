@@ -37,9 +37,10 @@ class LocationsController extends Controller
                 ->orWhere('facebook', 'LIKE', "%$keyword%")
                 ->orWhere('instagram', 'LIKE', "%$keyword%")
                 ->orWhere('telegram', 'LIKE', "%$keyword%")
+                ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
         } else {
-            $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->latest()->paginate($perPage);
+            $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->latest()->withoutGlobalScope('published')->paginate($perPage);
         }
 
         return view('admin.locations.index', compact('locations'));
@@ -207,8 +208,8 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
      */
     public function show($id)
     {
-        $location = Location::findOrFail($id);
-        $locations = Location::all();
+        $location = Location::withoutGlobalScope('published')->findOrFail($id);
+        $locations = Location::withoutGlobalScope('published')->get()->all();
 
         $categories = Category::all();
 
@@ -249,7 +250,7 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
      */
     public function edit(Request $request, $id)
     {
-        $location = Location::findOrFail($id);
+        $location = Location::withoutGlobalScope('published')->findOrFail($id);
 
         $categories = Category::all();
         $sky = Location::where('is_sky', 'on')->get();
@@ -277,7 +278,7 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
             'name' => 'required'
         ]);
 
-        $location = Location::findOrFail($id);
+        $location = Location::withoutGlobalScope('published')->findOrFail($id);
 
         $data = $request->all();
 
@@ -324,7 +325,7 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
 
 
         if(!empty($requestData['name'])) {
-            $location = Location::findOrFail($id);
+            $location = Location::withoutGlobalScope('published')->findOrFail($id);
             $location->update($requestData);
 
             $returnUrl = $request->session()->get('returnUrl');
@@ -556,7 +557,7 @@ foreach($krhotspotinfo as $key2=>$value2){
     }
     public function krpano($id)
     {
-        $location = Location::find($id);
+        $location = Location::withoutGlobalScope('published')->find($id);
 
 
            return response()->view('partials.admin.xml', compact('location'))->header('Content-Type', 'text/xml');
@@ -566,7 +567,7 @@ foreach($krhotspotinfo as $key2=>$value2){
     {
         $category = Category::findOrFail($id);
 
-        $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(999);
+        $locations = $category->locations()->withoutGlobalScope('published')->orderBy('created_at', 'DESC')->paginate(999);
 
         return $locations;
     }
