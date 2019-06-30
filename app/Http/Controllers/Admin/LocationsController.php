@@ -25,9 +25,13 @@ class LocationsController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
+        $category = $request->get('category');
         $perPage = 25;
 
-        if (!empty($keyword)) {
+        $totalLocations = Location::withoutGlobalScope('published')->count();
+        $categories = Category::pluck('name', 'id');
+
+        if (!empty($keyword) && $category == '') {
             $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->where('name', 'LIKE', "%$keyword%")
                 ->orWhere('address', 'LIKE', "%$keyword%")
                 ->orWhere('number', 'LIKE', "%$keyword%")
@@ -39,11 +43,35 @@ class LocationsController extends Controller
                 ->orWhere('telegram', 'LIKE', "%$keyword%")
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
-        } else {
+        } elseif ($category != '') {
+            $locations = Location::
+                where('category_id', $category)
+                ->where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($q) use ($keyword) {
+                     $q->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                 })
+                ->withoutGlobalScope('published')
+                ->latest()->paginate($perPage);
+        }
+            else {
             $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->latest()->withoutGlobalScope('published')->paginate($perPage);
         }
 
-        return view('admin.locations.index', compact('locations'));
+        return view('admin.locations.index', compact(
+            'locations', 
+            'totalLocations',
+            'categories',
+            'category'
+        ));
     }
 
     public function hasFloors($id) {
@@ -299,6 +327,11 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
         if(empty($data['isfeatured'])) {
 
             $requestData['isfeatured'] = 0;
+        }
+
+        if(empty($data['published'])) {
+
+            $requestData['published'] = 0;
         }
 
 

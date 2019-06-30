@@ -15,6 +15,11 @@
 
                         {!! Form::open(['method' => 'GET', 'url' => '/admin/locations', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
+                            {!! Form::Label('category', 'Категория') !!}
+
+                            {!! Form::select('category', $categories, $category, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                             <span class="input-group-append">
                                 <button class="btn btn-secondary" type="submit">
@@ -27,10 +32,11 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
+                            <div>Всего: <strong>{{ $totalLocations }}</strong></div>
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                      <th>Название</th><th>Действия</th>
+                                      <th>Название</th><th>Подлокации</th><th>Действия</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +44,7 @@
                                     <tr>
 
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->sublocations->count() }}</td>
                                         <td>
                                           <a href="{{ url('/admin/floors/' . $item->id) }}" title="Этажи"><button class="btn btn-info btn-sm"><i class="fa fa-arrows-v" aria-hidden="true"></i></button></a>
                                           <a href="{{ url('/admin/podloc/' . $item->id) }}" title="Подлокации"><button class="btn btn-info btn-sm"><i class="fa fa-map-marker" aria-hidden="true"></i></button></a>

@@ -165,6 +165,10 @@ public static  function folderNames($loc)
     {
         return $this->hasMany('App\Floors', 'parrentid');
     }
+    public function category()
+    {
+        return $this->hasOne('App\Category', 'id', 'category_id');
+    }
 
     protected static function boot()
     {
