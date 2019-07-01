@@ -15,9 +15,7 @@
 
                         {!! Form::open(['method' => 'GET', 'url' => '/admin/locations', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
-                            {!! Form::Label('category', 'Категория') !!}
-
-                            {!! Form::select('category', $categories, $category, ['class' => 'form-control']) !!}
+                            {!! Form::select('category', $categories, $category, ['class' => 'form-control', 'placeholder' => 'Категория']) !!}
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">

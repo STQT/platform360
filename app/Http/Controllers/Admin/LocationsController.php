@@ -179,32 +179,36 @@ $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
 
         $data = $request->all();
         $requestData = $request->all();
-$requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
+        
+        $requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
+
         if(!empty($data['isDefault'])) {
             $requestData['isDefault'] = 1;
         }
 
+        if(empty($data['published'])) {
+            $requestData['published'] = 0;
+        }
 
-
-            if(!empty($data['panorama'])) {
-                $randomStr = Str::random(40);
-                $file = $data['panorama']->store('panoramas');
-                $fullPath = public_path() . '/storage/' . $file;
-                $baseName = pathinfo($file);
-                $baseName = $baseName['filename'];
-                $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
-                $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config ' . $fullPath);
-                mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
-                copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
-                rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
-                self::delTree(public_path() . '/storage/panoramas/vtour');
-                $xmllocation = Location::xmlName($randomStr);
-                $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
-                $d = "";
-                foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
-                $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
-                $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
-            }
+        if(!empty($data['panorama'])) {
+            $randomStr = Str::random(40);
+            $file = $data['panorama']->store('panoramas');
+            $fullPath = public_path() . '/storage/' . $file;
+            $baseName = pathinfo($file);
+            $baseName = $baseName['filename'];
+            $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
+            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere -askforxmloverwrite=false ' . $fullPath);
+            mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
+            copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
+            rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
+            self::delTree(public_path() . '/storage/panoramas/vtour');
+            $xmllocation = Location::xmlName($randomStr);
+            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
+            $d = "";
+            foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
+            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
+            $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
+        }
 
 
 
@@ -342,7 +346,7 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
                     $baseName = pathinfo($file);
                     $baseName = $baseName['filename'];
                     $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
-                    $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config ' . $fullPath);
+                    $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere -askforxmloverwrite=false ' . $fullPath);
                     mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
                     copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
                     rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
@@ -383,11 +387,13 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
      */
     public function destroy($id)
     {
-        Location::destroy($id);
-           Location::where('podlocparent_id', $id)->delete();
-           Hotspot::where('location_id', $id)->delete();
-           Hotspot::where('destination_id', $id)->delete();
-           Location::where('sky_id', $id)->update(array('sky_id' => ''));
+        Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
+        Hotspot::where('location_id', $id)->delete();
+        Hotspot::where('destination_id', $id)->delete();
+        Location::where('sky_id', $id)->update(array('sky_id' => ''));
+
+        Location::where('id', $id)->withoutGlobalScope('published')->delete();
+
         return redirect('admin/locations')->with('flash_message', 'Location deleted!');
     }
 
