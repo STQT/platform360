@@ -290,10 +290,11 @@ $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
 
         $returnUrl = Input::get('returnUrl');
 
-        if ($returnUrl)
+        if ($returnUrl) {
           $request->session()->put('returnUrl', $returnUrl);
+        }
 
-        return view('admin.locations.edit', compact('location', 'sky','categories', 'cities'));
+        return view('admin.locations.edit', compact('location', 'sky','categories', 'cities', 'returnUrl'));
     }
 
     /**

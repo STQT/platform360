@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-header">Edit Location #{{ $location->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/locations') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ $returnUrl ? urldecode($returnUrl) : url('/admin/locations') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
