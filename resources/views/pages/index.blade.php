@@ -67,7 +67,7 @@
 
                              <select>
                                  @foreach($cities as $city)
-                                 <option id="{{$city->id}}" @if($defaultlocation==$city->id) selected @endif>{{$city->name}}</option>
+                                 <option id="{{$city->id}}" @if($defaultlocation==$city->id || $location->city->id == $city->id) selected @endif>{{$city->name}}</option>
 
                                  @endforeach
                              </select>

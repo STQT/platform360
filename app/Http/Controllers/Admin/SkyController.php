@@ -67,6 +67,16 @@ class SkyController extends Controller
         $requestData['is_sky'] = 'on';
 
         $requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
+
+
+
+        if(!empty($data['published'])) {
+            $requestData['published'] = 1;
+        } else {
+            $requestData['published'] = 0;
+        }
+
+
         if(!empty($data['panorama'])) {
           $randomStr = Str::random(40);
           $file = $data['panorama']->store('panoramas');
@@ -154,10 +164,11 @@ $sky = Sky::findOrFail($id);
 
 			'city_id' => 'required'
 		]);
-          $data = $request->all();
-          $requestData = $request->all();
+        
+        $data = $request->all();
+        $requestData = $request->all();
 
-          if(!empty($data['panorama'])) {
+        if(!empty($data['panorama'])) {
             $randomStr = Str::random(40);
             $file = $data['panorama']->store('panoramas');
             $fullPath = public_path() . '/storage/' . $file;
@@ -175,18 +186,24 @@ $sky = Sky::findOrFail($id);
             foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
             $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
-          }
+        }
 
 
-          if(!empty($panoramas)) {
-              $requestData['panorama'] = json_encode($panoramas);
-};
-if(!empty($data['skymainforcity'])) {
-   $requestData['skymainforcity'] = 'on';
-}
-else {
-$requestData['skymainforcity'] = 0;
-}
+        if(!empty($panoramas)) {
+          $requestData['panorama'] = json_encode($panoramas);
+        };
+
+        if(!empty($data['skymainforcity'])) {
+           $requestData['skymainforcity'] = 'on';
+        } else {
+          $requestData['skymainforcity'] = 0;
+        }
+
+        if(!empty($data['published'])) {
+           $requestData['published'] = 1;
+        } else {
+          $requestData['published'] = 0;
+        }
 
         $sky = Sky::findOrFail($id);
         $sky->update($requestData);
@@ -204,10 +221,10 @@ $requestData['skymainforcity'] = 0;
     public function destroy($id)
     {
         Sky::destroy($id);
-        Location::where('podlocparent_id', $id)->delete();
+        Location::withoutGlobalScope('published')->where('podlocparent_id', $id)->delete();
         Hotspot::where('location_id', $id)->delete();
         Hotspot::where('destination_id', $id)->delete();
-        Location::where('sky_id', $id)->update(array('sky_id' => ''));
+        Location::withoutGlobalScope('published')->where('sky_id', $id)->update(array('sky_id' => ''));
         return redirect('admin/sky')->with('flash_message', 'Небо удалено!');
     }
 }

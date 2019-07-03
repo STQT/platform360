@@ -29,7 +29,7 @@ class Sky extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'icon', 'icon_svg', 'description', 'city_id', 'is_sky', 'skymainforcity', 'panorama', 'slug', 'xmllocation'];
+    protected $fillable = ['name', 'icon', 'icon_svg', 'description', 'city_id', 'is_sky', 'skymainforcity', 'panorama', 'slug', 'xmllocation', 'published'];
 
 
 

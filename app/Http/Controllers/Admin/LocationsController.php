@@ -159,7 +159,7 @@ $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
      */
     public function create()
     {
-        $sky = Location::where('is_sky', 'on')->get();
+        $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
         return view('admin.locations.create', ['categories' => Category::all(), 'cities' => Cities::all(), 'sky' => $sky]);
     }
 
@@ -285,7 +285,7 @@ $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
 
         $categories = Category::all();
-        $sky = Location::where('is_sky', 'on')->get();
+        $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
         $cities = Cities::all();
 
         $returnUrl = Input::get('returnUrl');

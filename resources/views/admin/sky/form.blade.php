@@ -39,6 +39,13 @@
 
     {!! $errors->first('skymainforcity', '<p class="help-block">:message</p>') !!}
 </div>
+
+<div class="form-group{{ $errors->has('published') ? 'has-error' : ''}}">
+
+    <input {{ isset($sky) ? ($sky->published ? 'checked' : '') : ''}} id="published" type="checkbox" class="" name="published"> Опубликовано
+
+    {!! $errors->first('skymainforcity', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>
