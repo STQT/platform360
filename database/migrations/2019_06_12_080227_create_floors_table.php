@@ -19,7 +19,7 @@ class CreateFloorsTable extends Migration
             $table->string('parrentid');
             $table->string('name');
             $table->string('image');
-            $table->text('code');
+            $table->text('code')->nullable();
         });
     }
 

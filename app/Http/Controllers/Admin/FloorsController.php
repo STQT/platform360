@@ -73,9 +73,7 @@ class FloorsController extends Controller
      }
     public function store(Request $request)
     {
-
-
-    $this->validate($request, [
+        $this->validate($request, [
 			'name' => 'required',
 			'image' => 'required',
 			'parrentid' => 'required'
@@ -84,30 +82,19 @@ class FloorsController extends Controller
         $data = $request->all();
         $requestData = $request->all();
 
-
-
-
-
-
-
-
         if(!empty($data["image"])) {
-
-                  if( request()->hasFile('image') && request()->file('image')->isValid()) {
-                   $file2 = request()->file('image');
-                   $fileName2 = md5($file2->getClientOriginalName() . time()) . "." . $file2->getClientOriginalExtension();
-                   $file2->move(public_path() . '/storage/floors/', $fileName2);
-               }
-
-
-
+            if( request()->hasFile('image') && request()->file('image')->isValid()) {
+               $file2 = request()->file('image');
+               $fileName2 = md5($file2->getClientOriginalName() . time()) . "." . $file2->getClientOriginalExtension();
+               $file2->move(public_path() . '/storage/floors/', $fileName2);
+            }
 
              Floors::create([
-                    'name' => request()->get('name'),
-                    'image' => $fileName2,
+                'name' => request()->get('name'),
+                'image' => $fileName2,
                 'parrentid' => request()->get('parrentid'),
-
-                ]);
+                'code' => ''
+             ]);
 
             return redirect('admin/floors/'.$requestData['parrentid'].'')->with('flash_message', 'Подлокация добавлена!');
         }
