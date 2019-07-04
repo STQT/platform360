@@ -32,15 +32,19 @@ class LocationsController extends Controller
         $categories = Category::pluck('name', 'id');
 
         if (!empty($keyword) && $category == '') {
-            $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->where('name', 'LIKE', "%$keyword%")
-                ->orWhere('address', 'LIKE', "%$keyword%")
-                ->orWhere('number', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
-                ->orWhere('working_hours', 'LIKE', "%$keyword%")
-                ->orWhere('website', 'LIKE', "%$keyword%")
-                ->orWhere('facebook', 'LIKE', "%$keyword%")
-                ->orWhere('instagram', 'LIKE', "%$keyword%")
-                ->orWhere('telegram', 'LIKE', "%$keyword%")
+            $locations = Location::where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($q) use ($keyword) {
+                    $q->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
         } elseif ($category != '') {
