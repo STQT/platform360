@@ -18,7 +18,10 @@
                 <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div>
                 <header class="dubai360-header">
-                    <div class="dubai360-header__logo-languaje" onclick="location.href='/';"><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
+                    <div class="dubai360-header__logo-languaje dubai360-header__logo-slider" onclick="location.href='/';">
+                        <div><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
+                        <div><img src="/assets/logo2.png" class="" width="100%"></div>
+                    </div>
                     <div class="dubai360-header__icons">
                         <div class="wrapper-button" id="hubviewlink" @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
