@@ -12,3 +12,7 @@
     height: 27px;
     width: 55px;
 }
+
+.explore__listContainer .slick-active .listItem__icon-category {
+    border-bottom: unset;
+}

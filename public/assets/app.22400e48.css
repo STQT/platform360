@@ -1821,6 +1821,9 @@ margin-right: 15px;
 .searchPanel__resultscontainer .listItem {
   max-height: 192px;
 }
+.listItem:hover{
+  transform: translateY(-3px);
+}
 
 .listItem {
   /*width: 240px;*/
@@ -4502,13 +4505,21 @@ margin-right: auto;
   background-image: url(icons/icon-down.png);
 }
 
-.explore__listContainer .slick-active .listItem__icon-category {
+/*.explore__listContainer .slick-active .listItem__icon-category {
   border-bottom: 6px solid #da389c;
   border-radius: 4px;
+}*/
+
+.mytab1 > .virtualizedGrid{
+  padding: 0 95px;
 }
 @media (max-width: 768px) {
   .wrapper-panel.explorePannel {
     z-index: 2500;
+  }
+  .mytab1 > .virtualizedGrid{
+    padding: 0 80px;
+    padding: 0;
   }
   .explore__listContainer .slick-arrow {
     display: none !important;
@@ -4545,19 +4556,46 @@ margin-right: auto;
 .mobilechooselang li a{
   color:#1a90d2;
 }
-
-
+#searchContainer{
+  height: 400px;
+}
+.mytab2{
+  display: block !important;
+}
 @media screen and (max-width: 1250px){
   .input_city{
     display: none !important;
   }
+}
+@media screen and (max-width: 1100px){
+  .mybtn.wrapper-button{
+    display: flex !important;
+  }
+
+  .mytab1 > .virtualizedGrid{
+   padding: 0 80px;
+   box-sizing: border-box;
+ }
+
+    
 }
 
 @media screen and (max-width: 600px){
 	.wrapper-panel--main-container{
 		display: none !important;
 	}
-
+  .mytab1 > .virtualizedGrid{
+    padding: 0 !important;
+  }
+  .category-wrapper--category .icon-wrapper:last-child{
+    padding-bottom: 50px;
+  }
+   .floorplan-viewer__header__name{
+        min-width: auto;
+   }
+   .floorplan-viewer__header{
+    padding-right: 2px;
+   }
 	.responsivee{
 		width: 100% !important;
 	}

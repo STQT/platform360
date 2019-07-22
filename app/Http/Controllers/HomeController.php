@@ -207,27 +207,24 @@ $krhotspots[$key]->color = $krhotspotinfo[$key2]->color;}
 
         return view('pages.index', ['location' => $location]);
     }
-public function changeCity($id) {
-    if (is_numeric($id)) {
+    public function changeCity($id) {
+        if (is_numeric($id)) {
+            $cities = DB::select(DB::raw("SELECT * FROM cities WHERE id=".$id.""));
+            if(count($cities) > 0){
+                $cityid = json_encode($cities[0]->id);
 
-$cities =
- DB::select(DB::raw("SELECT * FROM cities WHERE id=".$id.""));
-   if(count($cities) > 0){
-
-
-
-    $cityid = json_encode($cities[0]->id);
+                Cookie::queue(Cookie::forever('city', $cityid));
 
 
-    Cookie::queue(Cookie::forever('city', $cityid));
+                return redirect(env('APP_URL'));
+            } else {
+                return redirect('/');
+            }
+        } else {
+            return redirect('/');
 
-return redirect('/');
-} else {return redirect('/');};
-    } else {
-          return redirect('/');
-
+        }
     }
-}
     public function krpano($index, $id) {
         $location = Location::find($id);
 

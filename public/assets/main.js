@@ -89,6 +89,12 @@ $(function() {
     	
     });
 
+    // $("#mobilelanguage").click(function() {   
+    // });
+
+
+
+
     $('.wrapper-panel-close').click(function() {
        $('.infoPanel__description__message').removeAttr('style');
     });
@@ -438,7 +444,7 @@ $(function() {
                 $('.searchPanel__results span').text('Объект не найден');
                 $('.searchPanel__button').text('Объект не найден');
             } else {
-                if (screen.width >= 1024) {
+                if (screen.width <= 1024) {
                     $('.searchPanel__results span').text('Результат: ' + data.length + '');
                 } else {
                     $('.searchPanel__button').text('Результаты: ' + data.length + '');
@@ -483,7 +489,7 @@ $(function() {
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
-                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
                       <div class="listItem__text">
                         <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
@@ -504,13 +510,13 @@ $(function() {
                         $('.searchPanel__button').show();
                     }
 
-                      if (screen.width <= 1024) {
-                        $('#searchContainer').empty().append(searchItem);
-                        $('.searchPanel__resultscontainer').show();
-                    } else {
-                        $('#searchContainerMobile').empty().append(searchItem);
-                        $('.searchPanel__button').show();
-                    }
+                    //   if (screen.width <= 1024) {
+                    //     $('#searchContainer').empty().append(searchItem);
+                    //     $('.searchPanel__resultscontainer').show();
+                    // } else {
+                    //     $('#searchContainerMobile').empty().append(searchItem);
+                    //     $('.searchPanel__button').show();
+                    // }
 
 
 
@@ -611,11 +617,39 @@ $(function() {
         dots: false,
         infinite: false,
         speed: 500,
-        // slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1,
-        variableWidth: true,
+        variableWidth: false,
         prevArrow: $('.slick-block3_left'),
         nextArrow: $('.slick-block3_right'),
+        responsive: [
+        {
+            breakpoint: 1600,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                infinite: false,
+                dots: false
+            }
+        },
+        {
+            breakpoint: 991,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+    ]
 
     });
 
