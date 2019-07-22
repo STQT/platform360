@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Http\Request;
 class Location extends Model
 {
     use LogsActivity;
-
+use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -29,6 +30,7 @@ class Location extends Model
      *
      * @var array
      */
+    protected $translatable = ['name', 'address', 'description', 'working_hours', ];
     protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id'];
 
 

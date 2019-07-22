@@ -1756,6 +1756,6 @@ maphotspotcolor: value.color
     </script>
 
     <script>
-        embedpano({target: "pano", id: "pano1", xml: "/krpano/0/{{ $location->id }}", passQueryParameters:true, html5:"only+webgl", onready: krpano_onready_callback});
+        embedpano({target: "pano", id: "pano1", xml: "ru/krpano/0/{{ $location->id }}", passQueryParameters:true, html5:"only+webgl", onready: krpano_onready_callback});
     </script>
 @endsection

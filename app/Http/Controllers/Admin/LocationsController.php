@@ -319,6 +319,8 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
         if(!empty($requestData['name'])) {
 
 $location = Location::findOrFail($id);
+$location
+   ->setTranslation('name', 'uzb', 'Name in English')
       $location->update($requestData);
 
 
