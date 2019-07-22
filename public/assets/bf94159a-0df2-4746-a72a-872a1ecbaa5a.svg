@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>.cls-1{fill:#fff;}</style>
+  </defs>
+  <title>ic_general</title>
+  <g id="Symbols">
+    <g id="Icons_normal_ic_general" data-name="Icons/normal/ic_general">
+      <path id="Combined-Shape" class="cls-1" d="M26.4,30.2a4,4,0,0,1-4.8,0A8.52,8.52,0,0,1,5,27.5,8.81,8.81,0,0,1,7,22H7l.1-.1a4.62,4.62,0,0,1,.7-.7l7-7A4,4,0,0,1,17.6,13h.8a2.48,2.48,0,0,1,2.5,2.5V19a5,5,0,0,1,6,0V15.5A2.48,2.48,0,0,1,29.4,13h.8A3.63,3.63,0,0,1,33,14.2l7,7a4.62,4.62,0,0,1,.7.7l.3.1h0a8.27,8.27,0,0,1,2,5.5,8.52,8.52,0,0,1-16.6,2.7ZM34.5,34A6.5,6.5,0,1,0,28,27.5,6.49,6.49,0,0,0,34.5,34Zm-21,0A6.5,6.5,0,1,0,7,27.5,6.49,6.49,0,0,0,13.5,34ZM24,29a2,2,0,1,0-2-2A2,2,0,0,0,24,29Z" />
+    </g>
+  </g>
+</svg>

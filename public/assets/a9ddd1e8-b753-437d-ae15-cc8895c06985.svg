@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>.cls-1{fill:#fff;}</style>
+  </defs>
+  <title>ic_night</title>
+  <g id="Symbols">
+    <g id="Icons_normal_ic_night" data-name="Icons/normal/ic_night">
+      <path id="Combined-Shape" class="cls-1" d="M19.1,7.7A14.68,14.68,0,0,0,15,18,15,15,0,0,0,30,33a14.68,14.68,0,0,0,10.3-4.1A17,17,0,1,1,19.1,7.7Z" />
+      <circle id="Oval-5" class="cls-1" cx="30.5" cy="17.5" r="2.5" />
+      <circle id="Oval-5-Copy" class="cls-1" cx="24.5" cy="11.5" r="1.5" />
+    </g>
+  </g>
+</svg>
