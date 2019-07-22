@@ -640,16 +640,16 @@
                             <div class="clock_icon"><img src="/storage/socialnetworks/clock.png"></div>
                             <span id="vremyaraboti">{{$location->working_hours}}2</span>
                         </div>@endisset
-                              @isset($location->number)
+
                          <div class="numberr" id="location_number_box">
                              <div class="clock_icon"><img src="/storage/socialnetworks/smartphone.png"></div>
                             <div ><a id="location_number" href="tel:{{ $location->number}}">{{ $location->number}}</a></div>
                         </div>
-                      @endisset
+
                             </div>
                        <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
                         <!-- <div class="infoPanel__title2">{{ $location->number}}</div> -->
-      @isset($location->description)
+
                         <div class="infoPanel__description">
                             <div class="infoPanel__description__message">
                                 <span id="location_description">{{$location->description}}</span>
@@ -668,8 +668,8 @@
                                 </div>
                             </div>
                         </div>
-                      @endisset
-                        @isset($location->address)
+
+
 
 
                         <div class="time_data" id="location_adress_box">
@@ -678,7 +678,7 @@
                             <span id="location_adress">{{$location->address}}</span>
                         </div>
 
-                            </div>    @endisset
+                            </div>   
                         <ul class="sharePanel__social__icons" style="    width: 200px;">
                             @isset($location->facebook)
                                 <li class="socialnetwork-icon">
@@ -1307,7 +1307,7 @@ history.pushState({
 $( "#location_name" ).text(data.name);
 $( "#location_name2" ).text(data.name);
 if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
-if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
+if (data.number) {console.log('phone number'); $( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
 if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
 if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
 if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
