@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use Spatie\Translatable\HasTranslations;
 class Floors extends Model
 {
     use LogsActivity;
-
+use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -29,6 +29,7 @@ class Floors extends Model
      *
      * @var array
      */
+     protected $translatable = ['name'];
     protected $fillable = ['parrentid', 'name', 'image', 'code'];
 
     public function location()

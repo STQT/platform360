@@ -37,8 +37,9 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
+        $this->mapAdminRoutes();
+
 
         //
     }
@@ -50,16 +51,24 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    protected function mapAdminRoutes()
+    {
+      Route::middleware('web')
+              ->namespace($this->namespace)
+              ->group(base_path('routes/admin.php'));
+
+    }
     protected function mapWebRoutes()
     {
-          $locale = Request::segment(1);
-          Route::group([
-                 'middleware' => 'web',
-                 'namespace' => $this->namespace,
-                 'prefix' => $locale
-             ], function ($router) {
-                 require base_path('routes/web.php');
-             });
+      $locale = Request::segment(1);
+
+        Route::group([
+            'middleware' => 'web',
+            'namespace' => $this->namespace,
+            'prefix' => $locale
+        ], function ($router) {
+            require base_path('routes/web.php');
+        });
     }
 
     /**

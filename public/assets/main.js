@@ -1,8 +1,5 @@
 $(function() {
 
-    $("body").click(function(event) {
-        console.log(event)
-    });
 
     // preloader
     setTimeout(function() {
@@ -67,7 +64,7 @@ $(function() {
         }
     });
 
-  
+
 
 
 
@@ -85,11 +82,11 @@ $(function() {
         	$('.infoPanel__description__message').removeAttr('style');
         }
 
-    	
-    	
+
+
     });
 
-    // $("#mobilelanguage").click(function() {   
+    // $("#mobilelanguage").click(function() {
     // });
 
 
@@ -111,7 +108,7 @@ $(function() {
 
             $('#logo2').remove();
         }
-    }  
+    }
 
     $('.wrapper-panel-close').click(function() {
         $('.searchPanel__button').css('display', 'none');
@@ -135,7 +132,7 @@ $(function() {
 
         $('.icon-ic_glass').click(function() {
             $('#search_adress input').focus();
-            // $('.searchPanel__input').trigger('click'); 
+            // $('.searchPanel__input').trigger('click');
         });
 
     }
@@ -310,7 +307,7 @@ $(function() {
                 } else {
                     $('.searchPanel__button').text('Результаты: ' + data.length + '');
                 }
-            
+
                 var searchItem = "";
                 var img = "";
 
@@ -689,8 +686,8 @@ $(function() {
     $('.drop_down_city select').on('change', function() {
 
         var id = $(this).children(":selected").attr("id");
-
-        document.location.href = '/city/' + id + '';
+var lang = $(this).children(":selected").data('my-var');
+        document.location.href = '/' + lang + '/city/' + id + '';
     });
     // ****************************************************
 

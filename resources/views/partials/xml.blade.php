@@ -1,4 +1,4 @@
-<krpano version="1.19" title="Virtual Tour">
+<krpano version="1.19" title="Virtual Tour" logkey="true" showerrors="true">
     <include url="/skin/vtourskin.xml" />
 <plugin name="gyro" keep="true" url="/plugins/gyro2.js" softstart="1.0" enabled="true"  devices="html5" />
     <skin_settings maps="true"

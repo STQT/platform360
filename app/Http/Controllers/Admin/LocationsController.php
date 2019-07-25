@@ -44,6 +44,50 @@ class LocationsController extends Controller
         return view('admin.locations.index', compact('locations'));
     }
 
+
+//Конвертор мультиязычности:Локации
+public function convert() {
+$locations = DB::table('locations')->get();
+foreach ($locations as $key => $location) {
+DB::table('locations')
+->where('id', $location->id)
+->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
+}}
+
+//Конвертор мультиязычности:Городов
+public function convertcity() {
+$locations = DB::table('cities')->get();
+foreach ($locations as $key => $location) {
+DB::table('cities')
+->where('id', $location->id)
+->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
+}}
+
+//Конвертор мультиязычности:Категории
+public function convertcategories() {
+$locations = DB::table('categories')->get();
+foreach ($locations as $key => $location) {
+DB::table('categories')
+->where('id', $location->id)
+->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
+}}
+
+//Конвертор мультиязычности:Этажи
+public function convertfloors() {
+$locations = DB::table('floors')->get();
+foreach ($locations as $key => $location) {
+DB::table('floors')
+->where('id', $location->id)
+->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
+}}
+
+
+
+
+
+
+
+
     public function hasFloors($id) {
         if (strpos($id, ':') !== false) {
             $tmp = explode(':', $id);
@@ -225,6 +269,9 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
       }
 
      $location = Location::where('slug', $slug)->firstOrFail();
+
+
+
      if(empty($location->is_sky)) {
 
      if(!empty($location->sky_id)) {
@@ -236,6 +283,7 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
        $location->sky_id = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->pluck('id')->first();
 
      }}   else { $location->skyslug = "no";};
+     $location = $location->toArray22();
         return $location;
     }
 
@@ -319,8 +367,6 @@ $requestData['slug'] = Location::transliterate( $requestData['name']).str_random
         if(!empty($requestData['name'])) {
 
 $location = Location::findOrFail($id);
-$location
-   ->setTranslation('name', 'uzb', 'Name in English')
       $location->update($requestData);
 
 
@@ -559,7 +605,7 @@ foreach($krhotspotinfo as $key2=>$value2){
         $category = Category::findOrFail($id);
 
         $locations = $category->locations()->orderBy('created_at', 'DESC')->paginate(10);
-
+$locations = $locations->toArray22();
         return $locations;
     }
     public function getcitydefaultlocation($id)
@@ -567,7 +613,7 @@ foreach($krhotspotinfo as $key2=>$value2){
 
 
         $locations = Location::where('isDefault', 1)->where('city_id', $id)->first();
-
+$locations = $locations->toArray22();
         return $locations;
     }
 
@@ -633,6 +679,7 @@ foreach($krhotspotinfo as $key2=>$value2){
 
 
 }
+$krhotspots = $krhotspots->toArray22();
         return  $krhotspots;
 
     }

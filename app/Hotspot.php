@@ -8,7 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Hotspot extends Model
 {
     use LogsActivity;
-    
+
 
     /**
      * The database table used by the model.
@@ -35,7 +35,17 @@ class Hotspot extends Model
     {
         return $this->belongsTo('App\Location');
     }
-    
+
+    public function mainlocation()
+    {
+
+        return $this->hasOne('App\Location', 'id', 'location_id');
+    }
+    public function destination_locations()
+    {
+
+        return $this->hasMany('App\Location', 'id', 'destination_id');
+    }
 
     /**
      * Change activity log event description

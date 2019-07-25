@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use Spatie\Translatable\HasTranslations;
+use Illuminate\Http\Request;
 class Sky extends Model
 {
     use LogsActivity;
-
+use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -29,6 +30,7 @@ class Sky extends Model
      *
      * @var array
      */
+         protected $translatable = ['name', 'address', 'description', 'working_hours'];
     protected $fillable = ['name', 'icon', 'icon_svg', 'description', 'city_id', 'is_sky', 'skymainforcity', 'panorama', 'slug', 'xmllocation'];
 
 

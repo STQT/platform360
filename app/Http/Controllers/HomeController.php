@@ -8,8 +8,10 @@ use App\Cities;
 use Illuminate\Http\Request;
 use DB;
 use App\Sky;
+use App\Hotspot;
 use Mail;
 use Illuminate\Support\Facades\Cookie;
+use Spatie\Translatable\HasTranslations;
 class HomeController extends Controller
 
 {
@@ -18,235 +20,152 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getIndex()
-    {
 
 
+//Главная страница
+
+public function getIndex()
+{
+
+//Проверка куков на город
 if (Cookie::has('city')) {
-  $defaultlocation = Cookie::get('city');
+$defaultlocation = Cookie::get('city');
 } else {
 $defaultlocation = "1";
-
-  Cookie::queue(Cookie::forever('city', '1'));
+Cookie::queue(Cookie::forever('city', '1'));
 }
 
-$cities =  DB::select(DB::raw("SELECT * FROM cities"));
-$location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->firstOrFail();
-$etaji = $location->etaji;
-if (!empty($etaji)) {
-  $code = "";
-foreach ($etaji as $ss => $etaj) {
-  $code .= $etaji[$ss]->code;
-}
-
-preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
-
-$etajlocations =DB::table('locations')
-                ->join('categories', 'categories.id', '=', 'locations.category_id')
-                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
-                ->whereIn('locations.id', $matches[1])
-                ->get();
-                foreach($etajlocations as $key=>$value){
-
-                 $test = json_decode($etajlocations[$key]->panorama)[0]->panoramas[0]->panorama;
-                    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    $filename = $test . '/' . $old[2];
-                    $etajlocations[$key]->img = $filename;
-                }
-
-}
-
-
-if(empty($location->is_sky)) {
-
-if(!empty($location->sky_id)) {
-
-  $sky = Sky::where('id', $location->sky_id)->firstOrFail();
-
-} else {
-  $sky = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->firstOrFail();
-
-}}   else { $sky = "no";};
-
+//Загрузка всех городов и координаты текущего города
+$cities = Cities::all();
 $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
-$locationscordinate = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon, c.cat_icon_svg, c.color
-FROM locations l, categories c
-WHERE l.city_id = $defaultlocation
-AND l.onmap = 'on'
-AND c.id = l.category_id"));
 
+//Загрузка основноч точки
+$location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->with('categorylocation')->firstOrFail();
 
-foreach($locationscordinate as $key=>$value){
+//Загрузка этажей основной точки
+$etaji = $location->etaji;
+$etajlocations="";
+if ($etaji->isNotEmpty()) {
+$code = "";
+foreach ($etaji as $ss => $etaj) {
+$code .= $etaji[$ss]->code;}
+preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
+$etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
+$sss =Location::folderNames($etajlocations);
+foreach($etajlocations as $key2=>$value2){
+$etajlocations[$key2]->img = $sss[$key2];}}
 
- $test = json_decode($locationscordinate[$key]->panorama)[0]->panoramas[0]->panorama;
-    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-    $filename = $test . '/' . $old[2];
-    $locationscordinate[$key]->img = $filename;
-}
+//Загрузка неба
+if(empty($location->is_sky)) {
+if(!empty($location->sky_id)) {
+$sky = Sky::where('id', $location->sky_id)->firstOrFail();
+} else {
+$sky = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->firstOrFail();
+}}else { $sky = "no";};
 
+//Координаты локаций
+$locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->get();
+if ($locationscordinate->isNotEmpty()) {
+$sss =Location::folderNames($locationscordinate);
+foreach($locationscordinate as $key2=>$value2){
+$locationscordinate[$key2]->img = $sss[$key2];}
+$locationscordinate = Location::transl($locationscordinate);}
 
-$isfeatured = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg, c.color
-FROM locations l, categories c
-WHERE l.isfeatured = 'on'
-AND l.onmap = 'on'
-AND l.city_id = $defaultlocation
-AND c.id = l.category_id
-ORDER BY RAND()
-LIMIT 8
-"));
-$isnew = DB::select(DB::raw("SELECT l.name, l.id, l.slug, l.lat, l.lng, l.panorama, c.cat_icon_svg, c.color
-FROM locations l, categories c
-WHERE l.onmap = 'on'
-AND l.city_id = $defaultlocation
-AND c.id = l.category_id
-ORDER BY RAND()
-LIMIT 8
-"));
-foreach($isnew as $key=>$value){
+//Загрузка избранных точек для карты
+$isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
+if ($isfeatured->isNotEmpty()) {
+$sss =Location::folderNames($isfeatured);
+foreach($isfeatured as $key2=>$value2){
+$isfeatured[$key2]->img = $sss[$key2];}}
 
- $test = json_decode($isnew[$key]->panorama)[0]->panoramas[0]->panorama;
-    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-    foreach ($old as $item){
-      if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
-          $filename = $test . '/' . $item;
-            $isnew[$key]->img = $filename;
-      }
-    }
-}
+//Загрузка новых точек для карты
+$isnew = Location::where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
+if ($isnew->isNotEmpty()) {
+$sss =Location::folderNames($isnew);
+foreach($isnew as $key2=>$value2){
+$isnew[$key2]->img = $sss[$key2];}}
 
+//Загрузка хотспотов основной точки
+$krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
+$array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
-
-foreach($isfeatured as $key=>$value){
-
- $test = json_decode($isfeatured[$key]->panorama)[0]->panoramas[0]->panorama;
-    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-    $filename = $test . '/' . $old[2];
-    $isfeatured[$key]->img = $filename;
-}
-$caticon = Category::where('id', $location->category_id)->firstOrFail();
-$location->cat_icon = $caticon->cat_icon;
-$location->color = $caticon->color;
-$location->cat_icon_svg = $caticon->cat_icon_svg;
-$krhotspots =
- DB::select(DB::raw("SELECT l.name, l.slug, h.*, c.cat_icon, c.cat_icon_svg, c.color
-FROM locations l, hotspots h, categories c
-WHERE h.location_id = ".$location->id."
-AND c.id = l.category_id"));
-$otherlocations =  DB::select(DB::raw("SELECT l.name, l.id, l.lat, l.lng, l.slug, l.panorama, c.cat_icon_svg, c.color
-FROM locations l, categories c
-WHERE c.id = l.category_id
-AND l.city_id = $defaultlocation
-ORDER BY RAND()
-LIMIT 7
-"));
-
-
-$sss =Location::folderNames($otherlocations);
-
-foreach($otherlocations as $key2=>$value2){
-$otherlocations[$key2]->img = $sss[$key2];
-}
-
-
-
-$array = array_column($krhotspots, 'destination_id');
-
-$krhotspotinfo =DB::table('locations')
-                ->join('categories', 'categories.id', '=', 'locations.category_id')
-                ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
-                ->whereIn('locations.id', $array)
-                ->get();
-
-
-
-
-
+//Загрузка информации хотспотов основной точки
+$krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
 foreach($krhotspots as $key=>$value){
-
 foreach($krhotspotinfo as $key2=>$value2){
- if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
-    $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
-    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-    $filename = $test . '/' . $old[2];
- $krhotspots[$key]->img = $filename;
- $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
- $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
- $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->cat_icon;
- $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->cat_icon_svg;
-$krhotspots[$key]->color = $krhotspotinfo[$key2]->color;}
+if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
+$test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
+$old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+foreach ($old as $item){
+if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
+$filename = $test . '/' . $item;
+$krhotspots[$key]->img = $filename;}}
+$krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
+$krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
+$krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->categorylocation->cat_icon;
+$krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
+$krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;}}}
 
+//Другие локации
+$otherlocations = Location::where('city_id', $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
+$sss =Location::folderNames($otherlocations);
+foreach($otherlocations as $key2=>$value2){
+$otherlocations[$key2]->img = $sss[$key2];}
+
+//Загрузка всех категорий
+$categories = Category::orderBy('id', 'ASC')->get();
+
+return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
 }
 
+//Загрузка сцены
+public function loadScene($id) {
+$location = Location::findOrFail($id);
+return view('pages.index', ['location' => $location]);}
 
-}
-        $categories = Category::orderBy('id', 'ASC')->get();
-
-        return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
-    }
-
-    public function loadScene($id) {
-        $location = Location::findOrFail($id);
-
-        return view('pages.index', ['location' => $location]);
-    }
+//Поменять город
 public function changeCity($id) {
-    if (is_numeric($id)) {
-
-$cities =
- DB::select(DB::raw("SELECT * FROM cities WHERE id=".$id.""));
-   if(count($cities) > 0){
-
-
-
-    $cityid = json_encode($cities[0]->id);
-
-
-    Cookie::queue(Cookie::forever('city', $cityid));
-
+if (is_numeric($id)) {
+$cities = Cities::where('id', $id)->get();
+if(count($cities) > 0){
+$cityid = json_encode($cities[0]->id);
+Cookie::queue(Cookie::forever('city', $cityid));
 return redirect('/');
 } else {return redirect('/');};
-    } else {
-          return redirect('/');
-
-    }
+} else {return redirect('/');}
 }
-    public function krpano($index, $id) {
-        $location = Location::find($id);
 
-        return view('partials.xml', ['location' => $location, 'index' => $index]);
-    }
-    public function savescreenshot(Request $request) {
+//Krpano
+public function krpano($index, $id) {
+$location = Location::find($id);
+return view('partials.xml', ['location' => $location, 'index' => $index]);}
+
+//Создание скриншота
+public function savescreenshot(Request $request) {
 $base64img = $request->input('photo');
-      if($base64img){
- $file = substr($base64img, strpos($base64img ,",")+1);
- $image = base64_decode($file);
- $png_url = "screenshot-".time().".jpg";
- $path = public_path() . "/screenshots/" . $png_url;
+if($base64img){
+$file = substr($base64img, strpos($base64img ,",")+1);
+$image = base64_decode($file);
+$png_url = "screenshot-".time().".jpg";
+$path = public_path() . "/screenshots/" . $png_url;
 $success = file_put_contents($path, $image);
+return response()->json(['pngurl' => $png_url]);
+}}
 
-     return response()->json(['pngurl' => $png_url]);
-
-         }
-
-    }
-
-    public function formProcessing(Request $request, $id) {
-        $data = $request->all();
-
-        if($id == 1) {
-            $request->validate([
-                'email' => 'required',
-                'message' => 'required',
-                'select' => 'required'
-            ]);
-
-            Mail::send('mails.feedback', ['bodymessage'=>$data['message'], 'clientmail'=>$data['email'], 'clientselect'=>$data['select']], function ($message) {
-    $message->from('noreply@uzoom.uz', 'Письмо с Uzb360');
-
-    $message->to('sherzod.nosirov@gmail.com');
-});
+//Отправка письма (Feedback)
+public function formProcessing(Request $request, $id) {
+$data = $request->all();
+if($id == 1) {
+$request->validate([
+'email' => 'required',
+'message' => 'required',
+'select' => 'required'
+]);
+Mail::send('mails.feedback', ['bodymessage'=>$data['message'], 'clientmail'=>$data['email'], 'clientselect'=>$data['select']], function ($message) {
+$message->from('noreply@uzoom.uz', 'Письмо с Uzb360');
+$message->to('sherzod.nosirov@gmail.com');});
+}}
 
 
-        }
-    }
+
 }
