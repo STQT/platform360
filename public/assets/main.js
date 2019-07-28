@@ -67,7 +67,7 @@ $(function() {
         }
     });
 
-  
+
 
 
 
@@ -75,18 +75,18 @@ $(function() {
 
 
     $('.svg_blockk').click(function() {
-    	var height = $('#location_description').height();
+        var height = $('#location_description').height();
         $('.infoPanel__description__message').toggleClass('show');
 
 
         if ($('.infoPanel__description__message').hasClass('show')) {
-        	$('.infoPanel__description__message').css('height', height);
+            $('.infoPanel__description__message').css('height', height);
         }else{
-        	$('.infoPanel__description__message').removeAttr('style');
+            $('.infoPanel__description__message').removeAttr('style');
         }
 
-    	
-    	
+
+
     });
 
     // $("#mobilelanguage").click(function() {   
@@ -96,7 +96,7 @@ $(function() {
 
 
     $('.wrapper-panel-close').click(function() {
-       $('.infoPanel__description__message').removeAttr('style');
+        $('.infoPanel__description__message').removeAttr('style');
     });
 
     // ********************** EXIT FULL SCREEN ************************
@@ -111,7 +111,7 @@ $(function() {
 
             $('#logo2').remove();
         }
-    }  
+    }
 
     $('.wrapper-panel-close').click(function() {
         $('.searchPanel__button').css('display', 'none');
@@ -142,7 +142,7 @@ $(function() {
 
 
     $('.icon-ic_glass').click(function() {
-    	$('.searchPanel__results').css("display", "none");
+        $('.searchPanel__results').css("display", "none");
 
     });
 
@@ -310,25 +310,21 @@ $(function() {
                 } else {
                     $('.searchPanel__button').text('Результаты: ' + data.length + '');
                 }
-            
+
                 var searchItem = "";
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-
-
-                    var img = $.ajax({
-                        type: "GET",
-                        url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
-                        async: false
-                    }).responseText;
+                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+                    $preview = $( xmlDoc ).find('preview');
+                    var img = $preview.attr("url").replace('preview', 'thumb');
 
 
                     if (screen.width >= 1024) {
                         searchItem += `
                       <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
                       <div class="listItem">
-                          <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                          <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
                               <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                           </div>
@@ -337,9 +333,7 @@ $(function() {
                           </div>
                       </div>
                   </div>
-                  `;
-
-                    } else {
+                  `; } else {
                         searchItem += `
                       <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
                               <div class="listItem" style="width: 170px; height: 192px;">
@@ -456,22 +450,15 @@ $(function() {
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-
-
-                    var img = $.ajax({
-                        type: "GET",
-                        url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
-                        async: false
-                    }).responseText;
-
-
-
+                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+                    $preview = $( xmlDoc ).find('preview');
+                    var img = $preview.attr("url").replace('preview', 'thumb');
 
                     if (screen.width >= 1024) {
                         searchItem += `
                       <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + ` ')">
                       <div class="listItem">
-                          <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                          <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
                               <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                           </div>
@@ -586,12 +573,12 @@ $(function() {
         nextArrow: $('.icon-ic_arrow_right__active_v2_third'),
 
         responsive: [{
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+            }
+        },
             {
                 breakpoint: 576,
                 settings: {
@@ -623,33 +610,33 @@ $(function() {
         prevArrow: $('.slick-block3_left'),
         nextArrow: $('.slick-block3_right'),
         responsive: [
-        {
-            breakpoint: 1600,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                infinite: false,
-                dots: false
+            {
+                breakpoint: 1600,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: false,
+                    dots: false
+                }
+            },
+            {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
             }
-        },
-        {
-            breakpoint: 991,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-    ]
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ]
 
     });
 

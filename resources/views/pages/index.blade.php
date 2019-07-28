@@ -678,7 +678,7 @@
                             <span id="location_adress">{{$location->address}}</span>
                         </div>
 
-                            </div>   
+                            </div>
                         <ul class="sharePanel__social__icons" style="    width: 200px;">
                             @isset($location->facebook)
                                 <li class="socialnetwork-icon">
