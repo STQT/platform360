@@ -337,7 +337,7 @@ $(function() {
                         searchItem += `
                       <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
                               <div class="listItem" style="width: 170px; height: 192px;">
-                                <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                                <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
                                   <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
@@ -474,7 +474,7 @@ $(function() {
                         searchItem += `
                       <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
                               <div class="listItem" style="width: 170px; height: 192px;">
-                                <div class="listItem__img"><img src="/storage/panoramas/unpacked/` + img + `/thumb.jpg" class="listItem__img--scene"></div>
+                                <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
                                   <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
