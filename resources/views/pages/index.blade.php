@@ -635,11 +635,11 @@
 
 
                         </div>
-                          <div class="time_data">      @isset($location->working_hours)
+                          <div class="time_data">
                          <div class="clock" id="vremyarabotibox">
                             <div class="clock_icon"><img src="/storage/socialnetworks/clock.png"></div>
                             <span id="vremyaraboti">{{$location->working_hours}}2</span>
-                        </div>@endisset
+                        </div>
 
                          <div class="numberr" id="location_number_box">
                              <div class="clock_icon"><img src="/storage/socialnetworks/smartphone.png"></div>
@@ -996,6 +996,16 @@
 
 @section('scripts')
     <script>
+    @if (empty($location->number))
+            $('#location_number_box').hide();
+    @endif
+    @if (empty($location->working_hours))
+        $('#vremyarabotibox').hide();
+    @endif
+
+    @if (empty($location->address))
+    $('#location_adress_box').hide();
+    @endif
 
     @foreach ($etaji as $i => $etaj)
     @if(!empty($etaj->code))
