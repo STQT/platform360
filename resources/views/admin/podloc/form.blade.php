@@ -104,12 +104,13 @@
     {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
 </div>
 
-
-
 <div class="form-group">
     <input {{ isset($location) ? ($location->isfeatured ? 'checked' : '') : ''}} id="isfeatured" type="checkbox" class="" name="isfeatured"> Избранный?
 </div>
 
+<div class="form-group">
+    <input {{ $sky->show_sublocation == 1 ? 'checked' : ''}} id="show_sublocation" type="checkbox" class="" name="show_sublocation" value="1"> Показывать в поиске
+</div>
 
 <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
     <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">

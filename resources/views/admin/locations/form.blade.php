@@ -130,9 +130,6 @@
 </div>
 
 
-
-
-
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>

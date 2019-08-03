@@ -110,43 +110,57 @@ class LocationsController extends Controller
         return $filename;
     }
 
-public function search(Request $search, $categories) {
-  if (Cookie::has('city')) {
-    $defaultlocation = Cookie::get('city');
-  } else {
-  $defaultlocation = "1";
+    public function search(Request $search, $categories) {
+        if (Cookie::has('city')) {
+            $defaultlocation = Cookie::get('city');
+        } else {
+            $defaultlocation = "1";
 
-    Cookie::queue(Cookie::forever('city', '1'));
-  }
+            Cookie::queue(Cookie::forever('city', '1'));
+        }
 
-$search = request()->route('search');
-if (request()->route('search') == "noresult") {
-  $categories = array_map('intval', explode(',', request()->route('categories')));
-$results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->whereIN('category_id', $categories)->get();
-} else {
+        $search = request()->route('search');
+        if (request()->route('search') == "noresult") {
+            $categories = array_map('intval', explode(',', request()->route('categories')));
+            $results = Location::where('city_id','=', $defaultlocation)
+                ->where(function($query) {
+                    $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                })
+                ->whereIN('category_id', $categories)
+                ->get();
+        } else {
 
-if (request()->route('categories') == 0)  {
+            if (request()->route('categories') == 0)  {
 
-$results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->where('name', 'LIKE', '%' . $search . '%')->get();
+                $results = Location::where('city_id','=', $defaultlocation)
+                    ->where(function($query)
+                        {
+                            $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                        })
+                    ->where('name', 'LIKE', '%' . $search . '%')
+                    ->get();
 
-}
-else {
-$categories = array_map('intval', explode(',', request()->route('categories')));
-$results = Location::where('city_id', '=', $defaultlocation)->whereNull('podlocparent_id')->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
-}
-}
-
-
-
+            }
+            else {
+                $categories = array_map('intval', explode(',', request()->route('categories')));
+                $results = Location::where('city_id', '=', $defaultlocation)
+                    ->where(function($query) {
+                        $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                    })
+                    ->where('name', 'LIKE', '%' . $search . '%')
+                    ->whereIn('category_id', $categories)
+                    ->get();
+            }
+        }
 
         if($results->count()) {
 
-foreach($results as $key2=>$value2){
-    $caticon = Category::where('id', $results[$key2]->category_id)->firstOrFail();
-$results[$key2]->cat_icon = $caticon->cat_icon;
-$results[$key2]->color = $caticon->color;
-$results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
-}
+            foreach($results as $key2=>$value2){
+                $caticon = Category::where('id', $results[$key2]->category_id)->firstOrFail();
+                $results[$key2]->cat_icon = $caticon->cat_icon;
+                $results[$key2]->color = $caticon->color;
+                $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
+            }
 
 
             return response()->json($results);
@@ -192,6 +206,10 @@ $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
 
         if(empty($data['published'])) {
             $requestData['published'] = 0;
+        }
+
+        if(empty($data['show_sublocation'])) {
+            $requestData['show_sublocation'] = 0;
         }
 
         if(!empty($data['panorama'])) {
@@ -336,6 +354,11 @@ $results[$key2]->cat_icon_svg = $caticon->cat_icon_svg;
         if(empty($data['isfeatured'])) {
 
             $requestData['isfeatured'] = 0;
+        }
+
+        if(empty($data['show_sublocation'])) {
+
+            $requestData['show_sublocation'] = 0;
         }
 
         if(empty($data['published'])) {
