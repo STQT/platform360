@@ -122,6 +122,13 @@ class PodlocController extends Controller
         }
     }
 
+    function showSublocation(Request $request, $id)
+    {
+        $sublocation = Sky::findOrFail($id);
+        $sublocation->show_sublocation = 1;
+        $sublocation->save();
+    }
+
     /**
      * Display the specified resource.
      *

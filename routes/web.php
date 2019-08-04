@@ -64,11 +64,13 @@ Route::get('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochki');
 Route::post('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochkiupdate');
 
 
+Route::post('admin/podloc/show-sublocation/{id}', 'Admin\\PodlocController@showSublocation');
 Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');
 Route::get('admin/podloc/edit/{id}', 'Admin\\PodlocController@edit');
 Route::match(['put', 'patch'],'admin/podloc/update/{id}', 'Admin\\PodlocController@update');
 Route::get('admin/podloc/create/{id}', 'Admin\\PodlocController@create');
 Route::post('admin/podloc/store/', 'Admin\\PodlocController@store');
+
 
     Route::group(['prefix' => 'api'], function() {
 
