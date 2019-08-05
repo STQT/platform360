@@ -49,6 +49,8 @@ Route::resource('admin/roles', 'Admin\RolesController');
     Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 
+    Route::get('admin/locations/main', 'Admin\LocationsController@main');
+    Route::get('admin/locations/hub', 'Admin\LocationsController@hub');
     Route::resource('admin/locations', 'Admin\\LocationsController');
 
 Route::resource('admin/sky', 'Admin\\SkyController');

@@ -29,6 +29,8 @@ class LocationsController extends Controller
         $perPage = 25;
 
         $totalLocations = Location::withoutGlobalScope('published')->count();
+        $publishedLocations = Location::count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->where('published', '!=', 1)->count();
         $categories = Category::pluck('name', 'id');
 
         if (!empty($keyword) && $category == '') {
@@ -73,6 +75,130 @@ class LocationsController extends Controller
         return view('admin.locations.index', compact(
             'locations', 
             'totalLocations',
+            'publishedLocations',
+            'unpublishedLocations',
+            'categories',
+            'category'
+        ));
+    }
+
+    public function main(Request $request)
+    {
+        $keyword = $request->get('search');
+        $category = $request->get('category');
+        $perPage = 25;
+
+        $totalLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->count();
+        $publishedLocations = Location::where('isDefault', '1')->count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->where('published', '!=', 1)->count();
+        $categories = Category::pluck('name', 'id');
+
+        if (!empty($keyword) && $category == '') {
+            $locations = Location::where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($q) use ($keyword) {
+                    $q->where('isDefault', '1')->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                })
+                ->withoutGlobalScope('published')
+                ->latest()->paginate($perPage);
+        } elseif ($category != '') {
+            $locations = Location::
+            where('category_id', $category)
+                ->where('isDefault', '1')
+                ->where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($q) use ($keyword) {
+                    $q->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                })
+                ->withoutGlobalScope('published')
+                ->latest()->paginate($perPage);
+        }
+        else {
+            $locations = Location::where('is_sky', '!=' , 'on')->where('isDefault', '1')->whereNull('podlocparent_id')->latest()->withoutGlobalScope('published')->paginate($perPage);
+        }
+
+        return view('admin.locations.index', compact(
+            'locations',
+            'totalLocations',
+            'publishedLocations',
+            'unpublishedLocations',
+            'categories',
+            'category'
+        ));
+    }
+
+    public function hub(Request $request)
+    {
+        $keyword = $request->get('search');
+        $category = $request->get('category');
+        $perPage = 25;
+
+        $totalLocations = Location::withoutGlobalScope('published')->whereNotNull('sky_id')->count();
+        $publishedLocations = Location::whereNotNull('sky_id')->count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->whereNotNull('sky_id')->where('published', '!=', 1)->count();
+        $categories = Category::pluck('name', 'id');
+
+        if (!empty($keyword) && $category == '') {
+            $locations = Location::where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($q) use ($keyword) {
+                    $q->whereNotNull('sky_id')->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                })
+                ->withoutGlobalScope('published')
+                ->latest()->paginate($perPage);
+        } elseif ($category != '') {
+            $locations = Location::
+            where('category_id', $category)
+                ->whereNotNull('sky_id')
+                ->where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($q) use ($keyword) {
+                    $q->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                })
+                ->withoutGlobalScope('published')
+                ->latest()->paginate($perPage);
+        }
+        else {
+            $locations = Location::where('is_sky', '!=' , 'on')->whereNotNull('sky_id')->whereNull('podlocparent_id')->latest()->withoutGlobalScope('published')->paginate($perPage);
+        }
+
+        return view('admin.locations.index', compact(
+            'locations',
+            'totalLocations',
+            'publishedLocations',
+            'unpublishedLocations',
             'categories',
             'category'
         ));

@@ -30,7 +30,7 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <div>Всего: <strong>{{ $totalLocations }}</strong></div>
+                            <div>Всего: <strong>{{ $totalLocations }}</strong> Опубликовано: <strong>{{ $publishedLocations }}</strong> Выключено: <strong>{{ $unpublishedLocations }}</strong></div>
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>

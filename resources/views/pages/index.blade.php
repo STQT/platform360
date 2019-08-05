@@ -1487,7 +1487,7 @@ if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         clickableIcons: false
     });
-    // map.setOptions({ minZoom: 14});
+    map.setOptions({ minZoom: 8});
     map.setZoom(14);
     var locations = <?php print_r(json_encode($locationscordinate)) ?>;
     function project(latLng) {
