@@ -1474,8 +1474,20 @@ if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: location,
         streetViewControl: false,
-clickableIcons: false
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+        }, // here´s the array of controls
+        disableDefaultUI: true, // a way to quickly hide all controls
+        mapTypeControl: true,
+        scaleControl: true,
+        zoomControl: true,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.LARGE
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        clickableIcons: false
     });
+    // map.setOptions({ minZoom: 14});
     map.setZoom(14);
     var locations = <?php print_r(json_encode($locationscordinate)) ?>;
     function project(latLng) {
@@ -1539,7 +1551,7 @@ clickableIcons: false
         } else {
             google.maps.event.removeListener(listener)
 
-            map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false})
+            map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false, minZoom: 8})
 
             if(!!optionalAnimationEndCallback) {
                 optionalAnimationEndCallback()
@@ -1557,7 +1569,7 @@ clickableIcons: false
         }
     }
 
-    map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true})
+    map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true, minZoom: 8})
     map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
     listener = google.maps.event.addListener(map, 'idle', zoomOut)
   }
