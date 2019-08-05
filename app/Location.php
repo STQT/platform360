@@ -80,7 +80,7 @@ class Location extends Model
     }
 public static  function folderNames($loc)
     {
-
+        $filename = [];
         foreach($loc as $key2=>$value2){
          $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
 
