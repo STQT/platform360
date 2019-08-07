@@ -1475,7 +1475,7 @@ if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
         center: location,
         streetViewControl: false,
         mapTypeControlOptions: {
-            mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+            mapTypeIds: []
         }, // here´s the array of controls
         disableDefaultUI: true, // a way to quickly hide all controls
         mapTypeControl: true,
