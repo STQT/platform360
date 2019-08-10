@@ -274,6 +274,22 @@
                                     </div>
                                 </li>
 
+                                <li class="socialnetwork-icon" onclick="uzbshareVK()">
+                                    <div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--vk">
+                                        <div style="width: 40px; height: 40px;">
+                                            <img src="/storage/socialnetworks/vkontakte.png" alt="vk share" />
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="socialnetwork-icon" onclick="uzbshareTwitter()">
+                                    <div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--twitter">
+                                        <div style="width: 40px; height: 40px;">
+                                            <img src="/storage/socialnetworks/twitter.png" alt="twitter share" />
+                                        </div>
+                                    </div>
+                                </li>
+
                                 {{-- <li class="socialnetwork-icon">
                      <div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--mail">
                                         <div style="width: 40px; height: 40px;">
@@ -1252,6 +1268,18 @@ closerejimwindow();
     window.open("https://telegram.me/share/url?url="+shareurl+"&text="+sharequote, "myWindow", 'width=600,height=500');
   window.close();
   }
+    function uzbshareVK() {
+        var shareurl = $('#previewlinkurlshare').val();
+        var sharequote = $('#location_name').text();
+        window.open("https://vk.com/share.php?url="+shareurl, "myWindow", 'width=600,height=500');
+        window.close();
+    }
+    function uzbshareTwitter() {
+        var shareurl = $('#previewlinkurlshare').val();
+        var sharequote = $('#location_name').text();
+        window.open("http://twitter.com/share?text="+sharequote+"&url="+shareurl+"&text="+sharequote, "myWindow", 'width=600,height=500');
+        window.close();
+    }
   function uzbsharewt() {
     var shareurl = $('#previewlinkurlshare').val();
     var sharequote = $('#location_name').text();
