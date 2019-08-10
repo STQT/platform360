@@ -1313,9 +1313,9 @@ function skin_view_littleplanet () {
 }
 
 function krpanoscreenshot () {
- 
 
-        krpano.call("makescreenshot();");  
+
+    krpano.call("makescreenshot(400, 400, false, 'jpeg', 0.85, {x: 0, y: 400, w: 400, h: 400});");
 
 
 }

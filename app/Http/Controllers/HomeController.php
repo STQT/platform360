@@ -197,7 +197,9 @@ $krhotspots[$key]->color = $krhotspotinfo[$key2]->color;}
 
 
 }
-        $categories = Category::has('locations', '!=', 0)->orderBy('id', 'ASC')->get();
+        $categories = Category::whereHas('locations', function($q) use($defaultlocation) {
+            $q->where('city_id', $defaultlocation);
+        })->orderBy('id', 'ASC')->get();
 
         return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
     }

@@ -134,6 +134,7 @@ tween(view.hlookat, 45.0, 2.0);
       // make a screenshot as canvas
       var sizeinfo = {w:0, h:0};
       var screenshotcanvas = krpano.webGL.makeScreenshot(400, 400, true, "canvas", 0, null, sizeinfo, krpano.makeScreenshotCache);
+{{--      var screenshotcanvas = krpano.webGL.makeScreenshot(400, 400, true, "canvas", 1, {x: 586, y: 800, w: 400, h: 400}, sizeinfo, krpano.makeScreenshotCache);--}}
 
       if (screenshotcanvas)
       {

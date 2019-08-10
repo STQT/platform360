@@ -1212,9 +1212,9 @@ this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), 
 }
 
 function krpanoscreenshot () {
+    krpano.call("makescreenshot();");
 
-
-        krpano.call("makescreenshot();");
+        // krpano.call("makescreenshot(0, 0, true, 'jpeg', 0.85, {x: 579, y: 980, w: 400, h: 400});");
 
 
 }
