@@ -272,13 +272,13 @@ $(function() {
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/' + categoryId,
+                    "/ru/search/" + _this.val() + '/' + categoryId,
                     onAjaxSuccess
                 );
             } else {
 
                 $.get(
-                    "/search/noresult/" + categoryId,
+                    "/ru/search/noresult/" + categoryId,
                     onAjaxSuccess
                 );
 
@@ -286,7 +286,7 @@ $(function() {
         } else {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/0',
+                    "/ru/search/" + _this.val() + '/0',
                     onAjaxSuccess
                 );
             }
@@ -316,7 +316,7 @@ $(function() {
 
                     var img = $.ajax({
                         type: "GET",
-                        url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
+                        url: "/ru/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
                         async: false
                     }).responseText;
 
@@ -418,14 +418,14 @@ $(function() {
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/' + categoryId,
+                    "/ru/search/" + _this.val() + '/' + categoryId,
                     onAjaxSuccess
                 );
             }
         } else {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/0',
+                    "/ru/search/" + _this.val() + '/0',
                     onAjaxSuccess
                 );
             }
@@ -457,7 +457,7 @@ $(function() {
 
                     var img = $.ajax({
                         type: "GET",
-                        url: "/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
+                        url: "/ru/getDirectories/" + JSON.parse(data[i].panorama)[0].panoramas[0].panorama,
                         async: false
                     }).responseText;
 
@@ -574,7 +574,7 @@ $(function() {
 
     $('.slick-block').slick({
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -582,28 +582,13 @@ $(function() {
         prevArrow: $('.icon-ic_arrow_left_active_v2_third'),
         nextArrow: $('.icon-ic_arrow_right__active_v2_third'),
 
-        responsive: [{
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 576,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
     });
 
     $('.slick-block2').slick({
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
-        // slidesToShow: 3,
+  slidesToShow: 5,
         slidesToScroll: 1,
         variableWidth: true,
         prevArrow: $('.slick-block2_left'),
@@ -612,41 +597,14 @@ $(function() {
 
     $('.slick-block3').slick({
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
-        slidesToShow: 4,
+  slidesToShow: 5,
         slidesToScroll: 1,
-        variableWidth: false,
+        variableWidth: true,
         prevArrow: $('.slick-block3_left'),
         nextArrow: $('.slick-block3_right'),
-        responsive: [
-        {
-            breakpoint: 1600,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                infinite: false,
-                dots: false
-            }
-        },
-        {
-            breakpoint: 991,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-    ]
+
 
     });
 
@@ -686,8 +644,29 @@ $(function() {
     $('.drop_down_city select').on('change', function() {
 
         var id = $(this).children(":selected").attr("id");
-var lang = $(this).children(":selected").data('my-var');
+        var lang = $(this).children(":selected").data('my-var');
         document.location.href = '/' + lang + '/city/' + id + '';
+    });
+
+    $('.language-switcher select').on('change', function() {
+      var id = $(this).children(":selected").attr("id");
+      var lang = $(this).children(":selected").data('my-var');
+var pathname = window.location.pathname;
+if (pathname.indexOf("/ru") >= 0) {
+  pathname =  pathname.replace("/ru", id);
+  document.location.href = '/' + pathname;
+}
+if (pathname.indexOf("/uzb") >= 0) {
+pathname =  pathname.replace("/uzb", id);
+  document.location.href = '/' + pathname;
+}
+if (pathname.indexOf("/en") >= 0) {
+pathname =  pathname.replace("/en", id);
+  document.location.href = '/' + pathname;
+}
+
+
+
     });
     // ****************************************************
 

@@ -67,6 +67,10 @@ public static  function folderNames($loc)
         $filename[$key2] = $test . '/' . $old[2];
 
 }}
+protected function asJson($value)
+ {
+     return json_encode($value, JSON_UNESCAPED_UNICODE);
+ }
     public function hotspots()
     {
         return $this->hasMany('App\Hotspot', 'sky_id');

@@ -80,7 +80,7 @@ class FloorsController extends Controller
 			'image' => 'required',
 			'parrentid' => 'required'
 		]);
-
+app()->setLocale('ru');
         $data = $request->all();
         $requestData = $request->all();
 
@@ -144,7 +144,7 @@ class FloorsController extends Controller
     public function tochkiupdate(Request $request, $id)
     {
       $requestData = $request->all();
-          
+
 
     Floors::where('id', $id)->update(array('code' => $requestData['codeetaj']));
 
@@ -157,15 +157,15 @@ class FloorsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $language)
     {
 
-
+  app()->setLocale($language);
 
 $floor = Floors::findOrFail($id);
 $parentid = Location::where('id', $floor['parrentid'])->first();
 
-        return view('admin.floors.edit', compact('floor','parentid'));
+        return view('admin.floors.edit', compact('floor','parentid', 'language'));
     }
 
     /**
@@ -176,11 +176,12 @@ $parentid = Location::where('id', $floor['parrentid'])->first();
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
 			'name' => 'required',
 		]);
+      app()->setLocale($language);
           $data = $request->all();
           $requestData = $request->all();
 

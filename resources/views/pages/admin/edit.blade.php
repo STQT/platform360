@@ -55,7 +55,7 @@ var hotspotname;
             $('body').on('click', '.locationItem', function () {
                 var _this = $(this);
 
-                $.post('/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
+                $.post('/ru/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
                     $('.modal').fadeOut();
                     alert('Точка установлена');
                 }).fail(function() {
@@ -79,7 +79,7 @@ var hotspotname;
                     $('.mess_img').fadeIn();
                 }, 700);
 
-                $.get('/api/locations/' + _this.data('category')).done(function (data) {
+                $.get('/ru/api/locations/' + _this.data('category')).done(function (data) {
                     setTimeout(function () {
                         $('.mess_img').fadeOut('slow');
 
@@ -176,7 +176,7 @@ var hotspotname;
 krpano.call("removehotspot("+hotspotname+")");
  if(hotspotid  != "new") {
 
-  $.get('/api/deletehotspot/' + hotspotid).done(function (data) {
+  $.get('/ru/api/deletehotspot/' + hotspotid).done(function (data) {
     $('.modal').fadeOut();
     alert('Удалили точку: '+ hotspotid);
   });

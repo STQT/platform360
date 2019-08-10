@@ -2179,7 +2179,7 @@ screen and (max-height: 600px) {
 
 .explore__listContainer .listItem-wrapper,
 .infoPanel .listItem-wrapper {
-  width: unset !important;
+  width: unset ;
 }
 
 .explore__listContainer .virtualizedGrid__content {
@@ -2326,7 +2326,7 @@ screen and (max-height: 600px) {
   }
   .infoPannel {
     width: 97.3%;
-    height: 77%;
+    height: 80%;
   }
 }
 
@@ -4990,7 +4990,8 @@ html {
     padding: 32px 0;
   }
   .listItem-wrapper {
-    width: 50% !important;
+    width: 176px !important;
+height: 192px;
     display: inline-table;
   }
   .listItem {
@@ -5560,6 +5561,9 @@ html {
 .mytab1>.virtualizedGrid {
   padding: 0 95px;
 }
+.mytab2>.virtualizedGrid {
+  padding: 0 95px;
+}
 
 @media (max-width: 768px) {
   .wrapper-panel.explorePannel {
@@ -5569,10 +5573,14 @@ html {
     padding: 0 80px;
     padding: 0;
   }
+  .mytab2>.virtualizedGrid {
+    padding: 0 80px;
+    padding: 0;
+  }
   .explore__listContainer .slick-arrow {
     display: none !important;
   }
-  .explore__listContainer .slick-active .listItem__icon-category {
+  .explore__listContainer .slick-current .listItem__icon-category {
     border-bottom: 6px solid #da389c;
     border-radius: 4px;
   }
@@ -5609,14 +5617,12 @@ html {
 }
 
 #searchContainer {
-  height: 400px !important;
-  width: 100% !important;
+  max-height: 400px !important;
+  max-width: 100% !important;
   overflow: auto !important;
 }
 
-.mytab2 {
-  display: block !important;
-}
+
 
 @media screen and (max-width: 1250px) {
   .input_city {
@@ -5637,7 +5643,7 @@ html {
     display: none !important;
   }
   .category-wrapper--category .icon-wrapper:last-child {
-    padding-bottom: 50px;
+
   }
   .floorplan-viewer__header__name {
     min-width: auto;

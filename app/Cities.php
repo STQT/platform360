@@ -42,6 +42,10 @@ class Cities extends Model
      *
      * @return string
      */
+     protected function asJson($value)
+      {
+          return json_encode($value, JSON_UNESCAPED_UNICODE);
+      }
     public function getDescriptionForEvent($eventName)
     {
         return __CLASS__ . " model has been {$eventName}";

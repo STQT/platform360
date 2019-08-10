@@ -42,7 +42,7 @@
                                           <a href="{{ url('/admin/floors/' . $item->id) }}" title="Этажи"><button class="btn btn-info btn-sm"><i class="fa fa-arrows-v" aria-hidden="true"></i></button></a>
                                           <a href="{{ url('/admin/podloc/' . $item->id) }}" title="Подлокации"><button class="btn btn-info btn-sm"><i class="fa fa-map-marker" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/locations/' . $item->id) }}" title="Установить Точи"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/admin/locations/' . $item->id . '/edit') }}" title="Edit Location"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/locations/' . $item->id . '/edit/ru') }}" title="Edit Location"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/locations', $item->id],

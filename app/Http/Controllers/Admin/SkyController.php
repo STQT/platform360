@@ -56,6 +56,7 @@ class SkyController extends Controller
      */
     public function store(Request $request)
     {
+        app()->setLocale('ru');
         $this->validate($request, [
 			'name' => 'required',
 			'panorama' => 'required',
@@ -132,11 +133,12 @@ class SkyController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $language)
     {
+        app()->setLocale($language);
         $cities = Cities::all();
 $sky = Sky::findOrFail($id);
-        return view('admin.sky.edit', compact('sky','cities'));
+        return view('admin.sky.edit', compact('sky','cities', 'language'));
     }
 
     /**
@@ -147,13 +149,14 @@ $sky = Sky::findOrFail($id);
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
 			'name' => 'required',
 
 			'city_id' => 'required'
 		]);
+     app()->setLocale($language);
           $data = $request->all();
           $requestData = $request->all();
 

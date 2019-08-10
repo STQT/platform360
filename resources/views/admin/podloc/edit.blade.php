@@ -10,6 +10,10 @@
                     <div class="card-header">Редактировать подлокацию {{ $sky->name }}</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/podloc/'.$sky->podlocparent_id.'') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/ru') }}" ><button class="btn btn-success btn-sm">Русский</button></a>
+
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/uzb') }}" ><button class="btn btn-success btn-sm">Узбекский</button></a>
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/en') }}" ><button class="btn btn-info btn-sm">Английский</button></a>
                         <br />
                         <br />
 
@@ -23,7 +27,7 @@
 
                         {!! Form::model($sky, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/podloc/update', $sky->id],
+                            'url' => ['/admin/podloc/update', $sky->id, $language],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}

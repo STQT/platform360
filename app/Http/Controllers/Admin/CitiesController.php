@@ -51,6 +51,7 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
+      app()->setLocale('ru');
         $this->validate($request, [
 			'name' => 'required',
 			'lat' => 'required',
@@ -58,7 +59,7 @@ class CitiesController extends Controller
             'position' => 'required'
 		]);
         $requestData = $request->all();
-        
+
         Cities::create($requestData);
 
         return redirect('admin/cities')->with('flash_message', 'City added!');
@@ -85,11 +86,12 @@ class CitiesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $language)
     {
+        app()->setLocale($language);
         $cities = Cities::findOrFail($id);
 
-        return view('admin.cities.edit', compact('cities'));
+        return view('admin.cities.edit', compact('cities', 'language'));
     }
 
     /**
@@ -100,7 +102,7 @@ class CitiesController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
 			'name' => 'required',
@@ -109,8 +111,8 @@ class CitiesController extends Controller
             'position' => 'required'
 		]);
           $data = $request->all();
+     app()->setLocale($language);
 
-           
 
         $requestData = $request->all();
          if(!empty($data['is_default'])) {

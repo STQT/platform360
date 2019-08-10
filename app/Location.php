@@ -45,7 +45,10 @@ use HasTranslations;
     {
         return __CLASS__ . " model has been {$eventName}";
     }
-
+    protected function asJson($value)
+     {
+         return json_encode($value, JSON_UNESCAPED_UNICODE);
+     }
     public  function folderName()
     {
         $test = json_decode($this->panorama)[0]->panoramas[0]->panorama;
@@ -81,6 +84,7 @@ use HasTranslations;
 
         return $attributes;
     }
+    
     public static function transl($massiv)
     {
       foreach ($massiv as $key => $massic) {
@@ -120,7 +124,7 @@ public static  function folderNames($loc)
 
 
 }
-  
+
         return $filename;
     }
      public static function setCookie($name, $value){

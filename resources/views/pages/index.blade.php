@@ -51,6 +51,17 @@
                             </div>
                         </div>
                     </div>
+                  @else
+                    <div class="dubai360-header__aloneicon buttonetaj0 headermainetajicon" style="display:none">
+                        <div class="wrapper-button active">
+                            <span class="icon-ic_floorplan wrapper-button__icon" data-pannel="floorplanPanel"></span>
+                            <div class="dubai360-tooltip">
+                                <span>{{ trans('uzb360.etaji')}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+
                   @endif
                     <div class="dubai360-header__description">
                         <div><span><span><span id="location_name">{{ $location->name }}</span></span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
@@ -150,9 +161,9 @@
                             <div class="dropdown-wrapper">
 
                                 <select name="select" class="dropdown">
-                                    <option value="en">RU</option>
-                                    <option value="ru">EN</option>
-                                    <option value="uz">UZ</option>
+                                    <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
+                                    <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
+                                    <option value="uzb"  id="uzb" @if(Lang::locale()=='uzb') selected @endif>UZB</option>
                                 </select>
                                 <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg==" class="dropdown-chevronImg">
                             </div>
@@ -216,6 +227,15 @@
 
                 @if (is_array($etajlocations) || is_object($etajlocations))
                     <div class="dubai360-header__aloneicon buttonetaj0">
+                        <div class="wrapper-button active">
+                            <span class="icon-ic_floorplan wrapper-button__icon" data-pannel="floorplanPanel"></span>
+                            <div class="dubai360-tooltip">
+                                <span>{{ trans('uzb360.etaji')}}</span>
+                            </div>
+                        </div>
+                    </div>
+                  @else
+                    <div class="dubai360-header__aloneicon buttonetaj0" style="display:none">
                         <div class="wrapper-button active">
                             <span class="icon-ic_floorplan wrapper-button__icon" data-pannel="floorplanPanel"></span>
                             <div class="dubai360-tooltip">
@@ -1307,6 +1327,16 @@ if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).at
 if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
 if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
 
+if(data.etaji.length > 0) {
+
+$('.buttonetaj0').show();
+}
+else {
+
+$('.buttonetaj0').hide();
+
+
+}
 if (data.onmap == "on") {
 
    $('.currentlocationcordinates').data('lat', data.lat);
@@ -1575,6 +1605,8 @@ var slidbox = $(".featuredloctionbox", realslide);
   });
   $('.slick-block2').on('afterChange', function(event, slick, currentSlide, nextSlide){
  if(window.innerWidth < 1025){
+     $('.slick-block2 .slick-slide').removeClass('slick-current');
+     $('.slick-block2 .slick-slide:not(.slick-cloned)').eq(currentSlide).addClass('slick-current');
            var realslide =  $(".slick-active", this);
 var slidbox = $(".featuredloctionbox", realslide);
 

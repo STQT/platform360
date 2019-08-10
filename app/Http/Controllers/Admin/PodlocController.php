@@ -25,6 +25,7 @@ class PodlocController extends Controller
      */
     public function index($id)
     {
+
         $parentid = $id;
         $perPage = 25;
         $check = Location::where('id', $parentid)->first();
@@ -75,7 +76,7 @@ class PodlocController extends Controller
      }
     public function store(Request $request)
     {
-
+  app()->setLocale('ru');
 
     $this->validate($request, [
 			'name' => 'required',
@@ -152,16 +153,16 @@ class PodlocController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $language)
     {
-
+  app()->setLocale($language);
 
         $cities = Cities::all();
         $categories = Category::all();
           $skyy = Sky::where('is_sky', 'on')->get();
 $sky = Location::findOrFail($id);
 
-        return view('admin.podloc.edit', compact('skyy','sky','cities', 'categories'));
+        return view('admin.podloc.edit', compact('skyy','sky','cities', 'categories', 'language'));
     }
 
     /**
@@ -172,13 +173,14 @@ $sky = Location::findOrFail($id);
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
 			'name' => 'required',
 
 			'city_id' => 'required'
 		]);
+      app()->setLocale($language);
           $data = $request->all();
           $requestData = $request->all();
 

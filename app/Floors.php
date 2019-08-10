@@ -31,7 +31,10 @@ use HasTranslations;
      */
      protected $translatable = ['name'];
     protected $fillable = ['parrentid', 'name', 'image', 'code'];
-
+    protected function asJson($value)
+     {
+         return json_encode($value, JSON_UNESCAPED_UNICODE);
+     }
     public function location()
     {
         return $this->belongsTo('App\Location', 'parrentid', 'id');
