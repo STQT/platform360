@@ -36,7 +36,6 @@ Route::get('/krpano/{index}/{id}', 'HomeController@krpano');
 Route::post('/savescreenshot', 'HomeController@savescreenshot');
 
 Route::group(['prefix' => 'api'], function() {
-    Route::get('/locations/{id}', 'Admin\\LocationsController@apiLocations');
     Route::get('/location/{id}', 'Admin\\LocationsController@show2');
     Route::get('/hotspots/{id}', 'Admin\LocationsController@apiHotspots');
 });
@@ -44,6 +43,8 @@ Route::group(['prefix' => 'api'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'api'], function() {
+        Route::get('/locations/{id}', 'Admin\\LocationsController@apiLocations');
+        Route::get('/sublocations/{id}', 'Admin\LocationsController@apiSublocations');
         Route::post('/locations/add', 'Admin\\LocationsController@apiAddhotspot');
         Route::get('/deletehotspot/{id}', 'Admin\\HotspotsController@deletehotspot');
         Route::get('/getcitydefaultlocation/{id}', 'Admin\\LocationsController@getcitydefaultlocation');

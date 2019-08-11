@@ -109,7 +109,7 @@ var hotspotname;
                                         var parentId = data.data[i].id;
                                         $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
 
-                                        $.get('/api/sublocations/' + data.data[i].id).done(function (data) {
+                                        $.get('/ru/api/sublocations/' + data.data[i].id).done(function (data) {
 	                                        for (var i = 0; i < data.data.length; i++) {
 	                                            var panos = JSON.parse(data.data[i].panorama);
 

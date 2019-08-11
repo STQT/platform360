@@ -10,6 +10,7 @@ use App\Location;
 use App\Cities;
 use App\Sky;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cookie;
@@ -28,6 +29,7 @@ class LocationsController extends Controller
     {
 
         $keyword = $request->get('search');
+        $category = $request->get('category');
         $perPage = 25;
 
         $totalLocations = Location::withoutGlobalScope('published')->count();
@@ -49,7 +51,11 @@ class LocationsController extends Controller
         } else {
             $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->latest()->paginate($perPage);
         }
-        return view('admin.locations.index', compact('locations'));
+        return view('admin.locations.index', compact('locations', 'totalLocations',
+            'publishedLocations',
+            'unpublishedLocations',
+            'categories',
+            'category'));
     }
 
     public function main(Request $request)
@@ -375,13 +381,20 @@ class LocationsController extends Controller
 
 
 //Редактирование локации
-    public function edit($id, $language)
+    public function edit(Request $request, $id, $language)
     {
         app()->setLocale($language);
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
         $categories = Category::all();
         $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
         $cities = Cities::all();
+
+        $returnUrl = Input::get('returnUrl');
+
+        if ($returnUrl) {
+            $request->session()->put('returnUrl', $returnUrl);
+        }
+
         return view('admin.locations.edit', compact('location', 'sky','categories', 'cities', 'language'));
     }
 
@@ -582,7 +595,7 @@ class LocationsController extends Controller
 
     public function apiSublocations($id)
     {
-        $location = Location::find($id);
+        $location = Location::withoutGlobalScope('published')->find($id);
         $locations = $location->sublocations()->orderBy('created_at', 'DESC')->paginate(999);
 
         return $locations;

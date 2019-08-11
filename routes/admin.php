@@ -18,9 +18,9 @@ Route::get('admin/locations/{id}/edit/{lang}', [
     'uses' => 'Admin\\LocationsController@edit'
 ]);
 Route::match(['put', 'patch'],'admin/locations/{id}/{language}', 'Admin\\LocationsController@update');
-Route::resource('admin/locations', 'Admin\\LocationsController');
 Route::get('admin/locations/main', 'Admin\LocationsController@main');
 Route::get('admin/locations/hub', 'Admin\LocationsController@hub');
+Route::resource('admin/locations', 'Admin\\LocationsController');
 
 //Небо
 Route::get('admin/sky/{id}/edit/{lang}', [
