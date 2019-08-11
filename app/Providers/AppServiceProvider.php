@@ -3,8 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Http\Request;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,13 +11,16 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+public function boot(Request $request)
     {
       if(config('app.env') === 'production') {
           \URL::forceScheme('https');
       }
 
       Schema::defaultStringLength(191);
+
+       app()->setLocale($request->segment(1));
+    
     }
 
     /**

@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use Spatie\Translatable\HasTranslations;
 class Category extends Model
 {
     use LogsActivity;
-
+  use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -29,6 +29,7 @@ class Category extends Model
      *
      * @var array
      */
+    protected $translatable = ['name'];
     protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color'];
 
     public function locations()
@@ -44,6 +45,10 @@ class Category extends Model
      *
      * @return string
      */
+     protected function asJson($value)
+      {
+          return json_encode($value, JSON_UNESCAPED_UNICODE);
+      }
     public function getDescriptionForEvent($eventName)
     {
         return __CLASS__ . " model has been {$eventName}";

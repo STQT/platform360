@@ -33,9 +33,9 @@
                                         <td>{{ $loop->iteration or $item->id }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>
-                                            <button class="btn btn-info btn-sm show-sublocation" data-id="{{ $item->id }}" title="Показывать в поиске"><i class="fa fa-check-square"></i></button>
+                                        <button class="btn btn-info btn-sm show-sublocation" data-id="{{ $item->id }}" title="Показывать в поиске"><i class="fa fa-check-square"></i></button>
                                             <a href="{{ url('/admin/locations/' . $item->id) }}" title="View"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/admin/podloc/edit/' . $item->id . '') }}" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/podloc/edit/' . $item->id . '/ru') }}" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/locations', $item->id],

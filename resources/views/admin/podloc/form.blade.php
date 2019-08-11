@@ -104,6 +104,8 @@
     {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
 </div>
 
+
+
 <div class="form-group">
     <input {{ isset($location) ? ($location->isfeatured ? 'checked' : '') : ''}} id="isfeatured" type="checkbox" class="" name="isfeatured"> Избранный?
 </div>

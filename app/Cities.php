@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use Spatie\Translatable\HasTranslations;
 class Cities extends Model
 {
     use LogsActivity;
-    
+    use HasTranslations;
+
 
     /**
      * The database table used by the model.
@@ -29,9 +30,10 @@ class Cities extends Model
      *
      * @var array
      */
+    protected $translatable = ['name'];
     protected $fillable = ['name', 'lat', 'lng', 'is_default', 'position'];
 
-   
+
 
     /**
      * Change activity log event description
@@ -40,6 +42,10 @@ class Cities extends Model
      *
      * @return string
      */
+     protected function asJson($value)
+      {
+          return json_encode($value, JSON_UNESCAPED_UNICODE);
+      }
     public function getDescriptionForEvent($eventName)
     {
         return __CLASS__ . " model has been {$eventName}";

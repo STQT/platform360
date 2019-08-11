@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use Spatie\Translatable\HasTranslations;
+use Illuminate\Http\Request;
 class Podloc extends Model
 {
     use LogsActivity;
-
+use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -29,6 +30,7 @@ class Podloc extends Model
      *
      * @var array
      */
+     protected $translatable = ['name', 'address', 'description','working_hours'];
     protected $fillable = ['name', 'sky_id', 'address', 'podlocparent_id', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'published'];
 
 
@@ -65,6 +67,10 @@ public static  function folderNames($loc)
         $filename[$key2] = $test . '/' . $old[2];
 
 }}
+protected function asJson($value)
+ {
+     return json_encode($value, JSON_UNESCAPED_UNICODE);
+ }
     public function hotspots()
     {
         return $this->hasMany('App\Hotspot', 'sky_id');

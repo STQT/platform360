@@ -25,6 +25,7 @@ class PodlocController extends Controller
      */
     public function index($id)
     {
+
         $parentid = $id;
         $perPage = 25;
         $check = Location::where('id', $parentid)->first();
@@ -75,16 +76,18 @@ class PodlocController extends Controller
      }
     public function store(Request $request)
     {
-        $this->validate($request, [
-    			'name' => 'required',
-    			'panorama' => 'required',
-    			'city_id' => 'required'
-    		]);
+  app()->setLocale('ru');
+
+    $this->validate($request, [
+			'name' => 'required',
+			'panorama' => 'required',
+			'city_id' => 'required'
+		]);
 
         $data = $request->all();
         $requestData = $request->all();
 
-        $requestData['podlocparent_id'] = $requestData['parrentid'] ;
+      $requestData['podlocparent_id'] = $requestData['parrentid'] ;
 
         $requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
 
@@ -108,10 +111,12 @@ class PodlocController extends Controller
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
 
+
+
+
         if(!empty($panoramas)) {
 
             $requestData['panorama'] = json_encode($panoramas);
-            $requestData['published'] = 1;
 
             $sky = Podloc::create($requestData);
 
@@ -120,13 +125,6 @@ class PodlocController extends Controller
         else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');
         }
-    }
-
-    function showSublocation(Request $request, $id)
-    {
-        $sublocation = Sky::findOrFail($id);
-        $sublocation->show_sublocation = 1;
-        $sublocation->save();
     }
 
     /**
@@ -155,16 +153,16 @@ class PodlocController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $language)
     {
-
+  app()->setLocale($language);
 
         $cities = Cities::all();
         $categories = Category::all();
           $skyy = Sky::where('is_sky', 'on')->get();
 $sky = Location::findOrFail($id);
 
-        return view('admin.podloc.edit', compact('skyy','sky','cities', 'categories'));
+        return view('admin.podloc.edit', compact('skyy','sky','cities', 'categories', 'language'));
     }
 
     /**
@@ -175,49 +173,52 @@ $sky = Location::findOrFail($id);
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
-    			'name' => 'required',
+			'name' => 'required',
 
-    			'city_id' => 'required'
-    		]);
+			'city_id' => 'required'
+		]);
+      app()->setLocale($language);
+          $data = $request->all();
+          $requestData = $request->all();
 
-        $data = $request->all();
-        $requestData = $request->all();
-
-        $requestData['podlocparent_id'] = $requestData['parrentid'];
-        
-        if(!empty($data['panorama'])) {
-            $randomStr = Str::random(40);
-            $file = $data['panorama']->store('panoramas');
-            $fullPath = public_path() . '/storage/' . $file;
-            $baseName = pathinfo($file);
-            $baseName = $baseName['filename'];
-            $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
-            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere -askforxmloverwrite=false ' . $fullPath);
-            mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
-            copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
-            rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
-            self::delTree(public_path() . '/storage/panoramas/vtour');
-            $xmllocation = Location::xmlName($randomStr);
-            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
-            $d = "";
-            foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
-            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
-            $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
-            $requestData['panorama'] = json_encode($panoramas);
-        }
+          $requestData['podlocparent_id'] = $requestData['parrentid'] ;
+          if(!empty($data['panorama'])) {
+              $randomStr = Str::random(40);
+              $file = $data['panorama']->store('panoramas');
+              $fullPath = public_path() . '/storage/' . $file;
+              $baseName = pathinfo($file);
+              $baseName = $baseName['filename'];
+              $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
+              $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere -askforxmloverwrite=false ' . $fullPath);
+              mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
+              copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
+              rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
+              self::delTree(public_path() . '/storage/panoramas/vtour');
+              $xmllocation = Location::xmlName($randomStr);
+              $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
+              $d = "";
+              foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
+              $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
+              $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
+              $requestData['panorama'] = json_encode($panoramas);
+          }
 
 
-        if(!empty($requestData['name'])) {
-            $location = Location::findOrFail($id);
-            $location->published = 1;
-                  $location->update($requestData);
-              return redirect('admin/podloc/'.$data['parrentid'].'')->with('flash_message', 'Подлокация обновлена!');
-        } else {
-              return redirect()->back()->withErrors('Корректно заполните форму ниже');
-        }
+  if(!empty($requestData['name'])) {
+
+    $location = Location::findOrFail($id);
+          $location->update($requestData);
+  return redirect('admin/podloc/'.$data['parrentid'].'')->with('flash_message', 'Подлокация обновлена!');
+}  else {
+      return redirect()->back()->withErrors('Корректно заполните форму ниже');
+  }
+
+
+
+
     }
 
     /**

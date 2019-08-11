@@ -10,6 +10,10 @@
                     <div class="card-header">Edit City #{{ $cities->id }}</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/cities') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/cities/'.$cities->id.'/edit/ru') }}" ><button class="btn btn-success btn-sm">Русский</button></a>
+
+                        <a href="{{ url('/admin/cities/'.$cities->id.'/edit/uzb') }}" ><button class="btn btn-success btn-sm">Узбекский</button></a>
+                        <a href="{{ url('/admin/cities/'.$cities->id.'/edit/en') }}" ><button class="btn btn-info btn-sm">Английский</button></a>
                         <br />
                         <br />
 
@@ -23,7 +27,7 @@
 
                         {!! Form::model($cities, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/cities', $cities->id],
+                            'url' => ['/admin/cities', $cities->id, $language],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}

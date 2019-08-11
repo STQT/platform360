@@ -1,8 +1,5 @@
 $(function() {
 
-    $("body").click(function(event) {
-        console.log(event)
-    });
 
     // preloader
     setTimeout(function() {
@@ -75,28 +72,28 @@ $(function() {
 
 
     $('.svg_blockk').click(function() {
-        var height = $('#location_description').height();
+    	var height = $('#location_description').height();
         $('.infoPanel__description__message').toggleClass('show');
 
 
         if ($('.infoPanel__description__message').hasClass('show')) {
-            $('.infoPanel__description__message').css('height', height);
+        	$('.infoPanel__description__message').css('height', height);
         }else{
-            $('.infoPanel__description__message').removeAttr('style');
+        	$('.infoPanel__description__message').removeAttr('style');
         }
 
 
 
     });
 
-    // $("#mobilelanguage").click(function() {   
+    // $("#mobilelanguage").click(function() {
     // });
 
 
 
 
     $('.wrapper-panel-close').click(function() {
-        $('.infoPanel__description__message').removeAttr('style');
+       $('.infoPanel__description__message').removeAttr('style');
     });
 
     // ********************** EXIT FULL SCREEN ************************
@@ -135,14 +132,14 @@ $(function() {
 
         $('.icon-ic_glass').click(function() {
             $('#search_adress input').focus();
-            // $('.searchPanel__input').trigger('click'); 
+            // $('.searchPanel__input').trigger('click');
         });
 
     }
 
 
     $('.icon-ic_glass').click(function() {
-        $('.searchPanel__results').css("display", "none");
+    	$('.searchPanel__results').css("display", "none");
 
     });
 
@@ -275,13 +272,13 @@ $(function() {
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/' + categoryId,
+                    "/ru/search/" + _this.val() + '/' + categoryId,
                     onAjaxSuccess
                 );
             } else {
 
                 $.get(
-                    "/search/noresult/" + categoryId,
+                    "/ru/search/noresult/" + categoryId,
                     onAjaxSuccess
                 );
 
@@ -289,7 +286,7 @@ $(function() {
         } else {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/0',
+                    "/ru/search/" + _this.val() + '/0',
                     onAjaxSuccess
                 );
             }
@@ -315,7 +312,7 @@ $(function() {
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+					xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
                     $preview = $( xmlDoc ).find('preview');
                     var img = $preview.attr("url").replace('preview', 'thumb');
 
@@ -326,18 +323,20 @@ $(function() {
                       <div class="listItem">
                           <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
-                              <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                              <div class="icon-wrapper__icon--category category-normal" style="` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                           </div>
                           <div class="listItem__text">
                           <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
                           </div>
                       </div>
                   </div>
-                  `; } else {
+                  `;
+
+                    } else {
                         searchItem += `
                       <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
                               <div class="listItem" style="width: 170px; height: 192px;">
-                                <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
+                                <div class="listItem__img"><img src="` + img + `/" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
                                   <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
@@ -415,14 +414,14 @@ $(function() {
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/' + categoryId,
+                    "/ru/search/" + _this.val() + '/' + categoryId,
                     onAjaxSuccess
                 );
             }
         } else {
             if (_this.val() != "") {
                 $.get(
-                    "/search/" + _this.val() + '/0',
+                    "/ru/search/" + _this.val() + '/0',
                     onAjaxSuccess
                 );
             }
@@ -450,9 +449,12 @@ $(function() {
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+					xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
                     $preview = $( xmlDoc ).find('preview');
                     var img = $preview.attr("url").replace('preview', 'thumb');
+
+
+
 
                     if (screen.width >= 1024) {
                         searchItem += `
@@ -476,7 +478,7 @@ $(function() {
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
-                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(2, 180, 227);"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
+                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: ` + data[i].color + `;"><img src="/storage/cat_icons/` + data[i].cat_icon_svg + `"></div>
                                 </div>
                       <div class="listItem__text">
                         <div><span><span>` + data[i].name + `</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
@@ -564,7 +566,7 @@ $(function() {
 
     $('.slick-block').slick({
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -572,28 +574,13 @@ $(function() {
         prevArrow: $('.icon-ic_arrow_left_active_v2_third'),
         nextArrow: $('.icon-ic_arrow_right__active_v2_third'),
 
-        responsive: [{
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
-            }
-        },
-            {
-                breakpoint: 576,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
     });
 
     $('.slick-block2').slick({
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
-        // slidesToShow: 3,
+  slidesToShow: 5,
         slidesToScroll: 1,
         variableWidth: true,
         prevArrow: $('.slick-block2_left'),
@@ -602,41 +589,14 @@ $(function() {
 
     $('.slick-block3').slick({
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
-        slidesToShow: 4,
+  slidesToShow: 5,
         slidesToScroll: 1,
-        variableWidth: false,
+        variableWidth: true,
         prevArrow: $('.slick-block3_left'),
         nextArrow: $('.slick-block3_right'),
-        responsive: [
-            {
-                breakpoint: 1600,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: false,
-                    dots: false
-                }
-            },
-            {
-                breakpoint: 991,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
-        ]
+
 
     });
 
@@ -676,8 +636,29 @@ $(function() {
     $('.drop_down_city select').on('change', function() {
 
         var id = $(this).children(":selected").attr("id");
+        var lang = $(this).children(":selected").data('my-var');
+        document.location.href = '/' + lang + '/city/' + id + '';
+    });
 
-        document.location.href = '/city/' + id + '';
+    $('.language-switcher select').on('change', function() {
+      var id = $(this).children(":selected").attr("id");
+      var lang = $(this).children(":selected").data('my-var');
+var pathname = window.location.pathname;
+if (pathname.indexOf("/ru") >= 0) {
+  pathname =  pathname.replace("/ru", id);
+  document.location.href = '/' + pathname;
+}
+if (pathname.indexOf("/uzb") >= 0) {
+pathname =  pathname.replace("/uzb", id);
+  document.location.href = '/' + pathname;
+}
+if (pathname.indexOf("/en") >= 0) {
+pathname =  pathname.replace("/en", id);
+  document.location.href = '/' + pathname;
+}
+
+
+
     });
     // ****************************************************
 

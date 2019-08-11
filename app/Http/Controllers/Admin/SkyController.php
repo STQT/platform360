@@ -43,7 +43,7 @@ class SkyController extends Controller
      */
     public function create()
     {
-      $cities = Cities::all();
+        $cities = Cities::all();
         return view('admin.sky.create', compact('cities'));
     }
 
@@ -56,45 +56,36 @@ class SkyController extends Controller
      */
     public function store(Request $request)
     {
+        app()->setLocale('ru');
         $this->validate($request, [
-			'name' => 'required',
-			'panorama' => 'required',
-			'city_id' => 'required'
-		]);
+            'name' => 'required',
+            'panorama' => 'required',
+            'city_id' => 'required'
+        ]);
 
         $data = $request->all();
         $requestData = $request->all();
         $requestData['is_sky'] = 'on';
 
         $requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
-
-
-
-        if(!empty($data['published'])) {
-            $requestData['published'] = 1;
-        } else {
-            $requestData['published'] = 0;
-        }
-
-
         if(!empty($data['panorama'])) {
-          $randomStr = Str::random(40);
-          $file = $data['panorama']->store('panoramas');
-          $fullPath = public_path() . '/storage/' . $file;
-          $baseName = pathinfo($file);
-          $baseName = $baseName['filename'];
-          $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
-          $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config ' . $fullPath);
-          mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
-          copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
-          rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
-          self::delTree(public_path() . '/storage/panoramas/vtour');
-          $xmllocation = '' . $randomStr . '/' . $baseName . '.tiles';
-          $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
-          $d = "";
-          foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
-          $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
-          $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
+            $randomStr = Str::random(40);
+            $file = $data['panorama']->store('panoramas');
+            $fullPath = public_path() . '/storage/' . $file;
+            $baseName = pathinfo($file);
+            $baseName = $baseName['filename'];
+            $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
+            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config ' . $fullPath);
+            mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
+            copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
+            rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
+            self::delTree(public_path() . '/storage/panoramas/vtour');
+            $xmllocation = '' . $randomStr . '/' . $baseName . '.tiles';
+            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
+            $d = "";
+            foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
+            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
+            $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
 
 
@@ -117,22 +108,22 @@ class SkyController extends Controller
      *
      * @return \Illuminate\View\View
      */
-     public static function delTree($dir) {
+    public static function delTree($dir) {
         $files = array_diff(scandir($dir), array('.','..'));
-         foreach ($files as $file) {
-           (is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
-         }
-         return rmdir($dir);
-     }
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
+        }
+        return rmdir($dir);
+    }
 
     public function show($id)
     {
-      $location = Sky::findOrFail($id);
-      $locations = Sky::all();
+        $location = Sky::findOrFail($id);
+        $locations = Sky::all();
 
-      $categories = Category::all();
+        $categories = Category::all();
 
-      return view('pages.admin.edit', ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
+        return view('pages.admin.edit', ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
     }
 
     /**
@@ -142,11 +133,12 @@ class SkyController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $language)
     {
+        app()->setLocale($language);
         $cities = Cities::all();
-$sky = Sky::findOrFail($id);
-        return view('admin.sky.edit', compact('sky','cities'));
+        $sky = Sky::findOrFail($id);
+        return view('admin.sky.edit', compact('sky','cities', 'language'));
     }
 
     /**
@@ -157,14 +149,14 @@ $sky = Sky::findOrFail($id);
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
-			'name' => 'required',
+            'name' => 'required',
 
-			'city_id' => 'required'
-		]);
-        
+            'city_id' => 'required'
+        ]);
+        app()->setLocale($language);
         $data = $request->all();
         $requestData = $request->all();
 
@@ -190,19 +182,13 @@ $sky = Sky::findOrFail($id);
 
 
         if(!empty($panoramas)) {
-          $requestData['panorama'] = json_encode($panoramas);
+            $requestData['panorama'] = json_encode($panoramas);
         };
-
         if(!empty($data['skymainforcity'])) {
-           $requestData['skymainforcity'] = 'on';
-        } else {
-          $requestData['skymainforcity'] = 0;
+            $requestData['skymainforcity'] = 'on';
         }
-
-        if(!empty($data['published'])) {
-           $requestData['published'] = 1;
-        } else {
-          $requestData['published'] = 0;
+        else {
+            $requestData['skymainforcity'] = 0;
         }
 
         $sky = Sky::findOrFail($id);

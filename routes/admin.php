@@ -1,0 +1,78 @@
+<?php
+Route::group(['middleware' => 'auth'], function() {
+//Конвертор мультиязычности
+Route::get('/admin/convert/locations', 'Admin\\LocationsController@convert');
+Route::get('/admin/convert/city', 'Admin\\LocationsController@convertcity');
+Route::get('/admin/convert/categories', 'Admin\\LocationsController@convertcategories');
+Route::get('/admin/convert/floors', 'Admin\\LocationsController@convertfloors');
+
+//Категории
+Route::get('admin/categories/{id}/edit/{lang}', [
+    'uses' => 'Admin\\CategoriesController@edit'
+]);
+Route::match(['put', 'patch'],'admin/categories/{id}/{language}', 'Admin\\CategoriesController@update');
+Route::resource('admin/categories', 'Admin\\CategoriesController');
+
+//Локации
+Route::get('admin/locations/{id}/edit/{lang}', [
+    'uses' => 'Admin\\LocationsController@edit'
+]);
+Route::match(['put', 'patch'],'admin/locations/{id}/{language}', 'Admin\\LocationsController@update');
+Route::resource('admin/locations', 'Admin\\LocationsController');
+Route::get('admin/locations/main', 'Admin\LocationsController@main');
+Route::get('admin/locations/hub', 'Admin\LocationsController@hub');
+
+//Небо
+Route::get('admin/sky/{id}/edit/{lang}', [
+    'uses' => 'Admin\\SkyController@edit'
+]);
+Route::match(['put', 'patch'],'admin/sky/{id}/{language}', 'Admin\\SkyController@update');
+Route::resource('admin/sky', 'Admin\\SkyController');
+
+//Город
+Route::get('admin/cities/{id}/edit/{lang}', [
+    'uses' => 'Admin\\CitiesController@edit'
+]);
+Route::match(['put', 'patch'],'admin/cities/{id}/{language}', 'Admin\\CitiesController@update');
+Route::resource('admin/cities', 'Admin\\CitiesController');
+
+//Подлокации
+Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');
+Route::get('admin/podloc/edit/{id}/{lang}', 'Admin\\PodlocController@edit');
+Route::match(['put', 'patch'],'admin/podloc/update/{id}/{lang}', 'Admin\\PodlocController@update');
+Route::get('admin/podloc/create/{id}', 'Admin\\PodlocController@create');
+Route::post('admin/podloc/store/', 'Admin\\PodlocController@store');
+Route::get('/sublocations/{id}', 'Admin\\LocationsController@apiSublocations');
+Route::post('admin/podloc/show-sublocation/{id}', 'Admin\\PodlocController@showSublocation');
+
+//Этажи
+Route::get('admin/floors/{id}', 'Admin\\FloorsController@index');
+Route::get('admin/floors/create/{id}', 'Admin\\FloorsController@create');
+Route::post('admin/floors/store/', 'Admin\\FloorsController@store');
+Route::get('admin/floors/edit/{id}/{lang}', 'Admin\\FloorsController@edit');
+Route::match(['put', 'patch'],'admin/floors/update/{id}/{lang}', 'Admin\\FloorsController@update');
+Route::delete('admin/floors/delete/{id}', 'Admin\\FloorsController@destroy');
+Route::get('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochki');
+Route::post('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochkiupdate');
+
+
+Route::get('/admin/krpano/{id}', 'Admin\\LocationsController@krpano');
+Route::get('admin', 'Admin\AdminController@index');
+Route::resource('admin/roles', 'Admin\RolesController');
+Route::resource('admin/permissions', 'Admin\PermissionsController');
+Route::resource('admin/users', 'Admin\UsersController');
+Route::resource('admin/pages', 'Admin\PagesController');
+Route::resource('admin/activitylogs', 'Admin\ActivityLogsController')->only([
+        'index', 'show', 'destroy'
+    ]);
+Route::resource('admin/settings', 'Admin\SettingsController');
+Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
+Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
+
+
+
+
+
+});
+
+?>

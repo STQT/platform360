@@ -9,7 +9,12 @@
                 <div class="card">
                     <div class="card-header">Edit Location #{{ $location->id }}</div>
                     <div class="card-body">
-                        <a href="{{ $returnUrl ? urldecode($returnUrl) : url('/admin/locations') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/locations') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/ru') }}" ><button class="btn btn-success btn-sm">Русский</button></a>
+
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/uzb') }}" ><button class="btn btn-success btn-sm">Узбекский</button></a>
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/en') }}" ><button class="btn btn-info btn-sm">Английский</button></a>
+
                         <br />
                         <br />
 
@@ -23,7 +28,7 @@
 
                         {!! Form::model($location, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/locations', $location->id],
+                            'url' => ['/admin/locations', $location->id, $language],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}

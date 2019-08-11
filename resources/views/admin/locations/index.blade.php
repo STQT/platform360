@@ -33,9 +33,9 @@
                             <div>Всего: <strong>{{ $totalLocations }}</strong> Опубликовано: <strong>{{ $publishedLocations }}</strong> Выключено: <strong>{{ $unpublishedLocations }}</strong></div>
                             <table class="table table-borderless">
                                 <thead>
-                                    <tr>
-                                      <th>Название</th><th>Подлокации</th><th>Действия</th>
-                                    </tr>
+                                <tr>
+                                    <th>Название</th><th>Подлокации</th><th>Действия</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($locations as $item)
@@ -44,21 +44,21 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->sublocations->count() }}</td>
                                         <td>
-                                          <a href="{{ url('/admin/floors/' . $item->id) }}" title="Этажи"><button class="btn btn-info btn-sm"><i class="fa fa-arrows-v" aria-hidden="true"></i></button></a>
-                                          <a href="{{ url('/admin/podloc/' . $item->id) }}" title="Подлокации"><button class="btn btn-info btn-sm"><i class="fa fa-map-marker" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/floors/' . $item->id) }}" title="Этажи"><button class="btn btn-info btn-sm"><i class="fa fa-arrows-v" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/podloc/' . $item->id) }}" title="Подлокации"><button class="btn btn-info btn-sm"><i class="fa fa-map-marker" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/locations/' . $item->id) }}" title="Установить Точи"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ route('locations.edit', ['id' => $item->id, 'returnUrl' => urlencode(url()->full())]) }}" title="Edit Location"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/locations/' . $item->id . '/edit/ru?returnUrl=' . urlencode(url()->full())) }}" title="Edit Location"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/locations', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-sm',
-                                                        'title' => 'Delete Location',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'title' => 'Delete Location',
+                                                    'onclick'=>'return confirm("Confirm delete?")'
+                                            )) !!}
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>

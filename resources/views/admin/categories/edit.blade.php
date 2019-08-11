@@ -10,6 +10,10 @@
                     <div class="card-header">Edit Category #{{ $category->id }}</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/categories') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/categories/'.$category->id.'/edit/ru') }}" ><button class="btn btn-success btn-sm">Русский</button></a>
+
+                        <a href="{{ url('/admin/categories/'.$category->id.'/edit/uzb') }}" ><button class="btn btn-success btn-sm">Узбекский</button></a>
+                        <a href="{{ url('/admin/categories/'.$category->id.'/edit/en') }}" ><button class="btn btn-info btn-sm">Английский</button></a>
                         <br />
                         <br />
 
@@ -23,7 +27,7 @@
 
                         {!! Form::model($category, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/categories', $category->id],
+                            'url' => ['/admin/categories', $category->id, $language],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}

@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-  <form action="/admin/floors/tochki/{{$floor->id}}" method="POST">
+  <form action="https://dev2.uzbekistan360.uz/admin/floors/tochki/{{$floor->id}}" method="POST">
   <div class="container">
       <div class="row">
               @include('admin.sidebar')  <div class="col-md-9">

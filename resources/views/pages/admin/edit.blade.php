@@ -52,10 +52,10 @@
 var hotspotid;
 var hotspotname;
         $(function () {
-            $('body').on('click', '.locationItem', function (e) {
+            $('body').on('click', '.locationItem', function () {
                 var _this = $(this);
 
-                $.post('/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
+                $.post('/ru/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
                     $('.modal').fadeOut();
                     alert('Точка установлена');
                 }).fail(function() {
@@ -79,7 +79,7 @@ var hotspotname;
                     $('.mess_img').fadeIn();
                 }, 700);
 
-                $.get('/api/locations/' + _this.data('category')).done(function (data) {
+                $.get('/ru/api/locations/' + _this.data('category')).done(function (data) {
                     setTimeout(function () {
                         $('.mess_img').fadeOut('slow');
 
@@ -100,29 +100,28 @@ var hotspotname;
                             for (var i = 0; i < data.data.length; i++) {
                                 var panos = JSON.parse(data.data[i].panorama);
 
-
                                 if(panos.length == 1) {
+
                                     if (data.data[i].podlocparent_id == null) {
                                         xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
                                         $preview = $( xmlDoc ).find('preview');
 
                                         var parentId = data.data[i].id;
                                         $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+
+                                        $.get('/api/sublocations/' + data.data[i].id).done(function (data) {
+	                                        for (var i = 0; i < data.data.length; i++) {
+	                                            var panos = JSON.parse(data.data[i].panorama);
+
+	                                            if(panos.length == 1) {
+	                                                xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
+	                                                $preview = $( xmlDoc ).find('preview');
+	                                                // console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
+	                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a></li>');
+	                                            }
+	                                        }
+	                                    });
                                     }
-
-                                    $.get('/api/sublocations/' + data.data[i].id).done(function (data) {
-                                        for (var i = 0; i < data.data.length; i++) {
-                                            var panos = JSON.parse(data.data[i].panorama);
-
-                                            if(panos.length == 1) {
-                                                xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
-                                                $preview = $( xmlDoc ).find('preview');
-                                                // console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
-                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a></li>');
-                                            }
-                                        }
-                                    });
-
                                 }
                                 else {
                                     for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
@@ -197,7 +196,7 @@ var hotspotname;
 krpano.call("removehotspot("+hotspotname+")");
  if(hotspotid  != "new") {
 
-  $.get('/api/deletehotspot/' + hotspotid).done(function (data) {
+  $.get('/ru/api/deletehotspot/' + hotspotid).done(function (data) {
     $('.modal').fadeOut();
     alert('Удалили точку: '+ hotspotid);
   });
