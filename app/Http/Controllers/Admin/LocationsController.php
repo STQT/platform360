@@ -51,6 +51,7 @@ return view('admin.locations.index', compact('locations'));
 public function convert() {
 $locations = DB::table('locations')->get();
 foreach ($locations as $key => $location) {
+$locations[$key]->name = str_replace('"','\"', $locations[$key]->name);  
 DB::table('locations')
 ->where('id', $location->id)
 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
