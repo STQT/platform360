@@ -131,7 +131,7 @@ $(function() {
     } else {
 
         $('.icon-ic_glass').click(function() {
-            $('#search_adress input').focus();
+          
             // $('.searchPanel__input').trigger('click');
         });
 

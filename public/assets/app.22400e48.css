@@ -2218,7 +2218,7 @@ screen and (max-height: 600px) {
   -webkit-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
-  width: 100%;
+  width: 244px;
 }
 
 @media (max-width: 30em) {
@@ -2740,7 +2740,7 @@ screen and (max-height: 600px) {
   .searchPanel__wrapper-category {
     overflow: auto;
     padding-bottom: 10px;
-    height: calc(100% - 202px);
+    height: calc(100% - 222px);
   }
 }
 

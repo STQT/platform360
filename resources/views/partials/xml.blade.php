@@ -152,7 +152,7 @@ previewlinkurlshare.value = currentLocation;
 
        $.ajax({
   method: 'POST',
-  url: '/savescreenshot',
+  url: '/ru/savescreenshot',
 
   data: {
     "_token": $('meta[name="csrf-token"]').attr('content'),
