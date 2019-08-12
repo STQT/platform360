@@ -51,7 +51,7 @@ return view('admin.locations.index', compact('locations'));
 public function convert() {
 $locations = DB::table('locations')->get();
 foreach ($locations as $key => $location) {
-$locations[$key]->name = str_replace('"','\"', $locations[$key]->name);  
+$locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
 DB::table('locations')
 ->where('id', $location->id)
 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
@@ -61,6 +61,7 @@ DB::table('locations')
 public function convertcity() {
 $locations = DB::table('cities')->get();
 foreach ($locations as $key => $location) {
+  $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
 DB::table('cities')
 ->where('id', $location->id)
 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
@@ -70,6 +71,7 @@ DB::table('cities')
 public function convertcategories() {
 $locations = DB::table('categories')->get();
 foreach ($locations as $key => $location) {
+  $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
 DB::table('categories')
 ->where('id', $location->id)
 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
@@ -79,6 +81,7 @@ DB::table('categories')
 public function convertfloors() {
 $locations = DB::table('floors')->get();
 foreach ($locations as $key => $location) {
+  $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);  
 DB::table('floors')
 ->where('id', $location->id)
 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
