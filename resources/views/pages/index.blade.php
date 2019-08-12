@@ -328,7 +328,7 @@
                 <div class="wrapper-panel  top left search hidden expand">
                     <img class="wrapper-panel-close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="searchPanel">
-                        <div class="searchPanel__input" id="search_adress"><input type="text" class="dubai360-input search-input" placeholder="{{ trans('uzb360.search')}}"></div>
+                        <div class="searchPanel__input" id="search_adress" ><input type="text" class="dubai360-input search-input" placeholder="{{ trans('uzb360.search')}}"></div>
                         <div class="searchPanel__filtered ">
                             <span class="searchPanel__filtered__title">{{ trans('uzb360.filtr')}}</span>
                             <span class="icon-ic_arrow_up chevron-mobile"></span>
