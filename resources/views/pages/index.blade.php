@@ -1335,7 +1335,7 @@ originalxmlname = originalxmlname.join("");
 
 
                 $.get(
-                  "/hasFloors" + xmlname,
+                  "/ru/hasFloors" + xmlname,
                   onAjaxSuccess
                 );
 

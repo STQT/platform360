@@ -182,44 +182,44 @@ class LocationsController extends Controller
 
 
 //Конвертор мультиязычности:Локации
-public function convert() {
-$locations = DB::table('locations')->get();
-foreach ($locations as $key => $location) {
-$locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
-DB::table('locations')
-->where('id', $location->id)
-->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
-}}
+    public function convert() {
+        $locations = DB::table('locations')->get();
+        foreach ($locations as $key => $location) {
+            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            DB::table('locations')
+                ->where('id', $location->id)
+                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
+        }}
 
 //Конвертор мультиязычности:Городов
-public function convertcity() {
-$locations = DB::table('cities')->get();
-foreach ($locations as $key => $location) {
-  $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
-DB::table('cities')
-->where('id', $location->id)
-->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
-}}
+    public function convertcity() {
+        $locations = DB::table('cities')->get();
+        foreach ($locations as $key => $location) {
+            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            DB::table('cities')
+                ->where('id', $location->id)
+                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
+        }}
 
 //Конвертор мультиязычности:Категории
-public function convertcategories() {
-$locations = DB::table('categories')->get();
-foreach ($locations as $key => $location) {
-  $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
-DB::table('categories')
-->where('id', $location->id)
-->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
-}}
+    public function convertcategories() {
+        $locations = DB::table('categories')->get();
+        foreach ($locations as $key => $location) {
+            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            DB::table('categories')
+                ->where('id', $location->id)
+                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
+        }}
 
 //Конвертор мультиязычности:Этажи
-public function convertfloors() {
-$locations = DB::table('floors')->get();
-foreach ($locations as $key => $location) {
-  $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
-DB::table('floors')
-->where('id', $location->id)
-->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
-}}
+    public function convertfloors() {
+        $locations = DB::table('floors')->get();
+        foreach ($locations as $key => $location) {
+            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            DB::table('floors')
+                ->where('id', $location->id)
+                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
+        }}
 
 //Функия для путей
     public function getDirectory($id) {
@@ -629,17 +629,12 @@ DB::table('floors')
 
     public function apiHotspots($id)
     {
-        $krhotspots =
-            DB::select(DB::raw("SELECT *
-FROM hotspots
-WHERE location_id = ".$id."
-"));
-        $array = array_column($krhotspots, 'destination_id');
-        $krhotspotinfo =DB::table('locations')
-            ->join('categories', 'categories.id', '=', 'locations.category_id')
-            ->select('locations.name', 'locations.slug', 'locations.id', 'locations.panorama' ,'categories.cat_icon', 'categories.cat_icon_svg', 'categories.color')
-            ->whereIn('locations.id', $array)
-            ->get();
+        //Загрузка хотспотов основной точки
+        $krhotspots = Hotspot::where('location_id', $id)->with('destination_locations')->get();
+        $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
+
+        //Загрузка информации хотспотов основной точки
+        $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach($krhotspots as $key=>$value){
             foreach($krhotspotinfo as $key2=>$value2){
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
@@ -648,17 +643,14 @@ WHERE location_id = ".$id."
                     foreach ($old as $item){
                         if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
                             $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;
-                        }
-                    }
+                            $krhotspots[$key]->img = $filename;}}
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
-                    $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->cat_icon;
-                    $krhotspots[$key]->color = $krhotspotinfo[$key2]->color;
-                    $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->cat_icon_svg;}
-            }
-        }
-        $krhotspots = $krhotspots->toArray22();
+                    $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->categorylocation->cat_icon;
+                    $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
+                    $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;}}}
+
+
         return  $krhotspots;
     }
 }
