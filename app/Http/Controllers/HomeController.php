@@ -40,7 +40,25 @@ class HomeController extends Controller
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
 //Загрузка основноч точки
-        $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->with('categorylocation')->firstOrFail();
+        $serverName = $_SERVER['HTTP_HOST'];
+        $serverNameArr = explode('.', $serverName);
+
+        $subdomain = false;
+
+        if (env('APP_ENV') == 'local') {
+            if (count($serverNameArr) > 1)
+                $subdomain = true;
+        } else {
+            if (count($serverNameArr) > 2)
+                $subdomain = true;
+        }
+
+        if ($subdomain && $serverNameArr[0] != 'dev' && !is_numeric($serverNameArr[0])) {
+            $subdomainName = $serverNameArr[0];
+            $location = Location::where('subdomain', $subdomainName)->with('categorylocation')->firstOrFail();
+        } else {
+            $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->with('categorylocation')->firstOrFail();
+        }
 
 //Загрузка этажей основной точки
         $etaji = $location->etaji;
