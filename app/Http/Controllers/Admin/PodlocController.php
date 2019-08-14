@@ -127,6 +127,13 @@ class PodlocController extends Controller
         }
     }
 
+    function showSublocation(Request $request, $id)
+    {
+        $sublocation = Sky::findOrFail($id);
+        $sublocation->show_sublocation = 1;
+        $sublocation->save();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -177,12 +184,16 @@ $sky = Location::findOrFail($id);
     {
         $this->validate($request, [
 			'name' => 'required',
-
 			'city_id' => 'required'
 		]);
-      app()->setLocale($language);
+
+        app()->setLocale($language);
           $data = $request->all();
           $requestData = $request->all();
+
+        if(empty($data['show_sublocation'])) {
+            $requestData['show_sublocation'] = 0;
+        }
 
           $requestData['podlocparent_id'] = $requestData['parrentid'] ;
           if(!empty($data['panorama'])) {

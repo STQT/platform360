@@ -238,16 +238,30 @@ class LocationsController extends Controller
         $search = request()->route('search');
         if (request()->route('search') == "noresult") {
             $categories = array_map('intval', explode(',', request()->route('categories')));
-            $results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->whereIN('category_id', $categories)->get();
+            $results = Location::where('city_id','=', $defaultlocation)
+                ->whereIN('category_id', $categories)
+                ->where(function($query) {
+                    $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                })
+                ->get();
 
         } else {
             if (request()->route('categories') == 0)  {
-                $results = Location::where('city_id','=', $defaultlocation)->whereNull('podlocparent_id')->where('name', 'LIKE', '%' . $search . '%')->get();
+                $results = Location::where('city_id','=', $defaultlocation)
+                    ->where(function($query)
+                    {
+                        $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                    })
+                    ->where('name', 'LIKE', '%' . $search . '%')->get();
 
             }
             else {
                 $categories = array_map('intval', explode(',', request()->route('categories')));
-                $results = Location::where('city_id', '=', $defaultlocation)->whereNull('podlocparent_id')->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
+                $results = Location::where('city_id', '=', $defaultlocation)
+                    ->where(function($query) {
+                        $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                    })
+                    ->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
             }}
         if($results->count()) {
             foreach($results as $key2=>$value2){
@@ -418,11 +432,6 @@ class LocationsController extends Controller
         }
         if(empty($data['isfeatured'])) {
             $requestData['isfeatured'] = 0;
-        }
-
-        if(empty($data['show_sublocation'])) {
-
-            $requestData['show_sublocation'] = 0;
         }
 
         if(empty($data['published'])) {

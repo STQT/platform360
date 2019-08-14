@@ -31,7 +31,7 @@ use HasTranslations;
      * @var array
      */
      protected $translatable = ['name', 'address', 'description','working_hours'];
-    protected $fillable = ['name', 'sky_id', 'address', 'podlocparent_id', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'published'];
+    protected $fillable = ['name', 'sky_id', 'address', 'podlocparent_id', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'published', 'show_sublocation'];
 
 
 
