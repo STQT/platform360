@@ -167,7 +167,7 @@ class PodlocController extends Controller
         $cities = Cities::all();
         $categories = Category::all();
           $skyy = Sky::where('is_sky', 'on')->get();
-$sky = Location::findOrFail($id);
+        $sky = Location::withoutGlobalScope('published')->findOrFail($id);
 
         return view('admin.podloc.edit', compact('skyy','sky','cities', 'categories', 'language'));
     }
@@ -195,6 +195,12 @@ $sky = Location::findOrFail($id);
             $requestData['show_sublocation'] = 0;
         }
 
+        if(empty($data['published'])) {
+            $requestData['published'] = 0;
+        } else {
+            $requestData['published'] = 1;
+        }
+
           $requestData['podlocparent_id'] = $requestData['parrentid'] ;
           if(!empty($data['panorama'])) {
               $randomStr = Str::random(40);
@@ -218,14 +224,13 @@ $sky = Location::findOrFail($id);
           }
 
 
-  if(!empty($requestData['name'])) {
-
-    $location = Location::findOrFail($id);
-          $location->update($requestData);
-  return redirect('admin/podloc/'.$data['parrentid'].'')->with('flash_message', 'Подлокация обновлена!');
-}  else {
-      return redirect()->back()->withErrors('Корректно заполните форму ниже');
-  }
+          if(!empty($requestData['name'])) {
+                $location = Location::withoutGlobalScope('published')->findOrFail($id);
+                $location->update($requestData);
+                return redirect('admin/podloc/'.$data['parrentid'].'')->with('flash_message', 'Подлокация обновлена!');
+          }  else {
+                return redirect()->back()->withErrors('Корректно заполните форму ниже');
+          }
 
 
 
