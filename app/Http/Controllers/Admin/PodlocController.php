@@ -33,7 +33,7 @@ class PodlocController extends Controller
         if (empty($check)) {
         return Redirect::back()->withErrors(['msg', 'The Message']);
         } else {
-            $podlocs = Podloc::where('podlocparent_id', $parentid)->orderBY('id', 'ASC')->paginate($perPage);
+            $podlocs = Podloc::where('podlocparent_id', $parentid)->withoutGlobalScope('published')->orderBY('id', 'ASC')->paginate($perPage);
         }
 
         return view('admin.podloc.index', ['podlocs'=>$podlocs, 'parentid'=>$parentid, 'parentname'=>$check['name']]);

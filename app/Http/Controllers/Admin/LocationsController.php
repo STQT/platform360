@@ -49,7 +49,7 @@ class LocationsController extends Controller
                 ->orWhere('telegram', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->latest()->paginate($perPage);
+            $locations = Location::where('is_sky', '!=' , 'on')->withoutGlobalScope('published')->whereNull('podlocparent_id')->latest()->paginate($perPage);
         }
         return view('admin.locations.index', compact('locations', 'totalLocations',
             'publishedLocations',
@@ -479,11 +479,12 @@ class LocationsController extends Controller
 //Удаление локации
     public function destroy($id)
     {
-        Location::withoutGlobalScope('published')->destroy($id);
+        Location::withoutGlobalScope('published')->findOrFail($id)->delete();
         Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
         Hotspot::where('location_id', $id)->delete();
         Hotspot::where('destination_id', $id)->delete();
         Location::where('sky_id', $id)->withoutGlobalScope('published')->update(array('sky_id' => ''));
+        
         return redirect('admin/locations')->with('flash_message', 'Location deleted!');
     }
 

@@ -42,7 +42,7 @@
 
 <div class="form-group{{ $errors->has('published') ? 'has-error' : ''}}">
 
-    <input {{ isset($sky) ? ($sky->published ? 'checked' : '') : ''}} id="published" type="checkbox" class="" name="published"> Опубликовано
+    <input {{ isset($sky) ? ($sky->published ? 'checked' : '') : ''}} id="published" type="checkbox" class="" name="published" value="1"> Опубликовано
 
     {!! $errors->first('skymainforcity', '<p class="help-block">:message</p>') !!}
 </div>

@@ -191,6 +191,10 @@ class SkyController extends Controller
             $requestData['skymainforcity'] = 0;
         }
 
+        if(empty($data['published'])) {
+            $requestData['published'] = 0;
+        }
+
         $sky = Sky::findOrFail($id);
         $sky->update($requestData);
 
