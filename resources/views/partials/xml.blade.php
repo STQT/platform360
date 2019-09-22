@@ -179,7 +179,52 @@ previewlinkurlshare.value = currentLocation;
     <scene name="scene1" title="scene1" onstart="" thumburl="/storage/panoramas/unpacked/{{ $location->folderName($index) }}/thumb.jpg" lat="41.311108"  lng="69.279711" heading="">
 {!!$location->xmllocation!!}
 
+   {{--  <action name="calc_pos_from_hfov_yaw_pitch_roll">
+  div(hfov,%1,57.295779);
+  div(yaw,%2,-57.295779);
+  div(pitch,%3,57.295779);
+  div(roll,%4,-57.295779);
+  mul(hfov,0.5);Math.tan(hfov);mul(width,hfov,1000);set(height,'prop');
+  Math.cos(ch,yaw);Math.sin(sh,yaw);
+  Math.cos(ca,pitch);Math.sin(sa,pitch);
+  Math.cos(cb,roll);Math.sin(sb,roll);
+  mul(m0,ca,ch);
+  mul(tmp,cb,sa);mul(tmp,ch);mul(tmp2,sb,sh);add(m3,tmp,tmp2);
+  mul(m4,cb,ca);
+  mul(tmp,cb,sa);mul(tmp,sh);mul(tmp2,sb,ch);sub(m5n,tmp,tmp2);mul(m5n,-1);
+  mul(tmp,sb,sa);mul(tmp,ch);mul(tmp2,cb,sh);sub(m6n,tmp,tmp2);mul(m6n,-1);
+  Math.atan2(yaw,m6n,m0);
+  Math.atan2(roll,m5n,m4);
+  Math.asin(pitch,m3);
+  mul(ath,yaw,57.295779);
+  mul(atv,pitch,57.295779);
+  mul(rotate,roll,57.295779);
+</action>
+
+<!--  Это код для хотспота видео (значениея конечно надо менять на свои) -->
+ <hotspot name="video"        
+         url.flash="/plugins/videoplayer.swf"
+         url.html5="/plugins/videoplayer.js"
+     videourl.desktop="/storage/panoramas/kusok.mp4"
+         videourl.mobile.or.tablet="/storage/panoramas/kusok.mp4"
+     onloaded="calc_pos_from_hfov_yaw_pitch_roll(70, 6.4273, -1.9083, -0.1601);"
+         distorted="true"
+         alpha="1"
+     zorder="100"
+         pausedonstart="false"
+         loop="true"
+           directionalsound="true"
+           range="200"
+           volume="0.7"
+           onclick="togglepause();"
+       onhover="showtext(OFF/ON)"
+            capture="false"
+         
+         /> --}}
+
+
     </scene>
+
 
 
 </krpano>

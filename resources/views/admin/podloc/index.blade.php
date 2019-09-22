@@ -36,6 +36,7 @@
                                         <button class="btn btn-info btn-sm show-sublocation" data-id="{{ $item->id }}" title="Показывать в поиске"><i class="fa fa-check-square"></i></button>
                                             <a href="{{ url('/admin/locations/' . $item->id) }}" title="View"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/podloc/edit/' . $item->id . '/ru') }}" title="Edit"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ '/storage/panoramas/' . pathinfo(str_replace('.tiles', '', \App\Location::xmlName(json_decode($item->panorama)[0]->panoramas[0]->panorama)))['filename'] . '.jpeg' }}" title="Оригинал"><button class="btn btn-info btn-sm"><i class="fa fa-image" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/locations', $item->id],

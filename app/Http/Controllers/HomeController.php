@@ -90,7 +90,7 @@ class HomeController extends Controller
             $locationscordinate = Location::transl($locationscordinate);}
 
 //Загрузка избранных точек для карты
-        $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
+        $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->orderBy('id', 'DESC')->limit(8)->get();
         if ($isfeatured->isNotEmpty()) {
             $sss =Location::folderNames($isfeatured);
             foreach($isfeatured as $key2=>$value2){
