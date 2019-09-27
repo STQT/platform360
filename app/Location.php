@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class Location extends Model
 {
     use LogsActivity;
-use HasTranslations;
+    use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -188,6 +188,11 @@ public static  function folderNames($loc)
     public function hotspots()
     {
         return $this->hasMany('App\Hotspot', 'location_id');
+    }
+
+        public function videos()
+    {
+        return $this->hasMany('App\Video', 'location_id');
     }
 
     public function locscats()

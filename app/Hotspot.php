@@ -9,6 +9,8 @@ class Hotspot extends Model
 {
     use LogsActivity;
 
+    const TYPE_MARKER = 1;
+    const TYPE_INFORMATION = 2;
 
     /**
      * The database table used by the model.
@@ -29,7 +31,7 @@ class Hotspot extends Model
      *
      * @var array
      */
-    protected $fillable = ['location_id', 'destination_id', 'h', 'v'];
+    protected $fillable = ['location_id', 'destination_id', 'h', 'v', 'information', 'image'];
 
     public function location()
     {

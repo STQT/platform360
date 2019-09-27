@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Hotspot;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Location;
 use App\Cities;
+use App\Hotspot;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Location;
 use App\Sky;
+use App\Video;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cookie;
-use DB;
 class LocationsController extends Controller
 {
     /**
@@ -696,6 +698,44 @@ class LocationsController extends Controller
         $hotspot->v = $data['v'];
         $hotspot->save();
         return 'ok';
+    }
+
+    public function uploadVideo(Request $request)
+    {
+        $data = $request->all();
+
+        $validation = Validator::make($request->all(), [
+            'video' => 'required|file|max:150000'
+        ]);
+
+        if ($validation->passes())
+        {
+            $video = $request->file('video');
+            $newName = rand() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('storage/videos'), $newName);
+
+            $hotspot = new Video();
+            $hotspot->location_id = $data['location'];
+            $hotspot->hfov = $data['hfov'];
+            $hotspot->yaw = $data['yaw'];
+            $hotspot->pitch = $data['pitch'];
+            $hotspot->roll = $data['roll'];
+            $hotspot->video = $newName;
+            $hotspot->save();
+
+            return response()->json([
+                'message' => 'Video uploaded successfully',
+                'uploaded_video' => 'storage/videos/' . $newName,
+                'class_name' => 'alert-success',
+            ]);
+        } else
+        {
+            return response()->json([
+                'message' => $validation->errors()->all(),
+                'uploaded_video' => '',
+                'class_name' => 'alert-danger',
+            ]);
+        }
     }
 
     public function apiHotspots($id)

@@ -1,185 +1,215 @@
 @extends('layouts.admin.krpano')
 
 @section('content')
-    <div id="adminModal" style="display: none;" class="modal">
-        <div class="overlay"></div>
-        <div class="modal-wrap">
-            <span class="modal-close">x</span>
+<div id="adminModal" style="display: none;" class="modal">
+    <div class="overlay"></div>
+    <div class="modal-wrap">
+        <span class="modal-close">x</span>
 
-            <div class="categories">          <div id="deletehotspot" onclick="deletehotspot()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
-                <ul class="category-list">
-                    @foreach($categories as $category)
-                        <li>
-                            <a class="category-li" data-category="{{ $category->id }}"
-                               href="#">{{ $category->name }}</a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="categories">          <div id="deletehotspot" onclick="deletehotspot()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
+        <ul class="category-list">
+            @foreach($categories as $category)
+            <li>
+                <a class="category-li" data-category="{{ $category->id }}"
+                   href="#">{{ $category->name }}</a>
+               </li>
+               @endforeach
+           </ul>
+       </div>
 
-            <div class="cotegory-info">
-                <div class="mess">
-                    <img style="display: none;" class="mess_img" src="/skin/preloader.gif" alt="">
-                    <h1 class="mess_title">Выберите хотя-бы одну категорию</h1>
-                    <h1 style="display: none;" class="mess_not_found">Локации не найдены</h1>
-                </div>
+       <div class="cotegory-info">
+        <div class="mess">
+            <img style="display: none;" class="mess_img" src="/skin/preloader.gif" alt="">
+            <h1 class="mess_title">Выберите хотя-бы одну категорию</h1>
+            <h1 style="display: none;" class="mess_not_found">Локации не найдены</h1>
+        </div>
 
-                <div class="axmad4ik" style="display: none;">
-                    <input class="info-search" type="search" placeholder="Поиск...">
+        <div class="axmad4ik" style="display: none;">
+            <input class="info-search" type="search" placeholder="Поиск...">
 
-                    <ul class="info-list">
+            <ul class="info-list">
 
-                    </ul>
+            </ul>
 
-                    <ul class="info-pagination">
+            <ul class="info-pagination">
 
-                    </ul>
-                </div>
-            </div>
+            </ul>
         </div>
     </div>
+</div>
+</div>
 
-    <button id="addHotspot" onclick="add_hotspot();">Добавить точку</button>
-    <a id="adminbackurl" href="{{ url()->previous() }}">Назад</a>
+
+<div id="videoModal" style="display: none;" class="modal">
+    <div class="overlay"></div>
+    <div class="modal-wrap">
+        <span class="modal-close">x</span>
+        
+        <div>
+            <form method="post" enctype="multipart/form-data" id="upload-video">
+                {{ csrf_field() }}
+                <div class="form-group">Видео: <input type="file" name="video"></div>
+                
+                <div class="form-group">hfov: <input type="text" name="hfov"></div>
+                
+                <div class="form-group">yaw: <input type="text" name="yaw"></div>
+                
+                <div class="form-group">pitch: <input type="text" name="pitch"></div>
+                
+                <div class="form-group">roll: <input type="text" name="roll"></div>
+
+                <input type="hidden" name="location" value={{ $location->id }} >
+                
+                <div><button type="submit" class="btn btn-primary">Добавить</button></div>
+                
+            </form>
+        </div>
+        
+</div>
+</div>
+
+<button id="addHotspot" onclick="add_hotspot();">Добавить точку</button>
+<button id="addVideo" onclick="add_video();">Добавить видео</button>
+<a id="adminbackurl" href="{{ url()->previous() }}">Назад</a>
 @endsection
 
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <script>
-        var hcoordinate;
-        var vcoordinate;
-var hotspotid;
-var hotspotname;
-        $(function () {
-            $('body').on('click', '.locationItem', function () {
-                var _this = $(this);
+<script>
+    var hcoordinate;
+    var vcoordinate;
+    var hotspotid;
+    var hotspotname;
+    $(function () {
+        $('body').on('click', '.locationItem', function () {
+            var _this = $(this);
 
-                $.post('/ru/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
-                    $('.modal').fadeOut();
-                    alert('Точка установлена');
-                }).fail(function() {
-                    alert('Ошибка установки точки');
-                });
+            $.post('/ru/api/locations/add', { location: "{{ $location->id }}", src: _this.data('location'), index: _this.data('index'), h: hcoordinate, v: vcoordinate }).done(function() {
+                $('.modal').fadeOut();
+                alert('Точка установлена');
+            }).fail(function() {
+                alert('Ошибка установки точки');
             });
+        });
 
 
-            $('.category-li').click(function () {
-                var _this = $(this);
+        $('.category-li').click(function () {
+            var _this = $(this);
 
-                $('.mess_title').fadeOut('slow');
+            $('.mess_title').fadeOut('slow');
 
-                $('.mess_not_found').fadeOut('slow');
+            $('.mess_not_found').fadeOut('slow');
 
-                $('.info-list').html('');
+            $('.info-list').html('');
 
-                $('.axmad4ik').fadeOut();
+            $('.axmad4ik').fadeOut();
 
+            setTimeout(function () {
+                $('.mess_img').fadeIn();
+            }, 700);
+
+            $.get('/ru/api/locations/' + _this.data('category')).done(function (data) {
                 setTimeout(function () {
-                    $('.mess_img').fadeIn();
+                    $('.mess_img').fadeOut('slow');
+
                 }, 700);
 
-                $.get('/ru/api/locations/' + _this.data('category')).done(function (data) {
-                    setTimeout(function () {
-                        $('.mess_img').fadeOut('slow');
-
-                    }, 700);
-
-                    setTimeout(function () {
-                        if (!data.data.length) {
-                            setTimeout(function () {
-                                $('.mess_not_found').fadeIn();
-                            }, 800);
-
-                            return;
-                        }
-
+                setTimeout(function () {
+                    if (!data.data.length) {
                         setTimeout(function () {
-                            $('.mess_not_found').fadeOut();
+                            $('.mess_not_found').fadeIn();
+                        }, 800);
 
-                            for (var i = 0; i < data.data.length; i++) {
-                                var panos = JSON.parse(data.data[i].panorama);
+                        return;
+                    }
 
-                                if(panos.length == 1) {
+                    setTimeout(function () {
+                        $('.mess_not_found').fadeOut();
 
-                                    if (data.data[i].podlocparent_id == null) {
-                                        xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
-                                        $preview = $( xmlDoc ).find('preview');
+                        for (var i = 0; i < data.data.length; i++) {
+                            var panos = JSON.parse(data.data[i].panorama);
 
-                                        var parentId = data.data[i].id;
-                                        $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+                            if(panos.length == 1) {
 
-                                        $.get('/ru/api/sublocations/' + data.data[i].id).done(function (data) {
-	                                        for (var i = 0; i < data.data.length; i++) {
-	                                            var panos = JSON.parse(data.data[i].panorama);
+                                if (data.data[i].podlocparent_id == null) {
+                                    xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
+                                    $preview = $( xmlDoc ).find('preview');
 
-	                                            if(panos.length == 1) {
-	                                                xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
-	                                                $preview = $( xmlDoc ).find('preview');
+                                    var parentId = data.data[i].id;
+                                    $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+
+                                    $.get('/ru/api/sublocations/' + data.data[i].id).done(function (data) {
+                                     for (var i = 0; i < data.data.length; i++) {
+                                         var panos = JSON.parse(data.data[i].panorama);
+
+                                         if(panos.length == 1) {
+                                             xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
+                                             $preview = $( xmlDoc ).find('preview');
 	                                                // console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
 	                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a></li>');
 	                                            }
 	                                        }
 	                                    });
-                                    }
-                                }
-                                else {
-                                    for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
-                                        $('.info-list').append('<li><a class="locationItem" data-index="' + floorIndex +'" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '(' + panos[i].name + ')' + '</a></li>');
-                                    }
                                 }
                             }
+                            else {
+                                for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
+                                    $('.info-list').append('<li><a class="locationItem" data-index="' + floorIndex +'" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '(' + panos[i].name + ')' + '</a></li>');
+                                }
+                            }
+                        }
 
-                            $('.axmad4ik').fadeIn();
-                        }, 700);
+                        $('.axmad4ik').fadeIn();
                     }, 700);
-                }).fail(function () {
-                    alert('Ошибка загрузки информации, пожалуйста попробуйте снова.')
-                });
-            });
-        })
-    </script>
-
-    <script>
-        $(function () {
-            $('.modal-close').on('click', function () {
-                $('.modal').fadeOut();
+                }, 700);
+            }).fail(function () {
+                alert('Ошибка загрузки информации, пожалуйста попробуйте снова.')
             });
         });
-    </script>
+    })
+</script>
 
-    <script>
-        var krpano = null;
+<script>
+    $(function () {
+        $('.modal-close').on('click', function () {
+            $('.modal').fadeOut();
+        });
+    });
+</script>
 
-        function krpano_onready_callback(krpano_interface) {
-            krpano = krpano_interface;
+<script>
+    var krpano = null;
 
-            setTimeout(function() {
-                @foreach($location->hotspots as $hotspot)
-                    add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, {{$hotspot->id}});
-                @endforeach
-            }, 3000);
-        }
+    function krpano_onready_callback(krpano_interface) {
+        krpano = krpano_interface;
 
-        function add_exist_hotspot(h, v, id) {
-            if (krpano) {
-                var hs_name = "hs" + ((Date.now() + Math.random()) | 0);
+        setTimeout(function() {
+            @foreach($location->hotspots as $hotspot)
+            add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, {{$hotspot->id}});
+            @endforeach
+        }, 3000);
+    }
 
-                krpano.call("addhotspot(" + hs_name + ")");
-                krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_hotspot.png");
-                krpano.set("hotspot[" + hs_name + "].ath", h);
-                krpano.set("hotspot[" + hs_name + "].atv", v);
-                krpano.set("hotspot[" + hs_name + "].distorted", true);
+    function add_exist_hotspot(h, v, id) {
+        if (krpano) {
+            var hs_name = "hs" + ((Date.now() + Math.random()) | 0);
 
-                if (krpano.get("device.html5")) {
+            krpano.call("addhotspot(" + hs_name + ")");
+            krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_hotspot.png");
+            krpano.set("hotspot[" + hs_name + "].ath", h);
+            krpano.set("hotspot[" + hs_name + "].atv", v);
+            krpano.set("hotspot[" + hs_name + "].distorted", true);
+
+            if (krpano.get("device.html5")) {
                     // for HTML5 it's possible to assign JS functions directly to krpano events
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                       hotspotid =  id;
-    hotspotname =  hs_name;
-                        hcoordinate = h;
-                        vcoordinate = v;
-                        $('#adminModal').fadeIn();
-                    }.bind(null, hs_name));
+                      hotspotname =  hs_name;
+                      hcoordinate = h;
+                      vcoordinate = v;
+                      $('#adminModal').fadeIn();
+                  }.bind(null, hs_name));
                 }
             }
         }
@@ -192,53 +222,49 @@ var hotspotname;
             }
         }
         function deletehotspot() {
+            krpano.call("removehotspot("+hotspotname+")");
+            if(hotspotid  != "new") {
 
-krpano.call("removehotspot("+hotspotname+")");
- if(hotspotid  != "new") {
+              $.get('/ru/api/deletehotspot/' + hotspotid).done(function (data) {
+                $('.modal').fadeOut();
+                alert('Удалили точку: '+ hotspotid);
+            });
+          } else {
 
-  $.get('/ru/api/deletehotspot/' + hotspotid).done(function (data) {
-    $('.modal').fadeOut();
-    alert('Удалили точку: '+ hotspotid);
-  });
-
-
-
-
- } else {
-
-      $('.modal').fadeOut();
-          alert('Удалили точку');
- }
-
-
-
-        }
-        function add_hotspot() {
+              $('.modal').fadeOut();
+              alert('Удалили точку');
+          }
+      }
+      function add_hotspot() {
          $('body').dblclick(function() {
             if (krpano) {
-            var mx = krpano.get("mouse.x");
-    var my = krpano.get("mouse.y");
-    var pt = krpano.screentosphere(mx, my);
+                var mx = krpano.get("mouse.x");
+                var my = krpano.get("mouse.y");
+                var pt = krpano.screentosphere(mx, my);
 
-                var hs_name = "hs" + ((Date.now() + Math.random()) | 0);    // create unique/randome name
-                krpano.call("addhotspot(" + hs_name + ")");
-                krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_hotspot.png");
-                krpano.set("hotspot[" + hs_name + "].ath", pt.x);
-                krpano.set("hotspot[" + hs_name + "].atv", pt.y);
-                krpano.set("hotspot[" + hs_name + "].distorted", true);
+            var hs_name = "hs" + ((Date.now() + Math.random()) | 0);    // create unique/randome name
+            krpano.call("addhotspot(" + hs_name + ")");
+            krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_hotspot.png");
+            krpano.set("hotspot[" + hs_name + "].ath", pt.x);
+            krpano.set("hotspot[" + hs_name + "].atv", pt.y);
+            krpano.set("hotspot[" + hs_name + "].distorted", true);
 
-                if (krpano.get("device.html5")) {
-                    // for HTML5 it's possible to assign JS functions directly to krpano events
-                    krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
-                      hotspotid =  'new';
-                      hotspotname =  hs_name;
-                        hcoordinate = pt.x;
-                        vcoordinate = pt.y;
-                        $('#adminModal').fadeIn();
-                    }.bind(null, hs_name));
-                }
+            if (krpano.get("device.html5")) {
+                // for HTML5 it's possible to assign JS functions directly to krpano events
+                krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                  hotspotid =  'new';
+                  hotspotname =  hs_name;
+                  hcoordinate = pt.x;
+                  vcoordinate = pt.y;
+                  $('#adminModal').fadeIn();
+              }.bind(null, hs_name));
             }
-        });}
+        }
+    });}
+
+         function add_video() {
+            $('#videoModal').fadeIn();
+        }
     </script>
 
     <script>
@@ -249,6 +275,25 @@ krpano.call("removehotspot("+hotspotname+")");
                 e.preventDefault();
                 $('.info-list li ul').hide();
                 $(this).closest('li').find('ul').slideDown('slow');
+            });
+
+
+            $('form#upload-video').on('submit', function(e) {
+                console.log('test');
+                e.preventDefault();
+                $.ajax({
+                    url: '/ru/api/locations/upload-video',
+                    method: 'POST',
+                    data: new FormData(this),
+                    dataType: 'JSON',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data)
+                    {
+                        $('#videoModal').fadeOut();
+                    }
+                });
             });
         });
     </script>
@@ -273,4 +318,4 @@ krpano.call("removehotspot("+hotspotname+")");
             height: 27px;
         }
     </style>
-@endsection
+    @endsection
