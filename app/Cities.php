@@ -31,7 +31,7 @@ class Cities extends Model
      * @var array
      */
     protected $translatable = ['name'];
-    protected $fillable = ['name', 'lat', 'lng', 'is_default', 'position'];
+    protected $fillable = ['name', 'lat', 'lng', 'is_default', 'position', 'subdomain'];
 
 
 

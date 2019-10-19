@@ -22,6 +22,14 @@
     
     {!! $errors->first('position', '<p class="help-block">:message</p>') !!}
 </div>
+
+<div class="form-group{{ $errors->has('subdomain') ? 'has-error' : ''}}">
+    {!! Form::label('subdomain', 'Subdomain', ['class' => 'control-label']) !!}
+    {!! Form::text('subdomain', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    
+    {!! $errors->first('subdomain', '<p class="help-block">:message</p>') !!}
+</div>
+
 <div class="form-group{{ $errors->has('is_default') ? 'has-error' : ''}}">
     
     <input {{ isset($cities) ? ($cities->is_default ? 'checked' : '') : ''}} id="is_default" type="checkbox" class="" name="is_default"> Основной
