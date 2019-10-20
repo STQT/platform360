@@ -55,7 +55,7 @@ class HomeController extends Controller
 
         if ($subdomain && $serverNameArr[0] != 'dev' && !is_numeric($serverNameArr[0])) {
             $subdomainName = $serverNameArr[0];
-            $city = Cities::where('subdomain', $subdomainName)->firstOrFail();
+            $city = Cities::where('subdomain', $subdomainName)->first();
             if ($city) {
                 $location = Location::where([['city_id', $city->id], ['isDefault', '1']])->with('categorylocation')->firstOrFail();
 
