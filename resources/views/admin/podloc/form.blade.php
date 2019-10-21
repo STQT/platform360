@@ -127,7 +127,13 @@
 </div>
 
 
-
+<div class="hasNo">
+    <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">
+        {!! Form::label('audio', 'Аудио', ['class' => 'control-label']) !!}
+        {!! Form::file('audio', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('audio', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 
 <div class="form-group">

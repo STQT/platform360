@@ -76,18 +76,18 @@ class PodlocController extends Controller
      }
     public function store(Request $request)
     {
-  app()->setLocale('ru');
+        app()->setLocale('ru');
 
-    $this->validate($request, [
-			'name' => 'required',
-			'panorama' => 'required',
-			'city_id' => 'required'
-		]);
+        $this->validate($request, [
+    			'name' => 'required',
+    			'panorama' => 'required',
+    			'city_id' => 'required'
+    		]);
 
         $data = $request->all();
         $requestData = $request->all();
 
-      $requestData['podlocparent_id'] = $requestData['parrentid'] ;
+        $requestData['podlocparent_id'] = $requestData['parrentid'] ;
 
         $requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
 
@@ -111,7 +111,14 @@ class PodlocController extends Controller
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
 
+        if(!empty($data['audio'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['audio']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['audio']->move(public_path('storage/audio'), $fullName);
 
+            $requestData['audio'] = $fullName;
+        }
 
 
         if(!empty($panoramas)) {
@@ -183,9 +190,9 @@ class PodlocController extends Controller
     public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
-			'name' => 'required',
-			'city_id' => 'required'
-		]);
+    			'name' => 'required',
+    			'city_id' => 'required'
+    		]);
 
         app()->setLocale($language);
           $data = $request->all();
@@ -223,6 +230,14 @@ class PodlocController extends Controller
               $requestData['panorama'] = json_encode($panoramas);
           }
 
+          if(!empty($data['audio'])) {
+              $randomStr = Str::random(40);
+              $extension = $data['audio']->getClientOriginalExtension();
+              $fullName = $randomStr . '.' . $extension;
+              $file = $data['audio']->move(public_path('storage/audio'), $fullName);
+
+              $requestData['audio'] = $fullName;
+          }
 
           if(!empty($requestData['name'])) {
                 $location = Location::withoutGlobalScope('published')->findOrFail($id);
