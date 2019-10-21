@@ -1184,7 +1184,17 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
                 @endforeach
             }, 3000);
         }
-@if(isset($hotspot))
+
+        $(document).ready(function() {
+          @if ($location->audio != '')
+            $('#audio')[0].setSrc('/storage/audio/{{$location->audio}}');
+            setTimeout(function() {
+              $('#audio')[0].play();
+            }, 100);
+          @endif
+        });
+
+        @if(isset($hotspot))
         $(function(){
             $.get(
               // "/hasFloors/axmad4ik:{{ $hotspot->destination_id }}",
@@ -1371,14 +1381,17 @@ if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).at
 if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
 
 if(data.etaji.length > 0) {
-
-$('.buttonetaj0').show();
+  $('.buttonetaj0').show();
 }
 else {
+  $('.buttonetaj0').hide();
+}
 
-$('.buttonetaj0').hide();
-
-
+if (data.audio) {
+  $('#audio')[0].setSrc('/storage/audio/' + data.audio);
+  $('#audio')[0].play();
+} else {
+  $('#audio')[0].pause();
 }
 if (data.onmap == "on") {
 
@@ -1849,4 +1862,10 @@ maphotspotcolor: value.categorylocation.color
     <script>
         embedpano({target: "pano", id: "pano1", xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}", passQueryParameters:true, html5:"only+webgl", onready: krpano_onready_callback});
     </script>
+
+    <audio controls style="display: none;" id="audio">
+      <source src="" type="audio/mpeg"  id="audio">
+      Your browser does not support the audio element.
+    </audio>
+
 @endsection

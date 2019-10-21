@@ -389,6 +389,14 @@ class LocationsController extends Controller
             $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
+        if(!empty($data['audio'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['audio']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['audio']->move(public_path('storage/audio'), $fullName);
+
+            $requestData['audio'] = $fullName;
+        }
         if(!empty($panoramas)) {
             $requestData['panorama'] = json_encode($panoramas);
             $location = Location::create($requestData);
@@ -479,7 +487,7 @@ class LocationsController extends Controller
         return view('admin.locations.edit', compact('location', 'sky','categories', 'cities', 'language'));
     }
 
-//Обновление локации
+    //Обновление локации
     public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
@@ -521,6 +529,14 @@ class LocationsController extends Controller
             $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
             $requestData['panorama'] = json_encode($panoramas);
+        }
+        if(!empty($data['audio'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['audio']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['audio']->move(public_path('storage/audio'), $fullName);
+
+            $requestData['audio'] = $fullName;
         }
         if(!empty($requestData['name'])) {
             app()->setLocale($language);
@@ -759,7 +775,9 @@ class LocationsController extends Controller
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
                     $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->categorylocation->cat_icon;
                     $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
-                    $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;}}}
+                    $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;
+                    $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
+                }}}
 
 
         return  $krhotspots;

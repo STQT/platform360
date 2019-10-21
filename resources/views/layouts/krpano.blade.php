@@ -119,6 +119,7 @@
 <script src="/assets/google-maps.js"></script>
 <script src="/assets/main.js"></script>
 <script src="/assets/custom.js"></script>
+<script src="/js/mediaelement-and-player.min.js"></script>
 
 @yield('scripts')
 

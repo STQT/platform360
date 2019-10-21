@@ -6,4 +6,11 @@ $(document).ready(function() {
         arrows: false,
         autoplaySpeed: 7000
     });
+
+    $('audio').mediaelementplayer({
+      success: function(player, node) {
+
+        // More code
+      }
+    });
 });

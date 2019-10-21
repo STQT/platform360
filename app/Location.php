@@ -32,7 +32,7 @@ class Location extends Model
      * @var array
      */
     protected $translatable = ['name', 'address', 'description','working_hours'];
-    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id', 'subdomain', 'published', 'show_sublocation'];
+    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id', 'subdomain', 'published', 'show_sublocation', 'audio'];
 
 
     /**
@@ -47,9 +47,9 @@ class Location extends Model
         return __CLASS__ . " model has been {$eventName}";
     }
     protected function asJson($value)
-     {
-         return json_encode($value, JSON_UNESCAPED_UNICODE);
-     }
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
     public  function folderName()
     {
         $test = json_decode($this->panorama)[0]->panoramas[0]->panorama;
@@ -61,7 +61,6 @@ class Location extends Model
               $filename = $test . '/' . $item;
           }
         }
-
 
         return $filename;
     }
