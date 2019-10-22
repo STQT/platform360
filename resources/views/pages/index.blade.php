@@ -1364,55 +1364,64 @@ originalxmlname = originalxmlname.join("");
                 if(nourl=="nooo") {
 
                 } else {
-history.pushState({
-    id: 'homepage'
-}, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
-}
+                  history.pushState({
+                      id: 'homepage'
+                  }, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
+                }
     $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
+      $( "#location_name" ).text(data.name);
+      $( "#location_name2" ).text(data.name);
+      if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
+      if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
+      if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
+      if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
+      if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
+      if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
+      if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
 
-$( "#location_name" ).text(data.name);
-$( "#location_name2" ).text(data.name);
-if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
-if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
-if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
-if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
-if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
-if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
-if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
+      if(data.etaji.length > 0) {
+        $('.buttonetaj0').show();
+      }
+      else {
+        $('.buttonetaj0').hide();
+      }
 
-if(data.etaji.length > 0) {
-  $('.buttonetaj0').show();
-}
-else {
-  $('.buttonetaj0').hide();
-}
+      if (data.audio) {
+        $('#audio')[0].setSrc('/storage/audio/' + data.audio);
+        $('#audio')[0].play();
+      } else {
+        if (data.podlocparent_id) {
+            $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
+              .done(function(parentLocData) {
+                  if (parentLocData.audio) {
+                    // $('#audio')[0].setSrc('/storage/audio/' + parentLocData.audio);
+                    // $('#audio')[0].play();
+                  }
+              });
+        } else {
+          $('#audio')[0].pause();
+        }
+      }
+      if (data.onmap == "on") {
 
-if (data.audio) {
-  $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-  $('#audio')[0].play();
-} else {
-  $('#audio')[0].pause();
-}
-if (data.onmap == "on") {
+         $('.currentlocationcordinates').data('lat', data.lat);
+         $('.currentlocationcordinates').data('lng', data.lng);
 
-   $('.currentlocationcordinates').data('lat', data.lat);
-   $('.currentlocationcordinates').data('lng', data.lng);
+      } else {
 
-} else {
-
-  $('.currentlocationcordinates').data('map', 'no');
-  $('.currentlocationcordinates').data('lat', 'no');
-  $('.currentlocationcordinates').data('lng', 'no');
-}
-if (data.is_sky == "on") {
+        $('.currentlocationcordinates').data('map', 'no');
+        $('.currentlocationcordinates').data('lat', 'no');
+        $('.currentlocationcordinates').data('lng', 'no');
+      }
+      if (data.is_sky == "on") {
 
 
-  document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
-  document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
-} else {
-  document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
-  document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
-}
+        document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
+        document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
+      } else {
+        document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
+        document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
+      }
 
 
     })

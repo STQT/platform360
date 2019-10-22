@@ -8,6 +8,7 @@ $(document).ready(function() {
     });
 
     $('audio').mediaelementplayer({
+      loop: true,
       success: function(player, node) {
 
         // More code

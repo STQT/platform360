@@ -426,7 +426,7 @@ class LocationsController extends Controller
         return view('pages.admin.edit', ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
     }
 
-//API Локация
+    //API Локация
     public function show2($slug)
     {
         //Проверка куков на город
@@ -437,10 +437,14 @@ class LocationsController extends Controller
             Cookie::queue(Cookie::forever('city', '1'));
         }
 
-        $location = Location::where('slug', $slug)->firstOrFail();
+        if (is_numeric($slug)) {
+            $location = Location::where('id', $slug)->firstOrFail();
+        } else {
+            $location = Location::where('slug', $slug)->firstOrFail();
+        }
 
 
-//Загрузка этажей основной точки
+        //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations="";
         if ($etaji->isNotEmpty()) {
@@ -462,10 +466,8 @@ class LocationsController extends Controller
             }} else { $location->skyslug = "no";};
 
 
-
         $location = $location->toArray22();
         return $location;
-
     }
 
 
