@@ -221,6 +221,11 @@ public static  function folderNames($loc)
         return $this->hasMany('App\Floors', 'parrentid');
     }
 
+    public function city()
+    {
+        return $this->hasOne('App\Cities', 'id', 'city_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

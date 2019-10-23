@@ -76,17 +76,13 @@
                         <!-- *********** TImberland Block *********** -->
                         <div class="input_city">
                            <div class="drop_down_city">
-
-
                              <select>
                                  @foreach($cities as $city)
-                                 <option id="{{$city->id}}" data-my-var="{{ app()->getLocale() }}" @if($defaultlocation==$city->id) selected @endif>{{$city->name}}</option>
+                                 <option id="{{$city->id}}" data-my-var="{{ app()->getLocale() }}" @if($defaultlocation==$city->id || $location->city->id == $city->id) selected @endif>{{$city->name}}</option>
 
                                  @endforeach
                              </select>
                            </div>
-
-
                         </div>
                         <!-- **************************************** -->
                         <div class="wrapper-button">

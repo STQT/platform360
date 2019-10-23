@@ -58,7 +58,7 @@ class HomeController extends Controller
             $city = Cities::where('subdomain', $subdomainName)->first();
             if ($city) {
                 $location = Location::where([['city_id', $city->id], ['isDefault', '1']])->with('categorylocation')->firstOrFail();
-
+                Cookie::queue(Cookie::forever('city', $city->id));
             } else {
                 $location = Location::where('subdomain', $subdomainName)->with('categorylocation')->firstOrFail();
             }
