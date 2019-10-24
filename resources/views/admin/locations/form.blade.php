@@ -137,6 +137,11 @@
     {!! $errors->first('subdomain', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group{{ $errors->has('order') ? 'has-error' : ''}}">
+    {!! Form::label('order', 'Порядок', ['class' => 'control-label']) !!}
+    {!! Form::text('order', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('order', '<p class="help-block">:message</p>') !!}
+</div>
 
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}

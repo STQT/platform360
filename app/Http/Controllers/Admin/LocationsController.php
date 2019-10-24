@@ -306,6 +306,7 @@ class LocationsController extends Controller
                 ->where(function($query) {
                     $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                 })
+                ->orderBy('order', 'asc')
                 ->get();
 
         } else {
@@ -353,7 +354,8 @@ class LocationsController extends Controller
         app()->setLocale('ru');
         $this->validate($request, [
             'name' => 'required',
-            'panorama' => 'file'
+            'panorama' => 'file',
+            'audio' => 'file',
         ]);
         $data = $request->all();
         $requestData = $request->all();
