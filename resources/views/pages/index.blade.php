@@ -1175,8 +1175,7 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
 
             setTimeout(function() {
                 @foreach($krhotspots as $index => $hotspot)
-
-                add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, "{{ $hotspot->name }}", "{{$hotspot->cat_icon_svg}}","{{$hotspot->cat_icon}}","{{$hotspot->img}}","uzbekistan:{{ $hotspot->destination_id }}", {{ $index }}, "{{$hotspot->slug}}", "{{$hotspot->color}}");
+                add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, "{!! str_replace('"', '\"', $hotspot->name) !!}", "{{$hotspot->cat_icon_svg}}","{{$hotspot->cat_icon}}","{{$hotspot->img}}","uzbekistan:{{ $hotspot->destination_id }}", {{ $index }}, "{{$hotspot->slug}}", "{{$hotspot->color}}");
                 @endforeach
             }, 3000);
         }
@@ -1437,9 +1436,7 @@ originalxmlname = originalxmlname.join("");
 
 
         function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color) {
-          console.log('ok');
             if (krpano) {
-console.log('ok2');
                 krpano.call("addhotspot(" + hs_name + ")");
                 krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
                 krpano.set("hotspot[" + hs_name + "].ath", h);
@@ -1449,82 +1446,71 @@ console.log('ok2');
                 krpano.set("hotspot[" + hs_name + "].edge", "bottom");
 
                 krpano.set("hotspot[" + hs_name + "].onout", function() {
-    $( ".hotspotPreview-wrapper" ).hide();
-});
+                  $( ".hotspotPreview-wrapper" ).hide();
+                });
 
                 krpano.set("hotspot[" + hs_name + "].onover", function() {
 
                     $( ".hotspotPreview-wrapper" ).show();
-                hotspottext=$('.hotspotPreview__text');
-                hotspoticon=$('.uzbhotspoticon');
-                hotspotimg= $('.uzbhotspotimg');
-                var n = krpano.spheretoscreen(h, v);
-                var m = krpano.get("state.position.location");
+                  hotspottext=$('.hotspotPreview__text');
+                  hotspoticon=$('.uzbhotspoticon');
+                  hotspotimg= $('.uzbhotspotimg');
+                  var n = krpano.spheretoscreen(h, v);
+                  var m = krpano.get("state.position.location");
+
+                  var link = $('.hotspotPreview__text');
+
+                  var uzb360preview = $('#uzb360preview');
+                      var bottomFromVisota = $(document).height() ;
+                      var bottomFromShirota = $(document).width() ;
+
+                      var preview = $('.hotspotPreview ');
+                  var previewx = n.x+50;
+                  var previewxx = n.x-280;
+                  var previewxxx = n.x-120;
+                  var previewy = n.y+30;
+                  var previewyy = n.y-200;
+                  var top = n.y -325;
+                  var bottom = n.y +30;
+                  var left = n.x -118;
+                  var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
+                  var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
+                  if (bottomFromShirota-n.x > 500) {
+
+                      preview.css('left', ''+previewx+'px')
+                      preview.css('top', ''+previewyy+'px')
+
+                      uzb360preview.removeClass();
+                      uzb360preview.addClass('hotspotPreview right');
 
 
+                  } else {
+                      preview.css('left', ''+previewxx+'px')
+                      preview.css('top', ''+previewyy+'px')
+                      uzb360preview.removeClass();
+                      uzb360preview.addClass('hotspotPreview left');
+                  }
 
-var link = $('.hotspotPreview__text');
+                  if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
 
-var uzb360preview = $('#uzb360preview');
-    var bottomFromVisota = $(document).height() ;
-    var bottomFromShirota = $(document).width() ;
+                      preview.css('left', ''+left+'px')
+                      preview.css('top', ''+top+'px')
+                       uzb360preview.removeClass();
+                      uzb360preview.addClass('hotspotPreview bottom');
+                  }
 
-    var preview = $('.hotspotPreview ');
-var previewx = n.x+50;
-var previewxx = n.x-280;
-var previewxxx = n.x-120;
-var previewy = n.y+30;
-var previewyy = n.y-200;
-var top = n.y -325;
-var bottom = n.y +30;
-var left = n.x -118;
-var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
-var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
-if (bottomFromShirota-n.x > 500) {
+                  if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
+                      preview.css('left', ''+left+'px')
+                      preview.css('top', ''+bottom+'px')
+                       uzb360preview.removeClass();
+                      uzb360preview.addClass('hotspotPreview top');
+                  }
 
-    preview.css('left', ''+previewx+'px')
-    preview.css('top', ''+previewyy+'px')
-
-    uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview right');
-
-
-} else {
-
-
-    preview.css('left', ''+previewxx+'px')
-    preview.css('top', ''+previewyy+'px')
-    uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview left');
-}
-
-
-
-if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
-
-    preview.css('left', ''+left+'px')
-    preview.css('top', ''+top+'px')
-     uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview bottom');
-}
-
-if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
-
-    preview.css('left', ''+left+'px')
-    preview.css('top', ''+bottom+'px')
-     uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview top');
-}
-
-
-                hotspottext.text(name);
-                hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
+                  hotspottext.text(name);
+                  hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
                   hotspoticon.css("background-color", color)
-               hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
-                    });
-
-
-
+                  hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
+                });
 
                 krpano.set("hotspot[" + hs_name + "].distorted", false);
 
