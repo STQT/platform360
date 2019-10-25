@@ -646,12 +646,12 @@
                                 <li class="pagination__wrapper is-activated--categories" data-tab="tab1">
                                     <div><span class="item">1</span></div>
                                 </li>
-                                <li class="pagination__wrapper" data-tab="tab2">
+                                {{-- <li class="pagination__wrapper" data-tab="tab2">
                                     <div><span class="item">2</span></div>
                                 </li>
                                 <li class="pagination__wrapper" data-tab="tab3">
                                     <div><span class="item">3</span></div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>

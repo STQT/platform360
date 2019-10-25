@@ -22,12 +22,11 @@ class HomeController extends Controller
      */
 
 
-//Главная страница
+    //Главная страница
 
     public function getIndex()
     {
-
-//Проверка куков на город
+        //Проверка куков на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
         } else {
@@ -35,11 +34,11 @@ class HomeController extends Controller
             Cookie::queue(Cookie::forever('city', '1'));
         }
 
-//Загрузка всех городов и координаты текущего города
+        //Загрузка всех городов и координаты текущего города
         $cities = Cities::all();
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
-//Загрузка основноч точки
+        //Загрузка основноч точки
         $serverName = $_SERVER['HTTP_HOST'];
         $serverNameArr = explode('.', $serverName);
 
@@ -66,7 +65,7 @@ class HomeController extends Controller
             $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->with('categorylocation')->firstOrFail();
         }
 
-//Загрузка этажей основной точки
+        //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations="";
         if ($etaji->isNotEmpty()) {
@@ -79,7 +78,7 @@ class HomeController extends Controller
             foreach($etajlocations as $key2=>$value2){
                 $etajlocations[$key2]->img = $sss[$key2];}}
 
-//Загрузка неба
+        //Загрузка неба
         if(empty($location->is_sky)) {
             if(!empty($location->sky_id)) {
                 $sky = Sky::where('id', $location->sky_id)->firstOrFail();
@@ -87,7 +86,7 @@ class HomeController extends Controller
                 $sky = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->firstOrFail();
             }}else { $sky = "no";};
 
-//Координаты локаций
+        //Координаты локаций
         $locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->get();
         if ($locationscordinate->isNotEmpty()) {
             $sss =Location::folderNames($locationscordinate);
@@ -95,25 +94,25 @@ class HomeController extends Controller
                 $locationscordinate[$key2]->img = $sss[$key2];}
             $locationscordinate = Location::transl($locationscordinate);}
 
-//Загрузка избранных точек для карты
+        //Загрузка избранных точек для карты
         $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->orderBy('id', 'DESC')->limit(8)->get();
         if ($isfeatured->isNotEmpty()) {
             $sss =Location::folderNames($isfeatured);
             foreach($isfeatured as $key2=>$value2){
                 $isfeatured[$key2]->img = $sss[$key2];}}
 
-//Загрузка новых точек для карты
+        //Загрузка новых точек для карты
         $isnew = Location::where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
         if ($isnew->isNotEmpty()) {
             $sss =Location::folderNames($isnew);
             foreach($isnew as $key2=>$value2){
                 $isnew[$key2]->img = $sss[$key2];}}
 
-//Загрузка хотспотов основной точки
+        //Загрузка хотспотов основной точки
         $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
-//Загрузка информации хотспотов основной точки
+        //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach($krhotspots as $key=>$value){
             foreach($krhotspotinfo as $key2=>$value2){
@@ -130,13 +129,13 @@ class HomeController extends Controller
                     $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
                     $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;}}}
 
-//Другие локации
+        //Другие локации
         $otherlocations = Location::where('city_id', $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
         $sss =Location::folderNames($otherlocations);
         foreach($otherlocations as $key2=>$value2){
             $otherlocations[$key2]->img = $sss[$key2];}
 
-//Загрузка всех категорий
+        //Загрузка всех категорий
         $categories = Category::whereHas('locations', function($q) use($defaultlocation) {
             $q->where('city_id', $defaultlocation);
         })->orderBy('id', 'ASC')->get();
@@ -144,12 +143,12 @@ class HomeController extends Controller
         return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
     }
 
-//Загрузка сцены
+        //Загрузка сцены
     public function loadScene($id) {
         $location = Location::findOrFail($id);
         return view('pages.index', ['location' => $location]);}
 
-//Поменять город
+        //Поменять город
     public function changeCity($id) {
         if (is_numeric($id)) {
             $cities = Cities::where('id', $id)->get();
@@ -161,12 +160,12 @@ class HomeController extends Controller
         } else {return redirect('/');}
     }
 
-//Krpano
+        //Krpano
     public function krpano($index, $id) {
         $location = Location::find($id);
         return view('partials.xml', ['location' => $location, 'index' => $index]);}
 
-//Создание скриншота
+        //Создание скриншота
     public function savescreenshot(Request $request) {
         $base64img = $request->input('photo');
         if($base64img){
@@ -178,7 +177,7 @@ class HomeController extends Controller
             return response()->json(['pngurl' => $png_url]);
         }}
 
-//Отправка письма (Feedback)
+        //Отправка письма (Feedback)
     public function formProcessing(Request $request, $id) {
         $data = $request->all();
         if($id == 1) {
