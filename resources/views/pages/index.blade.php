@@ -1396,6 +1396,7 @@ originalxmlname = originalxmlname.join("");
                   }
               });
         } else {
+          $('#playaudio').hide();
           $('#audio')[0].pause();
         }
       }
@@ -1857,8 +1858,22 @@ maphotspotcolor: value.categorylocation.color
     </script>
 
     <audio controls style="display: none;" id="audio">
-      <source src="" type="audio/mpeg"  id="audio">
+      <source src="" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
-
+<style>
+  #playaudio {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: 10px;
+    top: 70px;
+    display: block;
+    z-index: 10000;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+</style>
 @endsection
