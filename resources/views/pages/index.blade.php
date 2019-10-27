@@ -1185,7 +1185,7 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
             $('#audio')[0].setSrc('/storage/audio/{{$location->audio}}');
             setTimeout(function() {
               $('#audio')[0].play();
-            }, 100);
+            }, 1000);
           @endif
         });
 
@@ -1383,7 +1383,9 @@ originalxmlname = originalxmlname.join("");
 
       if (data.audio) {
         $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-        $('#audio')[0].play();
+        setTimeout(function() {
+          $('#audio')[0].play();
+        }, 1000);
       } else {
         if (data.podlocparent_id) {
             $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
