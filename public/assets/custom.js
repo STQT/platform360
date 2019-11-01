@@ -12,7 +12,7 @@ $(document).ready(function() {
       success: function(media, node, player) {
           //I <3 Apple
           if(media.paused){
-            $( "body" ).append( "<button type=\"button\" id='playaudio'><img src=\"/assets/play-icon.png\" style=\"width: 32px\"></button>" );
+            // $( "body" ).append( "<button type=\"button\" id='playaudio'><img src=\"/assets/play-icon.png\" style=\"width: 32px\"></button>" );
           }
       },
     });
