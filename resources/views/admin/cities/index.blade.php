@@ -30,7 +30,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th>Actions</th>
+                                        <th>#</th><th>Name</th><th>Количество панорам</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +38,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->locations->count() }}</td>
                                         <td>
                                             <a href="{{ url('/admin/cities/' . $item->id) }}" title="View City"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/cities/' . $item->id . '/edit/ru') }}" title="Edit City"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>

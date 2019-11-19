@@ -34,6 +34,10 @@ class Cities extends Model
     protected $fillable = ['name', 'lat', 'lng', 'is_default', 'position', 'subdomain'];
 
 
+    public function locations()
+    {
+        return $this->hasMany('App\Location',  'city_id','id');
+    }
 
     /**
      * Change activity log event description
