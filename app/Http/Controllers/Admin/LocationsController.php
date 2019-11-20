@@ -540,8 +540,9 @@ class LocationsController extends Controller
             }} else { $location->skyslug = "no";};
 
 
-        $location = $location->toArray22();
-        return $location;
+        $locationArray = $location->toArray22();
+        $locationArray['category_icon'] = $location->category->cat_icon_svg;
+        return $locationArray;
     }
 
 

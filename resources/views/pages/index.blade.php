@@ -1366,6 +1366,7 @@ originalxmlname = originalxmlname.join("");
     $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
       $( "#location_name" ).text(data.name);
       $( "#location_name2" ).text(data.name);
+      $('.infoPanel .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
       if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
       if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
       if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
