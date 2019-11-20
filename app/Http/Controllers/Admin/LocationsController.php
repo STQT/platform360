@@ -40,18 +40,28 @@ class LocationsController extends Controller
         $categories = Category::pluck('name', 'id');
 
         if (!empty($keyword)) {
-            $locations = Location::where('is_sky', '!=' , 'on')->whereNull('podlocparent_id')->where('name', 'LIKE', "%$keyword%")
-                ->orWhere('address', 'LIKE', "%$keyword%")
-                ->orWhere('number', 'LIKE', "%$keyword%")
-                ->orWhere('description', 'LIKE', "%$keyword%")
-                ->orWhere('working_hours', 'LIKE', "%$keyword%")
-                ->orWhere('website', 'LIKE', "%$keyword%")
-                ->orWhere('facebook', 'LIKE', "%$keyword%")
-                ->orWhere('instagram', 'LIKE', "%$keyword%")
-                ->orWhere('telegram', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+            $locations = Location::where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->where(function($query) use ($keyword) {
+                    $query->where('name', 'LIKE', "%$keyword%")
+                        ->orWhere('address', 'LIKE', "%$keyword%")
+                        ->orWhere('number', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "%$keyword%")
+                        ->orWhere('working_hours', 'LIKE', "%$keyword%")
+                        ->orWhere('website', 'LIKE', "%$keyword%")
+                        ->orWhere('facebook', 'LIKE', "%$keyword%")
+                        ->orWhere('instagram', 'LIKE', "%$keyword%")
+                        ->orWhere('telegram', 'LIKE', "%$keyword%");
+                    }
+                )
+                ->latest()
+                ->paginate($perPage);
         } else {
-            $locations = Location::where('is_sky', '!=' , 'on')->withoutGlobalScope('published')->whereNull('podlocparent_id')->latest()->paginate($perPage);
+            $locations = Location::where('is_sky', '!=' , 'on')
+                ->whereNull('podlocparent_id')
+                ->withoutGlobalScope('published')
+                ->latest()
+                ->paginate($perPage);
         }
         return view('admin.locations.index', compact('locations', 'totalLocations',
             'publishedLocations',
