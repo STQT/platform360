@@ -19,6 +19,7 @@ Route::get('admin/locations/{id}/edit/{lang}', [
 ]);
 Route::match(['put', 'patch'],'admin/locations/{id}/{language}', 'Admin\\LocationsController@update');
 Route::get('admin/locations/main', 'Admin\LocationsController@main');
+Route::get('admin/locations/unpublished', 'Admin\LocationsController@unpublished');
 Route::get('admin/locations/featured', 'Admin\LocationsController@featured');
 Route::get('admin/locations/hub', 'Admin\LocationsController@hub');
 Route::resource('admin/locations', 'Admin\\LocationsController');
