@@ -673,8 +673,13 @@
                               
                          <div class="numberr" id="location_number_box">
                              <div class="clock_icon"><img src="/storage/socialnetworks/smartphone.png"></div>
-                            <div ><a id="location_number" href="tel:{{ $location->number}}">{{ $location->number}}</a></div>
-                        </div>
+                             <div ><a id="location_number" href="tel:{{ $location->number}}">{{ $location->number}}</a></div>
+                         </div>
+
+                         <div class="numberr" id="website_box">
+                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
+                             <span id="website"><a href="{{$location->website }}" target="_blank">{{$location->website }}</a></span>
+                         </div>
 
                             </div>
                        <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
@@ -1034,6 +1039,10 @@
     $('#location_adress_box').hide();
     @endif
 
+    @if (empty($location->website))
+        $('#website_box').hide();
+    @endif
+
     @foreach ($etaji as $i => $etaj)
     @if(!empty($etaj->code))
     $(".buttonetaj{{$i}}").click(function(){
@@ -1374,6 +1383,7 @@ originalxmlname = originalxmlname.join("");
       if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
       if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
       if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
+      if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
 
       if(data.etaji.length > 0) {
         $('.buttonetaj0').show();

@@ -280,6 +280,10 @@
   align-items: center;
 }
 
+#website_box {
+  padding-left: 10px;
+}
+
 .time_data {
   display: -webkit-box;
   display: -ms-flexbox;
