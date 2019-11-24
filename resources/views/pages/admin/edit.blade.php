@@ -146,8 +146,7 @@
                                          if(panos.length == 1) {
                                              xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
                                              $preview = $( xmlDoc ).find('preview');
-	                                                // console.log($('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul'));
-	                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a></li>');
+	                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name.ru + '</a></li>');
 	                                            }
 	                                        }
 	                                    });
