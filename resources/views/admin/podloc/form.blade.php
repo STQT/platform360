@@ -135,6 +135,10 @@
     </div>
 </div>
 
+<div class="form-group">
+    <input {{ isset($location) ? ($location->isDefault ? 'checked' : '') : ''}} id="isDefault" type="checkbox" class="" name="isDefault"> Основной
+</div>
+
 
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}

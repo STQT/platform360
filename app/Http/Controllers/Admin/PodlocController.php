@@ -202,6 +202,9 @@ class PodlocController extends Controller
             $requestData['show_sublocation'] = 0;
         }
 
+        if(!empty($data['isDefault'])) {$requestData['isDefault'] = 1;}
+        else {$requestData['isDefault'] = 0;}
+
         if(empty($data['published'])) {
             $requestData['published'] = 0;
         } else {
