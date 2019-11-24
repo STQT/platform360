@@ -1328,126 +1328,110 @@ closerejimwindow();
   }
 
 
-        function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
+function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
+{
+    if (krpano)
+    {
+        originalxmlnam = xmlname;
+        originalxmlname = originalxmlnam.match(/\d/g);
+        originalxmlname = originalxmlname.join("");
+
+        xmlname = xmlname.split(':')[1];
+        var tmp = xmlname;
+        xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
+        remove_all_hotspots();
+        krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+        krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+
+        xmlname = xmlname.split('/').join(':');
+        xmlname = xmlname.replace(':', '/');
+        xmlname = xmlname.replace(':', '');
+
+
+        $.get(
+          "/ru/hasFloors" + xmlname,
+          onAjaxSuccess
+        );
+
+        function onAjaxSuccess(data)
         {
-            if (krpano)
-            {
-
-          originalxmlnam = xmlname;
-          originalxmlname = originalxmlnam.match(/\d/g);
-originalxmlname = originalxmlname.join("");
-
-                xmlname = xmlname.split(':')[1];
-                var tmp = xmlname;
-                xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
-                remove_all_hotspots();
-                krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-                krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-
-                xmlname = xmlname.split('/').join(':');
-                xmlname = xmlname.replace(':', '/');
-                xmlname = xmlname.replace(':', '');
+          if(data == 1) {
+            $('.icon-ic_floorplan').parent().show();
+          } else {
+            $('.icon-ic_floorplan').parent().hide();
+          }
+        }
 
 
-                $.get(
-                  "/ru/hasFloors" + xmlname,
-                  onAjaxSuccess
-                );
+        krpano.call("movecamera(0,0);");
+        if(nourl=="nooo") {
 
-                function onAjaxSuccess(data)
-                {
-                  if(data == 1) {
-                    $('.icon-ic_floorplan').parent().show();
-                  } else {
-                    $('.icon-ic_floorplan').parent().hide();
-                  }
-                }
-
-
-                krpano.call("movecamera(0,0);");
-                if(nourl=="nooo") {
-
-                } else {
-                  history.pushState({
-                      id: 'homepage'
-                  }, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
-                }
-    $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
-      $( "#location_name" ).text(data.name);
-      $( "#location_name2" ).text(data.name);
-      $('.infoPanel .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
-      if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
-      if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
-      if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
-      if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
-      if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
-      if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
-      if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
-      if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
-
-      if(data.etaji.length > 0) {
-        $('.buttonetaj0').show();
-      }
-      else {
-        $('.buttonetaj0').hide();
-      }
-
-      if (data.audio) {
-        $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-        setTimeout(function() {
-          $('#audio')[0].play();
-        }, 1000);
-      } else {
-        if (data.podlocparent_id) {
-            $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
-              .done(function(parentLocData) {
-                  if (parentLocData.audio) {
-                    // $('#audio')[0].setSrc('/storage/audio/' + parentLocData.audio);
-                    // $('#audio')[0].play();
-                  }
-              });
         } else {
-          $('#playaudio').hide();
-          $('#audio')[0].pause();
+          history.pushState({
+              id: 'homepage'
+          }, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
         }
-      }
-      if (data.onmap == "on") {
+        $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
+            $( "#location_name" ).text(data.name);
+            $( "#location_name2" ).text(data.name);
+            $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
+            if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
+            if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
+            if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
+            if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
+            if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
+            if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
+            if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
+            if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
 
-         $('.currentlocationcordinates').data('lat', data.lat);
-         $('.currentlocationcordinates').data('lng', data.lng);
-
-      } else {
-
-        $('.currentlocationcordinates').data('map', 'no');
-        $('.currentlocationcordinates').data('lat', 'no');
-        $('.currentlocationcordinates').data('lng', 'no');
-      }
-      if (data.is_sky == "on") {
-
-
-        document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
-        document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
-      } else {
-        document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
-        document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
-      }
-
-
-    })
-                $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function(data) {
-
-
-                    for(var i = 0; i < data.length; i++) {
-                        add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug, data[i].color);
-                    }
-                });
+            if(data.etaji.length > 0) {
+                $('.buttonetaj0').show();
+            } else {
+                $('.buttonetaj0').hide();
             }
-        }
 
-
-
-
-
+            if (data.audio) {
+                $('#audio')[0].setSrc('/storage/audio/' + data.audio);
+                setTimeout(function() {
+                  $('#audio')[0].play();
+                }, 1000);
+            } else {
+                if (data.podlocparent_id) {
+                    $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
+                      .done(function(parentLocData) {
+                          if (parentLocData.audio) {
+                            // $('#audio')[0].setSrc('/storage/audio/' + parentLocData.audio);
+                            // $('#audio')[0].play();
+                          }
+                      });
+                } else {
+                  $('#playaudio').hide();
+                  $('#audio')[0].pause();
+                }
+            }
+            if (data.onmap == "on") {
+                 $('.currentlocationcordinates').data('lat', data.lat);
+                 $('.currentlocationcordinates').data('lng', data.lng);
+            } else {
+                $('.currentlocationcordinates').data('map', 'no');
+                $('.currentlocationcordinates').data('lat', 'no');
+                $('.currentlocationcordinates').data('lng', 'no');
+            }
+            if (data.is_sky == "on") {
+                document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
+                document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
+            } else {
+                document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
+                document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
+            }
+        });
+        $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function(data) {
+            for(var i = 0; i < data.length; i++) {
+                add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug, data[i].color);
+            }
+        });
+    }
+}
 
         function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color) {
             if (krpano) {
