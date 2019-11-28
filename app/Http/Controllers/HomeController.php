@@ -139,6 +139,7 @@ class HomeController extends Controller
         $categories = Category::whereHas('locations', function($q) use($defaultlocation) {
             $q->where('city_id', $defaultlocation);
             $q->where('published', 1);
+            $q->whereNull('podlocparent_id');
         })->orderBy('id', 'ASC')->get();
 
         return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
