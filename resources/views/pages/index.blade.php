@@ -180,6 +180,7 @@
                     </ul>
                 </div>--}}
                 <div id="pano" style="width:100%;height:100%;"></div>
+                <button type="button" id="playaudio"><img src="/assets/play-icon.png" style="width: 32px"></button>
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span></div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span></div>
@@ -1193,7 +1194,7 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
           @if ($location->audio != '')
             $('#audio')[0].setSrc('/storage/audio/{{$location->audio}}');
             setTimeout(function() {
-              $('#audio')[0].play();
+              // $('#audio')[0].play();
             }, 1000);
           @endif
         });
@@ -1392,16 +1393,22 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
 
             if (data.audio) {
                 $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-                setTimeout(function() {
-                  $('#audio')[0].play();
-                }, 1000);
+                // setTimeout(function() {
+                //   // $('#audio')[0].setMute(false);
+                //   // $('#audio')[0].setVolume(1);
+                //   // $('#audio')[0].play();
+                // }, 1000);
+                $('#playaudio').show();
             } else {
                 if (data.podlocparent_id) {
                     $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
                       .done(function(parentLocData) {
                           if (parentLocData.audio) {
                             // $('#audio')[0].setSrc('/storage/audio/' + parentLocData.audio);
-                            // $('#audio')[0].play();
+                            //   $('#audio')[0].setMute(false);
+                            //   $('#audio')[0].setVolume(1);
+                            //   $('#audio')[0].play();
+                              $('#playaudio').show();
                           }
                       });
                 } else {
@@ -1852,7 +1859,7 @@ maphotspotcolor: value.categorylocation.color
         embedpano({target: "pano", id: "pano1", xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}", passQueryParameters:true, html5:"only+webgl", onready: krpano_onready_callback});
     </script>
 
-    <audio controls style="display: none;" id="audio">
+    <audio controls style="" id="audio">
       <source src="" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>

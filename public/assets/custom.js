@@ -10,16 +10,36 @@ $(document).ready(function() {
     $('audio').mediaelementplayer({
       loop: true,
       success: function(media, node, player) {
-          //I <3 Apple
-          if(media.paused){
-            // $( "body" ).append( "<button type=\"button\" id='playaudio'><img src=\"/assets/play-icon.png\" style=\"width: 32px\"></button>" );
-          }
-      },
+          media.play();
+      }
     });
 
-    $('body').on('click', '#playaudio', function() {
-        $('#audio')[0].play();
+    var audioPlayer = $('#audio')[0];
+    $('#playaudio').on('click', function() {
+        $(".mejs__controls").find(".mejs__button")[0].click();
+        // audioPlayer.play();
+        // audioPlayer.setVolume(1);
+        // audioPlayer.setMuted(false);
+        // $('#playaudio').off('click');
     });
+
+    // $('audio').bind('playing', function() {
+    //     $('body').off('click', '#playaudio');
+    //     $('body').on('click', '#playaudio', function() {
+    //        audioPlayer.setMuted(false);
+    //        audioPlayer.setVolume(1);
+    //        audioPlayer.pause();
+    //     });
+    //  });
+    //
+    // $('audio').bind('pause', function() {
+    //     $('body').off('click', '#playaudio');
+    //     $('body').on('click', '#playaudio', function() {
+    //         audioPlayer.setMuted(false);
+    //         audioPlayer.setVolume(1);
+    //         audioPlayer.play();
+    //     });
+    //  });
 
     $(window).on('resize', function () {
         if ($(this).width() > $(this).height() && isMobile) {
