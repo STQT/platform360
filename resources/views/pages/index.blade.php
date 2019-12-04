@@ -1044,6 +1044,10 @@
         $('#website_box').hide();
     @endif
 
+    @if (!$location->audio)
+        $('#playaudio').hide();
+    @endif
+
     @foreach ($etaji as $i => $etaj)
     @if(!empty($etaj->code))
     $(".buttonetaj{{$i}}").click(function(){
