@@ -714,33 +714,30 @@
 
                             </div>   
                         <ul class="sharePanel__social__icons" style="    width: 200px;">
-                            @isset($location->facebook)
-                                <li class="socialnetwork-icon">
+                                <li class="socialnetwork-icon facebook">
                                     <a href="{{$location->facebook}}" id="locationsocialfb" target="_blank">
                                         <div style="width: 40px; height: 40px;">
                                             <img src="/storage/socialnetworks/facebook.png" alt="facebook share" />
                                         </div>
                                     </a>
                                 </li>
-                                @endisset
-                                @isset($location->telegram)
-                                 <li class="socialnetwork-icon">
+
+                                 <li class="socialnetwork-icon telegram">
                                     <a href="{{$location->telegram}}" id="locationsocialtg" target="_blank">
                                         <div style="width: 40px; height: 40px;">
                                            <img src="/storage/socialnetworks/telegram.png" alt="telegram share" />
                                         </div>
                                     </a>
                                 </li>
-                               @endisset
-                               @isset($location->instagram)
-                                <li class="socialnetwork-icon">
+
+                                <li class="socialnetwork-icon instagram">
                                       <a href="{{$location->instagram}}" id="locationsocialig" target="_blank">
                                         <div style="width: 40px; height: 40px;">
                                             <img src="/storage/socialnetworks/instagram.png" alt="whatsapp share" />
                                         </div>
                                     </a>
                                 </li>
-                               @endisset
+
 
                             </ul>
                         <div class="virtualizedGrid__otherLocation">
@@ -1046,6 +1043,15 @@
 
     @if (!$location->audio)
         $('#playaudio').hide();
+    @endif
+    @if (empty($location->facebook))
+        $('.socialnetwork-icon.facebook').hide();
+    @endif
+    @if (empty($location->telegram))
+        $('.socialnetwork-icon.telegram').hide();
+    @endif
+    @if (empty($location->instagram))
+        $('.socialnetwork-icon.instagram').hide();
     @endif
 
     @foreach ($etaji as $i => $etaj)
