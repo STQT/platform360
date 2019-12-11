@@ -108,24 +108,21 @@ class Location extends Model
 
         return $filename;
     }
-public static  function folderNames($loc)
+    public static  function folderNames($loc)
     {
 
         foreach($loc as $key2=>$value2){
-         $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
+            $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
+            $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
 
-        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-
-        foreach ($old as $item){
-          if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
-              $filename[$key2] = $test . '/' . $item;
-          }
+            foreach ($old as $item){
+              if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
+                  $filename[$key2] = $test . '/' . $item;
+              }
+            }
         }
 
-
-}
-
-        return $filename;
+        return isset($filename) ? $filename : null;
     }
      public static function setCookie($name, $value){
 
