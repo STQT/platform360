@@ -548,6 +548,16 @@ $(function() {
             slidesToScroll: 1,
             prevArrow: $('.icon-ic_arrow_left_active_v2_first'),
             nextArrow: $('.icon-ic_arrow_right__active_v2_first'),
+            arrows: false
+        });
+
+        $('.cotegory-slick').each(function() {
+            var $this = $(this);
+            if ($this.children().length < 2) {
+                // $this.slick({
+                // });
+                $('.category-wrapper .btn_slider_slick span').addClass('slick-disabled');
+            }
         });
     }
 

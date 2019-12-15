@@ -734,10 +734,28 @@ class LocationsController extends Controller
             $otherlocations[$key2]->img = $sss[$key2];}
 
         //Загрузка всех категорий
-        $categories = Category::orderBy('id', 'ASC')->get();
+        $categories = Category::whereHas('locations', function($q) use($defaultlocation) {
+            $q->where('city_id', $defaultlocation);
+            $q->where('published', 1);
+            $q->whereNull('podlocparent_id');
+        })->orderBy('id', 'ASC')->get();
 
         if($location->count()) {
-            return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
+            return view('pages.index', [
+                'location' => $location,
+                'categories' => $categories,
+                'krhotspots' => $krhotspots,
+                'otherlocations' => $otherlocations,
+                'cities' => $cities,
+                'defaultlocation'=>$defaultlocation,
+                'isfeatured' => $isfeatured,
+                'curlocation'=> $curlocation,
+                'locationscordinate'=> $locationscordinate,
+                'sky'=> $sky,
+                'isnew'=> $isnew,
+                'etaji' => $etaji,
+                'etajlocations'=>$etajlocations
+            ]);
 
         } else {
             return response()->json([]);

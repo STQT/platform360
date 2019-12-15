@@ -145,12 +145,12 @@ class HomeController extends Controller
         return view('pages.index', ['location' => $location, 'categories' => $categories, 'krhotspots' => $krhotspots, 'otherlocations' => $otherlocations, 'cities' => $cities, 'defaultlocation'=>$defaultlocation, 'isfeatured' => $isfeatured, 'curlocation'=> $curlocation, 'locationscordinate'=> $locationscordinate, 'sky'=> $sky, 'isnew'=> $isnew, 'etaji' => $etaji, 'etajlocations'=>$etajlocations ]);
     }
 
-        //Загрузка сцены
+    //Загрузка сцены
     public function loadScene($id) {
         $location = Location::findOrFail($id);
         return view('pages.index', ['location' => $location]);}
 
-        //Поменять город
+    //Поменять город
     public function changeCity($id) {
         if (is_numeric($id)) {
             $cities = Cities::where('id', $id)->get();

@@ -338,13 +338,11 @@
                                  <span class="icon-ic_arrow_left_active_v2 icon-ic_arrow_left_active_v2_first category-wrapper--arrow is-activated--element slick-arrow slick-disabled"  style="display: block;"></span>
                                <span class="icon-ic_arrow_right__active_v2 icon-ic_arrow_right__active_v2_first category-wrapper--arrow is-activated--element slick-arrow"  style="display: block;"></span></div>
 
-
-
-
                                 <div class="cotegory-slick">
-
- @foreach($categories as $category)
-                         @if($loop->first or $loop->iteration % 9 == 0)           <div class="category-wrapper--category">    @endif
+                                     @foreach($categories as $category)
+                                         @if($loop->first or $loop->iteration % 9 == 0)
+                                            <div class="category-wrapper--category">
+                                         @endif
 
                                         <div class="icon-wrapper fade--in">
                                             <div class="js-icon icon-wrapper__icon" data-category="{{ $category->id }}">
@@ -352,11 +350,10 @@
                                                 <span class="icon-wrapper__text">{{ $category->name }}</span>
                                             </div>
                                         </div>
-                                    @if($loop->last == true or $loop->iteration % 8 == 0)
-                                    </div> @endif
-     @endforeach
-
-
+                                        @if($loop->last == true or $loop->iteration % 8 == 0)
+                                            </div>
+                                        @endif
+                                    @endforeach
 
                                 </div>
 
