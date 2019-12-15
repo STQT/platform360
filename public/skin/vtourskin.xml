@@ -5,7 +5,9 @@
 
 
 
-
+<action name="set_css_class" type="Javascript">
+  caller.sprite.className = args[1];
+</action>
 
 <layer name="icon_360" url="/assets/icon_360.png" align="middle" keep="true" x="0" y="0" alpha="1" scale="0.5" onloaded="tween(layer[icon_360].alpha, 0,5);delayedcall(10, set(layer[icon_360].visible,false));" enabled="false"/>
     <layer name="plusbutton" keep="true"
@@ -21,6 +23,7 @@
            onover="set(alpha,1.0)"
 		   onhover=""
 		   onout="set(alpha,0.5)"
+           onloaded="set_css_class('toolbar-button');"
     />
 
     <layer name="minusbutton" keep="true"
@@ -36,6 +39,7 @@
            onover="set(alpha,1.0)"
 		   onhover=""
 		   onout="set(alpha,0.5)"
+           onloaded="set_css_class('toolbar-button');"
     />
 
     <layer name="leftbutton" keep="true"
@@ -51,6 +55,7 @@
            onover="set(alpha,1.0)"
 		   onhover=""
 		   onout="set(alpha,0.5)"
+           onloaded="set_css_class('toolbar-button');"
     />
 
     <layer name="rightbutton" keep="true"
@@ -66,6 +71,7 @@
            onover="set(alpha,1.0)"
 		   onhover=""
 		   onout="set(alpha,0.5)"
+           onloaded="set_css_class('toolbar-button');"
     />
 
     <layer name="upbutton" keep="true"
@@ -81,6 +87,7 @@
            onover="set(alpha,1.0)"
 		   onhover=""
 		   onout="set(alpha,0.5)"
+           onloaded="set_css_class('toolbar-button');"
     />
 
     <layer name="downbutton" keep="true"
@@ -96,6 +103,7 @@
            onover="set(alpha,1.0)"
 		   onhover=""
 		   onout="set(alpha,0.5)"
+           onloaded="set_css_class('toolbar-button');"
     />
 
 </krpano>

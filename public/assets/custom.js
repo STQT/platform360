@@ -44,8 +44,14 @@ $(document).ready(function() {
     $(window).on('resize', function () {
         if ($(this).width() > $(this).height() && isMobile) {
             $('.dubai360-header').hide();
+            setTimeout(function () {
+                $('.toolbar-button').hide();
+            }, 100);
         } else if (($(this).width() < $(this).height() && isMobile)) {
             $('.dubai360-header').show();
+            setTimeout(function () {
+                $('.toolbar-button').show();
+            }, 100);
         }
     });
 
