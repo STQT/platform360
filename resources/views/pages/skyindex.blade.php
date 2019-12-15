@@ -477,19 +477,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pagination">
-                            <ul>
-                                <li class="pagination__wrapper is-activated--categories" data-tab="tab1">
-                                    <div><span class="item">1</span></div>
-                                </li>
-{{--                                 <li class="pagination__wrapper" data-tab="tab2">
-                                    <div><span class="item">2</span></div>
-                                </li>
-                                <li class="pagination__wrapper" data-tab="tab3">
-                                    <div><span class="item">3</span></div>
-                                </li> --}}
-                            </ul>
-                        </div>
+{{--                        <div class="pagination">--}}
+{{--                            <ul>--}}
+{{--                                <li class="pagination__wrapper is-activated--categories" data-tab="tab1">--}}
+{{--                                    <div><span class="item">1</span></div>--}}
+{{--                                </li>--}}
+{{--                                 <li class="pagination__wrapper" data-tab="tab2">--}}
+{{--                                    <div><span class="item">2</span></div>--}}
+{{--                                </li>--}}
+{{--                                <li class="pagination__wrapper" data-tab="tab3">--}}
+{{--                                    <div><span class="item">3</span></div>--}}
+{{--                                </li> --}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
                 <div class="wrapper-panel  top right infoPannel hidden expand">
