@@ -47,5 +47,10 @@ $(document).ready(function() {
         } else if (($(this).width() < $(this).height() && isMobile)) {
             $('.dubai360-header').show();
         }
-    })
+    });
+
+    $('.clear-field').on('click', function (e) {
+        e.preventDefault();
+        $('#search_adress input').val('');
+    });
 });

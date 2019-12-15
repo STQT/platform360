@@ -556,7 +556,7 @@ $(function() {
             if ($this.children().length < 2) {
                 // $this.slick({
                 // });
-                $('.category-wrapper .btn_slider_slick span').addClass('slick-disabled');
+                $('.category-wrapper .btn_slider_slick span').hide();
             }
         });
     }

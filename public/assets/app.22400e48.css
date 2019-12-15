@@ -2686,6 +2686,18 @@ screen and (max-height: 600px) {
   -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+  position: relative;
+}
+
+.searchPanel__input span.clear-field {
+  display: block;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  background: url('data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+');
+  cursor: pointer;
+  right: 9px;
+  top: 13px;
 }
 
 @media (max-width: 30em) {
