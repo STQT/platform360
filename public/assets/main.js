@@ -553,7 +553,7 @@ $(function() {
 
         $('.cotegory-slick').each(function() {
             var $this = $(this);
-            if ($this.children().length < 2) {
+            if ($this.find('.category-wrapper--category').length < 2) {
                 // $this.slick({
                 // });
                 $('.category-wrapper .btn_slider_slick span').hide();
