@@ -547,8 +547,7 @@ $(function() {
             slidesToShow: 1,
             slidesToScroll: 1,
             prevArrow: $('.icon-ic_arrow_left_active_v2_first'),
-            nextArrow: $('.icon-ic_arrow_right__active_v2_first'),
-            arrows: false
+            nextArrow: $('.icon-ic_arrow_right__active_v2_first')
         });
 
         $('.cotegory-slick').each(function() {
