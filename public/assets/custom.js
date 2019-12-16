@@ -46,11 +46,13 @@ $(document).ready(function() {
             $('.dubai360-header').hide();
             setTimeout(function () {
                 $('.toolbar-button').hide();
+                $('footer.dubai360-footer').hide();
             }, 100);
         } else if (($(this).width() < $(this).height() && isMobile)) {
             $('.dubai360-header').show();
             setTimeout(function () {
                 $('.toolbar-button').show();
+                $('footer.dubai360-footer').show();
             }, 100);
         }
     });
