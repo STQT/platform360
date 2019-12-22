@@ -1056,7 +1056,6 @@
     @foreach ($etaji as $i => $etaj)
     @if(!empty($etaj->code))
     $(".buttonetaj{{$i}}").click(function(){
-
       setTimeout(function(){
       $("#floorid{{$etaj->id}}").annotatorPro({
         maxZoom: 2,
@@ -1064,7 +1063,7 @@
           navigatorImagePreview : false,
           frameWidth: "auto",
           iconsize: "15px",
-    frameHeight: $(window).height()-300,
+          frameHeight: $(window).height()-300,
           fullscreen : true,
           {!!$etaj->code!!}
       });},500);
@@ -1074,55 +1073,45 @@
 
 
 
-            var isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
-            var isIpad = window.matchMedia("only screen and (min-width: 768px)").matches;
+    var isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+    var isIpad = window.matchMedia("only screen and (min-width: 768px)").matches;
 
-            if (isMobile) {
-              var hotspotsize = "0.65";
-            }
-            if (isIpad) {
-                    var hotspotsize = "0.4";
-            }
+    if (isMobile) {
+      var hotspotsize = "0.65";
+    }
+    if (isIpad) {
+            var hotspotsize = "0.4";
+    }
 $(window).on('popstate', function(event) {
   var pathname = window.location.pathname;
   if (pathname == "/") {
 
-pathname = "/{{ app()->getLocale() }}/api/getcitydefaultlocation/{{$defaultlocation}}";
-$.get(pathname,
-  {},
-  onAjaxSuccess2
-);
+    pathname = "/{{ app()->getLocale() }}/api/getcitydefaultlocation/{{$defaultlocation}}";
+    $.get(pathname,
+      {},
+      onAjaxSuccess2
+    );
 
-function onAjaxSuccess2(data)
-{
-
-
-
-loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
-
-}
+    function onAjaxSuccess2(data)
+    {
+        loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
+    }
 
 
+    } else {
+          pathname = pathname.replace('/location/','');
+          pathname = "/{{ app()->getLocale() }}/api/location/"+pathname;
 
+        $.get(pathname,
+          {},
+          onAjaxSuccess2
+        );
 
-} else {
-  pathname = pathname.replace('/location/','');
-pathname = "/{{ app()->getLocale() }}/api/location/"+pathname;
-
-$.get(pathname,
-  {},
-  onAjaxSuccess2
-);
-
-function onAjaxSuccess2(data)
-{
-loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
-
-}
-
-
-
-}
+        function onAjaxSuccess2(data)
+        {
+            loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
+        }
+    }
 
 });
         $('#feedbackForm').on('submit', function(e) {
@@ -1159,8 +1148,6 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
 
                });
 
-
-
                $('#sendinggg').click(function() {
                    $('.wrapper-panel-close').trigger('click')
 
@@ -1171,19 +1158,11 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
                        $('.block_thanks').css('display', 'none')
                        $('.send_form_btn').css('display', 'block')
                    }, 500);
-
-
-
-
                });
            }else{
             $('.mail_inp').addClass("red_color")
             $('.mail_inp2').addClass("red_color")
         }
-
-
-
-
         });
 
 
@@ -1226,8 +1205,6 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
         });@endif
 
         function krpanofullscreen () {
-
-
             krpano.call("set(fullscreen,true);");
             $('#logo2').css('display', 'block');
             $('#pano1').append(`<div id="logo2" onclick="krpanofullscreenexit()" class="icon-ic_windowed fullScreenIcon" style="display: block; position: absolute; z-index: 99999;"></div>`);
@@ -1240,8 +1217,6 @@ loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
         }
 
 
-
-
 function closerejimwindow() {
   var _this = $('.icon-ic_eye');
   var curModal = $('.' + _this.data('pannel')).eq(0);
@@ -1251,16 +1226,14 @@ function closerejimwindow() {
 function skin_view_fisheye () {
   closerejimwindow();
 
-this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye,       1.0, 1)"), this.krpano.call("tween(view.fovmax,       150, 1)"), this.krpano.call("tween(view.fov,       150, 0.5)")
+  this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye,       1.0, 1)"), this.krpano.call("tween(view.fovmax,       150, 1)"), this.krpano.call("tween(view.fov,       150, 0.5)")
 }
 function skin_view_panini () {
   closerejimwindow();
   this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.stereographic", !1), this.krpano.set("view.pannini", !0), this.krpano.call("tween(view.fovmax,       130, 0.5)"), this.krpano.call("tween(view.fov,       100, 0.5)"), this.krpano.call("tween(view.vlookat,       0, 0.5)"), 0.1 > this.krpano.get("view.fisheye") && this.krpano.call("tween(view.fisheye, 1.0, distance(1.0,0.8))")
 }
 function krpanoautorotate () {
-
     krpano.call("switch(autorotate.enabled)");
-
 }
 function skin_view_littleplanet () {
   closerejimwindow();
@@ -1268,18 +1241,12 @@ this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), 
 }
 
 function krpanoscreenshot () {
-
-
         krpano.call("makescreenshot();");
-
-
 }
 function setLookStraight (){
 closerejimwindow();
     var e = this.krpano.get("view.vlookat");
     (-80 >= e || 80 <= e) && (this.krpano.call("tween(view.vlookat, 0.0, 1.0, easeInOutSine)"), this.krpano.call("tween(view.fov, 150, distance(150,0.8))")) }
-
-
 
   function skin_view_stereographic() {
     closerejimwindow();
@@ -1389,9 +1356,9 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
             if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
             if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
             if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
-            if (data.facebook) {$( "#locationsocialfb" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( "#locationsocialfb" ).hide();}
-            if (data.telegram) {$( "#locationsocialtg" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( "#locationsocialtg" ).hide();}
-            if (data.instagram) {$( "#locationsocialig" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( "#locationsocialig" ).hide();}
+            if (data.facebook) {$( ".socialnetwork-icon.facebook" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( ".socialnetwork-icon.facebook" ).hide();}
+            if (data.telegram) {$( ".socialnetwork-icon.telegram" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( ".socialnetwork-icon.telegram" ).hide();}
+            if (data.instagram) {$( ".socialnetwork-icon.instagram" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( ".socialnetwork-icon.instagram" ).hide();}
             if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
 
             if(data.etaji.length > 0) {
@@ -1402,21 +1369,13 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
 
             if (data.audio) {
                 $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-                // setTimeout(function() {
-                //   // $('#audio')[0].setMute(false);
-                //   // $('#audio')[0].setVolume(1);
-                //   // $('#audio')[0].play();
-                // }, 1000);
+
                 $('#playaudio').show();
             } else {
                 if (data.podlocparent_id) {
                     $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
                       .done(function(parentLocData) {
                           if (parentLocData.audio) {
-                            // $('#audio')[0].setSrc('/storage/audio/' + parentLocData.audio);
-                            //   $('#audio')[0].setMute(false);
-                            //   $('#audio')[0].setVolume(1);
-                            //   $('#audio')[0].play();
                               $('#playaudio').show();
                           }
                       });
@@ -1540,327 +1499,263 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
         }
 
 
-        function initMap() {
+    function initMap() {
+        var location = new google.maps.LatLng({{$curlocation->lat}},{{$curlocation->lng}});
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: location,
+            streetViewControl: false,
+            mapTypeControlOptions: {
+                mapTypeIds: []
+            }, // here´s the array of controls
+            disableDefaultUI: true, // a way to quickly hide all controls
+            mapTypeControl: true,
+            scaleControl: true,
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.LARGE
+            },
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            clickableIcons: false,
+            mapTypeControl: false
+        });
+        map.setZoom(14);
+        map.setOptions({ minZoom: 8});
+        var locations = <?php print_r(json_encode($locationscordinate)) ?>;
+        function project(latLng) {
+            var TILE_SIZE = 256
+
+            var siny = Math.sin(latLng.lat() * Math.PI / 180)
 
 
+            siny = Math.min(Math.max(siny, -0.9999), 0.9999)
 
-
-
-    var location = new google.maps.LatLng({{$curlocation->lat}},{{$curlocation->lng}});
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: location,
-        streetViewControl: false,
-        mapTypeControlOptions: {
-            mapTypeIds: []
-        }, // here´s the array of controls
-        disableDefaultUI: true, // a way to quickly hide all controls
-        mapTypeControl: true,
-        scaleControl: true,
-        zoomControl: true,
-        zoomControlOptions: {
-            style: google.maps.ZoomControlStyle.LARGE
-        },
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        clickableIcons: false,
-        mapTypeControl: false
-    });
-    map.setZoom(14);
-    map.setOptions({ minZoom: 8});
-    var locations = <?php print_r(json_encode($locationscordinate)) ?>;
-    function project(latLng) {
-        var TILE_SIZE = 256
-
-        var siny = Math.sin(latLng.lat() * Math.PI / 180)
-
-
-        siny = Math.min(Math.max(siny, -0.9999), 0.9999)
-
-        return new google.maps.Point(
-            TILE_SIZE * (0.5 + latLng.lng() / 360),
-            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)))
-    }
-    function getMapDimenInPixels(map) {
-        var zoom = map.getZoom()
-        var bounds = map.getBounds()
-        var southWestPixel = getPixel(bounds.getSouthWest(), zoom)
-        var northEastPixel = getPixel(bounds.getNorthEast(), zoom)
-        return {
-            width: Math.abs(southWestPixel.x - northEastPixel.x),
-            height: Math.abs(southWestPixel.y - northEastPixel.y)
+            return new google.maps.Point(
+                TILE_SIZE * (0.5 + latLng.lng() / 360),
+                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)))
         }
-    }
-    function getPixel(latLng, zoom) {
-        var scale = 1 << zoom
-        var worldCoordinate = project(latLng)
-        return new google.maps.Point(
-                Math.floor(worldCoordinate.x * scale),
-                Math.floor(worldCoordinate.y * scale))
-    }
-
-    function willAnimatePanTo(map, destLatLng, optionalZoomLevel) {
-        var dimen = getMapDimenInPixels(map)
-
-        var mapCenter = map.getCenter()
-        optionalZoomLevel = !!optionalZoomLevel ? optionalZoomLevel : map.getZoom()
-
-        var destPixel = getPixel(destLatLng, optionalZoomLevel)
-        var mapPixel = getPixel(mapCenter, optionalZoomLevel)
-        var diffX = Math.abs(destPixel.x - mapPixel.x)
-        var diffY = Math.abs(destPixel.y - mapPixel.y)
-
-        return diffX < dimen.width && diffY < dimen.height
-    }
-    function getOptimalZoomOut(latLng, currentZoom) {
-        if(willAnimatePanTo(map, latLng, currentZoom - 1)) {
-            return currentZoom - 1
-        } else if(willAnimatePanTo(map, latLng, currentZoom - 2)) {
-            return currentZoom - 2
-        } else {
-            return currentZoom - 3
-        }
-    }
-    function smoothlyAnimatePanToWorkarround(map, destLatLng, optionalAnimationEndCallback) {
-    var initialZoom = map.getZoom(), listener
-
-    function zoomIn() {
-        if(map.getZoom() < initialZoom) {
-            map.setZoom(Math.min(map.getZoom() + 3, initialZoom))
-        } else {
-            google.maps.event.removeListener(listener)
-
-            map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false, minZoom: 8})
-
-            if(!!optionalAnimationEndCallback) {
-                optionalAnimationEndCallback()
+        function getMapDimenInPixels(map) {
+            var zoom = map.getZoom()
+            var bounds = map.getBounds()
+            var southWestPixel = getPixel(bounds.getSouthWest(), zoom)
+            var northEastPixel = getPixel(bounds.getNorthEast(), zoom)
+            return {
+                width: Math.abs(southWestPixel.x - northEastPixel.x),
+                height: Math.abs(southWestPixel.y - northEastPixel.y)
             }
         }
-    }
+        function getPixel(latLng, zoom) {
+            var scale = 1 << zoom
+            var worldCoordinate = project(latLng)
+            return new google.maps.Point(
+                    Math.floor(worldCoordinate.x * scale),
+                    Math.floor(worldCoordinate.y * scale))
+        }
 
-    function zoomOut() {
+        function willAnimatePanTo(map, destLatLng, optionalZoomLevel) {
+            var dimen = getMapDimenInPixels(map)
+
+            var mapCenter = map.getCenter()
+            optionalZoomLevel = !!optionalZoomLevel ? optionalZoomLevel : map.getZoom()
+
+            var destPixel = getPixel(destLatLng, optionalZoomLevel)
+            var mapPixel = getPixel(mapCenter, optionalZoomLevel)
+            var diffX = Math.abs(destPixel.x - mapPixel.x)
+            var diffY = Math.abs(destPixel.y - mapPixel.y)
+
+            return diffX < dimen.width && diffY < dimen.height
+        }
+        function getOptimalZoomOut(latLng, currentZoom) {
+            if(willAnimatePanTo(map, latLng, currentZoom - 1)) {
+                return currentZoom - 1
+            } else if(willAnimatePanTo(map, latLng, currentZoom - 2)) {
+                return currentZoom - 2
+            } else {
+                return currentZoom - 3
+            }
+        }
+        function smoothlyAnimatePanToWorkarround(map, destLatLng, optionalAnimationEndCallback) {
+        var initialZoom = map.getZoom(), listener
+
+        function zoomIn() {
+            if(map.getZoom() < initialZoom) {
+                map.setZoom(Math.min(map.getZoom() + 3, initialZoom))
+            } else {
+                google.maps.event.removeListener(listener)
+
+                map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false, minZoom: 8})
+
+                if(!!optionalAnimationEndCallback) {
+                    optionalAnimationEndCallback()
+                }
+            }
+        }
+
+        function zoomOut() {
+            if(willAnimatePanTo(map, destLatLng)) {
+                google.maps.event.removeListener(listener)
+                listener = google.maps.event.addListener(map, 'idle', zoomIn)
+                map.panTo(destLatLng)
+            } else {
+                map.setZoom(getOptimalZoomOut(destLatLng, map.getZoom()))
+            }
+        }
+
+        map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true, minZoom: 8})
+        map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
+        listener = google.maps.event.addListener(map, 'idle', zoomOut)
+      }
+
+
+      function smoothlyAnimatePanTo(map, destLatLng) {
         if(willAnimatePanTo(map, destLatLng)) {
-            google.maps.event.removeListener(listener)
-            listener = google.maps.event.addListener(map, 'idle', zoomIn)
             map.panTo(destLatLng)
         } else {
-            map.setZoom(getOptimalZoomOut(destLatLng, map.getZoom()))
+            smoothlyAnimatePanToWorkarround(map, destLatLng)
         }
-    }
-
-    map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true, minZoom: 8})
-    map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
-    listener = google.maps.event.addListener(map, 'idle', zoomOut)
-  }
+      }
 
 
-  function smoothlyAnimatePanTo(map, destLatLng) {
-    if(willAnimatePanTo(map, destLatLng)) {
-        map.panTo(destLatLng)
-    } else {
-        smoothlyAnimatePanToWorkarround(map, destLatLng)
-    }
-  }
+      $('.slick-block3').on('afterChange', function(event, slick, currentSlide, nextSlide){
+         if(window.innerWidth < 1025){
+            var realslide =  $(".slick-active", this);
+            var slidbox = $(".featuredloctionbox", realslide);
+            var latmark = slidbox.data('lat');
+            var lngmark = slidbox.data('lng');
+            smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
+         }
+      });
+      $('.slick-block2').on('afterChange', function(event, slick, currentSlide, nextSlide){
+         if(window.innerWidth < 1025){
+             $('.slick-block2 .slick-slide').removeClass('slick-current');
+             $('.slick-block2 .slick-slide:not(.slick-cloned)').eq(currentSlide).addClass('slick-current');
+                 var realslide =  $(".slick-active", this);
+                 var slidbox = $(".featuredloctionbox", realslide);
+                 var latmark = slidbox.data('lat');
+                 var lngmark = slidbox.data('lng');
+                 smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
+        }
+      });
+        $('.featuredloctionbox').mouseover(function(){
+          var latmark = $(this).data('lat');
+          var lngmark = $(this).data('lng');
+          smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
+        });
 
+    $('.icon-ic_explore').click(function(){
+      var currentlocationcordinates = $(".currentlocationcordinates");
+      var curmapchecl = currentlocationcordinates.data('map');
+      var curlatmark = currentlocationcordinates.data('lat');
+      var curlngmark = currentlocationcordinates.data('lng');
+      if (curmapchecl !== "no" && curlatmark != "0" && curlngmark != "0") {
 
-  $('.slick-block3').on('afterChange', function(event, slick, currentSlide, nextSlide){
- if(window.innerWidth < 1025){
-           var realslide =  $(".slick-active", this);
-var slidbox = $(".featuredloctionbox", realslide);
-
-
-        var latmark = slidbox.data('lat');
-
-        var lngmark = slidbox.data('lng');
-  smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
-
-}
-
-  });
-  $('.slick-block2').on('afterChange', function(event, slick, currentSlide, nextSlide){
- if(window.innerWidth < 1025){
-     $('.slick-block2 .slick-slide').removeClass('slick-current');
-     $('.slick-block2 .slick-slide:not(.slick-cloned)').eq(currentSlide).addClass('slick-current');
-           var realslide =  $(".slick-active", this);
-var slidbox = $(".featuredloctionbox", realslide);
-
-
-        var latmark = slidbox.data('lat');
-
-        var lngmark = slidbox.data('lng');
-  smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
-
-}
-
-  });
-    $('.featuredloctionbox').mouseover(function(){
-      var latmark = $(this).data('lat');
-      var lngmark = $(this).data('lng');
-smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
-
+      var curlatmark = currentlocationcordinates.data('lat');
+      var curlngmark = currentlocationcordinates.data('lng');
+    smoothlyAnimatePanTo(map, new google.maps.LatLng(curlatmark,curlngmark)); }
     });
 
 
 
-$('.icon-ic_explore').click(function(){
-  var currentlocationcordinates = $(".currentlocationcordinates");
-  var curmapchecl = currentlocationcordinates.data('map');
-  var curlatmark = currentlocationcordinates.data('lat');
-  var curlngmark = currentlocationcordinates.data('lng');
-  if (curmapchecl !== "no" && curlatmark != "0" && curlngmark != "0") {
+      $.each( locations, function( index, value ){
+        var icon = {
+            url:'/storage/cat_icons/'+ value.categorylocation.cat_icon, // url
+            scaledSize: new google.maps.Size(45, 55) // scaled size
+        };
 
-  var curlatmark = currentlocationcordinates.data('lat');
-  var curlngmark = currentlocationcordinates.data('lng');
-smoothlyAnimatePanTo(map, new google.maps.LatLng(curlatmark,curlngmark)); }
-});
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(value.lat, value.lng),
+            map: map,
+            animation: google.maps.Animation.DROP,
+            icon: icon,
+            maphotspotname: value.name,
+            maphotspoticon: value.categorylocation.cat_icon_svg,
+            maphotspotimg: value.img,
+            maphotspotcolor: value.categorylocation.color
+        });
 
+        function getPixelLocation(currentLatLng) {
+            var scale = Math.pow(2, map.getZoom());
+            var nw = new google.maps.LatLng(
+                map.getBounds().getNorthEast().lat(),
+                map.getBounds().getSouthWest().lng()
+            );
+            var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
+            var worldCoordinate = map.getProjection().fromLatLngToPoint(currentLatLng);
+            var currentLocation = new google.maps.Point(
+                Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
+                Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
+            );
+            return currentLocation;
+        }
+          marker.addListener('mouseout', function() {
+            $( ".hotspotPreview-wrapper" ).hide();
+          })
+          marker.addListener('mouseover', function() {
+              var maphotspotname = this.maphotspotname;
+              var maphotspoticon = this.maphotspoticon;
+              var maphotspotimg = this.maphotspotimg;
+              var maphotspotcolor = this.maphotspotcolor;
+              $( ".hotspotPreview-wrapper" ).show();
+              hotspottext=$('.hotspotPreview__text');
+              hotspoticon=$('.uzbhotspoticon');
+              hotspotimg= $('.uzbhotspotimg');
+              var projection = map.getProjection();
+              var markerLocation = marker.getPosition();
+              var latmark = $(this).data('lat');
+              var lngmark = $(this).data('lng');
+              var n = getPixelLocation(marker.getPosition());
+              var link = $('.hotspotPreview__text');
+              var uzb360preview = $('#uzb360preview');
+              var bottomFromVisota = $(document).height() ;
+              var bottomFromShirota = $(document).width() ;
+              var preview = $('.hotspotPreview ');
+              var previewx = n.x+50;
+              var previewxx = n.x-280;
+              var previewxxx = n.x-120;
+              var previewy = n.y+30;
+              var previewyy = n.y-200;
+              var top = n.y -325;
+              var bottom = n.y +30;
+              var left = n.x -118;
+              var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
+              var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
+              if (bottomFromShirota-n.x > 500) {
+                    preview.css('left', ''+previewx+'px')
+                    preview.css('top', ''+previewyy+'px')
+                    uzb360preview.removeClass();
+                    uzb360preview.addClass('hotspotPreview right');
+                } else {
+                    preview.css('left', ''+previewxx+'px')
+                    preview.css('top', ''+previewyy+'px')
+                    uzb360preview.removeClass();
+                    uzb360preview.addClass('hotspotPreview left');
+                }
+                if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
+                    preview.css('left', ''+left+'px')
+                    preview.css('top', ''+top+'px')
+                    uzb360preview.removeClass();
+                    uzb360preview.addClass('hotspotPreview bottom');
+                }
 
+                if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
+                    preview.css('left', ''+left+'px')
+                    preview.css('top', ''+bottom+'px')
+                    uzb360preview.removeClass();
+                    uzb360preview.addClass('hotspotPreview top');
+                }
 
+                hotspottext.text(maphotspotname);
+                hotspoticon.attr("src","/storage/cat_icons/"+maphotspoticon+"");
+                hotspoticon.css("background-color", maphotspotcolor)
+                hotspotimg.attr("src","/storage/panoramas/unpacked/"+maphotspotimg+"/thumb.jpg");
+          });
 
-
-
-
-
-
-
-  $.each( locations, function( index, value ){
-
-    var icon = {
-    url:'/storage/cat_icons/'+ value.categorylocation.cat_icon, // url
-    scaledSize: new google.maps.Size(45, 55), // scaled size
-
-};
-
-         var marker = new google.maps.Marker({
-
-        position: new google.maps.LatLng(value.lat, value.lng),
-        map: map,
-         animation: google.maps.Animation.DROP,
-          icon: icon,
-maphotspotname: value.name,
-maphotspoticon: value.categorylocation.cat_icon_svg,
-maphotspotimg: value.img,
-maphotspotcolor: value.categorylocation.color
-    });
-
-    function getPixelLocation(currentLatLng) {
-
-        var scale = Math.pow(2, map.getZoom());
-
-        var nw = new google.maps.LatLng(
-            map.getBounds().getNorthEast().lat(),
-            map.getBounds().getSouthWest().lng()
-        );
-
-        var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
-
-        var worldCoordinate = map.getProjection().fromLatLngToPoint(currentLatLng);
-        var currentLocation = new google.maps.Point(
-            Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
-            Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
-        );
-
-
-        return currentLocation;
-    }
-      marker.addListener('mouseout', function() {
-        $( ".hotspotPreview-wrapper" ).hide();
-      })
-  marker.addListener('mouseover', function() {
-  var maphotspotname = this.maphotspotname;
-  var maphotspoticon = this.maphotspoticon;
-  var maphotspotimg = this.maphotspotimg;
-  var maphotspotcolor = this.maphotspotcolor;
-  $( ".hotspotPreview-wrapper" ).show();
-  hotspottext=$('.hotspotPreview__text');
-  hotspoticon=$('.uzbhotspoticon');
-  hotspotimg= $('.uzbhotspotimg');
-  var projection = map.getProjection();
-  var markerLocation = marker.getPosition();
-  var latmark = $(this).data('lat');
-  var lngmark = $(this).data('lng');
-  var n = getPixelLocation(marker.getPosition());
-
-
-
-  var link = $('.hotspotPreview__text');
-  var uzb360preview = $('#uzb360preview');
-  var bottomFromVisota = $(document).height() ;
-  var bottomFromShirota = $(document).width() ;
-
-  var preview = $('.hotspotPreview ');
-  var previewx = n.x+50;
-  var previewxx = n.x-280;
-  var previewxxx = n.x-120;
-  var previewy = n.y+30;
-  var previewyy = n.y-200;
-  var top = n.y -325;
-  var bottom = n.y +30;
-  var left = n.x -118;
-  var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
-  var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
-  if (bottomFromShirota-n.x > 500) {
-
-    preview.css('left', ''+previewx+'px')
-    preview.css('top', ''+previewyy+'px')
-
-    uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview right');
-
-
-    } else {
-
-
-    preview.css('left', ''+previewxx+'px')
-    preview.css('top', ''+previewyy+'px')
-    uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview left');
-    }
-
-
-
-    if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
-
-    preview.css('left', ''+left+'px')
-    preview.css('top', ''+top+'px')
-    uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview bottom');
-    }
-
-    if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
-
-    preview.css('left', ''+left+'px')
-    preview.css('top', ''+bottom+'px')
-    uzb360preview.removeClass();
-    uzb360preview.addClass('hotspotPreview top');
-    }
-
-
-    hotspottext.text(maphotspotname);
-    hotspoticon.attr("src","/storage/cat_icons/"+maphotspoticon+"");
-      hotspoticon.css("background-color", maphotspotcolor)
-    hotspotimg.attr("src","/storage/panoramas/unpacked/"+maphotspotimg+"/thumb.jpg");
-
-
-
-
-
-
-    });
-
-
-         google.maps.event.addDomListener(marker, 'click', function() {
-
-
-   loadpano('uzbekistan:'+value.id, '1', value.slug);
-   setTimeout(function(){
-     $('.icon-ic_close').trigger('click')
-   }, 100);
-
-});
-   });
-
-
-
+            google.maps.event.addDomListener(marker, 'click', function() {
+               loadpano('uzbekistan:'+value.id, '1', value.slug);
+               setTimeout(function(){
+                 $('.icon-ic_close').trigger('click')
+               }, 100);
+            });
+       });
 }
     </script>
 
