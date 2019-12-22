@@ -62,8 +62,8 @@ class HomeController extends Controller
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
                 $subdomainLocation = Location::where('subdomain', $subdomainName)->with('categorylocation')->firstOrFail();
-                if($home != 'home') {
-                    //если пользователь перешел на главную страницу из меню, не показывать страницу с субдоменом
+                if(!Input::get('home')) {
+                    Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
                 } else {
                     //панорама по умолчанию для города

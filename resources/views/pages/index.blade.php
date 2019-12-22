@@ -17,7 +17,7 @@
                 <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
                 <header class="dubai360-header">
-                    <div class="dubai360-header__logo-languaje dubai360-header__logo-slider" onclick="location.href='/home';">
+                    <div class="dubai360-header__logo-languaje dubai360-header__logo-slider" onclick="location.href='/{{ Lang::locale() }}?home=1';">
                         <div><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
                         {{-- <div><img src="/assets/logo2.png" class="" width="100%"></div> --}}
                     </div>
