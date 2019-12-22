@@ -13,12 +13,11 @@
         <div class="root">
             <div class="root ">
                 <div></div>
-
-<div style="opacity:0"  class="currentlocationcordinates" @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}" @else data-map="no" @endif ></div>
+                <div style="opacity:0"  class="currentlocationcordinates" @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}" @else data-map="no" @endif ></div>
                 <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
                 <header class="dubai360-header">
-                    <div class="dubai360-header__logo-languaje dubai360-header__logo-slider" onclick="location.href='/';">
+                    <div class="dubai360-header__logo-languaje dubai360-header__logo-slider" onclick="location.href='/home';">
                         <div><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
                         {{-- <div><img src="/assets/logo2.png" class="" width="100%"></div> --}}
                     </div>
@@ -1881,7 +1880,7 @@ maphotspotcolor: value.categorylocation.color
     left: 10px;
     top: 70px;
     display: block;
-    z-index: 10000;
+    z-index: 2000;
     background: none;
     padding: 0;
     margin: 0;

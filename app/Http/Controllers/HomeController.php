@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Sky;
 use App\Hotspot;
+use Illuminate\Support\Facades\Input;
 use Mail;
 use Illuminate\Support\Facades\Cookie;
 use Spatie\Translatable\HasTranslations;
@@ -24,7 +25,7 @@ class HomeController extends Controller
 
     //Главная страница
 
-    public function getIndex()
+    public function getIndex($home = null)
     {
         //Проверка куков на город
         if (Cookie::has('city')) {
@@ -52,6 +53,7 @@ class HomeController extends Controller
                 $subdomain = true;
         }
 
+        //обработка субдоменов и локация по умолчанию
         if ($subdomain && $serverNameArr[0] != 'dev' && !is_numeric($serverNameArr[0])) {
             $subdomainName = $serverNameArr[0];
             $city = Cities::where('subdomain', $subdomainName)->first();
@@ -59,7 +61,14 @@ class HomeController extends Controller
                 $location = Location::where([['city_id', $city->id], ['isDefault', '1']])->with('categorylocation')->firstOrFail();
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
-                $location = Location::where('subdomain', $subdomainName)->with('categorylocation')->firstOrFail();
+                $subdomainLocation = Location::where('subdomain', $subdomainName)->with('categorylocation')->firstOrFail();
+                if($home != 'home') {
+                    //если пользователь перешел на главную страницу из меню, не показывать страницу с субдоменом
+                    $location = $subdomainLocation;
+                } else {
+                    //панорама по умолчанию для города
+                    $location = Location::where([['isDefault', '1'],['city_id', $subdomainLocation->city_id]])->with('categorylocation')->firstOrFail();
+                }
             }
         } else {
             $location = Location::where([['isDefault', '1'],['city_id', $defaultlocation]])->with('categorylocation')->firstOrFail();

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@getIndex');
+Route::get('/{home?}', 'HomeController@getIndex');
 
 Route::get('lang/{locale}', 'HomeController@changelanguage');
 Route::get('/clear', function() {
