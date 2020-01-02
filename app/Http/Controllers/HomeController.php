@@ -176,7 +176,7 @@ class HomeController extends Controller
         $location = Location::find($id);
         return view('partials.xml', ['location' => $location, 'index' => $index]);}
 
-        //Создание скриншота
+    //Создание скриншота
     public function savescreenshot(Request $request) {
         $base64img = $request->input('photo');
         if($base64img){
@@ -188,7 +188,7 @@ class HomeController extends Controller
             return response()->json(['pngurl' => $png_url]);
         }}
 
-        //Отправка письма (Feedback)
+    //Отправка письма (Feedback)
     public function formProcessing(Request $request, $id) {
         $data = $request->all();
         if($id == 1) {
@@ -200,8 +200,6 @@ class HomeController extends Controller
             Mail::send('mails.feedback', ['bodymessage'=>$data['message'], 'clientmail'=>$data['email'], 'clientselect'=>$data['select']], function ($message) {
                 $message->from('noreply@uzoom.uz', 'Письмо с Uzb360');
                 $message->to('sherzod.nosirov@gmail.com');});
-        }}
-
-
-
+        }
+    }
 }

@@ -131,6 +131,23 @@ class LocationsController extends Controller
         ));
     }
 
+//    public function hasFloors($id) {
+//        if (strpos($id, ':') !== false) {
+//            $tmp = explode(':', $id);
+//
+//            $location = Location::find($tmp[1]);
+//
+//            if(!empty($location)) {
+//                $tmp = json_decode($location->panorama);
+//
+//                if(count($tmp) > 1) {
+//                    return 1;
+//                }
+//            }
+//        }
+//
+//        return 0;
+//    }
 
     public function unpublished(Request $request)
     {
@@ -799,9 +816,7 @@ class LocationsController extends Controller
 
     public function apiAddhotspot(Request $request)
     {
-
         $data = $request->all();
-
         $hotspot = new Hotspot();
         $hotspot->location_id = $data['location'];
         $hotspot->destination_id = $data['src'];
@@ -809,6 +824,34 @@ class LocationsController extends Controller
         $hotspot->v = $data['v'];
         $hotspot->save();
         return 'ok';
+    }
+
+    public function apiAddInformationhotspot(Request $request)
+    {
+        $data = $request->all();
+
+        $validation = Validator::make($request->all(), [
+            'image' => 'required|file|max:150000'
+        ]);
+
+        if ($validation->passes()) {
+            $image = $request->file('image');
+            $newName = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/information'), $newName);
+        }
+
+        $hotspot = new Hotspot();
+        $hotspot->location_id = $data['location'];
+        $hotspot->destination_id = $data['location'];
+        $hotspot->h = $data['h'];
+        $hotspot->v = $data['v'];
+        $hotspot->information = $data['information'];
+        if (isset($image)) {
+            $hotspot->image = $newName;
+        }
+        $hotspot->type = Hotspot::TYPE_INFORMATION;
+        $hotspot->save();
+//        return 'ok';
     }
 
     public function uploadVideo(Request $request)
@@ -863,17 +906,23 @@ class LocationsController extends Controller
                     $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
                     $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
                     foreach ($old as $item){
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
+                        if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)) {
                             $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;}}
+                            $krhotspots[$key]->img = $filename;
+                        }
+                    }
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
                     $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->categorylocation->cat_icon;
                     $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
                     $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
-                }}}
-
+                    $krhotspots[$key]->type = $krhotspotinfo[$key2]->type;
+                    $krhotspots[$key]->image = $krhotspotinfo[$key2]->image;
+                    $krhotspots[$key]->information = $krhotspotinfo[$key2]->information;
+                }
+            }
+        }
 
         return  $krhotspots;
     }

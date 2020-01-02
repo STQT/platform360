@@ -67,8 +67,6 @@
                   @endif
                     <div class="dubai360-header__description">
                         <div><span><span><span id="location_name">{{ $location->name }}</span></span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
-
-
                     </div>
 
                     <div class="dubai360-header__icons">
@@ -303,16 +301,6 @@
                                         </div>
                                     </div>
                                 </li>
-
-                                {{-- <li class="socialnetwork-icon">
-                     <div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--mail">
-                                        <div style="width: 40px; height: 40px;">
-                                            <img src="/storage/socialnetworks/mail.png" alt="mail share" />
-                                        </div>
-                                    </div>
-
-
-                    </li> --}}
                             </ul>
                             <div class="sharePanel__social__share">
                                 <div class="sharePanel__social__share__url"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjE3cHgiIGhlaWdodD0iMTdweCIgdmlld0JveD0iMCAwIDE3IDE3IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5JY29ucy9pY19saW5rPC90aXRsZT4NCiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4NCiAgICA8ZGVmcz48L2RlZnM+DQogICAgPGcgaWQ9IkhvbWVfU2hhcmUiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNTY4LjAwMDAwMCwgLTQzNS4wMDAwMDApIj4NCiAgICAgICAgPGcgaWQ9Ikdyb3VwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTQ4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGluayIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIuMDAwMDAwLCAzNjQuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9Ikljb25zL2ljX2xpbmsiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDguMDAwMDAwLCA3LjAwMDAwMCkiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNS41LDE3LjAwMDMgQzQuMDMsMTcuMDAwMyAyLjY0OSwxNi40MjgzIDEuNjExLDE1LjM4OTMgQzAuNTcyLDE0LjM1MTMgMCwxMi45NjkzIDAsMTEuNTAwMyBDMCwxMC4wMzAzIDAuNTcyLDguNjQ5MyAxLjYxMSw3LjYxMTMgTDQuMTExLDUuMTExMyBMNS41MjUsNi41MjUzIEwzLjAyNSw5LjAyNTMgQzIuMzY0LDkuNjg3MyAyLDEwLjU2NTMgMiwxMS41MDAzIEMyLDEyLjQzNTMgMi4zNjQsMTMuMzEzMyAzLjAyNSwxMy45NzUzIEM0LjM0OCwxNS4yOTczIDYuNjUyLDE1LjI5NzMgNy45NzUsMTMuOTc1MyBMMTAuNDc1LDExLjQ3NTMgTDExLjg4OSwxMi44ODkzIEw5LjM4OSwxNS4zODkzIEM4LjM1MSwxNi40MjgzIDYuOTcsMTcuMDAwMyA1LjUsMTcuMDAwMyBaIE0xMC4wODU5LDUuNTAwMyBDMTAuNDc2OSw1LjEwOTMgMTEuMTA4OSw1LjEwOTMgMTEuNDk5OSw1LjUwMDMgQzExLjg5MDksNS44OTEzIDExLjg5MDksNi41MjQzIDExLjQ5OTksNi45MTQzIEw2LjkxMzksMTEuNTAwMyBDNi41MjI5LDExLjg5MTMgNS44OTA5LDExLjg5MTMgNS40OTk5LDExLjUwMDMgQzUuMTA4OSwxMS4xMDkzIDUuMTA4OSwxMC40NzczIDUuNDk5OSwxMC4wODYzIEwxMC4wODU5LDUuNTAwMyBaIE0xMi44ODg3LDExLjg4OSBMMTEuNDc0NywxMC40NzUgTDEzLjk3NDcsNy45NzUgQzE0LjYzNTcsNy4zMTQgMTQuOTk5Nyw2LjQzNSAxNC45OTk3LDUuNSBDMTQuOTk5Nyw0LjU2NSAxNC42MzU3LDMuNjg2IDEzLjk3NDcsMy4wMjUgQzEyLjY1MjcsMS43MDMgMTAuMzQ3NywxLjcwMyA5LjAyNTcsMy4wMjUgTDYuNTI1Nyw1LjUyNSBMNS4xMTE3LDQuMTExIEw3LjYxMTcsMS42MTEgQzguNjQ5NywwLjU3MiAxMC4wMzE3LDAgMTEuNDk5NywwIEMxMi45Njg3LDAgMTQuMzUwNywwLjU3MiAxNS4zODg3LDEuNjExIEMxNi40Mjc3LDIuNjUgMTYuOTk5Nyw0LjAzMSAxNi45OTk3LDUuNSBDMTYuOTk5Nyw2Ljk3IDE2LjQyNzcsOC4zNTEgMTUuMzg4Nyw5LjM4OSBMMTIuODg4NywxMS44ODkgWiIgaWQ9ImljX2xpbmsiPjwvcGF0aD4NCiAgICAgICAgICAgICAgICA8L2c+DQogICAgICAgICAgICA8L2c+DQogICAgICAgIDwvZz4NCiAgICA8L2c+DQo8L3N2Zz4="></div>
@@ -447,10 +435,7 @@
                         </div>
                         <div class="feedbackPanel__buttons">
                             <span id="Feedbackstatus">
-
                             </span>
-
-
 
                             <button type="submit" class="send_form_btn">{{ trans('uzb360.otpravit')}}</button>
 
@@ -466,10 +451,6 @@
                             </div>
 
                         </div>
-
-
-
-
                     </form>
                 </div>
                 <div class="wrapper-panel  top left helpPannel hidden expand">
@@ -662,34 +643,29 @@
                         <div class="infoPanel__current-categories">
                             <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$location->categorylocation->color}}"><img src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
                             <div class="clock_time"> <div class="infoPanel__title" id="location_name2">{{ $location->name }}</div></div>
-
-
                         </div>
                           <div class="time_data">      
-                         <div class="clock" id="vremyarabotibox">
-                            <div class="clock_icon"><img src="/storage/socialnetworks/clock.png"></div>
-                            <span id="vremyaraboti">{{$location->working_hours}}</span>
-                        </div>
-                              
-                         <div class="numberr" id="location_number_box">
-                             <div class="clock_icon"><img src="/storage/socialnetworks/smartphone.png"></div>
-                             <div ><a id="location_number" href="tel:{{ $location->number}}">{{ $location->number}}</a></div>
-                         </div>
-
-                         <div class="numberr" id="website_box">
-                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
-                             <span id="website"><a href="{{$location->website }}" target="_blank">{{$location->website }}</a></span>
-                         </div>
-
+                             <div class="clock" id="vremyarabotibox">
+                                <div class="clock_icon"><img src="/storage/socialnetworks/clock.png"></div>
+                                <span id="vremyaraboti">{{$location->working_hours}}</span>
                             </div>
+
+                             <div class="numberr" id="location_number_box">
+                                 <div class="clock_icon"><img src="/storage/socialnetworks/smartphone.png"></div>
+                                 <div ><a id="location_number" href="tel:{{ $location->number}}">{{ $location->number}}</a></div>
+                             </div>
+
+                             <div class="numberr" id="website_box">
+                                 <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
+                                 <span id="website"><a href="{{$location->website }}" target="_blank">{{$location->website }}</a></span>
+                             </div>
+                          </div>
                        <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
                         <!-- <div class="infoPanel__title2">{{ $location->number}}</div> -->
       
                         <div class="infoPanel__description">
                             <div class="infoPanel__description__message">
                                 <span id="location_description">{{$location->description}}</span>
-
-
                             </div>
                             <div class="dotsss">
                                 <div class="svg_blockk">
@@ -698,47 +674,42 @@
                                     <path d="M8,22c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S12.411,22,8,22z"/>
                                     <path d="M52,22c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S56.411,22,52,22z"/>
                                     <path d="M30,22c-4.411,0-8,3.589-8,8s3.589,8,8,8s8-3.589,8-8S34.411,22,30,22z"/>
-                                </svg>
-
+                                    </svg>
                                 </div>
                             </div>
                         </div>
- 
 
                         <div class="time_data" id="location_adress_box">
-                         <div class="clock">
-                            <div class="clock_icon"><img src="/storage/socialnetworks/placeholder.png"></div>
-                            <span id="location_adress">{{$location->address}}</span>
+                            <div class="clock">
+                                <div class="clock_icon"><img src="/storage/socialnetworks/placeholder.png"></div>
+                                <span id="location_adress">{{$location->address}}</span>
+                            </div>
                         </div>
-
-                            </div>   
                         <ul class="sharePanel__social__icons" style="    width: 200px;">
-                                <li class="socialnetwork-icon facebook">
-                                    <a href="{{$location->facebook}}" id="locationsocialfb" target="_blank">
-                                        <div style="width: 40px; height: 40px;">
-                                            <img src="/storage/socialnetworks/facebook.png" alt="facebook share" />
-                                        </div>
-                                    </a>
-                                </li>
+                            <li class="socialnetwork-icon facebook">
+                                <a href="{{$location->facebook}}" id="locationsocialfb" target="_blank">
+                                    <div style="width: 40px; height: 40px;">
+                                        <img src="/storage/socialnetworks/facebook.png" alt="facebook share" />
+                                    </div>
+                                </a>
+                            </li>
 
-                                 <li class="socialnetwork-icon telegram">
-                                    <a href="{{$location->telegram}}" id="locationsocialtg" target="_blank">
-                                        <div style="width: 40px; height: 40px;">
-                                           <img src="/storage/socialnetworks/telegram.png" alt="telegram share" />
-                                        </div>
-                                    </a>
-                                </li>
+                             <li class="socialnetwork-icon telegram">
+                                <a href="{{$location->telegram}}" id="locationsocialtg" target="_blank">
+                                    <div style="width: 40px; height: 40px;">
+                                       <img src="/storage/socialnetworks/telegram.png" alt="telegram share" />
+                                    </div>
+                                </a>
+                            </li>
 
-                                <li class="socialnetwork-icon instagram">
-                                      <a href="{{$location->instagram}}" id="locationsocialig" target="_blank">
-                                        <div style="width: 40px; height: 40px;">
-                                            <img src="/storage/socialnetworks/instagram.png" alt="whatsapp share" />
-                                        </div>
-                                    </a>
-                                </li>
-
-
-                            </ul>
+                            <li class="socialnetwork-icon instagram">
+                                  <a href="{{$location->instagram}}" id="locationsocialig" target="_blank">
+                                    <div style="width: 40px; height: 40px;">
+                                        <img src="/storage/socialnetworks/instagram.png" alt="whatsapp share" />
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                         <div class="virtualizedGrid__otherLocation">
                             <div class="virtualizedGrid__title"><span>{{ trans('uzb360.drugielokasii')}}</span></div>
                             <div class="virtualizedGrid__listContainer">
@@ -777,28 +748,21 @@
                                     <div style="overflow: visible; height: 0px; width: 0px;">
                                         <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid" role="grid" tabindex="0" style="box-sizing: border-box; direction: ltr;  position: relative; width: 273px; will-change: transform; overflow: hidden auto;">
                                             <div class="ReactVirtualized__Grid__innerScrollContainer" role="rowgroup" style="width: 240px; max-width: 240px; max-height: 3900px; overflow: hidden; position: relative;">
-
-
-
-
-@if (is_array($etajlocations) || is_object($etajlocations))
-@foreach ($etajlocations as $key => $etajlocation)
-
-                                                <div class="listItem-wrapper" style="height: 260px;" onclick="loadpano('uzbekistan:{{$etajlocation->id}}', {{$i}}, '{{$etajlocation->slug}}')">
-                                                    <div class="listItem" style="width: 224px; height: 244px;">
-                                                        <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$etajlocation->img}}/thumb.jpg" class="listItem__img--scene"></div>
-                                                        <div class="listItem__icon-category">
-                                                            <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$etajlocation->categorylocation->color}}"><img src="/storage/cat_icons/{{$etajlocation->categorylocation->cat_icon_svg}}"></div>
-                                                        </div>
-                                                        <div class="listItem__text">
-                                                            <div><span>{{$etajlocation->name}}</span></div>
+                                                @if (is_array($etajlocations) || is_object($etajlocations))
+                                                    @foreach ($etajlocations as $key => $etajlocation)
+                                                    <div class="listItem-wrapper" style="height: 260px;" onclick="loadpano('uzbekistan:{{$etajlocation->id}}', {{$i}}, '{{$etajlocation->slug}}')">
+                                                        <div class="listItem" style="width: 224px; height: 244px;">
+                                                            <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$etajlocation->img}}/thumb.jpg" class="listItem__img--scene"></div>
+                                                            <div class="listItem__icon-category">
+                                                                <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$etajlocation->categorylocation->color}}"><img src="/storage/cat_icons/{{$etajlocation->categorylocation->cat_icon_svg}}"></div>
+                                                            </div>
+                                                            <div class="listItem__text">
+                                                                <div><span>{{$etajlocation->name}}</span></div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                @endforeach
-@endif
-
-
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -822,32 +786,25 @@
                                 </div>
                             </div>
 
-
                             <div class="krpano-floorplan">
                                 <div id="floor-krpano" class="krpano">
-        @foreach($etaji as $i => $etaj)
-                                            <div id="floorplan-tab{{ $i }}" class="floorplan-tab" tabindex="-1" style="display: none;">
-                                                <div class="plan">
-                                                    <img class="planClass" id="floorid{{$etaj->id}}"  src="/storage/floors/{{$etaj->image}}">
-
-
-                                                        <span ></span>
-
-                                                </div>
+                                    @foreach($etaji as $i => $etaj)
+                                        <div id="floorplan-tab{{ $i }}" class="floorplan-tab" tabindex="-1" style="display: none;">
+                                            <div class="plan">
+                                                <img class="planClass" id="floorid{{$etaj->id}}"  src="/storage/floors/{{$etaj->image}}">
+                                                    <span ></span>
                                             </div>
-    @endforeach
+                                        </div>
+                                    @endforeach
                                 </div>
-
                             </div>
 
                             <ul class="floorplan-viewer__footer">
                                 @foreach($etaji as $i => $etaj)
-
-                                        <li class="floorplan-viewer__footer__element buttonetaj{{$i}}" data-tab="{{ $i }}">
-                                            <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">
-                                            <span class="floorplan-viewer__footer__element__name">{{ $etaj->name }}</span>
-                                        </li>
-
+                                    <li class="floorplan-viewer__footer__element buttonetaj{{$i}}" data-tab="{{ $i }}">
+                                        <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">
+                                        <span class="floorplan-viewer__footer__element__name">{{ $etaj->name }}</span>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
@@ -873,10 +830,9 @@
                         <ul class="mobilechooselang">
                             <li><a href="#">Русский<a/></li>
                               <li><a href="#">O'zbekcha<a/></li>
-                                <li><a href="#">English<a/></li>
-                              </ul>
+                              <li><a href="#">English<a/></li>
+                            </ul>
                         </div>
-
                     </div>
                 </div>
                 <div class="wrapper-panel  top  cityPannel hidden expand" style=" width: 90%;   margin-left: auto;
@@ -885,21 +841,16 @@
     right: 0;">
                     <img class="wrapper-panel-close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="gyro">
-
                         <div class="input_city2">
                            <div class="drop_down_city">
-
-
                              <select id="selectsss" style="background-color:#fff">
-                          @foreach($cities as $city)
-                          <option id="{{$city->id}}" data-my-var="{{ app()->getLocale() }}" @if($defaultlocation==$city->id) selected @endif>{{$city->name}}</option>
+                                  @foreach($cities as $city)
+                                  <option id="{{$city->id}}" data-my-var="{{ app()->getLocale() }}" @if($defaultlocation==$city->id) selected @endif>{{$city->name}}</option>
 
-                          @endforeach
-   </select>
-
-                          </div></div>
-
-
+                                  @endforeach
+                             </select>
+                           </div>
+                        </div>
                     </div>
                 </div>
                 <span class="">
@@ -934,19 +885,18 @@
                             <div class="virtualizedGrid__otherLocation__title"><span>{{ trans('uzb360.izbrannielokasii')}}</span></div>
                             <div class="ReactVirtualized__Grid slick-block2">
                                 @foreach ($isfeatured as $i => $featured)
-                              <div class="listItem-wrapper featuredloctionbox"  data-lat="{{$featured->lat}}" data-lng="{{$featured->lng}}" onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}')">
-                                <div class="listItem">
-                                  <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg" class="listItem__img--scene"></div>
-                                  <div class="listItem__icon-category">
-                                    <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$featured->categorylocation->color}}"><img src="/storage/cat_icons/{{$featured->categorylocation->cat_icon_svg}}"></div>
+                                  <div class="listItem-wrapper featuredloctionbox"  data-lat="{{$featured->lat}}" data-lng="{{$featured->lng}}" onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}')">
+                                    <div class="listItem">
+                                      <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg" class="listItem__img--scene"></div>
+                                      <div class="listItem__icon-category">
+                                        <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$featured->categorylocation->color}}"><img src="/storage/cat_icons/{{$featured->categorylocation->cat_icon_svg}}"></div>
+                                      </div>
+                                      <div class="listItem__text">
+                                        <div><span>{{$featured->name}}</span></div>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div class="listItem__text">
-                                    <div><span>{{$featured->name}}</span></div>
-                                  </div>
-                                </div>
-                              </div>
-
-                             @endforeach
+                                @endforeach
                             </div>
                             <div class="resize-triggers">
                               <div class="expand-trigger">
@@ -965,19 +915,18 @@
                             <div class="virtualizedGrid__otherLocation__title"><span>{{ trans('uzb360.novielokasii')}}</span></div>
                             <div class="ReactVirtualized__Grid slick-block3">
                               @foreach ($isnew as $i => $new)
-                              <div class="listItem-wrapper featuredloctionbox" data-lat="{{$new->lat}}" data-lng="{{$new->lng}}" onclick="loadpano('uzbekistan:{{$new->id}}', {{$i}}, '{{$new->slug}}')">
-                                <div class="listItem">
-                                  <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg" class="listItem__img--scene"></div>
-                                  <div class="listItem__icon-category">
-                                    <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$new->categorylocation->color}}"><img src="/storage/cat_icons/{{$new->categorylocation->cat_icon_svg}}"></div>
+                                  <div class="listItem-wrapper featuredloctionbox" data-lat="{{$new->lat}}" data-lng="{{$new->lng}}" onclick="loadpano('uzbekistan:{{$new->id}}', {{$i}}, '{{$new->slug}}')">
+                                    <div class="listItem">
+                                      <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg" class="listItem__img--scene"></div>
+                                      <div class="listItem__icon-category">
+                                        <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$new->categorylocation->color}}"><img src="/storage/cat_icons/{{$new->categorylocation->cat_icon_svg}}"></div>
+                                      </div>
+                                      <div class="listItem__text">
+                                        <div><span>{{$new->name}}</span></div>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div class="listItem__text">
-                                    <div><span>{{$new->name}}</span></div>
-                                  </div>
-                                </div>
-                              </div>
-
-                             @endforeach
+                              @endforeach
                             </div>
                             <div class="resize-triggers">
                               <div class="expand-trigger">
@@ -989,7 +938,6 @@
                           <span class="icon-ic_arrow_right_big slick-block3_right"></span>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -1054,24 +1002,22 @@
     @endif
 
     @foreach ($etaji as $i => $etaj)
-    @if(!empty($etaj->code))
-    $(".buttonetaj{{$i}}").click(function(){
-      setTimeout(function(){
-      $("#floorid{{$etaj->id}}").annotatorPro({
-        maxZoom: 2,
-          navigator : false,
-          navigatorImagePreview : false,
-          frameWidth: "auto",
-          iconsize: "15px",
-          frameHeight: $(window).height()-300,
-          fullscreen : true,
-          {!!$etaj->code!!}
-      });},500);
-    });
-    @endif
+        @if(!empty($etaj->code))
+        $(".buttonetaj{{$i}}").click(function(){
+          setTimeout(function(){
+          $("#floorid{{$etaj->id}}").annotatorPro({
+            maxZoom: 2,
+              navigator : false,
+              navigatorImagePreview : false,
+              frameWidth: "auto",
+              iconsize: "15px",
+              frameHeight: $(window).height()-300,
+              fullscreen : true,
+              {!!$etaj->code!!}
+          });},500);
+        });
+        @endif
     @endforeach
-
-
 
     var isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
     var isIpad = window.matchMedia("only screen and (min-width: 768px)").matches;
@@ -1119,7 +1065,6 @@ $(window).on('popstate', function(event) {
             var ln = $('#mailll').val();
             var textarea = $('.feedbackPanel__wrapper-inputs textarea').val();
 
-
             if (ln.length > 0 && ln.indexOf("@") != -1 && textarea.length > 0) {
                $('.mail_inp').removeClass("red_color")
                $('.mail_inp2').removeClass("red_color")
@@ -1133,19 +1078,12 @@ $(window).on('popstate', function(event) {
                var select = $( "#feedbackselect option:selected" ).text();;
                var email = $("input[name=email]").val();
                $.ajax({
-
                    type:'POST',
-
                    url:'/form/1',
-
                    data:{message:message, select:select, email:email},
-
                    success:function(data){
-
-
                        // $("#Feedbackstatus").text('Спасибо за ваше сообщение!');
                    }
-
                });
 
                $('#sendinggg').click(function() {
@@ -1165,7 +1103,6 @@ $(window).on('popstate', function(event) {
         }
         });
 
-
         var krpano = null;
 
         function krpano_onready_callback(krpano_interface) {
@@ -1173,7 +1110,20 @@ $(window).on('popstate', function(event) {
 
             setTimeout(function() {
                 @foreach($krhotspots as $index => $hotspot)
-                add_exist_hotspot({{ $hotspot->h }}, {{ $hotspot->v }}, "{!! str_replace('"', '\"', $hotspot->name) !!}", "{{$hotspot->cat_icon_svg}}","{{$hotspot->cat_icon}}","{{$hotspot->img}}","uzbekistan:{{ $hotspot->destination_id }}", {{ $index }}, "{{$hotspot->slug}}", "{{$hotspot->color}}");
+                add_exist_hotspot(
+                    {{ $hotspot->h }},
+                    {{ $hotspot->v }},
+                    "{!! str_replace('"', '\"', $hotspot->name) !!}",
+                    "{{$hotspot->cat_icon_svg}}","{{$hotspot->cat_icon}}",
+                    "{{$hotspot->img}}",
+                    "uzbekistan:{{ $hotspot->destination_id }}",
+                    {{ $index }},
+                    "{{$hotspot->slug}}",
+                    "{{$hotspot->color}}",
+                    "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
+                    "{{ $hotspot->information }}",
+                    "{{ $hotspot->image }}"
+                );
                 @endforeach
             }, 3000);
         }
@@ -1188,21 +1138,22 @@ $(window).on('popstate', function(event) {
         });
 
         @if(isset($hotspot))
-        $(function(){
-            $.get(
-              // "/hasFloors/axmad4ik:{{ $hotspot->destination_id }}",
-              // onAjaxSuccess
-            );
+            $(function(){
+                $.get(
+                  // "/hasFloors/axmad4ik:{{ $hotspot->destination_id }}",
+                  // onAjaxSuccess
+                );
 
-            function onAjaxSuccess(data)
-            {
-              if(data == 1) {
-                $('.icon-ic_floorplan').parent().show();
-              } else {
-                $('.icon-ic_floorplan').parent().hide();
-              }
-            }
-        });@endif
+                function onAjaxSuccess(data)
+                {
+                  if(data == 1) {
+                    $('.icon-ic_floorplan').parent().show();
+                  } else {
+                    $('.icon-ic_floorplan').parent().hide();
+                  }
+                }
+            });
+        @endif
 
         function krpanofullscreen () {
             krpano.call("set(fullscreen,true);");
@@ -1402,13 +1353,26 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
         });
         $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function(data) {
             for(var i = 0; i < data.length; i++) {
-                add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug, data[i].color);
+                add_exist_hotspot(data[i].h,
+                    data[i].v,
+                    data[i].name,
+                    data[i].cat_icon_svg,
+                    data[i].cat_icon,
+                    data[i].img,
+                    "uzbekistan:" + data[i].destination_id,
+                    i,
+                    data[i].slug,
+                    data[i].color,
+                    data[i].type,
+                    data[i].information,
+                    data[i].image
+                );
             }
         });
     }
 }
 
-        function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color) {
+        function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color, type, information, image) {
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
                 krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
@@ -1422,78 +1386,85 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
                   $( ".hotspotPreview-wrapper" ).hide();
                 });
 
+                krpano.set("hotspot[" + hs_name + "].type", type);
+
                 krpano.set("hotspot[" + hs_name + "].onover", function() {
+                    if (type == {{ \App\Hotspot::TYPE_INFORMATION }})
+                        return false;
+                    $(".hotspotPreview-wrapper").show();
+                    hotspottext=$('.hotspotPreview__text');
+                    hotspoticon=$('.uzbhotspoticon');
+                    hotspotimg= $('.uzbhotspotimg');
+                    var n = krpano.spheretoscreen(h, v);
+                    var m = krpano.get("state.position.location");
 
-                    $( ".hotspotPreview-wrapper" ).show();
-                  hotspottext=$('.hotspotPreview__text');
-                  hotspoticon=$('.uzbhotspoticon');
-                  hotspotimg= $('.uzbhotspotimg');
-                  var n = krpano.spheretoscreen(h, v);
-                  var m = krpano.get("state.position.location");
+                    var link = $('.hotspotPreview__text');
 
-                  var link = $('.hotspotPreview__text');
+                    var uzb360preview = $('#uzb360preview');
+                    var bottomFromVisota = $(document).height() ;
+                    var bottomFromShirota = $(document).width() ;
 
-                  var uzb360preview = $('#uzb360preview');
-                      var bottomFromVisota = $(document).height() ;
-                      var bottomFromShirota = $(document).width() ;
-
-                      var preview = $('.hotspotPreview ');
-                  var previewx = n.x+50;
-                  var previewxx = n.x-280;
-                  var previewxxx = n.x-120;
-                  var previewy = n.y+30;
-                  var previewyy = n.y-200;
-                  var top = n.y -325;
-                  var bottom = n.y +30;
-                  var left = n.x -118;
-                  var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
-                  var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
-                  if (bottomFromShirota-n.x > 500) {
-
+                    var preview = $('.hotspotPreview ');
+                    var previewx = n.x+50;
+                    var previewxx = n.x-280;
+                    var previewxxx = n.x-120;
+                    var previewy = n.y+30;
+                    var previewyy = n.y-200;
+                    var top = n.y -325;
+                    var bottom = n.y +30;
+                    var left = n.x -118;
+                    var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
+                    var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
+                    if (bottomFromShirota-n.x > 500) {
                       preview.css('left', ''+previewx+'px')
                       preview.css('top', ''+previewyy+'px')
 
                       uzb360preview.removeClass();
                       uzb360preview.addClass('hotspotPreview right');
-
-
-                  } else {
+                    } else {
                       preview.css('left', ''+previewxx+'px')
                       preview.css('top', ''+previewyy+'px')
                       uzb360preview.removeClass();
                       uzb360preview.addClass('hotspotPreview left');
-                  }
+                    }
 
-                  if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
-
+                    if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
                       preview.css('left', ''+left+'px')
                       preview.css('top', ''+top+'px')
                        uzb360preview.removeClass();
                       uzb360preview.addClass('hotspotPreview bottom');
-                  }
+                    }
 
-                  if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
+                    if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
                       preview.css('left', ''+left+'px')
                       preview.css('top', ''+bottom+'px')
-                       uzb360preview.removeClass();
+                      uzb360preview.removeClass();
                       uzb360preview.addClass('hotspotPreview top');
-                  }
+                    }
 
-                  hotspottext.text(name);
-                  hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
-                  hotspoticon.css("background-color", color)
-                  hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
+                    hotspottext.text(name);
+                    hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
+                    hotspoticon.css("background-color", color)
+                    hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
                 });
 
                 krpano.set("hotspot[" + hs_name + "].distorted", false);
 
                 if (krpano.get("device.html5")) {
-
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
-                        loadpano(hs_name, index, slug);
+                        if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+                            console.log('information');
+                            $('.information-modal .content').html(information);
+                            if (image.length > 0) {
+                                $('.image-block').html('<img/>');
+                                $('.image-block img').attr('src', '/storage/information/' + image);
+                            }
+                            $('.information-modal').fadeIn();
+                        } else {
+                            loadpano(hs_name, index, slug);
+                        }
 
                     }.bind(null, hs_name));
-
                 }
             }
         }
@@ -1525,8 +1496,6 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
             var TILE_SIZE = 256
 
             var siny = Math.sin(latLng.lat() * Math.PI / 180)
-
-
             siny = Math.min(Math.max(siny, -0.9999), 0.9999)
 
             return new google.maps.Point(
@@ -1614,7 +1583,6 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
         }
       }
 
-
       $('.slick-block3').on('afterChange', function(event, slick, currentSlide, nextSlide){
          if(window.innerWidth < 1025){
             var realslide =  $(".slick-active", this);
@@ -1635,11 +1603,11 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
                  smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
         }
       });
-        $('.featuredloctionbox').mouseover(function(){
+      $('.featuredloctionbox').mouseover(function(){
           var latmark = $(this).data('lat');
           var lngmark = $(this).data('lng');
           smoothlyAnimatePanTo(map, new google.maps.LatLng(latmark,lngmark));
-        });
+      });
 
     $('.icon-ic_explore').click(function(){
       var currentlocationcordinates = $(".currentlocationcordinates");
@@ -1650,10 +1618,8 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
 
       var curlatmark = currentlocationcordinates.data('lat');
       var curlngmark = currentlocationcordinates.data('lng');
-    smoothlyAnimatePanTo(map, new google.maps.LatLng(curlatmark,curlngmark)); }
+      smoothlyAnimatePanTo(map, new google.maps.LatLng(curlatmark,curlngmark)); }
     });
-
-
 
       $.each( locations, function( index, value ){
         var icon = {
@@ -1767,19 +1733,10 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
       <source src="" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
-<style>
-  #playaudio {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    left: 10px;
-    top: 70px;
-    display: block;
-    z-index: 2000;
-    background: none;
-    padding: 0;
-    margin: 0;
-    border: 0;
-  }
-</style>
+
+    <div class="information-modal modal" style="display: none">
+        <img class="close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
+        <div class="image-block"></div>
+        <div class="content"></div>
+    </div>
 @endsection

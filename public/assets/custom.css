@@ -25,3 +25,50 @@ body{
 .explore__listContainer .slick-active .listItem__icon-category {
     border-bottom: unset;
 }
+
+#playaudio {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: 10px;
+    top: 70px;
+    display: block;
+    z-index: 2000;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+.modal {
+    position: absolute;
+    padding: 30px;
+    background: #fff;
+    width: 60%;
+    height: 70%;
+    z-index: 1000;
+    top: 14%;
+    left: 18%;
+}
+.modal .close {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.information-modal {
+    border-radius: 4px;
+}
+
+.information-modal img {
+    max-width: 100%;
+}
+
+.information-modal .content {
+    padding-top: 20px;
+    max-height: 260px;
+    overflow: scroll;
+}

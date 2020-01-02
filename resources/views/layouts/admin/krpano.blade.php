@@ -185,6 +185,18 @@
             padding: 10px 25px;
             cursor: pointer;
         }
+
+        #addInformation {
+            position: absolute;
+            top: 25px;
+            background: rgba(0,0,0,0.5);
+            left: 500px;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+
         #adminbackurl:hover {
             background: rgba(0,0,0,1);
         }

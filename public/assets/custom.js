@@ -61,4 +61,8 @@ $(document).ready(function() {
         e.preventDefault();
         $('#search_adress input').val('');
     });
+
+    $('.modal .close').on('click', function() {
+       $(this).parent().fadeOut();
+    });
 });
