@@ -5203,6 +5203,10 @@ height: 192px;
   content: '\E927';
 }
 
+.icon-ic_info {
+  font-size: 56px;
+}
+
 .icon-ic_link:before {
   content: '\E928';
 }
