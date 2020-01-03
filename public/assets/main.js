@@ -466,7 +466,8 @@ $(function() {
         nextArrow: $('.icon-ic_arrow_right__active_v2_sec'),
     });
 
-    $('.slick-block').slick({
+    var otherLocationsSlider = $('.slick-block');
+    otherLocationsSlider.slick({
         dots: false,
         infinite: true,
         speed: 500,
@@ -477,6 +478,16 @@ $(function() {
         nextArrow: $('.icon-ic_arrow_right__active_v2_third'),
 
     });
+
+    otherLocationsSlider.on('wheel', (function(e) {
+      e.preventDefault();
+
+      if (e.originalEvent.deltaY < 0) {
+        $(this).slick('slickNext');
+      } else {
+        $(this).slick('slickPrev');
+      }
+    }));
 
     $('.slick-block2').slick({
         dots: false,
