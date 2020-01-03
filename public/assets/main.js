@@ -1,6 +1,4 @@
 $(function() {
-
-
     // preloader
     setTimeout(function() {
         $('.loading').fadeOut('slow');
@@ -19,18 +17,9 @@ $(function() {
     }
     // modals
 
-    $('.searchPanel__filtered__clear').on('click', function() {
-
-    });
-
-
-
-
     $('.wrapper-button__icon').on('click', function() {
         var _this = $(this);
         var curModal = $('.' + _this.data('pannel')).eq(0);
-
-
 
         if (_this.hasClass('is-active')) {
             _this.removeClass('is-active');
@@ -44,14 +33,10 @@ $(function() {
             $('.wrapper-panel').removeClass('visible').addClass('hidden');
             curModal.removeClass('hidden').addClass('visible');
 
-
-
-
             if (_this.find('.wrappersvg').length !== 0) {
                 _this.find('.wrappersvg').attr("fill", "#c23691");
             };
         }
-
     });
 
     // modals close
@@ -64,13 +49,6 @@ $(function() {
         }
     });
 
-
-
-
-
-    // ******************** TImberland SCripts ************************
-
-
     $('.svg_blockk').click(function() {
     	var height = $('#location_description').height();
         $('.infoPanel__description__message').toggleClass('show');
@@ -81,16 +59,7 @@ $(function() {
         }else{
         	$('.infoPanel__description__message').removeAttr('style');
         }
-
-
-
     });
-
-    // $("#mobilelanguage").click(function() {
-    // });
-
-
-
 
     $('.wrapper-panel-close').click(function() {
        $('.infoPanel__description__message').removeAttr('style');
@@ -105,7 +74,6 @@ $(function() {
 
     function exitHandler() {
         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-
             $('#logo2').remove();
         }
     }
@@ -122,30 +90,16 @@ $(function() {
         $(this).css('display', 'none');
     });
 
-
-
-
     if ($(window).width() > 1300) {
-
-
     } else {
-
         $('.icon-ic_glass').click(function() {
-          
             // $('.searchPanel__input').trigger('click');
         });
-
     }
 
-
     $('.icon-ic_glass').click(function() {
-    	$('.searchPanel__results').css("display", "none");
-
+        $('.searchPanel__results').css("display", "none");
     });
-
-
-
-    // ****************************************************************
 
     // feedback modal close
     $('.close-btn').on('click', function() {
@@ -161,12 +115,8 @@ $(function() {
         $('.mytab').fadeOut();
         $('.fullScreenPanel_filter').fadeOut();
         curTab.fadeIn();
-
     });
 
-    $('.mybtn').click(function() {
-
-    })
     $('.mybtn').on('touchstart click', function() {
         $('.fullScreenPanel_filter').fadeIn();
     });
@@ -208,7 +158,6 @@ $(function() {
         var _this = $(this);
         var curModal = $('#' + _this.data('tab')).eq(0);
 
-
         if (_this.hasClass('is-activated--categories')) {
             _this.removeClass('is-activated--categories');
             curModal.fadeOut();
@@ -220,7 +169,6 @@ $(function() {
                 curModal.fadeIn();
             }, 400);
         }
-
     });
 
     // krpano modes list
@@ -245,23 +193,18 @@ $(function() {
         }
     });
 
-
-
     // При клике на категории :: ПОИСК
-
 
     $('.js-icon').on('click', function() {
         // $(".searchPanel__button").css("display", "block")
         // $('.searchPanel__results').fadeIn();
         $('.searchPanel__results').removeAttr('style');
 
-
         if ($(this).hasClass('icon-wrapper__icon')) {
             $(this).removeClass('icon-wrapper__icon').addClass('icon-wrapper--selected');
         } else {
             $(this).removeClass('icon-wrapper--selected').addClass('icon-wrapper__icon');
         }
-
 
         var _this = $('.search-input');
         var categoryId =
@@ -276,12 +219,10 @@ $(function() {
                     onAjaxSuccess
                 );
             } else {
-
                 $.get(
                     "/ru/search/noresult/" + categoryId,
                     onAjaxSuccess
                 );
-
             }
         } else {
             if (_this.val() != "") {
@@ -294,10 +235,7 @@ $(function() {
         //Дебильная функция
         function onAjaxSuccess(data) {
             if (data === 'Null') {
-
-
                 $('#searchContainer').empty();
-
                 $('.searchPanel__resultscontainer').hide();
                 $('.searchPanel__results span').text('Объект не найден');
                 $('.searchPanel__button').text('Объект не найден');
@@ -312,10 +250,9 @@ $(function() {
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-					xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
                     $preview = $( xmlDoc ).find('preview');
                     var img = $preview.attr("url").replace('preview', 'thumb');
-
 
                     if (screen.width >= 1024) {
                         searchItem += `
@@ -331,7 +268,6 @@ $(function() {
                       </div>
                   </div>
                   `;
-
                     } else {
                         searchItem += `
                       <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
@@ -363,25 +299,10 @@ $(function() {
                         $('#searchContainerMobile').empty().append(searchItem);
                         $('.searchPanel__button').show();
                     }
-
-
-
-
                 }
-
-
-
-
             }
-
-
-
-
         }
         //КОНЕЦ Дебильная функция
-
-
-
 
         if (_this.val() == '') {
             $('.searchPanel__results span').text('Объект не найден');
@@ -393,7 +314,6 @@ $(function() {
         }
     });
     // КОНЕЦ При клике на категории :: ПОИСК
-
 
     // mobile search result panel
     $('.searchPanel__button').on('click', function() {
@@ -429,8 +349,6 @@ $(function() {
 
         function onAjaxSuccess(data) {
             if (data === 'Null') {
-
-
                 $('#searchContainer').empty();
 
                 $('.searchPanel__resultscontainer').hide();
@@ -443,18 +361,13 @@ $(function() {
                     $('.searchPanel__button').text('Результаты: ' + data.length + '');
                 }
 
-
-
                 var searchItem = "";
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-					xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
                     $preview = $( xmlDoc ).find('preview');
                     var img = $preview.attr("url").replace('preview', 'thumb');
-
-
-
 
                     if (screen.width >= 1024) {
                         searchItem += `
@@ -470,8 +383,6 @@ $(function() {
                       </div>
                   </div>
                   `;
-
-
                     } else {
                         searchItem += `
                       <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
@@ -488,9 +399,6 @@ $(function() {
                   `;
                     }
 
-
-
-
                     if (screen.width >= 1024) {
                         $('#searchContainer').empty().append(searchItem);
                         $('.searchPanel__resultscontainer').show();
@@ -506,20 +414,8 @@ $(function() {
                     //     $('#searchContainerMobile').empty().append(searchItem);
                     //     $('.searchPanel__button').show();
                     // }
-
-
-
-
                 }
-
-
-
-
             }
-
-
-
-
         }
 
         if (_this.val() == '') {
@@ -533,9 +429,6 @@ $(function() {
     });
 
     // sliders
-
-
-
     if (screen.width > 576) {
         $('.cotegory-slick').slick({
             dots: false,
@@ -589,7 +482,7 @@ $(function() {
         dots: false,
         infinite: true,
         speed: 500,
-  slidesToShow: 5,
+        slidesToShow: 5,
         slidesToScroll: 1,
         variableWidth: true,
         prevArrow: $('.slick-block2_left'),
@@ -600,13 +493,11 @@ $(function() {
         dots: false,
         infinite: true,
         speed: 500,
-  slidesToShow: 5,
+        slidesToShow: 5,
         slidesToScroll: 1,
         variableWidth: true,
         prevArrow: $('.slick-block3_left'),
         nextArrow: $('.slick-block3_right'),
-
-
     });
 
     $('.slick-block4').slick({
@@ -650,51 +541,38 @@ $(function() {
     });
 
     $('.language-switcher select').on('change', function() {
-      var id = $(this).children(":selected").attr("id");
-      var lang = $(this).children(":selected").data('my-var');
-var pathname = window.location.pathname;
-if (pathname.indexOf("/ru") >= 0) {
-  pathname =  pathname.replace("/ru", id);
-  document.location.href = '/' + pathname;
-}
-if (pathname.indexOf("/uzb") >= 0) {
-pathname =  pathname.replace("/uzb", id);
-  document.location.href = '/' + pathname;
-}
-if (pathname.indexOf("/en") >= 0) {
-pathname =  pathname.replace("/en", id);
-  document.location.href = '/' + pathname;
-}
-
-
-
+        var id = $(this).children(":selected").attr("id");
+        var lang = $(this).children(":selected").data('my-var');
+        var pathname = window.location.pathname;
+        if (pathname.indexOf("/ru") >= 0) {
+          pathname =  pathname.replace("/ru", id);
+          document.location.href = '/' + pathname;
+        }
+        if (pathname.indexOf("/uzb") >= 0) {
+        pathname =  pathname.replace("/uzb", id);
+          document.location.href = '/' + pathname;
+        }
+        if (pathname.indexOf("/en") >= 0) {
+        pathname =  pathname.replace("/en", id);
+          document.location.href = '/' + pathname;
+        }
     });
-    // ****************************************************
-
-
-
 
     // ********************* CLOSE SEARCH BLOCK ******************************************
 
     $('body').on('click', '.listItem-wrapper', function() {
-
         setTimeout(function() {
             $('.wrapper-panel-close').trigger('click')
         }, 1000)
     });
 
-
-
     $('.listItem-wrapper').on('click', function() {
         var _this = $(this);
         var curModal = $('.' + _this.data('pannel')).eq(0);
 
-
-
         if (_this.hasClass('is-active')) {
             _this.removeClass('is-active');
             curModal.removeClass('visible').addClass('hidden');
-
         } else {
             $('.wrapper-button__icon').removeClass('is-active');
             _this.addClass('is-active');
@@ -703,10 +581,4 @@ pathname =  pathname.replace("/en", id);
         }
 
     });
-
-
-
-
-    // **********************************************************************************
-
 });
