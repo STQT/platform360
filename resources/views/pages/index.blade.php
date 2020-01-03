@@ -318,9 +318,6 @@
                             <span class="clear-field"></span>
                         </div>
                         <div class="searchPanel__filtered ">
-                            <span class="searchPanel__filtered__title">{{ trans('uzb360.filtr')}}</span>
-                            <span class="icon-ic_arrow_up chevron-mobile"></span>
-                            {{-- <span class="searchPanel__filtered__clear">Сбросить</span> --}}
                         </div>
                         <div class="searchPanel__wrapper-category">
                             <div class="category-wrapper ">

@@ -182,17 +182,6 @@ $(function() {
         $(this).toggleClass('checked');
     });
 
-    // search
-    $('.searchPanel__filtered__title').on('click', function() {
-        if ($('.chevron-mobile').hasClass('icon-ic_arrow_down')) {
-            $('.chevron-mobile').removeClass('icon-ic_arrow_down').addClass('icon-ic_arrow_up');
-            $('.searchPanel__wrapper-category').slideDown();
-        } else {
-            $('.searchPanel__wrapper-category').slideUp();
-            $('.chevron-mobile').removeClass('icon-ic_arrow_up').addClass('icon-ic_arrow_down');
-        }
-    });
-
     // При клике на категории :: ПОИСК
 
     $('.js-icon').on('click', function() {
