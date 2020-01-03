@@ -38,6 +38,5 @@ return [
   'novielokasii' => 'Yangi joylar',
   'vashemail' => 'Siznig email',
   'vashesoobshenie' => 'Xabaringiz',
-
-
+  'bad_connection' => 'Bad Internet connection',
 ];

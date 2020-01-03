@@ -38,7 +38,5 @@ return [
   'novielokasii' => 'New locations',
   'vashemail' => 'Your email',
   'vashesoobshenie' => 'Your message',
-
-
-
+  'bad_connection' => 'Bad Internet connection',
 ];

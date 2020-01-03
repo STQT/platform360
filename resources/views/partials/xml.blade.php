@@ -90,7 +90,7 @@ tween(view.hlookat, 45.0, 2.0);
 	        /> --}}
 {{-- <events onxmlcomplete="wait(2); playsound(bg, 'https://dev2.uzbekistan360.uz/plugins/ding_dong_merrily_on_high.mp3|https://dev2.uzbekistan360.uz/plugins/ding_dong_merrily_on_high.ogg',1); "/> --}}
 
-
+<events onloaderror="js(alert('{{ trans('uzb360.bad_connection')}}'))" />
 <style name="button" type="text"
          css="text-align:center;"
          padding="4 8"
