@@ -1478,6 +1478,7 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
             disableDefaultUI: true, // a way to quickly hide all controls
             mapTypeControl: true,
             scaleControl: true,
+            gestureHandling: 'greedy',
             zoomControl: true,
             zoomControlOptions: {
                 style: google.maps.ZoomControlStyle.LARGE

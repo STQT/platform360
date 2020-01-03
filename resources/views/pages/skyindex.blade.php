@@ -1199,7 +1199,8 @@ if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
 
     var map = new google.maps.Map(document.getElementById('map'), {
         center: location,
- clickableIcons: false
+        clickableIcons: false,
+        gestureHandling: 'greedy',
     });
     map.setZoom(14);
     var locations = <?php print_r(json_encode($locationscordinate)) ?>;
