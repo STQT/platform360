@@ -272,7 +272,7 @@ class LocationsController extends Controller
         $perPage = 25;
 
         $totalLocations = Location::withoutGlobalScope('published')->where('isfeatured', 'on')->count();
-        $publishedLocations = Location::where('isDefault', '1')->count();
+        $publishedLocations = Location::where('published', '=', 1)->where('isfeatured', 'on')->count();
         $unpublishedLocations = Location::withoutGlobalScope('published')->where('isfeatured', 'on')->where('published', '!=', 1)->count();
         $categories = Category::pluck('name', 'id');
         $cities = Cities::pluck('name', 'id');
