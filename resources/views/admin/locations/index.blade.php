@@ -13,7 +13,10 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>Добавить новую
                         </a>
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/admin/locations', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        <div class="input-group">
+                            {!! Form::select('city', $cities, $city, ['class' => 'form-control', 'placeholder' => 'Город']) !!}
+                        </div>
                         <div class="input-group">
                             {!! Form::select('category', $categories, $category, ['class' => 'form-control', 'placeholder' => 'Категория']) !!}
                         </div>
