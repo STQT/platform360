@@ -105,6 +105,7 @@
     var hotspotid;
     var hotspot_type = {{ \App\Hotspot::TYPE_MARKER }};
     var hotspotname;
+    var selectedCategory = null;
     $(function () {
         $('body').on('click', '.locationItem', function () {
             var _this = $(this);
@@ -133,7 +134,6 @@
                 processData: false,
                 success: function(data)
                 {
-                    console.log(data);
                     $('#informationModal').fadeOut();
                 }
             });
@@ -149,64 +149,78 @@
                 $('.mess_img').fadeIn();
             }, 700);
 
-            $.get('/ru/api/locations/' + _this.data('category')).done(function (data) {
-                setTimeout(function () {
-                    $('.mess_img').fadeOut('slow');
+            selectedCategory = _this.data('category');
+            getLocations(selectedCategory);
+        });
+    });
 
-                }, 700);
+    function getLocations(category, query) {
+        if (typeof query == 'undefined')
+            query = '';
+        $.get('/ru/api/locations/' + category + (query ? ('?query=' + query) : '')).done(function (data) {
+            setTimeout(function () {
+                $('.mess_img').fadeOut('slow');
+            }, 700);
 
-                setTimeout(function () {
-                    if (!data.data.length) {
-                        setTimeout(function () {
-                            $('.mess_not_found').fadeIn();
-                        }, 800);
-
-                        return;
-                    }
+            setTimeout(function () {
+                if (!data.data.length) {
+                    $('.info-list').html('');
 
                     setTimeout(function () {
-                        $('.mess_not_found').fadeOut();
+                        $('.mess_not_found').fadeIn();
+                    }, 800);
 
-                        for (var i = 0; i < data.data.length; i++) {
-                            var panos = JSON.parse(data.data[i].panorama);
+                    return;
+                }
 
-                            if(panos.length == 1) {
+                setTimeout(function () {
+                    $('.mess_not_found').fadeOut();
 
-                                if (data.data[i].podlocparent_id == null) {
-                                    xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
-                                    $preview = $( xmlDoc ).find('preview');
+                    $('.info-list').html('');
 
-                                    var parentId = data.data[i].id;
-                                    $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+                    for (var i = 0; i < data.data.length; i++) {
+                        var panos = JSON.parse(data.data[i].panorama);
 
-                                    $.get('/ru/api/sublocations/' + data.data[i].id).done(function (data) {
-                                     for (var i = 0; i < data.data.length; i++) {
-                                         var panos = JSON.parse(data.data[i].panorama);
+                        if(panos.length == 1) {
 
-                                         if(panos.length == 1) {
-                                             xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
-                                             $preview = $( xmlDoc ).find('preview');
-	                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name.ru + '</a></li>');
-	                                            }
-	                                        }
-	                                    });
-                                }
-                            }
-                            else {
-                                for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
-                                    $('.info-list').append('<li><a class="locationItem" data-index="' + floorIndex +'" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '(' + panos[i].name + ')' + '</a></li>');
-                                }
+                            if (data.data[i].podlocparent_id == null) {
+                                xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
+                                $preview = $( xmlDoc ).find('preview');
+
+                                var parentId = data.data[i].id;
+                                $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+
+                                $.get('/ru/api/sublocations/' + data.data[i].id).done(function (data) {
+                                 for (var i = 0; i < data.data.length; i++) {
+                                     var panos = JSON.parse(data.data[i].panorama);
+
+                                     if(panos.length == 1) {
+                                         xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
+                                         $preview = $( xmlDoc ).find('preview');
+                                                $('.info-list li[data-id='+data.data[i].podlocparent_id+'] ul').append('<li><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+$preview.attr("url").replace('preview', 'thumb')+'" width="150">' + data.data[i].name.ru + '</a></li>');
+                                            }
+                                        }
+                                    });
                             }
                         }
+                        else {
+                            for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
+                                $('.info-list').append('<li><a class="locationItem" data-index="' + floorIndex +'" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '(' + panos[i].name + ')' + '</a></li>');
+                            }
+                        }
+                    }
 
-                        $('.axmad4ik').fadeIn();
-                    }, 700);
+                    $('.axmad4ik').fadeIn();
                 }, 700);
-            }).fail(function () {
-                alert('Ошибка загрузки информации, пожалуйста попробуйте снова.')
-            });
+            }, 700);
+        }).fail(function () {
+            alert('Ошибка загрузки информации, пожалуйста попробуйте снова.')
         });
-    })
+    }
+
+    $('.info-search').on('keyup', function() {
+        getLocations(selectedCategory, $(this).val());
+    });
 
     $(function () {
         $('.modal-close').on('click', function () {

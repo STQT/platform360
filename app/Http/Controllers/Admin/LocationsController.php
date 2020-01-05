@@ -874,7 +874,7 @@ class LocationsController extends Controller
         return view('partials.admin.xml', ['location' => $location]);
     }
 
-//Генерация Krpano для админки
+    //Генерация Krpano для админки
     public function krpano($id)
     {
         $location = Location::withoutGlobalScope('published')->find($id);
@@ -882,11 +882,20 @@ class LocationsController extends Controller
     }
 
 
-//Загрузка всей локаций опредленной категории
+    //Загрузка всей локаций опредленной категории
     public function apiLocations($id)
     {
         $category = Category::findOrFail($id);
-        $locations = $category->locations()->withoutGlobalScope('published')->orderBy('created_at', 'DESC')->paginate(999);
+        $query = isset($_GET['query']) ? $_GET['query'] : '';
+        if ($query) {
+            $locations = $category->locations()
+                ->withoutGlobalScope('published')
+                ->where('name', 'LIKE', "%$query%")
+                ->orderBy('created_at', 'DESC')
+                ->paginate(999);
+        } else {
+            $locations = $category->locations()->withoutGlobalScope('published')->orderBy('created_at', 'DESC')->paginate(999);
+        }
 
         $locations = Location::transl($locations);
         return $locations;
