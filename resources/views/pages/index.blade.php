@@ -714,11 +714,9 @@
                                   @foreach($otherlocations as $i=> $otherlocation)
                                     <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}')">
                                         <div class="listItem">
-
                                             <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$otherlocation->img}}/thumb.jpg" class="listItem__img--scene"></div>
                                             <div class="listItem__icon-category">
                                                 <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$otherlocation->categorylocation->color}}"><img src="/storage/cat_icons/{{$otherlocation->categorylocation->cat_icon_svg}}"></div>
-
                                             </div>
                                             <div class="listItem__text">
                                                 <div><span>{{$otherlocation->name}}</span></div>
@@ -737,7 +735,6 @@
                 </div>
                 <div class="wrapper-panel  top left floorplanPanel hidden expand">
                     <div class="wrapper-panel--main-container">
-
                         <div class="floorplan fade--in">
                             <span class="floorplan__recommended__title"><span>{{ trans('uzb360.obekty')}}</span></span>
                             <div class="floorplan__listContainer">
@@ -966,6 +963,17 @@
         </div>
     </div>
     </div>
+
+    <audio controls style="" id="audio">
+      <source src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <div class="information-modal modal" style="display: none">
+        <img class="close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
+        <div class="image-block"></div>
+        <div class="content"></div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -1025,210 +1033,205 @@
     if (isIpad) {
             var hotspotsize = "0.4";
     }
-$(window).on('popstate', function(event) {
-  var pathname = window.location.pathname;
-  if (pathname == "/") {
+    $(window).on('popstate', function(event) {
+        var pathname = window.location.pathname;
+        if (pathname == "/") {
+            pathname = "/{{ app()->getLocale() }}/api/getcitydefaultlocation/{{$defaultlocation}}";
+            $.get(pathname,
+              {},
+              onAjaxSuccess2
+            );
 
-    pathname = "/{{ app()->getLocale() }}/api/getcitydefaultlocation/{{$defaultlocation}}";
-    $.get(pathname,
-      {},
-      onAjaxSuccess2
-    );
+            function onAjaxSuccess2(data)
+            {
+                loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
+            }
+        } else {
+            console.log(pathname);
+            pathname = pathname.replace('/{{ app()->getLocale() }}/location/','');
+            pathname = "/{{ app()->getLocale() }}/api/location/"+pathname;
 
-    function onAjaxSuccess2(data)
-    {
-        loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
-    }
+            $.get(pathname,
+              {},
+              onAjaxSuccess2
+            );
 
-
-    } else {
-          pathname = pathname.replace('/location/','');
-          pathname = "/{{ app()->getLocale() }}/api/location/"+pathname;
-
-        $.get(pathname,
-          {},
-          onAjaxSuccess2
-        );
-
-        function onAjaxSuccess2(data)
-        {
-            loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
+            function onAjaxSuccess2(data)
+            {
+                loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
+            }
         }
-    }
+    });
 
-});
-        $('#feedbackForm').on('submit', function(e) {
-            e.preventDefault();
-            var ln = $('#mailll').val();
-            var textarea = $('.feedbackPanel__wrapper-inputs textarea').val();
+    $('#feedbackForm').on('submit', function(e) {
+        e.preventDefault();
+        var ln = $('#mailll').val();
+        var textarea = $('.feedbackPanel__wrapper-inputs textarea').val();
 
-            if (ln.length > 0 && ln.indexOf("@") != -1 && textarea.length > 0) {
-               $('.mail_inp').removeClass("red_color")
-               $('.mail_inp2').removeClass("red_color")
+        if (ln.length > 0 && ln.indexOf("@") != -1 && textarea.length > 0) {
+           $('.mail_inp').removeClass("red_color")
+           $('.mail_inp2').removeClass("red_color")
 
-               $('.send_form_btn').css('display', 'none')
-               $('.block_thanks').css('display', 'flex')
+           $('.send_form_btn').css('display', 'none')
+           $('.block_thanks').css('display', 'flex')
 
-               $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-               e.preventDefault();
-               var message =$('textarea#feedbacktext').val();
-               var select = $( "#feedbackselect option:selected" ).text();;
-               var email = $("input[name=email]").val();
-               $.ajax({
-                   type:'POST',
-                   url:'/form/1',
-                   data:{message:message, select:select, email:email},
-                   success:function(data){
-                       // $("#Feedbackstatus").text('Спасибо за ваше сообщение!');
-                   }
-               });
+           $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+           e.preventDefault();
+           var message =$('textarea#feedbacktext').val();
+           var select = $( "#feedbackselect option:selected" ).text();;
+           var email = $("input[name=email]").val();
+           $.ajax({
+               type:'POST',
+               url:'/form/1',
+               data:{message:message, select:select, email:email},
+               success:function(data){
+                   // $("#Feedbackstatus").text('Спасибо за ваше сообщение!');
+               }
+           });
 
-               $('#sendinggg').click(function() {
-                   $('.wrapper-panel-close').trigger('click')
+           $('#sendinggg').click(function() {
+               $('.wrapper-panel-close').trigger('click');
 
-                   setTimeout(function(){
-                       $('#feedbackselect option:eq(0)').attr('selected', 'selected');
-                       $('#mailll').val('');
-                       $('.mail_inp2 textarea').val('');
-                       $('.block_thanks').css('display', 'none')
-                       $('.send_form_btn').css('display', 'block')
-                   }, 500);
-               });
-           }else{
+               setTimeout(function(){
+                   $('#feedbackselect option:eq(0)').attr('selected', 'selected');
+                   $('#mailll').val('');
+                   $('.mail_inp2 textarea').val('');
+                   $('.block_thanks').css('display', 'none')
+                   $('.send_form_btn').css('display', 'block')
+               }, 500);
+           });
+       } else{
             $('.mail_inp').addClass("red_color")
             $('.mail_inp2').addClass("red_color")
         }
+    });
+
+    var krpano = null;
+
+    function krpano_onready_callback(krpano_interface) {
+        krpano = krpano_interface;
+        setTimeout(function() {
+            @foreach($krhotspots as $index => $hotspot)
+            add_exist_hotspot(
+                {{ $hotspot->h }},
+                {{ $hotspot->v }},
+                "{!! str_replace('"', '\"', $hotspot->name) !!}",
+                "{{$hotspot->cat_icon_svg}}","{{$hotspot->cat_icon}}",
+                "{{$hotspot->img}}",
+                "uzbekistan:{{ $hotspot->destination_id }}",
+                {{ $index }},
+                "{{$hotspot->slug}}",
+                "{{$hotspot->color}}",
+                "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
+                "{{ $hotspot->information }}",
+                "{{ $hotspot->image }}"
+            );
+            @endforeach
+        }, 3000);
+    }
+
+    $(document).ready(function() {
+      @if ($location->audio != '')
+        $('#audio')[0].setSrc('/storage/audio/{{$location->audio}}');
+        setTimeout(function() {
+          // $('#audio')[0].play();
+        }, 1000);
+      @endif
+    });
+
+    @if(isset($hotspot))
+        $(function(){
+            $.get(
+              // "/hasFloors/axmad4ik:{{ $hotspot->destination_id }}",
+              // onAjaxSuccess
+            );
+
+            function onAjaxSuccess(data)
+            {
+              if(data == 1) {
+                $('.icon-ic_floorplan').parent().show();
+              } else {
+                $('.icon-ic_floorplan').parent().hide();
+              }
+            }
         });
+    @endif
 
-        var krpano = null;
+    function krpanofullscreen () {
+        krpano.call("set(fullscreen,true);");
+        $('#logo2').css('display', 'block');
+        $('#pano1').append(`<div id="logo2" onclick="krpanofullscreenexit()" class="icon-ic_windowed fullScreenIcon" style="display: block; position: absolute; z-index: 99999;"></div>`);
 
-        function krpano_onready_callback(krpano_interface) {
-            krpano = krpano_interface;
+    }
+    function krpanofullscreenexit ()  {
+        krpano.call("set(fullscreen,false);");
+        $('.icon-ic_fullscreen').removeClass('is-active')
+      $('#logo2').remove();
+    }
 
-            setTimeout(function() {
-                @foreach($krhotspots as $index => $hotspot)
-                add_exist_hotspot(
-                    {{ $hotspot->h }},
-                    {{ $hotspot->v }},
-                    "{!! str_replace('"', '\"', $hotspot->name) !!}",
-                    "{{$hotspot->cat_icon_svg}}","{{$hotspot->cat_icon}}",
-                    "{{$hotspot->img}}",
-                    "uzbekistan:{{ $hotspot->destination_id }}",
-                    {{ $index }},
-                    "{{$hotspot->slug}}",
-                    "{{$hotspot->color}}",
-                    "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
-                    "{{ $hotspot->information }}",
-                    "{{ $hotspot->image }}"
-                );
-                @endforeach
-            }, 3000);
-        }
+    function closerejimwindow() {
+      var _this = $('.icon-ic_eye');
+      var curModal = $('.' + _this.data('pannel')).eq(0);
+      _this.removeClass('is-active');
+      curModal.removeClass('visible').addClass('hidden');
+    }
+    function skin_view_fisheye () {
+      closerejimwindow();
+      this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye,       1.0, 1)"), this.krpano.call("tween(view.fovmax,       150, 1)"), this.krpano.call("tween(view.fov,       150, 0.5)")
+    }
+    function skin_view_panini () {
+      closerejimwindow();
+      this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.stereographic", !1), this.krpano.set("view.pannini", !0), this.krpano.call("tween(view.fovmax,       130, 0.5)"), this.krpano.call("tween(view.fov,       100, 0.5)"), this.krpano.call("tween(view.vlookat,       0, 0.5)"), 0.1 > this.krpano.get("view.fisheye") && this.krpano.call("tween(view.fisheye, 1.0, distance(1.0,0.8))")
+    }
+    function krpanoautorotate () {
+        krpano.call("switch(autorotate.enabled)");
+    }
+    function skin_view_littleplanet () {
+        closerejimwindow();
+        this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !0), this.krpano.call("tween(view.fisheye,       1.0, 0.5)"), this.krpano.call("tween(view.vlookat,       77, 0.5)"), this.krpano.call("tween(view.fovmax,       150, 0.5)"), this.krpano.call("tween(view.fov,       150, 0.5)")
+    }
 
-        $(document).ready(function() {
-          @if ($location->audio != '')
-            $('#audio')[0].setSrc('/storage/audio/{{$location->audio}}');
-            setTimeout(function() {
-              // $('#audio')[0].play();
-            }, 1000);
-          @endif
-        });
-
-        @if(isset($hotspot))
-            $(function(){
-                $.get(
-                  // "/hasFloors/axmad4ik:{{ $hotspot->destination_id }}",
-                  // onAjaxSuccess
-                );
-
-                function onAjaxSuccess(data)
-                {
-                  if(data == 1) {
-                    $('.icon-ic_floorplan').parent().show();
-                  } else {
-                    $('.icon-ic_floorplan').parent().hide();
-                  }
-                }
-            });
-        @endif
-
-        function krpanofullscreen () {
-            krpano.call("set(fullscreen,true);");
-            $('#logo2').css('display', 'block');
-            $('#pano1').append(`<div id="logo2" onclick="krpanofullscreenexit()" class="icon-ic_windowed fullScreenIcon" style="display: block; position: absolute; z-index: 99999;"></div>`);
-
-        }
-        function krpanofullscreenexit ()  {
-            krpano.call("set(fullscreen,false);");
-            $('.icon-ic_fullscreen').removeClass('is-active')
-          $('#logo2').remove();
-        }
-
-
-function closerejimwindow() {
-  var _this = $('.icon-ic_eye');
-  var curModal = $('.' + _this.data('pannel')).eq(0);
-  _this.removeClass('is-active');
-  curModal.removeClass('visible').addClass('hidden');
-}
-function skin_view_fisheye () {
-  closerejimwindow();
-
-  this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye,       1.0, 1)"), this.krpano.call("tween(view.fovmax,       150, 1)"), this.krpano.call("tween(view.fov,       150, 0.5)")
-}
-function skin_view_panini () {
-  closerejimwindow();
-  this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.stereographic", !1), this.krpano.set("view.pannini", !0), this.krpano.call("tween(view.fovmax,       130, 0.5)"), this.krpano.call("tween(view.fov,       100, 0.5)"), this.krpano.call("tween(view.vlookat,       0, 0.5)"), 0.1 > this.krpano.get("view.fisheye") && this.krpano.call("tween(view.fisheye, 1.0, distance(1.0,0.8))")
-}
-function krpanoautorotate () {
-    krpano.call("switch(autorotate.enabled)");
-}
-function skin_view_littleplanet () {
-  closerejimwindow();
-this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !0), this.krpano.call("tween(view.fisheye,       1.0, 0.5)"), this.krpano.call("tween(view.vlookat,       77, 0.5)"), this.krpano.call("tween(view.fovmax,       150, 0.5)"), this.krpano.call("tween(view.fov,       150, 0.5)")
-}
-
-function krpanoscreenshot () {
+    function krpanoscreenshot () {
         krpano.call("makescreenshot();");
-}
-function setLookStraight (){
-closerejimwindow();
-    var e = this.krpano.get("view.vlookat");
-    (-80 >= e || 80 <= e) && (this.krpano.call("tween(view.vlookat, 0.0, 1.0, easeInOutSine)"), this.krpano.call("tween(view.fov, 150, distance(150,0.8))")) }
+    }
+    function setLookStraight (){
+        closerejimwindow();
+        var e = this.krpano.get("view.vlookat");
+        (-80 >= e || 80 <= e) && (this.krpano.call("tween(view.vlookat, 0.0, 1.0, easeInOutSine)"), this.krpano.call("tween(view.fov, 150, distance(150,0.8))"))
+    }
 
   function skin_view_stereographic() {
     closerejimwindow();
-  this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !0), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fovmax,       120, 0.5)"), this.krpano.call("tween(view.fov,       90, 0.5)"), this.krpano.call("tween(view.fisheye,       1.0, distance(1.0,0.8))")
-}
+    this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !0), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fovmax,       120, 0.5)"), this.krpano.call("tween(view.fov,       90, 0.5)"), this.krpano.call("tween(view.fisheye,       1.0, distance(1.0,0.8))")
+  }
 
-function skin_view_architectural (){
-  closerejimwindow();
-this.setLookStraight(), this.krpano.set("view.architectural", !0), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye, 0, distance(1.0,0.8))"), this.krpano.call("tween(view.fovmax,       120, 0.5)"), this.krpano.call("tween(view.fov,       70, 0.5)")
+  function skin_view_architectural (){
+    closerejimwindow();
+    this.setLookStraight(), this.krpano.set("view.architectural", !0), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye, 0, distance(1.0,0.8))"), this.krpano.call("tween(view.fovmax,       120, 0.5)"), this.krpano.call("tween(view.fov,       70, 0.5)")
   }
   function skin_view_normal (){
-closerejimwindow();
-        this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.fov,       90, 1"), this.krpano.call("tween(view.fovmax,       120, 1"), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye,       0.0, 0.5)"), this.krpano.call("tween(view.pannini,       0.0, 0.5)")
-
+    closerejimwindow();
+    this.setLookStraight(), this.krpano.set("view.architectural", !1), this.krpano.set("view.pannini", !1), this.krpano.set("view.stereographic", !1), this.krpano.call("tween(view.fov,       90, 1"), this.krpano.call("tween(view.fovmax,       120, 1"), this.krpano.call("tween(view.vlookat,       0, 0.5)"), this.krpano.call("tween(view.fisheye,       0.0, 0.5)"), this.krpano.call("tween(view.pannini,       0.0, 0.5)")
   }
 
   function uzbsharefb() {
     var shareurl = $('#previewlinkurlshare').val();
     var sharequote = $('#location_name').text();
     window.open("https://www.facebook.com/sharer/sharer.php?u="+shareurl+"&quote="+sharequote, "myWindow", 'width=600,height=500');
-  window.close();
+    window.close();
   }
   function uzbsharetg() {
     var shareurl = $('#previewlinkurlshare').val();
     var sharequote = $('#location_name').text();
     window.open("https://telegram.me/share/url?url="+shareurl+"&text="+sharequote, "myWindow", 'width=600,height=500');
-  window.close();
+    window.close();
   }
   function uzbsharewt() {
     var shareurl = $('#previewlinkurlshare').val();
     var sharequote = $('#location_name').text();
 
     window.open("https://api.whatsapp.com/send?text="+sharequote+" - "+shareurl, "myWindow", 'width=600,height=500');
-  window.close();
+    window.close();
   }
 
   function uzbshareVK() {
@@ -1246,226 +1249,219 @@ closerejimwindow();
 
   function remove_all_hotspots()
   {
-      if (krpano)
-      {
+      if (krpano) {
           krpano.call("loop(hotspot.count GT 0, removehotspot(0) );");
       }
   }
 
-
-function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
-{
-    if (krpano)
+    function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
     {
-        originalxmlnam = xmlname;
-        originalxmlname = originalxmlnam.match(/\d/g);
-        originalxmlname = originalxmlname.join("");
-
-        xmlname = xmlname.split(':')[1];
-        var tmp = xmlname;
-        xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
-        remove_all_hotspots();
-        krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-        krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-
-        xmlname = xmlname.split('/').join(':');
-        xmlname = xmlname.replace(':', '/');
-        xmlname = xmlname.replace(':', '');
-
-
-        $.get(
-          "/ru/hasFloors" + xmlname,
-          onAjaxSuccess
-        );
-
-        function onAjaxSuccess(data)
+        if (krpano)
         {
-          if(data == 1) {
-            $('.icon-ic_floorplan').parent().show();
-          } else {
-            $('.icon-ic_floorplan').parent().hide();
-          }
-        }
+            originalxmlnam = xmlname;
+            originalxmlname = originalxmlnam.match(/\d/g);
+            originalxmlname = originalxmlname.join("");
 
+            xmlname = xmlname.split(':')[1];
+            var tmp = xmlname;
+            xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
+            remove_all_hotspots();
+            krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+            krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
 
-        krpano.call("movecamera(0,0);");
-        if(nourl=="nooo") {
+            xmlname = xmlname.split('/').join(':');
+            xmlname = xmlname.replace(':', '/');
+            xmlname = xmlname.replace(':', '');
 
-        } else {
-          history.pushState({
-              id: 'homepage'
-          }, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
-        }
-        $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
-            $( "#location_name" ).text(data.name);
-            $( "#location_name2" ).text(data.name);
-            $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
-            if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
-            if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
-            if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
-            if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
-            if (data.facebook) {$( ".socialnetwork-icon.facebook" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( ".socialnetwork-icon.facebook" ).hide();}
-            if (data.telegram) {$( ".socialnetwork-icon.telegram" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( ".socialnetwork-icon.telegram" ).hide();}
-            if (data.instagram) {$( ".socialnetwork-icon.instagram" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( ".socialnetwork-icon.instagram" ).hide();}
-            if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
+            $.get(
+              "/ru/hasFloors" + xmlname,
+              onAjaxSuccess
+            );
 
-            if(data.etaji.length > 0) {
-                $('.buttonetaj0').show();
-            } else {
-                $('.buttonetaj0').hide();
+            function onAjaxSuccess(data)
+            {
+              if(data == 1) {
+                $('.icon-ic_floorplan').parent().show();
+              } else {
+                $('.icon-ic_floorplan').parent().hide();
+              }
             }
 
-            if (data.audio) {
-                $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-
-                $('#playaudio').show();
+            krpano.call("movecamera(0,0);");
+            if(nourl=="nooo") {
             } else {
-                if (data.podlocparent_id) {
-                    $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
-                      .done(function(parentLocData) {
-                          if (parentLocData.audio) {
-                              $('#playaudio').show();
-                          }
-                      });
+              history.pushState({
+                  id: 'homepage'
+              }, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
+            }
+            $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
+                $( "#location_name" ).text(data.name);
+                $( "#location_name2" ).text(data.name);
+                $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
+                if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
+                if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
+                if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
+                if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
+                if (data.facebook) {$( ".socialnetwork-icon.facebook" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( ".socialnetwork-icon.facebook" ).hide();}
+                if (data.telegram) {$( ".socialnetwork-icon.telegram" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( ".socialnetwork-icon.telegram" ).hide();}
+                if (data.instagram) {$( ".socialnetwork-icon.instagram" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( ".socialnetwork-icon.instagram" ).hide();}
+                if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
+
+                if(data.etaji.length > 0) {
+                    $('.buttonetaj0').show();
                 } else {
-                  $('#playaudio').hide();
-                  $('#audio')[0].pause();
+                    $('.buttonetaj0').hide();
                 }
-            }
-            if (data.onmap == "on") {
-                 $('.currentlocationcordinates').data('lat', data.lat);
-                 $('.currentlocationcordinates').data('lng', data.lng);
-            } else {
-                $('.currentlocationcordinates').data('map', 'no');
-                $('.currentlocationcordinates').data('lat', 'no');
-                $('.currentlocationcordinates').data('lng', 'no');
-            }
-            if (data.is_sky == "on") {
-                document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
-                document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
-            } else {
-                document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
-                document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
-            }
-        });
-        $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function(data) {
-            for(var i = 0; i < data.length; i++) {
-                add_exist_hotspot(data[i].h,
-                    data[i].v,
-                    data[i].name,
-                    data[i].cat_icon_svg,
-                    data[i].cat_icon,
-                    data[i].img,
-                    "uzbekistan:" + data[i].destination_id,
-                    i,
-                    data[i].slug,
-                    data[i].color,
-                    data[i].type,
-                    data[i].information,
-                    data[i].image
-                );
-            }
-        });
-    }
-}
 
-        function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color, type, information, image) {
-            if (krpano) {
-                krpano.call("addhotspot(" + hs_name + ")");
-                krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
-                krpano.set("hotspot[" + hs_name + "].ath", h);
-                krpano.set("hotspot[" + hs_name + "].atv", v);
-                r =  h;
-                krpano.set("hotspot[" + hs_name + "].scale",  hotspotsize);
-                krpano.set("hotspot[" + hs_name + "].edge", "bottom");
+                if (data.audio) {
+                    $('#audio')[0].setSrc('/storage/audio/' + data.audio);
 
-                krpano.set("hotspot[" + hs_name + "].onout", function() {
-                  $( ".hotspotPreview-wrapper" ).hide();
-                });
-
-                krpano.set("hotspot[" + hs_name + "].type", type);
-
-                krpano.set("hotspot[" + hs_name + "].onover", function() {
-                    if (type == {{ \App\Hotspot::TYPE_INFORMATION }})
-                        return false;
-                    $(".hotspotPreview-wrapper").show();
-                    hotspottext=$('.hotspotPreview__text');
-                    hotspoticon=$('.uzbhotspoticon');
-                    hotspotimg= $('.uzbhotspotimg');
-                    var n = krpano.spheretoscreen(h, v);
-                    var m = krpano.get("state.position.location");
-
-                    var link = $('.hotspotPreview__text');
-
-                    var uzb360preview = $('#uzb360preview');
-                    var bottomFromVisota = $(document).height() ;
-                    var bottomFromShirota = $(document).width() ;
-
-                    var preview = $('.hotspotPreview ');
-                    var previewx = n.x+50;
-                    var previewxx = n.x-280;
-                    var previewxxx = n.x-120;
-                    var previewy = n.y+30;
-                    var previewyy = n.y-200;
-                    var top = n.y -325;
-                    var bottom = n.y +30;
-                    var left = n.x -118;
-                    var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
-                    var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
-                    if (bottomFromShirota-n.x > 500) {
-                      preview.css('left', ''+previewx+'px')
-                      preview.css('top', ''+previewyy+'px')
-
-                      uzb360preview.removeClass();
-                      uzb360preview.addClass('hotspotPreview right');
+                    $('#playaudio').show();
+                } else {
+                    if (data.podlocparent_id) {
+                        $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
+                          .done(function(parentLocData) {
+                              if (parentLocData.audio) {
+                                  $('#playaudio').show();
+                              }
+                          });
                     } else {
-                      preview.css('left', ''+previewxx+'px')
-                      preview.css('top', ''+previewyy+'px')
-                      uzb360preview.removeClass();
-                      uzb360preview.addClass('hotspotPreview left');
+                      $('#playaudio').hide();
+                      $('#audio')[0].pause();
                     }
-
-                    if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
-                      preview.css('left', ''+left+'px')
-                      preview.css('top', ''+top+'px')
-                       uzb360preview.removeClass();
-                      uzb360preview.addClass('hotspotPreview bottom');
-                    }
-
-                    if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
-                      preview.css('left', ''+left+'px')
-                      preview.css('top', ''+bottom+'px')
-                      uzb360preview.removeClass();
-                      uzb360preview.addClass('hotspotPreview top');
-                    }
-
-                    hotspottext.text(name);
-                    hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
-                    hotspoticon.css("background-color", color)
-                    hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
-                });
-
-                krpano.set("hotspot[" + hs_name + "].distorted", false);
-
-                if (krpano.get("device.html5")) {
-                    krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
-                        if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                            console.log('information');
-                            $('.information-modal .content').html(information);
-                            if (image.length > 0) {
-                                $('.image-block').html('<img/>');
-                                $('.image-block img').attr('src', '/storage/information/' + image);
-                            }
-                            $('.information-modal').fadeIn();
-                        } else {
-                            loadpano(hs_name, index, slug);
-                        }
-
-                    }.bind(null, hs_name));
                 }
+                if (data.onmap == "on") {
+                     $('.currentlocationcordinates').data('lat', data.lat);
+                     $('.currentlocationcordinates').data('lng', data.lng);
+                } else {
+                    $('.currentlocationcordinates').data('map', 'no');
+                    $('.currentlocationcordinates').data('lat', 'no');
+                    $('.currentlocationcordinates').data('lng', 'no');
+                }
+                if (data.is_sky == "on") {
+                    document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
+                    document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+prevsceneid+"', '0', '"+prevsceneslug+"', '"+originalxmlname+"','"+url+"');");
+                } else {
+                    document.getElementById("hubviewlink").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
+                    document.getElementById("hubviewlink2").setAttribute("onclick","loadpano('uzbekistan:"+data.sky_id+"', '0', '"+data.skyslug+"', '"+originalxmlname+"','"+url+"');");
+                }
+            });
+            $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function(data) {
+                for(var i = 0; i < data.length; i++) {
+                    add_exist_hotspot(data[i].h,
+                        data[i].v,
+                        data[i].name,
+                        data[i].cat_icon_svg,
+                        data[i].cat_icon,
+                        data[i].img,
+                        "uzbekistan:" + data[i].destination_id,
+                        i,
+                        data[i].slug,
+                        data[i].color,
+                        data[i].type,
+                        data[i].information,
+                        data[i].image
+                    );
+                }
+            });
+        }
+    }
+
+    function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color, type, information, image) {
+        if (krpano) {
+            krpano.call("addhotspot(" + hs_name + ")");
+            krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
+            krpano.set("hotspot[" + hs_name + "].ath", h);
+            krpano.set("hotspot[" + hs_name + "].atv", v);
+            r =  h;
+            krpano.set("hotspot[" + hs_name + "].scale",  hotspotsize);
+            krpano.set("hotspot[" + hs_name + "].edge", "bottom");
+
+            krpano.set("hotspot[" + hs_name + "].onout", function() {
+              $( ".hotspotPreview-wrapper" ).hide();
+            });
+
+            krpano.set("hotspot[" + hs_name + "].type", type);
+
+            krpano.set("hotspot[" + hs_name + "].onover", function() {
+                if (type == {{ \App\Hotspot::TYPE_INFORMATION }})
+                    return false;
+                $(".hotspotPreview-wrapper").show();
+                hotspottext=$('.hotspotPreview__text');
+                hotspoticon=$('.uzbhotspoticon');
+                hotspotimg= $('.uzbhotspotimg');
+                var n = krpano.spheretoscreen(h, v);
+                var m = krpano.get("state.position.location");
+
+                var link = $('.hotspotPreview__text');
+
+                var uzb360preview = $('#uzb360preview');
+                var bottomFromVisota = $(document).height() ;
+                var bottomFromShirota = $(document).width() ;
+
+                var preview = $('.hotspotPreview ');
+                var previewx = n.x+50;
+                var previewxx = n.x-280;
+                var previewxxx = n.x-120;
+                var previewy = n.y+30;
+                var previewyy = n.y-200;
+                var top = n.y -325;
+                var bottom = n.y +30;
+                var left = n.x -118;
+                var xxx =  bottomFromShirota - (bottomFromShirota-n.x);
+                var xxxx = bottomFromVisota - (bottomFromVisota-n.y);
+                if (bottomFromShirota-n.x > 500) {
+                  preview.css('left', ''+previewx+'px')
+                  preview.css('top', ''+previewyy+'px')
+
+                  uzb360preview.removeClass();
+                  uzb360preview.addClass('hotspotPreview right');
+                } else {
+                  preview.css('left', ''+previewxx+'px')
+                  preview.css('top', ''+previewyy+'px')
+                  uzb360preview.removeClass();
+                  uzb360preview.addClass('hotspotPreview left');
+                }
+
+                if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
+                  preview.css('left', ''+left+'px')
+                  preview.css('top', ''+top+'px')
+                   uzb360preview.removeClass();
+                  uzb360preview.addClass('hotspotPreview bottom');
+                }
+
+                if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
+                  preview.css('left', ''+left+'px')
+                  preview.css('top', ''+bottom+'px')
+                  uzb360preview.removeClass();
+                  uzb360preview.addClass('hotspotPreview top');
+                }
+
+                hotspottext.text(name);
+                hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
+                hotspoticon.css("background-color", color)
+                hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
+            });
+
+            krpano.set("hotspot[" + hs_name + "].distorted", false);
+
+            if (krpano.get("device.html5")) {
+                krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                    if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+                        $('.information-modal .content').html(information);
+                        if (image.length > 0) {
+                            $('.image-block').html('<img/>');
+                            $('.image-block img').attr('src', '/storage/information/' + image);
+                        }
+                        $('.information-modal').fadeIn();
+                    } else {
+                        loadpano(hs_name, index, slug);
+                    }
+
+                }.bind(null, hs_name));
             }
         }
-
+    }
 
     function initMap() {
         var location = new google.maps.LatLng({{$curlocation->lat}},{{$curlocation->lng}});
@@ -1541,37 +1537,36 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
             }
         }
         function smoothlyAnimatePanToWorkarround(map, destLatLng, optionalAnimationEndCallback) {
-        var initialZoom = map.getZoom(), listener
+            var initialZoom = map.getZoom(), listener
 
-        function zoomIn() {
-            if(map.getZoom() < initialZoom) {
-                map.setZoom(Math.min(map.getZoom() + 3, initialZoom))
-            } else {
-                google.maps.event.removeListener(listener)
+            function zoomIn() {
+                if(map.getZoom() < initialZoom) {
+                    map.setZoom(Math.min(map.getZoom() + 3, initialZoom))
+                } else {
+                    google.maps.event.removeListener(listener)
 
-                map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false, minZoom: 8})
+                    map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false, minZoom: 8})
 
-                if(!!optionalAnimationEndCallback) {
-                    optionalAnimationEndCallback()
+                    if(!!optionalAnimationEndCallback) {
+                        optionalAnimationEndCallback()
+                    }
                 }
             }
-        }
 
-        function zoomOut() {
-            if(willAnimatePanTo(map, destLatLng)) {
-                google.maps.event.removeListener(listener)
-                listener = google.maps.event.addListener(map, 'idle', zoomIn)
-                map.panTo(destLatLng)
-            } else {
-                map.setZoom(getOptimalZoomOut(destLatLng, map.getZoom()))
+            function zoomOut() {
+                if(willAnimatePanTo(map, destLatLng)) {
+                    google.maps.event.removeListener(listener)
+                    listener = google.maps.event.addListener(map, 'idle', zoomIn)
+                    map.panTo(destLatLng)
+                } else {
+                    map.setZoom(getOptimalZoomOut(destLatLng, map.getZoom()))
+                }
             }
-        }
 
-        map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true, minZoom: 8})
-        map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
-        listener = google.maps.event.addListener(map, 'idle', zoomOut)
+            map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true, minZoom: 8})
+            map.setZoom(getOptimalZoomOut(destLatLng, initialZoom))
+            listener = google.maps.event.addListener(map, 'idle', zoomOut)
       }
-
 
       function smoothlyAnimatePanTo(map, destLatLng) {
         if(willAnimatePanTo(map, destLatLng)) {
@@ -1721,20 +1716,6 @@ function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl)
             });
        });
 }
-    </script>
-
-    <script>
         embedpano({target: "pano", id: "pano1", xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}", passQueryParameters:true, html5:"only+webgl", onready: krpano_onready_callback});
-    </script>
-
-    <audio controls style="" id="audio">
-      <source src="" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-
-    <div class="information-modal modal" style="display: none">
-        <img class="close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
-        <div class="image-block"></div>
-        <div class="content"></div>
-    </div>
+</script>
 @endsection
