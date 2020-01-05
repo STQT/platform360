@@ -72,3 +72,9 @@ body{
     max-height: 260px;
     overflow: scroll;
 }
+
+@media (max-width: 768px) {
+    .listItem-wrapper.is-active .listItem {
+        border-bottom: 2px solid #c23691;
+    }
+}

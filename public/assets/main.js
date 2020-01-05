@@ -570,6 +570,7 @@ $(function() {
         var _this = $(this);
         var curModal = $('.' + _this.data('pannel')).eq(0);
 
+        $('.listItem-wrapper').removeClass('is-active');
         if (_this.hasClass('is-active')) {
             _this.removeClass('is-active');
             curModal.removeClass('visible').addClass('hidden');
