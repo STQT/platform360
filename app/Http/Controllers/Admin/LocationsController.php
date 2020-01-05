@@ -1020,9 +1020,9 @@ class LocationsController extends Controller
                     $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
                     $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
-                    $krhotspots[$key]->type = $krhotspotinfo[$key2]->type;
-                    $krhotspots[$key]->image = $krhotspotinfo[$key2]->image;
-                    $krhotspots[$key]->information = $krhotspotinfo[$key2]->information;
+                    $krhotspots[$key]->type = $krhotspots[$key]->type;
+                    $krhotspots[$key]->image = $krhotspots[$key]->image;
+                    $krhotspots[$key]->information = $krhotspots[$key]->information;
                 }
             }
         }
