@@ -1,7 +1,3 @@
-
-
-
-
 <div class="form-group{{ $errors->has('name') ? 'has-error' : ''}}">
     {!! Form::label('name', 'Название', ['class' => 'control-label']) !!}
     {!! Form::text('name', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
@@ -10,35 +6,30 @@
 
 <div class="form-group{{ $errors->has('category_id') ? 'has-error' : '' }}">
     {{Form::label('category_id', 'Категория', ['class' => 'control-label'])}}
-    {{Form::select('category_id', $categories->pluck('name', 'id') ,null,array('name'=>'category_id', 'class' => 'form-control'))}}
+    {{Form::select('category_id', $categories->pluck('name', 'id'), null,array('name'=>'category_id', 'class' => 'form-control'))}}
 </div>
+
+<div class="form-group{{ $errors->has('category_id') ? 'has-error' : '' }}">
+    {{Form::label('category_id', 'Категория', ['class' => 'control-label'])}}
+    {{Form::select('category_id', $categories->pluck('name', 'id'), null,array('name'=>'category_id', 'class' => 'form-control'))}}
+</div>
+
 <div class="form-group{{ $errors->has('city_id') ? 'has-error' : '' }}">
-    {{Form::label('city_id', 'Город', ['class' => 'control-label'])}}
-
-    {{Form::select('city_id', $cities->pluck('name', 'id') ,null,array('name'=>'city_id', 'class' => 'form-control'))}}
-
+    {{Form::label('tags', 'Теги', ['class' => 'control-label'])}}
+    {{Form::select('tags[]', $tags, null, array('id' => 'tags_list', 'class' => 'form-control', 'multiple'))}}
 </div>
 <div class="form-group{{ $errors->has('sky_id') ? 'has-error' : '' }}">
-
     {{Form::label('sky_id', 'Небо', ['class' => 'control-label'])}}
-
-
-<select class="form-control" name="sky_id" id="sky_id">
-<option selected value="">Неба нет</option>
-
-   @foreach($sky as $sky)
-
-     @if (isset($location->sky_id) && $location->sky_id == $sky->id)
-       <option selected value="{{$sky->id}}">{{$sky->name}}</option>
-
-   @else
-     <option value="{{$sky->id}}">{{$sky->name}}</option>
-
- @endif
-
-   @endforeach
- </select>
-
+    <select class="form-control" name="sky_id" id="sky_id">
+    <option selected value="">Неба нет</option>
+       @foreach($sky as $sky)
+         @if (isset($location->sky_id) && $location->sky_id == $sky->id)
+           <option selected value="{{$sky->id}}">{{$sky->name}}</option>
+         @else
+           <option value="{{$sky->id}}">{{$sky->name}}</option>
+         @endif
+       @endforeach
+     </select>
 </div>
 <div class="form-group{{ $errors->has('address') ? 'has-error' : ''}}">
     {!! Form::label('address', 'Адрес', ['class' => 'control-label']) !!}
@@ -102,8 +93,6 @@
     {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
 </div>
 
-
-
 <div class="form-group">
     <input {{ isset($location) ? ($location->isDefault ? 'checked' : '') : ''}} id="isDefault" type="checkbox" class="" name="isDefault"> Основной
 </div>
@@ -129,7 +118,6 @@
         {!! $errors->first('audio', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-
 
 <div class="form-group{{ $errors->has('subdomain') ? 'has-error' : ''}}">
     {!! Form::label('subdomain', 'Субдомен', ['class' => 'control-label']) !!}

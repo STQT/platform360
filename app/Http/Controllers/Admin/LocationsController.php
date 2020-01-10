@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Location;
 use App\Sky;
+use App\Tag;
 use App\Video;
 use DB;
 use Illuminate\Http\Request;
@@ -585,6 +586,10 @@ class LocationsController extends Controller
         if(!empty($panoramas)) {
             $requestData['panorama'] = json_encode($panoramas);
             $location = Location::create($requestData);
+
+            $tagIds = $requestData['tags'];
+            $location->tags()->sync($tagIds);
+
             return redirect('admin/locations')->with('flash_message', 'Location added!');
         }
         else {
@@ -601,7 +606,7 @@ class LocationsController extends Controller
         return rmdir($dir);
     }
 
-//Просмотр локации
+    //Просмотр локации
     public function show($id)
     {
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
@@ -657,7 +662,7 @@ class LocationsController extends Controller
     }
 
 
-//Редактирование локации
+    //Редактирование локации
     public function edit(Request $request, $id, $language)
     {
         app()->setLocale($language);
@@ -665,6 +670,7 @@ class LocationsController extends Controller
         $categories = Category::all();
         $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
         $cities = Cities::all();
+        $tags = Tag::pluck('name', 'id')->all();
 
         $returnUrl = Input::get('returnUrl');
 
@@ -672,7 +678,14 @@ class LocationsController extends Controller
             $request->session()->put('returnUrl', $returnUrl);
         }
 
-        return view('admin.locations.edit', compact('location', 'sky','categories', 'cities', 'language'));
+        return view('admin.locations.edit', compact(
+    'location',
+          'sky',
+            'categories',
+            'cities',
+            'language',
+            'tags'
+        ));
     }
 
     //Обновление локации
@@ -684,8 +697,15 @@ class LocationsController extends Controller
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
         $data = $request->all();
         $requestData = $request->all();
-        if(!empty($data['isDefault'])) {$requestData['isDefault'] = 1;}
-        else {$requestData['isDefault'] = 0;}
+
+        $tagIds = $requestData['tags'];
+        $location->tags()->sync($tagIds);
+
+        if (!empty($data['isDefault'])) {
+            $requestData['isDefault'] = 1;
+        } else {
+            $requestData['isDefault'] = 0;
+        }
         if(empty($data['onmap'])) {
             $requestData['onmap'] = 0;
         }
@@ -694,7 +714,6 @@ class LocationsController extends Controller
         }
 
         if(empty($data['published'])) {
-
             $requestData['published'] = 0;
         }
 
@@ -737,10 +756,10 @@ class LocationsController extends Controller
             } else {
                 return redirect('admin/locations')->with('flash_message', 'Локация отредактирована!');
             }
-        }
-        else {
+        } else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');
-        }}
+        }
+    }
 
 
 //Удаление локации

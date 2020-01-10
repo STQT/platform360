@@ -110,7 +110,6 @@ class Location extends Model
     }
     public static  function folderNames($loc)
     {
-
         foreach($loc as $key2=>$value2){
             $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
             $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
@@ -124,13 +123,9 @@ class Location extends Model
 
         return isset($filename) ? $filename : null;
     }
-     public static function setCookie($name, $value){
-
-
+    public static function setCookie($name, $value) {
         setcookie($name,$value, time() + (86400 * 30), "/");
-
-
-   }
+    }
 
     public static function transliterate ($string){
         $str = mb_strtolower($string, 'UTF-8');
@@ -221,6 +216,11 @@ class Location extends Model
     public function city()
     {
         return $this->hasOne('App\Cities', 'id', 'city_id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
     }
 
     protected static function boot()

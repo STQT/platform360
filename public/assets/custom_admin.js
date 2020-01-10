@@ -12,4 +12,6 @@ $(document).ready(function() {
            $this.attr('disabled', 'disabled');
         });
     });
+
+    $('#tags_list').select2();
 });

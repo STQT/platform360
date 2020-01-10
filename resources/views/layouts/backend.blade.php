@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
    @stack('styles')
     <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery-ui.theme.min.css') }}" rel="stylesheet">
@@ -101,6 +102,7 @@
     </script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
     <script src="{{ asset('assets/custom_admin.js') }}"></script>
     @yield('scripts')
 </body>

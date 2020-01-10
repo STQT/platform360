@@ -368,7 +368,6 @@
             border: 1px solid black;
         }
     </style>
-
 </head>
 
 <div id="pano" style="width:100%;height:100%;"></div>
