@@ -480,8 +480,11 @@ class LocationsController extends Controller
 
 //Поиск
     public function search(Request $search, $categories) {
-        if (Cookie::has('city')) { $defaultlocation = Cookie::get('city');}
-        else { $defaultlocation = "1"; Cookie::queue(Cookie::forever('city', '1'));}
+        if (Cookie::has('city')) {
+            $defaultlocation = Cookie::get('city');
+        } else {
+            $defaultlocation = "1"; Cookie::queue(Cookie::forever('city', '1'));
+        }
         $search = request()->route('search');
         if (request()->route('search') == "noresult") {
             $categories = array_map('intval', explode(',', request()->route('categories')));
@@ -495,15 +498,18 @@ class LocationsController extends Controller
 
         } else {
             if (request()->route('categories') == 0)  {
-                $results = Location::where('city_id','=', $defaultlocation)
-                    ->where(function($query)
-                    {
-                        $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                $results = Location::with('tags')
+                    ->where(function($query) use ($search) {
+                         $query->where('name', 'LIKE', '%' . $search . '%');
+                         $query->orWhereHas('tags', function($q) use ($search) {
+                             $q->where('name', 'LIKE', '%' . $search . '%');
+                         });
                     })
-                    ->where('name', 'LIKE', '%' . $search . '%')->get();
-
-            }
-            else {
+                    ->where('city_id','=', $defaultlocation)
+                    ->where(function($query) {
+                        $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+                    })->get();
+            } else {
                 $categories = array_map('intval', explode(',', request()->route('categories')));
                 $results = Location::where('city_id', '=', $defaultlocation)
                     ->where(function($query) {
@@ -511,7 +517,7 @@ class LocationsController extends Controller
                     })
                     ->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
             }}
-        if($results->count()) {
+        if ($results->count()) {
             foreach($results as $key2=>$value2){
                 $caticon = Category::where('id', $results[$key2]->category_id)->firstOrFail();
                 $results[$key2]->cat_icon = $caticon->cat_icon;
@@ -520,10 +526,10 @@ class LocationsController extends Controller
             }
             $results = Location::transl($results);
             return response()->json($results);
-        }
-        else {
+        } else {
             return response()->json('Null');
-        }}
+        }
+    }
 
 //Создание локации
     public function create()
@@ -643,7 +649,7 @@ class LocationsController extends Controller
                 $code .= $etaji[$ss]->code;}
             preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
             $etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
-            $sss =Location::folderNames($etajlocations);
+            $sss = Location::folderNames($etajlocations);
             foreach($etajlocations as $key2=>$value2){
                 $etajlocations[$key2]->img = $sss[$key2];}}
 

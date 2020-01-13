@@ -38,6 +38,13 @@ Route::get('admin/cities/{id}/edit/{lang}', [
 Route::match(['put', 'patch'],'admin/cities/{id}/{language}', 'Admin\\CitiesController@update');
 Route::resource('admin/cities', 'Admin\\CitiesController');
 
+//Теги
+Route::get('admin/tags/{id}/edit/{lang}', [
+    'uses' => 'Admin\\TagsController@edit'
+]);
+Route::match(['put', 'patch'],'admin/tags/{id}/{language}', 'Admin\\TagsController@update');
+Route::resource('admin/tags', 'Admin\\TagsController');
+
 //Подлокации
 Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');
 Route::get('admin/podloc/edit/{id}/{lang}', 'Admin\\PodlocController@edit');

@@ -30,8 +30,9 @@ use HasTranslations;
      *
      * @var array
      */
-         protected $translatable = ['name', 'address', 'description', 'working_hours'];
-    protected $fillable = ['name', 'icon', 'icon_svg', 'description', 'city_id', 'is_sky', 'skymainforcity', 'panorama', 'slug', 'xmllocation', 'published'];
+    protected $translatable = ['name', 'address', 'description', 'working_hours'];
+    protected $fillable = ['name', 'icon', 'icon_svg', 'description', 'city_id', 'is_sky', 'skymainforcity',
+        'panorama', 'slug', 'xmllocation', 'published'];
 
 
 
@@ -56,21 +57,18 @@ use HasTranslations;
 
         return $filename;
     }
-public static  function folderNames($loc)
+    public static  function folderNames($loc)
     {
-
         foreach($loc as $key2=>$value2){
-         $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
-
-        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-
-        $filename[$key2] = $test . '/' . $old[2];
-
-}}
-protected function asJson($value)
- {
-     return json_encode($value, JSON_UNESCAPED_UNICODE);
- }
+            $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
+            $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+            $filename[$key2] = $test . '/' . $old[2];
+        }
+    }
+    protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
     public function hotspots()
     {
         return $this->hasMany('App\Hotspot', 'sky_id');

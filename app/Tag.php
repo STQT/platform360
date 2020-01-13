@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
+    protected $fillable = ['name'];
+
     public function locations()
     {
         return $this->belongsToMany('App\Location')->withTimestamps();
