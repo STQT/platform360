@@ -599,8 +599,10 @@ class LocationsController extends Controller
             $requestData['panorama'] = json_encode($panoramas);
             $location = Location::create($requestData);
 
-            $tagIds = $requestData['tags'];
-            $location->tags()->sync($tagIds);
+            if (isset($requestData['tags'])) {
+                $tagIds = $requestData['tags'];
+                $location->tags()->sync($tagIds);
+            }
 
             return redirect('admin/locations')->with('flash_message', 'Location added!');
         }
@@ -710,8 +712,10 @@ class LocationsController extends Controller
         $data = $request->all();
         $requestData = $request->all();
 
-        $tagIds = $requestData['tags'];
-        $location->tags()->sync($tagIds);
+        if (isset($requestData['tags'])) {
+            $tagIds = $requestData['tags'];
+            $location->tags()->sync($tagIds);
+        }
 
         if (!empty($data['isDefault'])) {
             $requestData['isDefault'] = 1;
