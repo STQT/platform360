@@ -535,7 +535,13 @@ class LocationsController extends Controller
     public function create()
     {
         $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
-        return view('admin.locations.create', ['categories' => Category::all(), 'cities' => Cities::all(), 'sky' => $sky]);
+        $tags = Tag::pluck('name', 'id')->all();
+        return view('admin.locations.create', [
+            'categories' => Category::all(),
+            'cities' => Cities::all(),
+            'sky' => $sky,
+            'tags' => $tags,
+        ]);
     }
 
 //Публикация локации
