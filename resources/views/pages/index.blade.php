@@ -409,6 +409,9 @@
                         {{ csrf_field() }}
                         <div class="feedbackPanel__title"><span>{{ trans('uzb360.feedback')}}</span></div>
                         <div class="feedbackPanel__message"><span>{{ trans('uzb360.rasskajitenam')}}</span></div>
+                        <div class="feedbackPanel__message"><p><span>По вопросам сотрудничества:<br>
+                        +998971310023
+                        </span></p></div>
                         <div class="feedbackPanel__wrapper-inputs">
                             <div class="feedbackPanel__wrapper-inputs--dropdown">
                                 <div class="dropdown-wrapper">
@@ -461,11 +464,8 @@
                                         <p><span>Вращайте и масштабируйте изображение с помощью элементов управления внизу, мыши или сенсорного экрана.
                                         </span></p>
                                         <p><span>Используйте горячие точки на изображении для навигации между различными фотографиями и видео. Вы также можете перемещаться с помощью карты или категорий.</span></p>
-                                        <p><span>По вопросам сотрудничества:<br> 
-                                        +998971310023
-                                        </span></p>
                                     </div>
-                                    <img src="assets/image_mouse.cec9e28c.png">
+                                    <img src="/assets/image_mouse.cec9e28c.png">
                                 </div>
                             </div>
                         </div>
