@@ -1267,20 +1267,19 @@
             xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
             remove_all_hotspots();
             krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-            krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+            krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
 
             xmlname = xmlname.split('/').join(':');
             xmlname = xmlname.replace(':', '/');
             xmlname = xmlname.replace(':', '');
 
-            $.get(
-              "/ru/hasFloors" + xmlname,
+            $.get("/ru/hasFloors" + xmlname,
               onAjaxSuccess
             );
 
             function onAjaxSuccess(data)
             {
-              if(data == 1) {
+              if (data == 1) {
                 $('.icon-ic_floorplan').parent().show();
               } else {
                 $('.icon-ic_floorplan').parent().hide();
@@ -1298,7 +1297,7 @@
                 $( "#location_name" ).text(data.name);
                 $( "#location_name2" ).text(data.name);
                 $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
-                if(data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
+                if (data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
                 if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
                 if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
                 if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
@@ -1370,6 +1369,7 @@
     function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug, color, type, information, image) {
         if (krpano) {
             krpano.call("addhotspot(" + hs_name + ")");
+            krpano.set("hotspot[" + hs_name + "].keep", "true");
             krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
             krpano.set("hotspot[" + hs_name + "].ath", h);
             krpano.set("hotspot[" + hs_name + "].atv", v);
@@ -1447,7 +1447,6 @@
 
             if (krpano.get("device.html5")) {
                 krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
-                    console.log(type);
                     if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                         $('.information-modal .content').html(information);
                         if (image.length > 0) {

@@ -611,7 +611,6 @@ class LocationsController extends Controller
         }
     }
 
-
     public static function delTree($dir) {
         $files = array_diff(scandir($dir), array('.','..'));
         foreach ($files as $file) {
@@ -647,7 +646,6 @@ class LocationsController extends Controller
             $location = Location::where('slug', $slug)->firstOrFail();
         }
 
-
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations="";
@@ -658,8 +656,10 @@ class LocationsController extends Controller
             preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
             $etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
             $sss = Location::folderNames($etajlocations);
-            foreach($etajlocations as $key2=>$value2){
-                $etajlocations[$key2]->img = $sss[$key2];}}
+            foreach($etajlocations as $key2=>$value2) {
+                $etajlocations[$key2]->img = $sss[$key2];
+            }
+        }
 
         if(empty($location->is_sky)) {
             if(!empty($location->sky_id)) {
@@ -667,14 +667,15 @@ class LocationsController extends Controller
             } else {
                 $location->skyslug = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->pluck('slug')->first();
                 $location->sky_id = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->pluck('id')->first();
-            }} else { $location->skyslug = "no";};
-
+            }
+        } else {
+            $location->skyslug = "no";
+        }
 
         $locationArray = $location->toArray22();
         $locationArray['category_icon'] = $location->category->cat_icon_svg;
         return $locationArray;
     }
-
 
     //Редактирование локации
     public function edit(Request $request, $id, $language)
@@ -778,7 +779,7 @@ class LocationsController extends Controller
     }
 
 
-//Удаление локации
+    //Удаление локации
     public function destroy($id)
     {
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();
@@ -790,7 +791,7 @@ class LocationsController extends Controller
         return redirect('admin/locations')->with('flash_message', 'Location deleted!');
     }
 
-//Генерация панорамы
+    //Генерация панорамы
     public function generatePano($slug)
     {
         //Проверка куков на город
@@ -833,9 +834,10 @@ class LocationsController extends Controller
         $locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->get();
         if ($locationscordinate->isNotEmpty()) {
             $sss =Location::folderNames($locationscordinate);
-            foreach($locationscordinate as $key2=>$value2){
+            foreach ($locationscordinate as $key2=>$value2){
                 $locationscordinate[$key2]->img = $sss[$key2];}
-            $locationscordinate = Location::transl($locationscordinate);}
+                $locationscordinate = Location::transl($locationscordinate);
+        }
 
         //Загрузка избранных точек для карты
         $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
@@ -916,7 +918,6 @@ class LocationsController extends Controller
         return response()->view('partials.admin.xml', compact('location'))->header('Content-Type', 'text/xml');
     }
 
-
     //Загрузка всей локаций опредленной категории
     public function apiLocations($id)
     {
@@ -989,7 +990,6 @@ class LocationsController extends Controller
         }
         $hotspot->type = Hotspot::TYPE_INFORMATION;
         $hotspot->save();
-//        return 'ok';
     }
 
     public function uploadVideo(Request $request)

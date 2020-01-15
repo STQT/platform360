@@ -203,24 +203,24 @@ previewlinkurlshare.value = currentLocation;
         mul(rotate,roll,57.295779);
       </action>
 
-      <!--  Это код для хотспота видео (значениея конечно надо менять на свои) -->
        <hotspot name="video"        
                url.flash="/plugins/videoplayer.swf"
                url.html5="/plugins/videoplayer.js"
-           videourl.desktop="/storage/videos/{{ $video->video }}"
+               videourl.desktop="/storage/videos/{{ $video->video }}"
                videourl.mobile.or.tablet="/storage/videos/{{ $video->video }}"
-           onloaded="calc_pos_from_hfov_yaw_pitch_roll({{ $video->hfov }}, {{ $video->yaw }}, {{ $video->pitch }}, {{ $video->roll }});"
+               onloaded="calc_pos_from_hfov_yaw_pitch_roll({{ $video->hfov }}, {{ $video->yaw }}, {{ $video->pitch }}, {{ $video->roll }});"
                distorted="true"
                alpha="1"
-           zorder="100"
+               zorder="100"
                pausedonstart="false"
                loop="true"
-                 directionalsound="true"
-                 range="200"
-                 volume="0.7"
-                 onclick="togglepause();"
-             onhover="showtext(OFF/ON)"
-                  capture="false"
+               directionalsound="true"
+               range="200"
+               volume="0.7"
+               onclick="togglepause();"
+               onhover="showtext(OFF/ON)"
+               capture="false"
+               keep="true"
                
                />
         @endforeach
