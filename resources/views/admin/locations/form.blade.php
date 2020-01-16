@@ -9,12 +9,13 @@
     {{Form::select('category_id', $categories->pluck('name', 'id'), null,array('name'=>'category_id', 'class' => 'form-control'))}}
 </div>
 
-<div class="form-group{{ $errors->has('category_id') ? 'has-error' : '' }}">
-    {{Form::label('category_id', 'Категория', ['class' => 'control-label'])}}
-    {{Form::select('category_id', $categories->pluck('name', 'id'), null,array('name'=>'category_id', 'class' => 'form-control'))}}
-</div>
-
 <div class="form-group{{ $errors->has('city_id') ? 'has-error' : '' }}">
+    {{Form::label('city_id', 'Город', ['class' => 'control-label'])}}
+
+    {{Form::select('city_id', $cities->pluck('name', 'id') ,null,array('name'=>'city_id', 'class' => 'form-control'))}}
+
+</div>
+<div class="form-group{{ $errors->has('tags') ? 'has-error' : '' }}">
     {{Form::label('tags', 'Теги', ['class' => 'control-label'])}}
     {{Form::select('tags[]', $tags, null, array('id' => 'tags_list', 'class' => 'form-control', 'multiple'))}}
 </div>
