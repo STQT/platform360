@@ -1008,10 +1008,10 @@ class LocationsController extends Controller
 
             $hotspot = new Video();
             $hotspot->location_id = $data['location'];
-            $hotspot->hfov = $data['hfov'];
-            $hotspot->yaw = $data['yaw'];
-            $hotspot->pitch = $data['pitch'];
-            $hotspot->roll = $data['roll'];
+            $hotspot->hfov = str_replace(',', '.', $data['hfov']);
+            $hotspot->yaw = str_replace(',', '.', $data['yaw']);
+            $hotspot->pitch = str_replace(',', '.', $data['pitch']);
+            $hotspot->roll = str_replace(',', '.', $data['roll']);
             $hotspot->video = $newName;
             $hotspot->save();
 
@@ -1028,6 +1028,11 @@ class LocationsController extends Controller
                 'class_name' => 'alert-danger',
             ]);
         }
+    }
+
+    public function removeVideo($id)
+    {
+
     }
 
     public function apiHotspots($id)
