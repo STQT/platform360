@@ -1,2 +1,25 @@
 User-agent: *
-Disallow:
+Disallow: /en/
+Disallow: /uzb/
+
+Sitemap: https://uzbekistan360.uz/sitemap.xml 
+
+User-agent: Googlebot
+Disallow: /en/
+Disallow: /uzb/
+Allow: /*.jpg
+Allow: /*.gif
+Allow: /*.png
+Allow: /*.js
+Allow: /*.css
+
+Sitemap: https://uzbekistan360.uz/sitemap.xml 
+
+User-agent: Yandex
+Disallow: /en/
+Disallow: /uzb/
+
+Sitemap: https://uzbekistan360.uz/sitemap.xml 
+
+
+

@@ -40,7 +40,6 @@ Route::group(['prefix' => 'api'], function() {
     Route::get('/hotspots/{id}', 'Admin\LocationsController@apiHotspots');
 });
 
-
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'api'], function() {
         Route::get('/locations/{id}', 'Admin\\LocationsController@apiLocations');
@@ -53,3 +52,5 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('admin/hotspots', 'ADmin\\HotspotsController');
     });
 });
+
+Route::get('/sitemap.xml', 'SitemapController@sitemap');
