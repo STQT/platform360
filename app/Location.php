@@ -87,30 +87,27 @@ class Location extends Model
     
     public static function transl($massiv)
     {
-      foreach ($massiv as $key => $massic) {
-
-        $massiv[$key] = $massic->toArray22();
-              }
+        foreach ($massiv as $key => $massic) {
+            $massiv[$key] = $massic->toArray22();
+        }
         return $massiv;
     }
 
     public static function xmlName($xml)
     {
-        $test = $xml;
-
-        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $xml);
 
         foreach ($old as $item){
-          if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
-              $filename = $test . '/' . $item;
+          if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$xml.'/' . $item)){
+              $filename = $xml . '/' . $item;
           }
         }
 
         return $filename;
     }
-    public static  function folderNames($loc)
+    public static function folderNames($loc)
     {
-        foreach($loc as $key2=>$value2){
+        foreach($loc as $key2=>$value2) {
             $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
             $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
 
@@ -167,7 +164,6 @@ class Location extends Model
 
         foreach ($leter_array as $leter => $kyr){
             $kyr = explode(',',$kyr);
-
             $str = str_replace($kyr, $leter, $str);
         }
 
@@ -181,7 +177,7 @@ class Location extends Model
         return $this->hasMany('App\Hotspot', 'location_id');
     }
 
-        public function videos()
+    public function videos()
     {
         return $this->hasMany('App\Video', 'location_id');
     }

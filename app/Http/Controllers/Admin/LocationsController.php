@@ -428,7 +428,7 @@ class LocationsController extends Controller
     }
 
 
-//Конвертор мультиязычности:Локации
+    //Конвертор мультиязычности:Локации
     public function convert() {
         $locations = DB::table('locations')->get();
         foreach ($locations as $key => $location) {
@@ -438,7 +438,7 @@ class LocationsController extends Controller
                 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
         }}
 
-//Конвертор мультиязычности:Городов
+    //Конвертор мультиязычности:Городов
     public function convertcity() {
         $locations = DB::table('cities')->get();
         foreach ($locations as $key => $location) {
@@ -448,7 +448,7 @@ class LocationsController extends Controller
                 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
         }}
 
-//Конвертор мультиязычности:Категории
+    //Конвертор мультиязычности:Категории
     public function convertcategories() {
         $locations = DB::table('categories')->get();
         foreach ($locations as $key => $location) {
@@ -458,7 +458,7 @@ class LocationsController extends Controller
                 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
         }}
 
-//Конвертор мультиязычности:Этажи
+    //Конвертор мультиязычности:Этажи
     public function convertfloors() {
         $locations = DB::table('floors')->get();
         foreach ($locations as $key => $location) {
@@ -468,7 +468,7 @@ class LocationsController extends Controller
                 ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
         }}
 
-//Функия для путей
+    //Функия для путей
     public function getDirectory($id) {
         $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $id);
         foreach ($old as $item){
@@ -478,7 +478,7 @@ class LocationsController extends Controller
         return $filename;
     }
 
-//Поиск
+    //Поиск
     public function search(Request $search, $categories) {
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
@@ -531,7 +531,7 @@ class LocationsController extends Controller
         }
     }
 
-//Создание локации
+    //Создание локации
     public function create()
     {
         $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
@@ -544,7 +544,7 @@ class LocationsController extends Controller
         ]);
     }
 
-//Публикация локации
+    //Публикация локации
     public function store(Request $request)
     {
         app()->setLocale('ru');
@@ -778,10 +778,10 @@ class LocationsController extends Controller
         }
     }
 
-
     //Удаление локации
     public function destroy($id)
     {
+        Video::where('location_id', $id)->delete();
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();
         Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
         Hotspot::where('location_id', $id)->delete();
