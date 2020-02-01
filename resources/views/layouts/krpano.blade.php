@@ -121,7 +121,7 @@
 
 @yield('scripts')
 
-<script type="text/javascript" async="" src="https://maps.google.com/maps/api/js?v=3.30&key=AIzaSyCuukKz6F0pH77lK5jgKdNEHa7AFqPMh4k&callback=initMap"></script>
+<script type="text/javascript" async="" src="https://maps.google.com/maps/api/js?v=quarterly&key=AIzaSyCuukKz6F0pH77lK5jgKdNEHa7AFqPMh4k&callback=initMap"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
     (adsbygoogle = window.adsbygoogle || []).push({
