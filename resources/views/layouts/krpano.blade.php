@@ -22,7 +22,11 @@
     @if ($location->podlocparent_id === null)
         <link rel="canonical" href="{{ $location->createUrl() }}"/>
     @else
-        <link rel="canonical" href="{{ $location->parent->createUrl() }}"/>
+        @if ($location->parent->description === $location->description)
+            <link rel="canonical" href="{{ $location->parent->createUrl() }}"/>
+        @else
+            <link rel="canonical" href="{{ $location->createUrl() }}"/>
+        @endif
     @endif
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="/assets/app.22400e48.css?033f3b348c8154cd9ec6" rel="stylesheet">
