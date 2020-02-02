@@ -19,7 +19,11 @@
     <meta property="og:image" content="/assets/socialpreview.jpg">
     <meta property="og:description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta property="og:site_name" content="Uzbekistan360">
-
+    @if ($location->podlocparent_id === null)
+        <link rel="canonical" href="{{ $location->createUrl() }}"/>
+    @else
+        <link rel="canonical" href="{{ $location->parent->createUrl() }}"/>
+    @endif
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="/assets/app.22400e48.css?033f3b348c8154cd9ec6" rel="stylesheet">
     <link href="/assets/slick-carousel/slick.css" rel="stylesheet">
@@ -51,10 +55,7 @@
     </style>
     <style id="detectElementResize" type="text/css">
         @keyframes resizeanim { from { opacity: 0; } to { opacity: 0; } } .resize-triggers { animation: 1ms resizeanim; visibility: hidden; opacity: 0; } .resize-triggers, .resize-triggers > div, .contract-trigger:before { content: " "; display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; z-index: -1; } .resize-triggers > div { background: #eee; overflow: auto; } .contract-trigger:before { width: 200%; height: 200%; }
-    </style>
 
-
-    <style>
         @-ms-viewport {
             width: device-width;
         }
@@ -83,16 +84,16 @@
 
     <!-- Facebook Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window,document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-     fbq('init', '483941939034652'); 
-    fbq('track', 'PageView');
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+         fbq('init', '483941939034652');
+        fbq('track', 'PageView');
     </script>
     <noscript>
      <img height="1" width="1" 
@@ -101,13 +102,8 @@
     </noscript>
     <!-- End Facebook Pixel Code -->
 </head>
-
-
-
 <body>
-
 @yield('content')
-
 <script src="/krpano.js"></script>
 <script src="/assets/jquery.min.js"></script>
 {{-- <script src="/flooreditor/js/lib/jquery.min.js"></script> --}}

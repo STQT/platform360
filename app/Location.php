@@ -32,7 +32,10 @@ class Location extends Model
      * @var array
      */
     protected $translatable = ['name', 'address', 'description','working_hours'];
-    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook', 'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured', 'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id', 'subdomain', 'published', 'show_sublocation', 'audio', 'order'];
+    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook',
+        'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured',
+        'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id', 'subdomain', 'published', 'show_sublocation',
+        'audio', 'order'];
 
 
     /**
@@ -172,6 +175,7 @@ class Location extends Model
 
         return $str;
     }
+
     public function hotspots()
     {
         return $this->hasMany('App\Hotspot', 'location_id');
@@ -190,13 +194,16 @@ class Location extends Model
     {
         return $this->hasMany('App\Location', 'podlocparent_id');
     }
+    public function parent()
+    {
+        return $this->hasOne('App\Location', 'id', 'podlocparent_id');
+    }
     public function category()
     {
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
     public function categorylocation()
     {
-
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
     public function locationhotspots()
@@ -228,4 +235,9 @@ class Location extends Model
         });
     }
 
+    public function createUrl()
+    {
+        $baseName = request()->getSchemeAndHttpHost();
+        return $baseName . '/' . \Lang::locale() . '/location/' . $this->slug;
+    }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.krpano')
+@extends('layouts.krpano', compact('location'))
 
 @section('content')
 <meta name="csrf-token" content="{!! csrf_token() !!}">
@@ -155,7 +155,6 @@
 
                         <div class="language-switcher">
                             <div class="dropdown-wrapper">
-
                                 <select name="select" class="dropdown">
                                     <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
                                     <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
@@ -639,7 +638,7 @@
                     <div class="infoPanel">
                         <div class="infoPanel__current-categories">
                             <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$location->categorylocation->color}}"><img src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
-                            <div class="clock_time"> <div class="infoPanel__title" id="location_name2">{{ $location->name }}</div></div>
+                            <div class="clock_time"> <div class="infoPanel__title" id="location_name2"><h1>{{ $location->name }}</h1></div></div>
                         </div>
                           <div class="time_data">      
                              <div class="clock" id="vremyarabotibox">

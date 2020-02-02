@@ -497,7 +497,7 @@
                     <div class="infoPanel">
                         <div class="infoPanel__current-categories">
                             <div class="icon-wrapper__icon--category category-normal" style="background-color: rgb(237, 68, 104);"><img src="/storage/cat_icons/{{$location->cat_icon_svg}}"></div>
-                            <div class="clock_time"> <div class="infoPanel__title" id="location_name2">{{ $location->name }}</div></div>
+                            <div class="clock_time"> <div class="infoPanel__title" id="location_name2"><h1>{{ $location->name }}</h1></div></div>
 
 
                         </div>
@@ -1008,7 +1008,7 @@ function krpanoscreenshot () {
     this.krpano.call("tween(view.fisheye,       1.0, distance(1.0,0.8))");
 }
 
-function skin_view_architectural (){
+  function skin_view_architectural (){
       this.krpano.call("tween(view.vlookat, 0.0, 1.0, easeInOutSine)");
    this.krpano.call("tween(view.fov, 150, distance(150,0.8)");
 
@@ -1023,73 +1023,64 @@ function skin_view_architectural (){
     krpano.call("tween(view.distortion,    0.0, distance(1.0,0.5));");
   }
 
-        function loadpano(xmlname, index, url)
+    function loadpano(xmlname, index, url)
+    {
+        if (krpano)
         {
-            if (krpano)
+            xmlname = xmlname.split(':')[1];
+            var tmp = xmlname;
+            xmlname = "/krpano/" + index + '/' + xmlname;
+            remove_all_hotspots();
+            krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+            krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+
+            xmlname = xmlname.split('/').join(':');
+            xmlname = xmlname.replace(':', '/');
+            xmlname = xmlname.replace(':', '');
+
+            $.get(
+              "/hasFloors" + xmlname,
+              onAjaxSuccess
+            );
+
+            function onAjaxSuccess(data)
             {
-                xmlname = xmlname.split(':')[1];
-                var tmp = xmlname;
-                xmlname = "/krpano/" + index + '/' + xmlname;
-                remove_all_hotspots();
-                krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-                krpano.call("loadscene('scene1', null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+              if(data == 1) {
+                $('.icon-ic_floorplan').parent().show();
+              } else {
+                $('.icon-ic_floorplan').parent().hide();
+              }
+            }
 
-                xmlname = xmlname.split('/').join(':');
-                xmlname = xmlname.replace(':', '/');
-                xmlname = xmlname.replace(':', '');
+            krpano.call("movecamera(0,0);");
+            history.pushState({
+                id: 'homepage'
+            }, 'Home | My App', '/location/'+url+'');
 
+            $.get('/api/location/' + url).done(function(data) {
+                $( "#location_name" ).text(data.name);
+                $( "#location_name2" ).text(data.name);
+                $( "#vremyaraboti" ).text(data.working_hours);
 
-                $.get(
-                  "/hasFloors" + xmlname,
-                  onAjaxSuccess
-                );
-
-                function onAjaxSuccess(data)
-                {
-                  if(data == 1) {
-                    $('.icon-ic_floorplan').parent().show();
-                  } else {
-                    $('.icon-ic_floorplan').parent().hide();
-                  }
+                $( "#location_number" ).text(data.number);
+                $( "#location_description" ).text(data.description);
+                $( "#location_adress" ).text(data.address);
+            });
+            $.get('/api/hotspots/' + tmp).done(function(data) {
+                for(var i = 0; i < data.length; i++) {
+                    add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug);
                 }
-
-
-                krpano.call("movecamera(0,0);");
-history.pushState({
-    id: 'homepage'
-}, 'Home | My App', '/location/'+url+'');
-
-    $.get('/api/location/' + url).done(function(data) {
-$( "#location_name" ).text(data.name);
-$( "#location_name2" ).text(data.name);
-$( "#vremyaraboti" ).text(data.working_hours);
-
-$( "#location_number" ).text(data.number);
-$( "#location_description" ).text(data.description);
-$( "#location_adress" ).text(data.address);
-    })
-                $.get('/api/hotspots/' + tmp).done(function(data) {
-
-
-                    for(var i = 0; i < data.length; i++) {
-                        add_exist_hotspot(data[i].h, data[i].v, data[i].name, data[i].cat_icon_svg, data[i].cat_icon, data[i].img, "uzbekistan:" + data[i].destination_id, i, data[i].slug);
-                    }
-                });
-            }
+            });
         }
+    }
 
-        function remove_all_hotspots()
+    function remove_all_hotspots()
+    {
+        if (krpano)
         {
-            if (krpano)
-            {
-                krpano.call("loop(hotspot.count GT 0, removehotspot(0) );");
-            }
+            krpano.call("loop(hotspot.count GT 0, removehotspot(0) );");
         }
-
-
-
-
-
+    }
 
 
         function add_exist_hotspot(h, v, name,cat_icon_svg, cat_icon, img,  hs_name, index, slug) {
@@ -1114,7 +1105,6 @@ $( "#location_adress" ).text(data.address);
                 hotspotimg= $('.uzbhotspotimg');
                 var n = krpano.spheretoscreen(h, v);
                 var m = krpano.get("state.position.location");
-
 
 
 var link = $('.hotspotPreview__text');
@@ -1144,15 +1134,11 @@ if (bottomFromShirota-n.x > 500) {
 
 
 } else {
-
-
     preview.css('left', ''+previewxx+'px')
     preview.css('top', ''+previewyy+'px')
     uzb360preview.removeClass();
     uzb360preview.addClass('hotspotPreview left');
 }
-
-
 
 if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
 
@@ -1163,20 +1149,16 @@ if (bottomFromVisota-n.y < 90 && bottomFromShirota-n.x> 150 && xxx>150) {
 }
 
 if (xxxx < 254 && bottomFromShirota-n.x> 150 && xxx>150) {
-
     preview.css('left', ''+left+'px')
     preview.css('top', ''+bottom+'px')
      uzb360preview.removeClass();
     uzb360preview.addClass('hotspotPreview top');
 }
 
-
                 hotspottext.text(name);
                 hotspoticon.attr("src","/storage/cat_icons/"+cat_icon_svg+"");
                hotspotimg.attr("src","/storage/panoramas/unpacked/"+img+"/thumb.jpg");
                     });
-
-
 
 
                 krpano.set("hotspot[" + hs_name + "].distorted", false);
