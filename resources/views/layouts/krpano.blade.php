@@ -19,13 +19,15 @@
     <meta property="og:image" content="/assets/socialpreview.jpg">
     <meta property="og:description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta property="og:site_name" content="Uzbekistan360">
-    @if ($location->podlocparent_id === null)
-        <link rel="canonical" href="{{ $location->createUrl() }}"/>
-    @else
-        @if ($location->parent->description === $location->description)
-            <link rel="canonical" href="{{ $location->parent->createUrl() }}"/>
-        @else
+    @if (strpos(request()->url(), '/location/'))
+        @if ($location->podlocparent_id === null)
             <link rel="canonical" href="{{ $location->createUrl() }}"/>
+        @else
+            @if ($location->parent->description === $location->description)
+                <link rel="canonical" href="{{ $location->parent->createUrl() }}"/>
+            @else
+                <link rel="canonical" href="{{ $location->createUrl() }}"/>
+            @endif
         @endif
     @endif
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
