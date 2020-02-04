@@ -1369,7 +1369,12 @@
         if (krpano) {
             krpano.call("addhotspot(" + hs_name + ")");
             krpano.set("hotspot[" + hs_name + "].keep", "true");
-            krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
+            if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+                krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/information-icon.png");
+            } else {
+                krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/"+ cat_icon +"");
+            }
+
             krpano.set("hotspot[" + hs_name + "].ath", h);
             krpano.set("hotspot[" + hs_name + "].atv", v);
             r =  h;
