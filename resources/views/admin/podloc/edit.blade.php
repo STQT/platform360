@@ -31,8 +31,8 @@
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}
-@php $sky->id = $sky->podlocparent_id;@endphp
-                        @include ('admin.podloc.form', ['formMode' => 'edit'])
+                        @php $sky->id = $sky->podlocparent_id; @endphp
+                        @include ('admin.podloc.form', ['formMode' => 'edit', 'tags' => $tags])
 
                         {!! Form::close() !!}
 

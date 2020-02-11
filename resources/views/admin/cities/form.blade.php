@@ -4,6 +4,14 @@
     
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
+
+<div class="form-group{{ $errors->has('seo_title') ? 'has-error' : ''}}">
+    {!! Form::label('seo_title', 'SEO Title', ['class' => 'control-label']) !!}
+    {!! Form::text('seo_title', null,  ['class' => 'form-control']) !!}
+
+    {!! $errors->first('seo_title', '<p class="help-block">:message</p>') !!}
+</div>
+
 <div class="form-group{{ $errors->has('lat') ? 'has-error' : ''}}">
     {!! Form::label('lat', 'Lat', ['class' => 'control-label']) !!}
     {!! Form::text('lat', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}

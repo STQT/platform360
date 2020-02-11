@@ -53,11 +53,11 @@ class CitiesController extends Controller
     {
       app()->setLocale('ru');
         $this->validate($request, [
-			'name' => 'required',
-			'lat' => 'required',
-			'lng' => 'required',
+            'name' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
             'position' => 'required'
-		]);
+        ]);
         $requestData = $request->all();
 
         Cities::create($requestData);
@@ -105,11 +105,11 @@ class CitiesController extends Controller
     public function update(Request $request, $id, $language)
     {
         $this->validate($request, [
-			'name' => 'required',
-			'lat' => 'required',
-			'lng' => 'required',
+            'name' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
             'position' => 'required'
-		]);
+        ]);
           $data = $request->all();
      app()->setLocale($language);
 

@@ -640,7 +640,7 @@
                             <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$location->categorylocation->color}}"><img src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
                             <div class="clock_time"> <div class="infoPanel__title" id="location_name2"><h1>{{ $location->name }}</h1></div></div>
                         </div>
-                          <div class="time_data">      
+                          <div class="time_data">
                              <div class="clock" id="vremyarabotibox">
                                 <div class="clock_icon"><img src="/storage/socialnetworks/clock.png"></div>
                                 <span id="vremyaraboti">{{$location->working_hours}}</span>
@@ -658,7 +658,7 @@
                           </div>
                        <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
                         <!-- <div class="infoPanel__title2">{{ $location->number}}</div> -->
-      
+
                         <div class="infoPanel__description">
                             <div class="infoPanel__description__message">
                                 <span id="location_description">{{$location->description}}</span>

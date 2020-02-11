@@ -555,7 +555,7 @@ class LocationsController extends Controller
         ]);
         $data = $request->all();
         $requestData = $request->all();
-        $requestData['slug'] = Location::transliterate( $requestData['name']).str_random(3);
+        $requestData['slug'] = Location::transliterate( $requestData['name']) . str_random(3);
         if(!empty($data['isDefault'])) {
             $requestData['isDefault'] = 1;
         }
@@ -598,6 +598,9 @@ class LocationsController extends Controller
         if(!empty($panoramas)) {
             $requestData['panorama'] = json_encode($panoramas);
             $location = Location::create($requestData);
+            $meta = \App\Meta::create($requestData['meta']);
+            $location->meta_id = $meta->id;
+            $location->save();
 
             if (isset($requestData['tags'])) {
                 $tagIds = $requestData['tags'];
@@ -765,6 +768,16 @@ class LocationsController extends Controller
         if(!empty($requestData['name'])) {
             app()->setLocale($language);
             $location = Location::withoutGlobalScope('published')->findOrFail($id);
+            if (!$location->meta) {
+                $meta = \App\Meta::create($requestData['meta']);
+                $meta->save();
+                $location->meta_id = $meta->id;
+                $location->save();
+            } else {
+                $meta = $location->meta;
+                $meta->update($requestData['meta']);
+            }
+            $location = Location::withoutGlobalScope('published')->with('meta')->findOrFail($id);
             $location->update($requestData);
             $returnUrl = $request->session()->get('returnUrl');
 

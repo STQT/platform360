@@ -10,7 +10,6 @@ class Cities extends Model
     use LogsActivity;
     use HasTranslations;
 
-
     /**
      * The database table used by the model.
      *
@@ -30,8 +29,8 @@ class Cities extends Model
      *
      * @var array
      */
-    protected $translatable = ['name'];
-    protected $fillable = ['name', 'lat', 'lng', 'is_default', 'position', 'subdomain'];
+    protected $translatable = ['name', 'seo_title'];
+    protected $fillable = ['name', 'lat', 'lng', 'is_default', 'position', 'subdomain', 'seo_title'];
 
 
     public function locations()

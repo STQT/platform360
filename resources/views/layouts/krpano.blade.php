@@ -3,10 +3,47 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Uzbekistan 360</title>
+    @php
+        $title = !empty($location->seo_title) ? $location->seo_title : $location->name;
+    @endphp
+    @if (empty($location->description))
+        @if (isset($location->meta->title) && $location->meta->title != '')
+            <title>{{ $location->meta->title }}</title>
+        @else
+            <title>{{ $title }} в {{ $location->city->seo_title }}, Узбекистан: виртуальный тур, 3D фото, панорамные снимки, интерактивная версия – посмотреть {{ $title }} онлайн на Uzbekistan360.Uz</title>
+        @endif
+        @if (isset($location->meta->description) && !empty($location->meta->description))
+            <meta name="description" content="{{ $location->meta->description }}">
+        @else
+            <meta name="description" content="Виртуальный тур по {{ $location->name }} в {{ $location->city->seo_title }}, Узбекистан. Посмотреть 3D фото и панорамные снимки {{ $location->name }} Вы можете на Uzbekistan360.Uz. На сайте представлен {{ $location->name }} в {{ $location->city->seo_title }} в режиме обзора 360 градусов и полным 3D погружением!">
+        @endif
+        @if (isset($location->meta->keywords) && !empty($location->meta->keywords))
+             <meta name="keywords" content="{{ $location->meta->keywords }}">
+        @else
+            <meta name="keywords" content="{{ $location->name }}, {{ $location->name }} в {{ $location->city->seo_title }}, {{ $location->name }} в узбекистане, {{ $location->name }} виртуальный тур, {{ $location->name }} 3d фото, {{ $location->name }} 3д фото, {{ $location->name }} панорама, {{ $location->name }} панорамные снимки, {{ $location->name }} посмотреть онлайн, {{ $location->name }} обзор 360 градусов">
+        @endif
+    @elseif ($location->podlocparent_id !== null && !empty($location->description))
+        @if (isset($location->meta->title) && $location->meta->title != '')
+            <title>{{ $location->meta->title }}</title>
+        @else
+            <title>{{ $title }} в {{ $location->city->seo_title }}, 3D фото, панорамные снимки, интерактивная версия – посмотреть {{ $title }} онлайн на Uzbekistan360.Uz</title>
+        @endif
+        @if (isset($location->meta->description) && !empty($location->meta->description))
+            <meta name="description" content="{{ $location->meta->description }}">
+        @else
+            <meta name="description" content="Виртуальный тур по {{ $title }} в {{ $location->city->seo_title }}. Посмотреть 3D фото и панорамные снимки {{ $title }} Вы можете на Uzbekistan360.Uz. На сайте представлен {{ $title }} в {{ $location->city->seo_title }} в режиме обзора 360 градусов и полным 3D погружением! {{ $location->description }}">
+        @endif
+        @if (isset($location->meta->keywords) && !empty($location->meta->keywords))
+             <meta name="keywords" content="{{ $location->meta->keywords }}">
+        @else
+            <meta name="keywords" content="{{ $title }}, {{ $title }} в {{ $location->city->seo_title }}, {{ $title }} в узбекистане, {{ $title }} виртуальный тур, {{ $title }} 3d фото, {{ $title }} 3д фото, {{ $title }} панорама, {{ $title }} панорамные снимки, {{ $title }} посмотреть онлайн, {{ $title }} обзор 360 градусов, {{ $title }} {{ $location->description }}">
+        @endif
+    @else
+        <title>{{ $location->name }} - Uzbekistan 360</title>
+        <meta name="description" content="Самый большой и качественный интерактивный тур по Узбекистану">
+    @endif
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 
-    <meta name="description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta itemprop="name" content="Uzbekistan360">
     <meta itemprop="description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta itemprop="image" content="/assets/socialpreview.jpg">

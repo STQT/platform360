@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Http\Request;
+
 class Location extends Model
 {
     use LogsActivity;
@@ -31,12 +32,37 @@ class Location extends Model
      *
      * @var array
      */
-    protected $translatable = ['name', 'address', 'description','working_hours'];
-    protected $fillable = ['name', 'address', 'number',  'description', 'working_hours', 'website', 'facebook',
-        'instagram', 'telegram', 'panorama', 'category_id', 'floors', 'isFloor', 'isDefault', 'slug', 'isfeatured',
-        'city_id', 'lat', 'lng', 'onmap', 'xmllocation', 'sky_id', 'subdomain', 'published', 'show_sublocation',
-        'audio', 'order'];
-
+    protected $translatable = ['name', 'address', 'description', 'working_hours'];
+    protected $fillable = [
+        'name',
+        'address',
+        'number',
+        'description',
+        'working_hours',
+        'website',
+        'facebook',
+        'instagram',
+        'telegram',
+        'panorama',
+        'category_id',
+        'floors',
+        'isFloor',
+        'isDefault',
+        'slug',
+        'isfeatured',
+        'city_id',
+        'lat',
+        'lng',
+        'onmap',
+        'xmllocation',
+        'sky_id',
+        'subdomain',
+        'published',
+        'show_sublocation',
+        'seo_title',
+        'audio',
+        'order'
+    ];
 
     /**
      * Change activity log event description
@@ -49,24 +75,27 @@ class Location extends Model
     {
         return __CLASS__ . " model has been {$eventName}";
     }
+
     protected function asJson($value)
     {
         return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
-    public  function folderName()
+
+    public function folderName()
     {
         $test = json_decode($this->panorama)[0]->panoramas[0]->panorama;
 
         $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-        foreach ($old as $item){
-          if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
+        foreach ($old as $item) {
+            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
 
-              $filename = $test . '/' . $item;
-          }
+                $filename = $test . '/' . $item;
+            }
         }
 
         return $filename;
     }
+
     public function toArray22()
     {
         $attributes = parent::toArray();
@@ -77,6 +106,7 @@ class Location extends Model
 
         return $attributes;
     }
+
     public function toArray33()
     {
         $attributes = parent::toArray();
@@ -87,7 +117,7 @@ class Location extends Model
 
         return $attributes;
     }
-    
+
     public static function transl($massiv)
     {
         foreach ($massiv as $key => $massic) {
@@ -100,34 +130,38 @@ class Location extends Model
     {
         $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $xml);
 
-        foreach ($old as $item){
-          if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$xml.'/' . $item)){
-              $filename = $xml . '/' . $item;
-          }
+        foreach ($old as $item) {
+            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $xml . '/' . $item)) {
+                $filename = $xml . '/' . $item;
+            }
         }
 
         return $filename;
     }
+
     public static function folderNames($loc)
     {
-        foreach($loc as $key2=>$value2) {
+        foreach ($loc as $key2 => $value2) {
             $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
             $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
 
-            foreach ($old as $item){
-              if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
-                  $filename[$key2] = $test . '/' . $item;
-              }
+            foreach ($old as $item) {
+                if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
+                    $filename[$key2] = $test . '/' . $item;
+                }
             }
         }
 
         return isset($filename) ? $filename : null;
     }
-    public static function setCookie($name, $value) {
-        setcookie($name,$value, time() + (86400 * 30), "/");
+
+    public static function setCookie($name, $value)
+    {
+        setcookie($name, $value, time() + (86400 * 30), "/");
     }
 
-    public static function transliterate ($string){
+    public static function transliterate($string)
+    {
         $str = mb_strtolower($string, 'UTF-8');
 
         $leter_array = array(
@@ -165,13 +199,13 @@ class Location extends Model
             'ya' => 'я',
         );
 
-        foreach ($leter_array as $leter => $kyr){
-            $kyr = explode(',',$kyr);
+        foreach ($leter_array as $leter => $kyr) {
+            $kyr = explode(',', $kyr);
             $str = str_replace($kyr, $leter, $str);
         }
 
         $str = preg_replace('/(\s|[^A-Za-z0-9-])+/', '-', $str);
-        $str = trim($str,'-');
+        $str = trim($str, '-');
 
         return $str;
     }
@@ -190,25 +224,30 @@ class Location extends Model
     {
         return $this->hasMany('App\Category', 'id', 'category_id');
     }
+
     public function sublocations()
     {
         return $this->hasMany('App\Location', 'podlocparent_id');
     }
+
     public function parent()
     {
         return $this->hasOne('App\Location', 'id', 'podlocparent_id');
     }
+
     public function category()
     {
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
+
     public function categorylocation()
     {
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
+
     public function locationhotspots()
     {
-        return $this->hasMany('App\Hotspot',  'location_id','id');
+        return $this->hasMany('App\Hotspot', 'location_id', 'id');
     }
 
     public function etaji()
@@ -219,6 +258,11 @@ class Location extends Model
     public function city()
     {
         return $this->hasOne('App\Cities', 'id', 'city_id');
+    }
+
+    public function meta()
+    {
+        return $this->hasOne('App\Meta', 'id', 'meta_id');
     }
 
     public function tags()
