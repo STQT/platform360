@@ -6,7 +6,7 @@
     @php
         $title = !empty($location->seo_title) ? $location->seo_title : $location->name;
     @endphp
-    @if (empty($location->description))
+    @if ((empty($location->description) && $location->podlocparent_id !== null) || $location->podlocparent_id === null)
         @if (isset($location->meta->title) && $location->meta->title != '')
             <title>{{ $location->meta->title }}</title>
         @else
