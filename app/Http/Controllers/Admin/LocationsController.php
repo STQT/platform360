@@ -166,23 +166,21 @@ class LocationsController extends Controller
         ));
     }
 
-//    public function hasFloors($id) {
-//        if (strpos($id, ':') !== false) {
-//            $tmp = explode(':', $id);
-//
-//            $location = Location::find($tmp[1]);
-//
-//            if(!empty($location)) {
-//                $tmp = json_decode($location->panorama);
-//
-//                if(count($tmp) > 1) {
-//                    return 1;
-//                }
-//            }
-//        }
-//
-//        return 0;
-//    }
+    public function hasFloors($id) {
+        if (strpos($id, ':') !== false) {
+            $ids = explode(':', $id);
+            //получаем ID панорамы
+            $location = Location::find(end($ids));
+
+            if(!empty($location)) {
+                if($location->etaji) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+    }
 
     public function unpublished(Request $request)
     {

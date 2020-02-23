@@ -26,7 +26,7 @@ $(function() {
             curModal.removeClass('visible').addClass('hidden');
             if (_this.find('.wrappersvg').length !== 0) {
                 _this.find('.wrappersvg').attr("fill", "#1a90d2");
-            };
+            }
         } else {
             $('.wrapper-button__icon').removeClass('is-active');
             _this.addClass('is-active');
@@ -35,7 +35,7 @@ $(function() {
 
             if (_this.find('.wrappersvg').length !== 0) {
                 _this.find('.wrappersvg').attr("fill", "#c23691");
-            };
+            }
         }
     });
 
