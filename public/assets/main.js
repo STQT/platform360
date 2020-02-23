@@ -50,14 +50,14 @@ $(function() {
     });
 
     $('.svg_blockk').click(function() {
-    	var height = $('#location_description').height();
+        var height = $('#location_description').height();
         $('.infoPanel__description__message').toggleClass('show');
 
 
         if ($('.infoPanel__description__message').hasClass('show')) {
-        	$('.infoPanel__description__message').css('height', height);
+            $('.infoPanel__description__message').css('height', height);
         }else{
-        	$('.infoPanel__description__message').removeAttr('style');
+            $('.infoPanel__description__message').removeAttr('style');
         }
     });
 
