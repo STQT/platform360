@@ -1007,19 +1007,20 @@
 
     @foreach ($etaji as $i => $etaj)
         @if(!empty($etaj->code))
-        $(".buttonetaj{{$i}}").click(function(){
-          setTimeout(function(){
-          $("#floorid{{$etaj->id}}").annotatorPro({
-            maxZoom: 2,
-              navigator : false,
-              navigatorImagePreview : false,
-              frameWidth: "auto",
-              iconsize: "15px",
-              frameHeight: $(window).height()-300,
-              fullscreen : true,
-              {!!$etaj->code!!}
-          });},500);
-        });
+            $(".buttonetaj{{$i}}").click(function(){
+              setTimeout(function(){
+              $("#floorid{{$etaj->id}}").annotatorPro({
+                  maxZoom: 2,
+                  navigator : false,
+                  navigatorImagePreview : false,
+                  frameWidth: "auto",
+                  iconsize: "15px",
+                  frameHeight: $(window).height()-300,
+                  fullscreen : true,
+                  {!! $etaj->code !!}
+              });
+              },500);
+            });
         @endif
     @endforeach
 
@@ -1027,10 +1028,10 @@
     var isIpad = window.matchMedia("only screen and (min-width: 768px)").matches;
 
     if (isMobile) {
-      var hotspotsize = "0.65";
+        var hotspotsize = "0.65";
     }
     if (isIpad) {
-            var hotspotsize = "0.4";
+        var hotspotsize = "0.4";
     }
     $(window).on('popstate', function(event) {
         var pathname = window.location.pathname;
@@ -1046,7 +1047,6 @@
                 loadpano('uzbekistan:'+data.id+'', 0, data.slug,'','', 'nooo');
             }
         } else {
-            console.log(pathname);
             pathname = pathname.replace('/{{ app()->getLocale() }}/location/','');
             pathname = "/{{ app()->getLocale() }}/api/location/"+pathname;
 
@@ -1322,6 +1322,24 @@
                                 <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">\
                                 <span class="floorplan-viewer__footer__element__name">'+data.name+', '+data.etaji[iFloor].id+'</span>\
                             </li>'
+                        );
+
+                        var obj1 = {
+                              maxZoom: 2,
+                              navigator : false,
+                              navigatorImagePreview : false,
+                              frameWidth: "auto",
+                              iconsize: "15px",
+                              frameHeight: $(window).height()-300,
+                              fullscreen : true
+                        };
+
+                        var code = data.etaji[iFloor].code;
+                        code = eval('{' + code + '}');
+                        obj1.annotations = code;
+
+                        $("#floorid"+data.etaji[iFloor].id).annotatorPro(
+                            obj1
                         );
                     }
                     $('.buttonetaj0').show();
