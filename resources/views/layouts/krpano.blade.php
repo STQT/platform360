@@ -75,7 +75,6 @@
     @endif
     @if ($location->subdomain != '')
         @php
-        die('ok');
             $urlCanonical = $location->createUrl();
         @endphp
     @endif
