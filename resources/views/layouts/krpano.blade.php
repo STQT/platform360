@@ -58,13 +58,28 @@
     <meta property="og:site_name" content="Uzbekistan360">
     @if (strpos(request()->url(), '/location/'))
         @if ($location->podlocparent_id === null)
-            <link rel="canonical" href="{{ $location->createUrl() }}"/>
+            @php
+                $urlCanonical = $location->createUrl();
+            @endphp
         @else
-            @if ($location->parent->description === $location->description)
-                <link rel="canonical" href="{{ $location->parent->createUrl() }}"/>
+            @if ($location->parent->description === $location->description || $location->description == '')
+                @php
+                    $urlCanonical = $location->parent->createUrl();
+                @endphp
             @else
-                <link rel="canonical" href="{{ $location->createUrl() }}"/>
+                @php
+                    $urlCanonical = $location->createUrl();
+                @endphp
             @endif
+        @endif
+        @if (isset($urlCanonical))
+            @php
+                $serverName = $_SERVER['SERVER_NAME'];
+                if (strpos($serverName, 'p360') !== false) {
+                    $urlCanonical = str_replace('p360', 'uzbekistan360', $serverName);
+                }
+            @endphp
+            <link rel="canonical" href="{{ $urlCanonical }}"/>
         @endif
     @endif
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
