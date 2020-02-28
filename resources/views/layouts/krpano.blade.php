@@ -72,15 +72,21 @@
                 @endphp
             @endif
         @endif
-        @if (isset($urlCanonical))
-            @php
-                $serverName = $_SERVER['SERVER_NAME'];
-                if (strpos($serverName, 'p360') !== false) {
-                    $urlCanonical = str_replace('p360', 'uzbekistan360', $serverName);
-                }
-            @endphp
-            <link rel="canonical" href="{{ $urlCanonical }}"/>
-        @endif
+    @endif
+    @if ($location->subdomain != '')
+        @php
+        die('ok');
+            $urlCanonical = $location->createUrl();
+        @endphp
+    @endif
+    @if (isset($urlCanonical))
+        @php
+            $serverName = $_SERVER['SERVER_NAME'];
+            if (strpos($serverName, 'p360') !== false) {
+                $urlCanonical = str_replace('p360', 'uzbekistan360', $serverName);
+            }
+        @endphp
+        <link rel="canonical" href="{{ $urlCanonical }}"/>
     @endif
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="/assets/app.22400e48.css?033f3b348c8154cd9ec6" rel="stylesheet">
