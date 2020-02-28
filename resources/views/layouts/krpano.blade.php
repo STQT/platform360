@@ -56,7 +56,7 @@
     <meta property="og:image" content="/assets/socialpreview.jpg">
     <meta property="og:description" content="Самый большой и качественный интерактивный тур по Узбекистану">
     <meta property="og:site_name" content="Uzbekistan360">
-    @if (strpos(request()->url(), '/location/'))
+    @if (strpos(request()->url(), '/location/') !== false)
         @if ($location->podlocparent_id === null)
             @php
                 $urlCanonical = $location->createUrl();
