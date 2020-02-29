@@ -1308,9 +1308,12 @@
                 if(data.etaji.length > 0) {
                     $('.floorplan-viewer__header__name').html(data.name + ', ' + data.etaji[0].name.ru);
                     var iFloor;
+                    var floorId;
+                    var obj1;
+                    var code;
                     for (iFloor = 0; iFloor < data.etaji.length; ++iFloor) {
                         $('#floor-krpano').append(
-                            '<div id="floorplan-tab' + iFloor + '" class="floorplan-tab" tabindex="-1" style="">\
+                            '<div id="floorplan-tab' + iFloor + '" class="floorplan-tab" style="display: none;">\
                                 <div class="plan">\
                                     <img class="planClass" id="floorid'+data.etaji[iFloor].id+'"  src="/storage/floors/'+data.etaji[iFloor].image+'">\
                                         <span ></span>\
@@ -1324,24 +1327,43 @@
                             </li>'
                         );
 
-                        var obj1 = {
-                              maxZoom: 2,
-                              navigator : false,
-                              navigatorImagePreview : false,
-                              frameWidth: "auto",
-                              iconsize: "15px",
-                              frameHeight: $(window).height()-300,
-                              fullscreen : true
+                        obj1 = {
+                            maxZoom: 2,
+                            navigator : false,
+                            navigatorImagePreview : false,
+                            frameWidth: "1567px",
+                            iconsize: "15px",
+                            frameHeight: $(window).height()-300,
+                            fullscreen : true
                         };
-
-                        var code = data.etaji[iFloor].code;
+                        code = data.etaji[iFloor].code;
                         code = eval('{' + code + '}');
                         obj1.annotations = code;
-
-                        $("#floorid"+data.etaji[iFloor].id).annotatorPro(
-                            obj1
-                        );
+                        floorId = data.etaji[iFloor].id;
+                            $("#floorid"+floorId).annotatorPro(
+                                obj1
+                            );
                     }
+
+                    $('.floorplan-tab').eq(0).fadeIn();
+
+                    $('.floorplan-viewer__footer li').eq(0).addClass(
+                        'floorplan-viewer__footer__element--selected is-activated--categories');
+
+                    $('.floorplan-viewer__footer li').on('click', function() {
+                        var _this = $(this);
+                        var curTab = $('#floorplan-tab' + _this.data('tab')).eq(0);
+
+                        $('.floorplan-viewer__footer li').removeClass(
+                            'floorplan-viewer__footer__element--selected is-activated--categories');
+                        _this.addClass('floorplan-viewer__footer__element--selected is-activated--categories');
+
+                        $('.floorplan-tab').fadeOut();
+
+                        setTimeout(function() {
+                            curTab.fadeIn();
+                        }, 400);
+                    });
                     $('.buttonetaj0').show();
                 } else {
                     $('.buttonetaj0').hide();
