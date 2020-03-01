@@ -252,6 +252,9 @@ class Location extends Model
 
     public function etaji()
     {
+        if ($this->parent) {
+            return $this->parent->etaji();
+        }
         return $this->hasMany('App\Floors', 'parrentid');
     }
 
