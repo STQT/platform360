@@ -1343,6 +1343,7 @@
                         code = eval('{' + code + '}');
                         floorObject.annotations = code;
                         allFloors[iFloor] = floorObject;
+                        console.log(floorObject);
                     }
 
                     //показ первого этажа
@@ -1368,6 +1369,7 @@
                         $("#floorid"+_this.data('tab')).annotatorPro(
                             allFloors[_this.data('tab')]
                         );
+                        $('.floorplan-viewer__header__name').html($(this).find('.floorplan-viewer__footer__element__name').html());
 
                         setTimeout(function() {
                             curTab.fadeIn();
