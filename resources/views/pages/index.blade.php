@@ -1007,19 +1007,19 @@
 
     @foreach ($etaji as $i => $etaj)
         @if(!empty($etaj->code))
-            $(".buttonetaj{{$i}}").click(function(){
-              setTimeout(function(){
-              $("#floorid{{$etaj->id}}").annotatorPro({
-                  maxZoom: 2,
-                  navigator : false,
-                  navigatorImagePreview : false,
-                  frameWidth: "auto",
-                  iconsize: "15px",
-                  frameHeight: $(window).height()-300,
-                  fullscreen : true,
-                  {!! $etaj->code !!}
-              });
-              },500);
+            $(".buttonetaj{{$i}}").click(function () {
+                setTimeout(function () {
+                    $("#floorid{{$etaj->id}}").annotatorPro({
+                        maxZoom: 2,
+                        navigator: false,
+                        navigatorImagePreview: false,
+                        frameWidth: "auto",
+                        iconsize: "15px",
+                        frameHeight: $(window).height() - 300,
+                        fullscreen: true,
+                        {!! $etaj->code !!}
+                    });
+                }, 500);
             });
         @endif
     @endforeach
@@ -1286,8 +1286,7 @@
             }
 
             krpano.call("movecamera(0,0);");
-            if(nourl=="nooo") {
-            } else {
+            if(nourl!="nooo") {
               history.pushState({
                   id: 'homepage'
               }, 'Home | My App', '/{{app()->getLocale()}}/location/'+url+'');
@@ -1305,12 +1304,16 @@
                 if (data.instagram) {$( ".socialnetwork-icon.instagram" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( ".socialnetwork-icon.instagram" ).hide();}
                 if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
 
-                if(data.etaji.length > 0) {
+                if (data.etaji.length > 0) {
                     $('.floorplan-viewer__header__name').html(data.name + ', ' + data.etaji[0].name.{{ Lang::locale()  }});
                     var iFloor;
                     var floorId;
-                    var obj1;
+                    var floorObject;
                     var code;
+                    var allFloors = [];
+                    $('#floor-krpano').html('');
+                    $('.floorplan-viewer__footer').html('');
+
                     for (iFloor = 0; iFloor < data.etaji.length; ++iFloor) {
                         $('#floor-krpano').append(
                             '<div id="floorplan-tab' + iFloor + '" class="floorplan-tab" style="display: none;">\
@@ -1327,7 +1330,7 @@
                             </li>'
                         );
 
-                        obj1 = {
+                        floorObject = {
                             maxZoom: 2,
                             navigator : false,
                             navigatorImagePreview : false,
@@ -1338,18 +1341,20 @@
                         };
                         code = data.etaji[iFloor].code;
                         code = eval('{' + code + '}');
-                        obj1.annotations = code;
-                        floorId = data.etaji[iFloor].id;
-                            $("#floorid"+floorId).annotatorPro(
-                                obj1
-                            );
+                        floorObject.annotations = code;
+                        allFloors[iFloor] = floorObject;
                     }
 
+                    //показ первого этажа
+                    floorId = data.etaji[0].id;
+                    $("#floorid"+floorId).annotatorPro(
+                        allFloors[0]
+                    );
                     $('.floorplan-tab').eq(0).fadeIn();
-
                     $('.floorplan-viewer__footer li').eq(0).addClass(
                         'floorplan-viewer__footer__element--selected is-activated--categories');
 
+                    //обработка нажатий кнопок выбора этажей
                     $('.floorplan-viewer__footer li').on('click', function() {
                         var _this = $(this);
                         var curTab = $('#floorplan-tab' + _this.data('tab')).eq(0);
@@ -1359,6 +1364,10 @@
                         _this.addClass('floorplan-viewer__footer__element--selected is-activated--categories');
 
                         $('.floorplan-tab').fadeOut();
+
+                        $("#floorid"+_this.data('tab')).annotatorPro(
+                            allFloors[_this.data('tab')]
+                        );
 
                         setTimeout(function() {
                             curTab.fadeIn();
@@ -1372,7 +1381,6 @@
 
                 if (data.audio) {
                     $('#audio')[0].setSrc('/storage/audio/' + data.audio);
-
                     $('#playaudio').show();
                 } else {
                     if (data.podlocparent_id) {
