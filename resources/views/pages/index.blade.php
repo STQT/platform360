@@ -992,8 +992,19 @@
         $('#website_box').hide();
     @endif
 
-    @if (!$location->audio)
+    @if (!$location->audio && !$location->videos)
         $('#playaudio').hide();
+    @endif
+    @if ($location->videos)
+        $('#playaudio').on('click', function() {
+            @foreach ($location->videos as $vKey => $video)
+               if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
+                   krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
+               } else {
+                   krpano.set('hotspot[video{{ $vKey }}].volume', '0');
+               }
+            @endforeach
+        });
     @endif
     @if (empty($location->facebook))
         $('.socialnetwork-icon.facebook').hide();
@@ -1396,6 +1407,18 @@
                       $('#playaudio').hide();
                       $('#audio')[0].pause();
                     }
+                }
+                if (typeof data.videos != 'undefined') {
+                    $('#playaudio').show();
+                    $('#playaudio').on('click', function() {
+                        $.each(data.videos, function(key) {
+                           if (krpano.get('hotspot[video' + key + '].volume') == 0) {
+                               krpano.set('hotspot[video' + key + '].volume', '1.0');
+                           } else {
+                               krpano.set('hotspot[video' + key + '].volume', '0');
+                           }
+                        });
+                    });
                 }
                 if (data.onmap == "on") {
                      $('.currentlocationcordinates').data('lat', data.lat);

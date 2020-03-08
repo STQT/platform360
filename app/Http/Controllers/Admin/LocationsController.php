@@ -653,17 +653,18 @@ class LocationsController extends Controller
         if ($etaji->isNotEmpty()) {
             $code = "";
             foreach ($etaji as $ss => $etaj) {
-                $code .= $etaji[$ss]->code;}
+                $code .= $etaji[$ss]->code;
+            }
             preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
             $etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
-            $sss = Location::folderNames($etajlocations);
-            foreach($etajlocations as $key2=>$value2) {
-                $etajlocations[$key2]->img = $sss[$key2];
+            $folderNames = Location::folderNames($etajlocations);
+            foreach ($etajlocations as $key2=>$value2) {
+                $etajlocations[$key2]->img = $folderNames[$key2];
             }
         }
 
-        if(empty($location->is_sky)) {
-            if(!empty($location->sky_id)) {
+        if (empty($location->is_sky)) {
+            if (!empty($location->sky_id)) {
                 $location->skyslug = Sky::where('id', $location->sky_id)->pluck('slug')->first();
             } else {
                 $location->skyslug = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->pluck('slug')->first();
@@ -674,6 +675,9 @@ class LocationsController extends Controller
         }
 
         $locationArray = $location->toArray22();
+        if ($location->videos) {
+            $locationArray['videos'] = $location->videos;
+        }
         $locationArray['category_icon'] = $location->category->cat_icon_svg;
         return $locationArray;
     }
@@ -1024,6 +1028,7 @@ class LocationsController extends Controller
             $hotspot->pitch = str_replace(',', '.', $data['pitch']);
             $hotspot->roll = str_replace(',', '.', $data['roll']);
             $hotspot->video = $newName;
+            $hotspot->play_type = $data['play_type'];
             $hotspot->save();
 
             return response()->json([

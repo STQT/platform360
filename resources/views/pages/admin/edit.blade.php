@@ -81,6 +81,12 @@
                 
                 <div class="form-group">roll: <input type="text" name="roll"></div>
 
+                <select name="play_type">
+                    @foreach (\App\Video::playTypeOptions() as $vKey => $option)
+                        <option value="{{ $vKey }}">{{ $option }}</option>
+                    @endforeach
+                </select>
+
                 <input type="hidden" name="location" value={{ $location->id }} >
                 
                 <div><button type="submit" class="btn btn-primary">Добавить</button></div>
