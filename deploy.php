@@ -25,7 +25,7 @@ add('writable_dirs', ['vendor', 'storage']);
 host('dev.uzbekistan360.uz')
     ->stage('staging')
     ->user('www-data')
-    ->port(50400)
+    ->port(50800)
     ->configFile('~/.ssh/config')
     ->identityFile('~/.ssh/id_rsa')
     ->forwardAgent(true)
