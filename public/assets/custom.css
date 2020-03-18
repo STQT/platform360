@@ -73,8 +73,19 @@ body{
     overflow: scroll;
 }
 
+/* mobile */
 @media (max-width: 768px) {
     .listItem-wrapper.is-active .listItem {
         border-bottom: 2px solid #c23691;
+    }
+    .time_data {
+        flex-direction: column;
+        align-items: unset;
+    }
+    .time_data > div {
+        padding: 10px 0 10px 0;
+    }
+    #website_box {
+        padding-left: 0;
     }
 }
