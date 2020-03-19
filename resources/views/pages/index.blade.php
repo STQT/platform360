@@ -1306,14 +1306,55 @@
                 $( "#location_name" ).text(data.name);
                 $( "#location_name2" ).text(data.name);
                 $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
-                if (data.working_hours){$( "#location_number_box" ).show();$( "#vremyarabotibox" ).show(); $( "#vremyaraboti" ).text(data.working_hours);} else {$( "#vremyarabotibox" ).hide()}
-                if (data.number) {$( "#location_number" ).attr("href", "tel:"+data.number);$( "#location_number" ).text(data.number);} else {$( "#location_number_box" ).hide();}
-                if (data.description) {$( "#location_description" ).text(data.description); } else {$( "#location_description" ).text("");}
-                if (data.address) {$( "#location_adress_box" ).show(); $( "#location_adress" ).text(data.address);} else {$( "#location_adress_box" ).hide();}
-                if (data.facebook) {$( ".socialnetwork-icon.facebook" ).show(); $( "#locationsocialfb" ).attr("href", data.facebook);} else {$( ".socialnetwork-icon.facebook" ).hide();}
-                if (data.telegram) {$( ".socialnetwork-icon.telegram" ).show(); $( "#locationsocialtg" ).attr("href", data.telegram);} else {$( ".socialnetwork-icon.telegram" ).hide();}
-                if (data.instagram) {$( ".socialnetwork-icon.instagram" ).show(); $( "#locationsocialig" ).attr("href", data.instagram);} else {$( ".socialnetwork-icon.instagram" ).hide();}
-                if (data.website) {$( "#website_box" ).show(); $( "#website_box a" ).attr("href", data.website);} else {$( "#website_box" ).hide();}
+                if (data.working_hours) {
+                    $("#vremyarabotibox").show();
+                    $("#vremyaraboti").text(data.working_hours);
+                } else {
+                    $("#vremyarabotibox").hide()
+                }
+                if (data.number) {
+                    $("#location_number_box").show();
+                    $("#location_number").attr("href", "tel:" + data.number);
+                    $("#location_number").text(data.number);
+                } else {
+                    $("#location_number_box").hide();
+                }
+                if (data.description) {
+                    $("#location_description").text(data.description);
+                } else {
+                    $("#location_description").text("");
+                }
+                if (data.address) {
+                    $("#location_adress_box").show();
+                    $("#location_adress").text(data.address);
+                } else {
+                    $("#location_adress_box").hide();
+                }
+                if (data.facebook) {
+                    $(".socialnetwork-icon.facebook").show();
+                    $("#locationsocialfb").attr("href", data.facebook);
+                } else {
+                    $(".socialnetwork-icon.facebook").hide();
+                }
+                if (data.telegram) {
+                    $(".socialnetwork-icon.telegram").show();
+                    $("#locationsocialtg").attr("href", data.telegram);
+                } else {
+                    $(".socialnetwork-icon.telegram").hide();
+                }
+                if (data.instagram) {
+                    $(".socialnetwork-icon.instagram").show();
+                    $("#locationsocialig").attr("href", data.instagram);
+                } else {
+                    $(".socialnetwork-icon.instagram").hide();
+                }
+                if (data.website) {
+                    $("#website_box").show();
+                    $("#website_box a").html(data.website);
+                    $("#website_box a").attr("href", data.website);
+                } else {
+                    $("#website_box").hide();
+                }
 
                 if (data.etaji.length > 0) {
                     $('.floorplan-viewer__header__name').html(data.name + ', ' + data.etaji[0].name.{{ Lang::locale()  }});
