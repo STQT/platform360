@@ -1304,7 +1304,7 @@
             }
             $.get('/{{app()->getLocale()}}/api/location/' + url).done(function(data) {
                 $( "#location_name" ).text(data.name);
-                $( "#location_name2" ).text(data.name);
+                $( "#location_name2 h1" ).text(data.name);
                 $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
                 if (data.working_hours) {
                     $("#vremyarabotibox").show();
