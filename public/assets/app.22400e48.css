@@ -2349,7 +2349,7 @@ screen and (max-height: 600px) {
 .infoPanel__title h1 {
   letter-spacing: 1px;
   color: #c23691;
-  font-size: 1em;
+  font-size: 1.4em;
   padding-bottom: 5px;
   font-weight: normal;
 }
