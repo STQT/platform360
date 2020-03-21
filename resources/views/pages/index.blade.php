@@ -176,7 +176,7 @@
                     </ul>
                 </div>--}}
                 <div id="pano" style="width:100%;height:100%;"></div>
-                <button type="button" id="playaudio"><img src="/assets/play-icon.png" style="width: 32px"></button>
+                <button type="button" id="playaudio"><img src="/assets/play-icon_muted.png" style="width: 32px"></button>
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span></div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span></div>
@@ -314,7 +314,7 @@
                     <div class="searchPanel">
                         <div class="searchPanel__input" id="search_adress" >
                             <input type="text" class="dubai360-input search-input" placeholder="{{ trans('uzb360.search')}}">
-                            <span class="clear-field"></span>
+                            <span class="clear-field" style="display: none"></span>
                         </div>
                         <div class="searchPanel__filtered ">
                         </div>
@@ -1000,8 +1000,10 @@
             @foreach ($location->videos as $vKey => $video)
                if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
                    krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
+                   $('#playaudio').find('img').attr('src', '/assets/play-icon.png');
                } else {
                    krpano.set('hotspot[video{{ $vKey }}].volume', '0');
+                   $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
                }
             @endforeach
         });
@@ -1306,6 +1308,9 @@
                 $( "#location_name" ).text(data.name);
                 $( "#location_name2 h1" ).text(data.name);
                 $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
+
+                $('.information-modal').hide();
+
                 if (data.working_hours) {
                     $("#vremyarabotibox").show();
                     $("#vremyaraboti").text(data.working_hours);
@@ -1455,8 +1460,10 @@
                         $.each(data.videos, function(key) {
                            if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                krpano.set('hotspot[video' + key + '].volume', '1.0');
+                               $('#playaudio').find('img').attr('src', '/assets/play-icon.png');
                            } else {
                                krpano.set('hotspot[video' + key + '].volume', '0');
+                               $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
                            }
                         });
                     });

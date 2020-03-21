@@ -89,3 +89,12 @@ body{
         padding-left: 0;
     }
 }
+
+.information-modal .close {
+    width: 32px;
+    height: 32px;
+}
+
+.icon-ic_explore.wrapper-button__icon {
+    font-size: 3.3em;
+}

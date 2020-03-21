@@ -315,6 +315,11 @@ $(function() {
 
     $('.search-input').bind('input', function() {
         var _this = $(this);
+        if (_this.val() != '') {
+            $('.clear-field').show();
+        } else {
+            $('.clear-field').hide();
+        }
         var categoryId =
             $('.js-icon.icon-wrapper--selected').map(function() {
                 return $(this).data('category');

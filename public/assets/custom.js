@@ -17,6 +17,11 @@ $(document).ready(function() {
     var audioPlayer = $('#audio')[0];
     $('#playaudio').on('click', function() {
         $(".mejs__controls").find(".mejs__button")[0].click();
+            if (audioPlayer.getPaused() === true) {
+                $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
+            } else {
+                $('#playaudio').find('img').attr('src', '/assets/play-icon.png');
+            }
         // audioPlayer.play();
         // audioPlayer.setVolume(1);
         // audioPlayer.setMuted(false);
