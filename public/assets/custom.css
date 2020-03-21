@@ -46,7 +46,7 @@ body{
     background: #fff;
     width: 60%;
     height: 70%;
-    z-index: 1000;
+    z-index: 2000;
     top: 14%;
     left: 18%;
 }
@@ -87,6 +87,12 @@ body{
     }
     #website_box {
         padding-left: 0;
+    }
+    .information-modal {
+        width: 87%;
+        top: 0;
+        left: 0;
+        height: 100%;
     }
 }
 
