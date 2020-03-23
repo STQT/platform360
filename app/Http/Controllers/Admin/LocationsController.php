@@ -573,7 +573,7 @@ class LocationsController extends Controller
             $baseName = pathinfo($file);
             $baseName = $baseName['filename'];
             $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
-            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config ' . $fullPath);
+            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere ' . $fullPath);
             mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
             copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
             rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
@@ -746,7 +746,7 @@ class LocationsController extends Controller
             $baseName = pathinfo($file);
             $baseName = $baseName['filename'];
             $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
-            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config ' . $fullPath);
+            $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere ' . $fullPath);
             mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
             copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
             rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
