@@ -176,7 +176,7 @@
                     </ul>
                 </div>--}}
                 <div id="pano" style="width:100%;height:100%;"></div>
-                <button type="button" id="playaudio"><img src="/assets/play-icon_muted.png" style="width: 32px"></button>
+                <button type="button" id="playaudio"><img src="/assets/play-icon_muted.png" style="width: 32px;"></button>
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span></div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span></div>
@@ -992,7 +992,7 @@
         $('#website_box').hide();
     @endif
 
-    @if (!$location->audio && !$location->videos)
+    @if (!$location->audio && count($location->videos) < 1)
         $('#playaudio').hide();
     @endif
     @if ($location->videos)
@@ -1454,9 +1454,9 @@
                       $('#audio')[0].pause();
                     }
                 }
-                if (typeof data.videos != 'undefined') {
+                if (typeof data.videos != 'undefined' && data.videos.length > 0) {
                     $('#playaudio').show();
-                    $('#playaudio').on('click', function() {
+                    $('#lkbplayaudio').on('click', function() {
                         $.each(data.videos, function(key) {
                            if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                krpano.set('hotspot[video' + key + '].volume', '1.0');
