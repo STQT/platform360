@@ -1441,12 +1441,14 @@
                 if (data.audio) {
                     $('#audio')[0].setSrc('/storage/audio/' + data.audio);
                     $('#playaudio').show();
+                    $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
                 } else {
                     if (data.podlocparent_id) {
                         $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
                           .done(function(parentLocData) {
                               if (parentLocData.audio) {
                                   $('#playaudio').show();
+                                  $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
                               }
                           });
                     } else {
