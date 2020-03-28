@@ -39,30 +39,15 @@ class HomeController extends Controller
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
         //Загрузка основноч точки
-        $serverName = $_SERVER['HTTP_HOST'];
-        $serverNameArr = explode('.', $serverName);
-
-        $subdomain = false;
-
-        if (env('APP_ENV') == 'local') {
-            if (count($serverNameArr) > 1) {
-                $subdomain = true;
-            }
-        } else {
-            if (count($serverNameArr) > 2) {
-                $subdomain = true;
-            }
-        }
-
         //обработка субдоменов и локация по умолчанию
-        if ($subdomain && $serverNameArr[0] != 'dev' && !is_numeric($serverNameArr[0])) {
-            $subdomainName = $serverNameArr[0];
-            $city = Cities::where('subdomain', $subdomainName)->first();
+        $subdomain = $this->getSubdomainName();
+        if ($subdomain && $subdomain != 'dev' && !is_numeric($subdomain)) {
+            $city = Cities::where('subdomain', $subdomain)->first();
             if ($city) {
                 $location = Location::where([['city_id', $city->id], ['isDefault', '1']])->with('categorylocation')->firstOrFail();
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
-                $subdomainLocation = Location::where('subdomain', $subdomainName)->with('categorylocation')->firstOrFail();
+                $subdomainLocation = Location::where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
                 if (!Input::get('home')) {
                     Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
@@ -174,6 +159,33 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * @return boolean|string Возвращает название субдомена, или false, если это не субдомен
+     */
+    public function getSubdomainName()
+    {
+        $serverName = $_SERVER['HTTP_HOST'];
+        $serverNameArr = explode('.', $serverName);
+
+        $subdomain = false;
+
+        if (env('APP_ENV') == 'local') {
+            if (count($serverNameArr) > 1) {
+                $subdomain = true;
+            }
+        } else {
+            if (count($serverNameArr) > 2) {
+                $subdomain = true;
+            }
+        }
+
+        if ($subdomain) {
+            $subdomain = $serverNameArr[0];
+        }
+
+        return $subdomain;
+    }
+
     //Загрузка сцены
     public function loadScene($id) {
         $location = Location::findOrFail($id);
@@ -186,7 +198,7 @@ class HomeController extends Controller
             if(count($cities) > 0){
                 $cityid = json_encode($cities[0]->id);
                 Cookie::queue(Cookie::forever('city', $cityid));
-                return redirect('/');
+                return redirect('http://' . getenv('MAIN_DOMAIN') . '/');
             } else {
                 return redirect('/');
             }
