@@ -192,10 +192,11 @@ class HomeController extends Controller
         return view('pages.index', ['location' => $location]);}
 
     //Поменять город
-    public function changeCity($id) {
+    public function changeCity($id)
+    {
         if (is_numeric($id)) {
             $cities = Cities::where('id', $id)->get();
-            if(count($cities) > 0){
+            if (count($cities) > 0) {
                 $cityid = json_encode($cities[0]->id);
                 Cookie::queue(Cookie::forever('city', $cityid));
                 return redirect('http://' . getenv('MAIN_DOMAIN') . '/');
