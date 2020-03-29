@@ -14,3 +14,5 @@ yarn-error.log
 /storage/app/public/
 /public/videos/
 /storage/debugbar/
+/db-data/*
+!/db-data/.gitkeep

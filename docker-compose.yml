@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+    app:
+        image: 'bitnami/nginx'
+        ports:
+            - '80:8080'
+        links:
+            - phpfpm
+        volumes:
+            - ./logs/access.log:/opt/bitnami/nginx/logs/myapp-access.log
+            - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
+            - ./nginx/app.conf:/opt/bitnami/nginx/conf/server_blocks/app.conf
+            - ./:/myapps
+    phpfpm:
+        image: 'bitnami/php-fpm'
+        ports:
+            - '9000:9000'
+        volumes:
+            - ./:/myapps
+    db:
+        image: 'mariadb'
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./db-data:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=pass
