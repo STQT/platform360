@@ -116,11 +116,16 @@ class HomeController extends Controller
             foreach($krhotspotinfo as $key2=>$value2){
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
-                    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    foreach ($old as $item){
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
+                    try {
+                        $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+                    } catch (\Exception $e) {
+                        $dirs = [];
+                    }
+                    foreach ($dirs as $item) {
+                        if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
                             $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;}
+                            $krhotspots[$key]->img = $filename;
+                        }
                     }
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;

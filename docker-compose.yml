@@ -12,6 +12,7 @@ services:
             - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
             - ./nginx/app.conf:/opt/bitnami/nginx/conf/server_blocks/app.conf
             - ./:/myapps
+#            - /media/skey/Elements/panoramas:/myapps/storage/app/public/panoramas
     phpfpm:
         image: 'bitnami/php-fpm'
         ports:

@@ -128,9 +128,15 @@ class Location extends Model
 
     public static function xmlName($xml)
     {
-        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $xml);
+        try {
+            $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $xml);
+        } catch (\Exception $e) {
+            $dirs = [];
+        }
 
-        foreach ($old as $item) {
+        $filename = null;
+
+        foreach ($dirs as $item) {
             if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $xml . '/' . $item)) {
                 $filename = $xml . '/' . $item;
             }
@@ -143,9 +149,13 @@ class Location extends Model
     {
         foreach ($loc as $key2 => $value2) {
             $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
-            $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+            try {
+                $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+            } catch(\Exception $e) {
+                $dirs = [];
+            }
 
-            foreach ($old as $item) {
+            foreach ($dirs as $item) {
                 if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
                     $filename[$key2] = $test . '/' . $item;
                 }
