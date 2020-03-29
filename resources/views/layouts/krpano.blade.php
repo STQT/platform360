@@ -85,9 +85,9 @@
     @endif
     @if (isset($urlCanonical))
         @php
-            $serverName = $_SERVER['SERVER_NAME'];
-            if (strpos($serverName, 'p360') !== false) {
-                $urlCanonical = str_replace('p360', 'uzbekistan360', $serverName);
+            $serverName = request()->root();
+            if (strpos($serverName, getenv('SUBDOMAIN')) !== false) {
+                $urlCanonical = str_replace(getenv('SUBDOMAIN'), getenv('MAIN_DOMAIN'), $serverName);
             }
         @endphp
         <link rel="canonical" href="{{ $urlCanonical }}"/>
