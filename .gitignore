@@ -16,3 +16,4 @@ yarn-error.log
 /storage/debugbar/
 /db-data/*
 !/db-data/.gitkeep
+/logs/

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+
 class LocationsController extends Controller
 {
     /**
@@ -42,9 +43,9 @@ class LocationsController extends Controller
         $cities = Cities::pluck('name', 'id');
 
         if (!empty($keyword)) {
-            $locations = Location::where('is_sky', '!=' , 'on')
+            $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($query) use ($keyword, $category, $city) {
+                ->where(function ($query) use ($keyword, $category, $city) {
                     $query->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -54,22 +55,26 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $query->where('city_id', $city);
-                    if ($category)
+                    }
+                    if ($category) {
                         $query->where('category_id', $category);
                     }
+                }
                 )
                 ->latest()
                 ->paginate($perPage);
         } else {
-            $locations = Location::where(function($query) use ($category, $city, $perPage) {
-                $query->where('is_sky', '!=' , 'on')
+            $locations = Location::where(function ($query) use ($category, $city, $perPage) {
+                $query->where('is_sky', '!=', 'on')
                     ->whereNull('podlocparent_id');
-                if ($city)
+                if ($city) {
                     $query->where('city_id', $city);
-                if ($category)
+                }
+                if ($category) {
                     $query->where('category_id', $category);
+                }
             })->withoutGlobalScope('published')
                 ->latest()
                 ->paginate($perPage);
@@ -95,14 +100,15 @@ class LocationsController extends Controller
 
         $totalLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->count();
         $publishedLocations = Location::where('isDefault', '1')->count();
-        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->where('published', '!=', 1)->count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->where('published',
+            '!=', 1)->count();
         $categories = Category::pluck('name', 'id');
         $cities = Cities::pluck('name', 'id');
 
         if (!empty($keyword) && $category == '') {
-            $locations = Location::where('is_sky', '!=' , 'on')
+            $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city) {
+                ->where(function ($q) use ($keyword, $city) {
                     $q->where('isDefault', '1')->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -112,8 +118,9 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
@@ -121,9 +128,9 @@ class LocationsController extends Controller
             $locations = Location::
             where('category_id', $category)
                 ->where('isDefault', '1')
-                ->where('is_sky', '!=' , 'on')
+                ->where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city, $category) {
+                ->where(function ($q) use ($keyword, $city, $category) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -133,22 +140,26 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
-                    if ($category)
+                    }
+                    if ($category) {
                         $q->where('category_id', $category);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
         } else {
-            $locations = Location::where(function($q) use ($category, $city, $perPage) {
-                    $q->where('is_sky', '!=' , 'on')
+            $locations = Location::where(function ($q) use ($category, $city, $perPage) {
+                $q->where('is_sky', '!=', 'on')
                     ->where('isDefault', '1')
                     ->whereNull('podlocparent_id');
-                    if ($city)
-                        $q->where('city_id', $city);
-                    if ($category)
-                        $q->where('category_id', $category);
+                if ($city) {
+                    $q->where('city_id', $city);
+                }
+                if ($category) {
+                    $q->where('category_id', $category);
+                }
             })->latest()
                 ->withoutGlobalScope('published')
                 ->paginate($perPage);
@@ -191,14 +202,15 @@ class LocationsController extends Controller
 
         $totalLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->count();
         $publishedLocations = Location::where('isDefault', '1')->count();
-        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->where('published', '!=', 1)->count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isDefault', '1')->where('published',
+            '!=', 1)->count();
         $categories = Category::pluck('name', 'id');
         $cities = Cities::pluck('name', 'id');
 
         if (!empty($keyword) && $category == '') {
-            $locations = Location::where('is_sky', '!=' , 'on')
+            $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city) {
+                ->where(function ($q) use ($keyword, $city) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -208,17 +220,18 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
         } elseif ($category != '') {
             $locations = Location::
             where('category_id', $category)
-                ->where('is_sky', '!=' , 'on')
+                ->where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city, $category) {
+                ->where(function ($q) use ($keyword, $city, $category) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -228,24 +241,27 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
-                    if ($category)
+                    }
+                    if ($category) {
                         $q->where('category_id', $category);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->where('published', '!=', 1)
                 ->latest()->paginate($perPage);
-        }
-        else {
-            $locations = Location::where(function($q) use ($perPage, $city, $category) {
-                $q->where('is_sky', '!=' , 'on')
+        } else {
+            $locations = Location::where(function ($q) use ($perPage, $city, $category) {
+                $q->where('is_sky', '!=', 'on')
                     ->where('published', '!=', '1')
                     ->whereNull('podlocparent_id');
-                if ($city)
+                if ($city) {
                     $q->where('city_id', $city);
-                if ($category)
+                }
+                if ($category) {
                     $q->where('category_id', $category);
+                }
             })->latest()
                 ->withoutGlobalScope('published')
                 ->paginate($perPage);
@@ -272,14 +288,15 @@ class LocationsController extends Controller
 
         $totalLocations = Location::withoutGlobalScope('published')->where('isfeatured', 'on')->count();
         $publishedLocations = Location::where('published', '=', 1)->where('isfeatured', 'on')->count();
-        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isfeatured', 'on')->where('published', '!=', 1)->count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->where('isfeatured', 'on')->where('published',
+            '!=', 1)->count();
         $categories = Category::pluck('name', 'id');
         $cities = Cities::pluck('name', 'id');
 
         if (!empty($keyword) && $category == '') {
-            $locations = Location::where('is_sky', '!=' , 'on')
+            $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city) {
+                ->where(function ($q) use ($keyword, $city) {
                     $q->where('isfeatured', 'on')->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -289,8 +306,9 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
@@ -298,9 +316,9 @@ class LocationsController extends Controller
             $locations = Location::
             where('category_id', $category)
                 ->where('isfeatured', 'on')
-                ->where('is_sky', '!=' , 'on')
+                ->where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city, $category) {
+                ->where(function ($q) use ($keyword, $city, $category) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -310,23 +328,26 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
-                    if ($category)
+                    }
+                    if ($category) {
                         $q->where('category_id', $category);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
-        }
-        else {
-            $locations = Location::where(function($q) use ($city, $category, $perPage) {
-                $q->where('is_sky', '!=' , 'on')
+        } else {
+            $locations = Location::where(function ($q) use ($city, $category, $perPage) {
+                $q->where('is_sky', '!=', 'on')
                     ->where('isfeatured', 'on')
                     ->whereNull('podlocparent_id');
-                if ($city)
+                if ($city) {
                     $q->where('city_id', $city);
-                if ($category)
+                }
+                if ($category) {
                     $q->where('category_id', $category);
+                }
             })->latest()
                 ->withoutGlobalScope('published')
                 ->paginate($perPage);
@@ -353,14 +374,15 @@ class LocationsController extends Controller
 
         $totalLocations = Location::withoutGlobalScope('published')->whereNotNull('sky_id')->count();
         $publishedLocations = Location::whereNotNull('sky_id')->count();
-        $unpublishedLocations = Location::withoutGlobalScope('published')->whereNotNull('sky_id')->where('published', '!=', 1)->count();
+        $unpublishedLocations = Location::withoutGlobalScope('published')->whereNotNull('sky_id')->where('published',
+            '!=', 1)->count();
         $categories = Category::pluck('name', 'id');
         $cities = Cities::pluck('name', 'id');
 
         if (!empty($keyword) && $category == '') {
-            $locations = Location::where('is_sky', '!=' , 'on')
+            $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city) {
+                ->where(function ($q) use ($keyword, $city) {
                     $q->whereNotNull('sky_id')->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -370,8 +392,9 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
@@ -379,9 +402,9 @@ class LocationsController extends Controller
             $locations = Location::
             where('category_id', $category)
                 ->whereNotNull('sky_id')
-                ->where('is_sky', '!=' , 'on')
+                ->where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function($q) use ($keyword, $city, $category) {
+                ->where(function ($q) use ($keyword, $city, $category) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -391,26 +414,29 @@ class LocationsController extends Controller
                         ->orWhere('facebook', 'LIKE', "%$keyword%")
                         ->orWhere('instagram', 'LIKE', "%$keyword%")
                         ->orWhere('telegram', 'LIKE', "%$keyword%");
-                    if ($city)
+                    if ($city) {
                         $q->where('city_id', $city);
-                    if ($category)
+                    }
+                    if ($category) {
                         $q->where('category_id', $category);
+                    }
                 })
                 ->withoutGlobalScope('published')
                 ->latest()->paginate($perPage);
-        }
-        else {
-            $locations = Location::where(function($q) use ($perPage, $city, $category) {
-                $q->where('is_sky', '!=' , 'on')
+        } else {
+            $locations = Location::where(function ($q) use ($perPage, $city, $category) {
+                $q->where('is_sky', '!=', 'on')
                     ->whereNotNull('sky_id')
                     ->whereNull('podlocparent_id');
-                if ($city)
+                if ($city) {
                     $q->where('city_id', $city);
-                if ($category)
+                }
+                if ($category) {
                     $q->where('category_id', $category);
+                }
             })
-            ->latest()
-            ->withoutGlobalScope('published')->paginate($perPage);
+                ->latest()
+                ->withoutGlobalScope('published')->paginate($perPage);
         }
 
         return view('admin.locations.index', compact(
@@ -427,96 +453,114 @@ class LocationsController extends Controller
 
 
     //Конвертор мультиязычности:Локации
-    public function convert() {
+    public function convert()
+    {
         $locations = DB::table('locations')->get();
         foreach ($locations as $key => $location) {
-            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            $locations[$key]->name = str_replace('"', '\"', $locations[$key]->name);
             DB::table('locations')
                 ->where('id', $location->id)
-                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}', 'address' => '{"ru":"'.$locations[$key]->address.'"}','description' => '{"ru":"'.$locations[$key]->description.'"}','working_hours' => '{"ru":"'.$locations[$key]->working_hours.'"}']);
-        }}
+                ->update([
+                    'name' => '{"ru":"' . $locations[$key]->name . '"}',
+                    'address' => '{"ru":"' . $locations[$key]->address . '"}',
+                    'description' => '{"ru":"' . $locations[$key]->description . '"}',
+                    'working_hours' => '{"ru":"' . $locations[$key]->working_hours . '"}'
+                ]);
+        }
+    }
 
     //Конвертор мультиязычности:Городов
-    public function convertcity() {
+    public function convertcity()
+    {
         $locations = DB::table('cities')->get();
         foreach ($locations as $key => $location) {
-            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            $locations[$key]->name = str_replace('"', '\"', $locations[$key]->name);
             DB::table('cities')
                 ->where('id', $location->id)
-                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
-        }}
+                ->update(['name' => '{"ru":"' . $locations[$key]->name . '"}']);
+        }
+    }
 
     //Конвертор мультиязычности:Категории
-    public function convertcategories() {
+    public function convertcategories()
+    {
         $locations = DB::table('categories')->get();
         foreach ($locations as $key => $location) {
-            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            $locations[$key]->name = str_replace('"', '\"', $locations[$key]->name);
             DB::table('categories')
                 ->where('id', $location->id)
-                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
-        }}
+                ->update(['name' => '{"ru":"' . $locations[$key]->name . '"}']);
+        }
+    }
 
     //Конвертор мультиязычности:Этажи
-    public function convertfloors() {
+    public function convertfloors()
+    {
         $locations = DB::table('floors')->get();
         foreach ($locations as $key => $location) {
-            $locations[$key]->name = str_replace('"','\"', $locations[$key]->name);
+            $locations[$key]->name = str_replace('"', '\"', $locations[$key]->name);
             DB::table('floors')
                 ->where('id', $location->id)
-                ->update(['name' => '{"ru":"'.$locations[$key]->name.'"}']);
-        }}
+                ->update(['name' => '{"ru":"' . $locations[$key]->name . '"}']);
+        }
+    }
 
     //Функия для путей
-    public function getDirectory($id) {
+    public function getDirectory($id)
+    {
         $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $id);
-        foreach ($old as $item){
-            if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$id.'/' . $item)){
+        foreach ($old as $item) {
+            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $id . '/' . $item)) {
                 $filename = $id . '/' . $item;
-            }}
+            }
+        }
         return $filename;
     }
 
     //Поиск
-    public function search(Request $search, $categories) {
+    public function search(Request $search, $categories)
+    {
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
         } else {
-            $defaultlocation = "1"; Cookie::queue(Cookie::forever('city', '1'));
+            $defaultlocation = "1";
+            Cookie::queue(Cookie::forever('city', '1'));
         }
         $search = request()->route('search');
         if (request()->route('search') == "noresult") {
             $categories = array_map('intval', explode(',', request()->route('categories')));
-            $results = Location::where('city_id','=', $defaultlocation)
+            $results = Location::where('city_id', '=', $defaultlocation)
                 ->whereIN('category_id', $categories)
-                ->where(function($query) {
+                ->where(function ($query) {
                     $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                 })
                 ->orderBy('order', 'asc')
                 ->get();
 
         } else {
-            if (request()->route('categories') == 0)  {
+            if (request()->route('categories') == 0) {
                 $results = Location::with('tags')
-                    ->where(function($query) use ($search) {
-                         $query->where('name', 'LIKE', '%' . $search . '%');
-                         $query->orWhereHas('tags', function($q) use ($search) {
-                             $q->where('name', 'LIKE', '%' . $search . '%');
-                         });
+                    ->where(function ($query) use ($search) {
+                        $query->where('name', 'LIKE', '%' . $search . '%');
+                        $query->orWhereHas('tags', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', '%' . $search . '%');
+                        });
                     })
-                    ->where('city_id','=', $defaultlocation)
-                    ->where(function($query) {
+                    ->where('city_id', '=', $defaultlocation)
+                    ->where(function ($query) {
                         $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                     })->get();
             } else {
                 $categories = array_map('intval', explode(',', request()->route('categories')));
                 $results = Location::where('city_id', '=', $defaultlocation)
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                     })
                     ->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
-            }}
+            }
+        }
         if ($results->count()) {
-            foreach($results as $key2=>$value2){
+            foreach ($results as $key2 => $value2) {
                 $caticon = Category::where('id', $results[$key2]->category_id)->firstOrFail();
                 $results[$key2]->cat_icon = $caticon->cat_icon;
                 $results[$key2]->color = $caticon->color;
@@ -553,20 +597,20 @@ class LocationsController extends Controller
         ]);
         $data = $request->all();
         $requestData = $request->all();
-        $requestData['slug'] = Location::transliterate( $requestData['name']) . str_random(3);
-        if(!empty($data['isDefault'])) {
+        $requestData['slug'] = Location::transliterate($requestData['name']) . str_random(3);
+        if (!empty($data['isDefault'])) {
             $requestData['isDefault'] = 1;
         }
 
-        if(empty($data['published'])) {
+        if (empty($data['published'])) {
             $requestData['published'] = 0;
         }
 
-        if(empty($data['show_sublocation'])) {
+        if (empty($data['show_sublocation'])) {
             $requestData['show_sublocation'] = 0;
         }
 
-        if(!empty($data['panorama'])) {
+        if (!empty($data['panorama'])) {
             $randomStr = Str::random(40);
             $file = $data['panorama']->store('panoramas');
             $fullPath = public_path() . '/storage/' . $file;
@@ -575,17 +619,21 @@ class LocationsController extends Controller
             $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
             $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere ' . $fullPath);
             mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
-            copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
+            copy(public_path() . '/storage/panoramas/vtour/tour.xml',
+                public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
             rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
             self::delTree(public_path() . '/storage/panoramas/vtour');
             $xmllocation = Location::xmlName($randomStr);
-            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
+            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
             $d = "";
-            foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
-            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
+            foreach ($xmldata->scene->children() as $child) {
+                $d .= $child->asXML();
+            }
+            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/',
+                '/storage/panoramas/unpacked/' . $xmllocation . '', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
-        if(!empty($data['audio'])) {
+        if (!empty($data['audio'])) {
             $randomStr = Str::random(40);
             $extension = $data['audio']->getClientOriginalExtension();
             $fullName = $randomStr . '.' . $extension;
@@ -593,7 +641,7 @@ class LocationsController extends Controller
 
             $requestData['audio'] = $fullName;
         }
-        if(!empty($panoramas)) {
+        if (!empty($panoramas)) {
             $requestData['panorama'] = json_encode($panoramas);
             $location = Location::create($requestData);
             $meta = \App\Meta::create($requestData['meta']);
@@ -606,14 +654,14 @@ class LocationsController extends Controller
             }
 
             return redirect('admin/locations')->with('flash_message', 'Location added!');
-        }
-        else {
+        } else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');
         }
     }
 
-    public static function delTree($dir) {
-        $files = array_diff(scandir($dir), array('.','..'));
+    public static function delTree($dir)
+    {
+        $files = array_diff(scandir($dir), array('.', '..'));
         foreach ($files as $file) {
             (is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
         }
@@ -627,7 +675,8 @@ class LocationsController extends Controller
         $locations = Location::withoutGlobalScope('published')->get()->all();
 
         $categories = Category::all();
-        return view('pages.admin.edit', ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
+        return view('pages.admin.edit',
+            ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
     }
 
     //API Локация
@@ -649,16 +698,16 @@ class LocationsController extends Controller
 
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
-        $etajlocations="";
+        $etajlocations = "";
         if ($etaji->isNotEmpty()) {
             $code = "";
             foreach ($etaji as $ss => $etaj) {
                 $code .= $etaji[$ss]->code;
             }
-            preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
+            preg_match_all('/location : "([0-9]+)"/', $code, $matches);
             $etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
             $folderNames = Location::folderNames($etajlocations);
-            foreach ($etajlocations as $key2=>$value2) {
+            foreach ($etajlocations as $key2 => $value2) {
                 $etajlocations[$key2]->img = $folderNames[$key2];
             }
         }
@@ -667,8 +716,14 @@ class LocationsController extends Controller
             if (!empty($location->sky_id)) {
                 $location->skyslug = Sky::where('id', $location->sky_id)->pluck('slug')->first();
             } else {
-                $location->skyslug = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->pluck('slug')->first();
-                $location->sky_id = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->pluck('id')->first();
+                $location->skyslug = Sky::where([
+                    ['skymainforcity', 'on'],
+                    ['city_id', $defaultlocation]
+                ])->pluck('slug')->first();
+                $location->sky_id = Sky::where([
+                    ['skymainforcity', 'on'],
+                    ['city_id', $defaultlocation]
+                ])->pluck('id')->first();
             }
         } else {
             $location->skyslug = "no";
@@ -699,8 +754,8 @@ class LocationsController extends Controller
         }
 
         return view('admin.locations.edit', compact(
-    'location',
-          'sky',
+            'location',
+            'sky',
             'categories',
             'cities',
             'language',
@@ -728,18 +783,18 @@ class LocationsController extends Controller
         } else {
             $requestData['isDefault'] = 0;
         }
-        if(empty($data['onmap'])) {
+        if (empty($data['onmap'])) {
             $requestData['onmap'] = 0;
         }
-        if(empty($data['isfeatured'])) {
+        if (empty($data['isfeatured'])) {
             $requestData['isfeatured'] = 0;
         }
 
-        if(empty($data['published'])) {
+        if (empty($data['published'])) {
             $requestData['published'] = 0;
         }
 
-        if(!empty($data['panorama'])) {
+        if (!empty($data['panorama'])) {
             $randomStr = Str::random(40);
             $file = $data['panorama']->store('panoramas');
             $fullPath = public_path() . '/storage/' . $file;
@@ -748,18 +803,22 @@ class LocationsController extends Controller
             $panoDir = public_path() . '/storage/panoramas/vtour/panos/' . $baseName . '.tiles';
             $command = exec('"/opt/krpano/krpanotools" makepano -config=templates/vtour-multires.config -panotype=sphere ' . $fullPath);
             mkdir(public_path() . '/storage/panoramas/unpacked/' . $randomStr);
-            copy(public_path() . '/storage/panoramas/vtour/tour.xml', public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
+            copy(public_path() . '/storage/panoramas/vtour/tour.xml',
+                public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
             rename($panoDir, public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/' . $baseName . '.tiles');
             self::delTree(public_path() . '/storage/panoramas/vtour');
             $xmllocation = Location::xmlName($randomStr);
-            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/'.$randomStr.'/tour.xml');
+            $xmldata = simplexml_load_file(public_path() . '/storage/panoramas/unpacked/' . $randomStr . '/tour.xml');
             $d = "";
-            foreach ($xmldata->scene->children() as $child){ $d .= $child->asXML();}
-            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/', '/storage/panoramas/unpacked/'.$xmllocation.'', $d);;
+            foreach ($xmldata->scene->children() as $child) {
+                $d .= $child->asXML();
+            }
+            $requestData['xmllocation'] = preg_replace('/panos[\s\S]+?tiles/',
+                '/storage/panoramas/unpacked/' . $xmllocation . '', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
             $requestData['panorama'] = json_encode($panoramas);
         }
-        if(!empty($data['audio'])) {
+        if (!empty($data['audio'])) {
             $randomStr = Str::random(40);
             $extension = $data['audio']->getClientOriginalExtension();
             $fullName = $randomStr . '.' . $extension;
@@ -767,7 +826,7 @@ class LocationsController extends Controller
 
             $requestData['audio'] = $fullName;
         }
-        if(!empty($requestData['name'])) {
+        if (!empty($requestData['name'])) {
             app()->setLocale($language);
             $location = Location::withoutGlobalScope('published')->findOrFail($id);
             if (!$location->meta) {
@@ -802,7 +861,7 @@ class LocationsController extends Controller
         Hotspot::where('location_id', $id)->delete();
         Hotspot::where('destination_id', $id)->delete();
         Location::where('sky_id', $id)->withoutGlobalScope('published')->update(array('sky_id' => ''));
-        
+
         return redirect('admin/locations')->with('flash_message', 'Location deleted!');
     }
 
@@ -826,48 +885,62 @@ class LocationsController extends Controller
 
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
-        $etajlocations="";
+        $etajlocations = "";
         if ($etaji->isNotEmpty()) {
             $code = "";
             foreach ($etaji as $ss => $etaj) {
-                $code .= $etaji[$ss]->code;}
-            preg_match_all ('/location : "([0-9]+)"/', $code, $matches);
+                $code .= $etaji[$ss]->code;
+            }
+            preg_match_all('/location : "([0-9]+)"/', $code, $matches);
             $etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
-            $sss =Location::folderNames($etajlocations);
-            foreach($etajlocations as $key2=>$value2){
-                $etajlocations[$key2]->img = $sss[$key2];}}
+            $sss = Location::folderNames($etajlocations);
+            foreach ($etajlocations as $key2 => $value2) {
+                $etajlocations[$key2]->img = $sss[$key2];
+            }
+        }
 
         //Загрузка неба
-        if(empty($location->is_sky)) {
-            if(!empty($location->sky_id)) {
+        if (empty($location->is_sky)) {
+            if (!empty($location->sky_id)) {
                 $sky = Sky::where('id', $location->sky_id)->firstOrFail();
             } else {
-                $sky = Sky::where([['skymainforcity', 'on'],['city_id', $defaultlocation]])->firstOrFail();
-            }}else { $sky = "no";};
+                $sky = Sky::where([['skymainforcity', 'on'], ['city_id', $defaultlocation]])->firstOrFail();
+            }
+        } else {
+            $sky = "no";
+        };
 
         //Координаты локаций
-        $locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->get();
+        $locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap',
+            'on')->with('categorylocation')->get();
         if ($locationscordinate->isNotEmpty()) {
-            $sss =Location::folderNames($locationscordinate);
-            foreach ($locationscordinate as $key2=>$value2){
-                $locationscordinate[$key2]->img = $sss[$key2];}
-                $locationscordinate = Location::transl($locationscordinate);
+            $sss = Location::folderNames($locationscordinate);
+            foreach ($locationscordinate as $key2 => $value2) {
+                $locationscordinate[$key2]->img = $sss[$key2];
+            }
+            $locationscordinate = Location::transl($locationscordinate);
         }
 
         //Загрузка избранных точек для карты
-        $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
+        $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id',
+            $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
         if ($isfeatured->isNotEmpty()) {
-            $sss =Location::folderNames($isfeatured);
-            foreach($isfeatured as $key2=>$value2){
-                $isfeatured[$key2]->img = $sss[$key2];}}
+            $sss = Location::folderNames($isfeatured);
+            foreach ($isfeatured as $key2 => $value2) {
+                $isfeatured[$key2]->img = $sss[$key2];
+            }
+        }
 
 
         //Загрузка новых точек для карты
-        $isnew = Location::where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap', 'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
+        $isnew = Location::where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap',
+            'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
         if ($isnew->isNotEmpty()) {
-            $sss =Location::folderNames($isnew);
-            foreach($isnew as $key2=>$value2){
-                $isnew[$key2]->img = $sss[$key2];}}
+            $sss = Location::folderNames($isnew);
+            foreach ($isnew as $key2 => $value2) {
+                $isnew[$key2]->img = $sss[$key2];
+            }
+        }
 
         //Загрузка хотспотов основной точки
         $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
@@ -875,51 +948,60 @@ class LocationsController extends Controller
 
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
-        foreach($krhotspots as $key=>$value){
-            foreach($krhotspotinfo as $key2=>$value2){
+        foreach ($krhotspots as $key => $value) {
+            foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
                     $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    foreach ($old as $item){
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)){
+                    foreach ($old as $item) {
+                        if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
                             $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;}}
+                            $krhotspots[$key]->img = $filename;
+                        }
+                    }
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
                     $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->categorylocation->cat_icon;
                     $krhotspots[$key]->cat_icon_svg = $krhotspotinfo[$key2]->categorylocation->cat_icon_svg;
-                    $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;}}}
+                    $krhotspots[$key]->color = $krhotspotinfo[$key2]->categorylocation->color;
+                }
+            }
+        }
 
         //Другие локации
-        $otherlocations = Location::where('city_id', $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
-        $sss =Location::folderNames($otherlocations);
-        foreach($otherlocations as $key2=>$value2){
-            $otherlocations[$key2]->img = $sss[$key2];}
+        $otherlocations = Location::where('city_id',
+            $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
+        $sss = Location::folderNames($otherlocations);
+        foreach ($otherlocations as $key2 => $value2) {
+            $otherlocations[$key2]->img = $sss[$key2];
+        }
 
         //Загрузка всех категорий
-        $categories = Category::whereHas('locations', function($q) use($defaultlocation) {
+        $categories = Category::whereHas('locations', function ($q) use ($defaultlocation) {
             $q->where('city_id', $defaultlocation);
             $q->where('published', 1);
             $q->whereNull('podlocparent_id');
         })->orderBy('id', 'ASC')->get();
 
-        if($location->count()) {
+        $openedCategory = null;
+
+        if ($location->count()) {
             return view('pages.index', [
                 'location' => $location,
                 'categories' => $categories,
                 'krhotspots' => $krhotspots,
                 'otherlocations' => $otherlocations,
                 'cities' => $cities,
-                'defaultlocation'=>$defaultlocation,
+                'defaultlocation' => $defaultlocation,
                 'isfeatured' => $isfeatured,
-                'curlocation'=> $curlocation,
-                'locationscordinate'=> $locationscordinate,
-                'sky'=> $sky,
-                'isnew'=> $isnew,
+                'curlocation' => $curlocation,
+                'locationscordinate' => $locationscordinate,
+                'sky' => $sky,
+                'isnew' => $isnew,
                 'etaji' => $etaji,
-                'etajlocations'=>$etajlocations
+                'etajlocations' => $etajlocations,
+                'openedCategory' => $openedCategory,
             ]);
-
         } else {
             return response()->json([]);
         }
@@ -945,7 +1027,8 @@ class LocationsController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->paginate(999);
         } else {
-            $locations = $category->locations()->withoutGlobalScope('published')->orderBy('created_at', 'DESC')->paginate(999);
+            $locations = $category->locations()->withoutGlobalScope('published')->orderBy('created_at',
+                'DESC')->paginate(999);
         }
 
         $locations = Location::transl($locations);
@@ -1015,8 +1098,7 @@ class LocationsController extends Controller
             'video' => 'required|file|max:150000'
         ]);
 
-        if ($validation->passes())
-        {
+        if ($validation->passes()) {
             $video = $request->file('video');
             $newName = rand() . '.' . $video->getClientOriginalExtension();
             $video->move(public_path('storage/videos'), $newName);
@@ -1036,8 +1118,7 @@ class LocationsController extends Controller
                 'uploaded_video' => 'storage/videos/' . $newName,
                 'class_name' => 'alert-success',
             ]);
-        } else
-        {
+        } else {
             return response()->json([
                 'message' => $validation->errors()->all(),
                 'uploaded_video' => '',
@@ -1059,13 +1140,13 @@ class LocationsController extends Controller
 
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
-        foreach($krhotspots as $key=>$value){
-            foreach($krhotspotinfo as $key2=>$value2){
+        foreach ($krhotspots as $key => $value) {
+            foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
                     $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    foreach ($old as $item){
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/'.$test.'/' . $item)) {
+                    foreach ($old as $item) {
+                        if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
                             $filename = $test . '/' . $item;
                             $krhotspots[$key]->img = $filename;
                         }
@@ -1083,6 +1164,6 @@ class LocationsController extends Controller
             }
         }
 
-        return  $krhotspots;
+        return $krhotspots;
     }
 }

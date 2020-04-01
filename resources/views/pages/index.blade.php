@@ -176,7 +176,7 @@
                     </ul>
                 </div>--}}
                 <div id="pano" style="width:100%;height:100%;"></div>
-                <button type="button" id="playaudio"><img src="/assets/play-icon_muted.png" style="width: 32px;"></button>
+                <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span></div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span></div>
@@ -1000,10 +1000,10 @@
             @foreach ($location->videos as $vKey => $video)
                if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
                    krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
-                   $('#playaudio').find('img').attr('src', '/assets/play-icon.png');
+                   $('#playaudio').find('img').attr('src', '/assets/icons/sound-on.svg');
                } else {
                    krpano.set('hotspot[video{{ $vKey }}].volume', '0');
-                   $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
+                   $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
                }
             @endforeach
         });
@@ -1441,14 +1441,14 @@
                 if (data.audio) {
                     $('#audio')[0].setSrc('/storage/audio/' + data.audio);
                     $('#playaudio').show();
-                    $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
+                    $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
                 } else {
                     if (data.podlocparent_id) {
                         $.get('/{{app()->getLocale()}}/api/location/' + data.podlocparent_id)
                           .done(function(parentLocData) {
                               if (parentLocData.audio) {
                                   $('#playaudio').show();
-                                  $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
+                                  $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
                               }
                           });
                     } else {
@@ -1462,10 +1462,10 @@
                         $.each(data.videos, function(key) {
                            if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                krpano.set('hotspot[video' + key + '].volume', '1.0');
-                               $('#playaudio').find('img').attr('src', '/assets/play-icon.png');
+                               $('#playaudio').find('img').attr('src', '/assets/icons/sound-on.svg');
                            } else {
                                krpano.set('hotspot[video' + key + '].volume', '0');
-                               $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
+                               $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
                            }
                         });
                     });

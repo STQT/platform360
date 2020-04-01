@@ -16,16 +16,14 @@ $(document).ready(function() {
 
     var audioPlayer = $('#audio')[0];
     $('#playaudio').on('click', function() {
-        $(".mejs__controls").find(".mejs__button")[0].click();
+        if (audioPlayer.src.search('.mp3') !== -1) {
+            $(".mejs__controls").find(".mejs__button")[0].click();
             if (audioPlayer.getPaused() === true) {
-                $('#playaudio').find('img').attr('src', '/assets/play-icon_muted.png');
+                $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
             } else {
-                $('#playaudio').find('img').attr('src', '/assets/play-icon.png');
+                $('#playaudio').find('img').attr('src', '/assets/icons/sound-on.svg');
             }
-        // audioPlayer.play();
-        // audioPlayer.setVolume(1);
-        // audioPlayer.setMuted(false);
-        // $('#playaudio').off('click');
+        }
     });
 
     // $('audio').bind('playing', function() {
