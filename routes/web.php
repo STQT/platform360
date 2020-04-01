@@ -27,6 +27,7 @@ Route::get('/clear', function() {
 Route::get('/scene/{id}', 'HomeController@loadScene');
 Route::get('/city/{id}', 'HomeController@changeCity');
 Route::get('/location/{slug}', 'Admin\\LocationsController@generatePano');
+Route::get('/category/{category}', 'HomeController@getIndex')->name('category');
 Route::get('/search/{search}/{categories}', 'Admin\\LocationsController@search');
 Route::post('/form/{id}', 'HomeController@formProcessing');
 Route::get('/hasFloors/{id}', 'Admin\\LocationsController@hasFloors');

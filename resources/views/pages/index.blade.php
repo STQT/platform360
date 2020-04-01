@@ -309,7 +309,7 @@
                     </div>
                 </div>
                 <div class="hotspotPreview-wrapper" style="display: none"><div id="uzb360preview" class="hotspotPreview right" style="left: 1001.06px; top: 240.132px;"><div class="hotspotPreview__innerWrapper"><div class="hotspotPreview__img"><img src="" class="hotspotPreview__img--scene uzbhotspotimg"></div><div class="hotspotPreview__icon-category"><img src="" class="icon-wrapper__icon--category category-normal uzbhotspoticon" style="background-color: rgb(237, 68, 104);"></div><div class="hotspotPreview__text"></div></div></div></div>
-                <div class="wrapper-panel  top left search hidden expand">
+                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand">
                     <img class="wrapper-panel-close" src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="searchPanel">
                         <div class="searchPanel__input" id="search_adress" >
@@ -331,9 +331,9 @@
                                          @endif
 
                                         <div class="icon-wrapper fade--in">
-                                            <div class="js-icon icon-wrapper__icon" data-category="{{ $category->id }}">
-                                                <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;"><img src="/storage/cat_icons/{{$category->cat_icon_svg}}"></div>
-                                                <span class="icon-wrapper__text">{{ $category->name }}</span>
+                                            <div class="js-icon {{ (isset($openedCategory) && $openedCategory->id == $category->id) ? 'icon-wrapper--selected' : 'icon-wrapper__icon' }}" data-category="{{ $category->id }}">
+                                                    <div class="icon-wrapper__icon--category category-normal" style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;"><img src="/storage/cat_icons/{{$category->cat_icon_svg}}"></div>
+                                                    <span class="icon-wrapper__text">{{ $category->name }}</span>
                                             </div>
                                         </div>
                                         @if($loop->last == true or $loop->iteration % 8 == 0)

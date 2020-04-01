@@ -64,7 +64,6 @@ Route::delete('admin/floors/delete/{id}', 'Admin\\FloorsController@destroy');
 Route::get('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochki');
 Route::post('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochkiupdate');
 
-
 Route::get('/admin/krpano/{id}', 'Admin\\LocationsController@krpano');
 Route::get('admin', 'Admin\AdminController@index');
 Route::resource('admin/roles', 'Admin\RolesController');
@@ -77,11 +76,6 @@ Route::resource('admin/activitylogs', 'Admin\ActivityLogsController')->only([
 Route::resource('admin/settings', 'Admin\SettingsController');
 Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
 Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
-
-
-
-
-
 });
 
 ?>

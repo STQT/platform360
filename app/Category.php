@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
+
 class Category extends Model
 {
     use LogsActivity;
-  use HasTranslations;
+    use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -18,10 +19,10 @@ class Category extends Model
     protected $table = 'categories';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -29,8 +30,8 @@ class Category extends Model
      *
      * @var array
      */
-    protected $translatable = ['name'];
-    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color'];
+    protected $translatable = ['name', 'slug'];
+    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug'];
 
     public function locations()
     {
@@ -45,12 +46,18 @@ class Category extends Model
      *
      * @return string
      */
-     protected function asJson($value)
-      {
-          return json_encode($value, JSON_UNESCAPED_UNICODE);
-      }
+    protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
+
     public function getDescriptionForEvent($eventName)
     {
         return __CLASS__ . " model has been {$eventName}";
     }
+//    public function createUrl()
+//    {
+//        $baseName = request()->getSchemeAndHttpHost();
+//        return $baseName . '/' . \Lang::locale() . '/category/' . $this->slug;
+//    }
 }

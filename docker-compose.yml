@@ -10,8 +10,7 @@ services:
         volumes:
             - ./logs/access.log:/opt/bitnami/nginx/logs/myapp-access.log
             - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
-            - ./nginx/app.conf:/opt/bitnami/nginx/conf/server_blocks/app.conf
-            - ./:/myapps
+            - ./docker/nginx/app.conf:/opt/bitnami/nginx/conf/server_blocks/app.conf
 #            - /media/skey/Elements/panoramas:/myapps/storage/app/public/panoramas
     phpfpm:
         image: 'bitnami/php-fpm'
@@ -19,6 +18,7 @@ services:
             - '9000:9000'
         volumes:
             - ./:/myapps
+#            - ./docker/php/php.ini:/opt/bitnami/php/etc/php.ini
     db:
         image: 'mariadb'
         ports:
