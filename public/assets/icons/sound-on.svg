@@ -1,76 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   x="0px"
-   y="0px"
-   viewBox="0 0 380 299.99999"
-   xml:space="preserve"
-   id="svg12"
-   sodipodi:docname="sound-on.svg"
-   width="380"
-   height="300"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"><metadata
-   id="metadata18"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
-   id="defs16" /><sodipodi:namedview
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1"
-   objecttolerance="10"
-   gridtolerance="10"
-   guidetolerance="10"
-   inkscape:pageopacity="0"
-   inkscape:pageshadow="2"
-   inkscape:window-width="1920"
-   inkscape:window-height="1013"
-   id="namedview14"
-   showgrid="false"
-   inkscape:zoom="1.0078848"
-   inkscape:cx="125.41352"
-   inkscape:cy="96.92992"
-   inkscape:window-x="0"
-   inkscape:window-y="0"
-   inkscape:window-maximized="1"
-   inkscape:current-layer="svg12" />
-<style
-   type="text/css"
-   id="style2">
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 385.5 283.5" style="enable-background:new 0 0 385.5 283.5;" xml:space="preserve">
+<style type="text/css">
 	.st0{fill:#027AFF;}
 </style>
-<g
-   id="Слой_2"
-   transform="matrix(1.4604216,0,0,1.6220159,-409.97761,-283.3612)">
-	<path
-   class="st0"
-   d="m 398.72,181.45 -48.12,47.74 h -40.48 c -13.37,0 -14.13,11.46 -14.13,11.46 0,0 -1.53,36.66 0,50.03 1.53,13.37 14.13,14.13 14.13,14.13 h 44.68 c 0,0 29.03,31.7 40.48,45.07 11.46,13.37 19.48,0 19.48,0 0,-56.14 0,-168.42 0,-168.42 0,0 -8.31,-6.42 -16.04,-0.01 z"
-   id="path4"
-   inkscape:connector-curvature="0"
-   style="fill:#027aff" />
-	<path
-   class="st0"
-   d="m 510.76,196.46 c -3.02,-3.01 -7.86,-3.01 -10.85,0 -2.97,3 -2.97,7.85 0,10.85 16.55,16.54 24.8,38.11 24.83,59.76 -0.03,21.77 -8.24,43.44 -24.83,60.08 -2.98,3 -2.97,7.82 0,10.84 1.51,1.46 3.47,2.22 5.43,2.22 1.95,0 3.92,-0.76 5.42,-2.22 19.55,-19.61 29.29,-45.3 29.29,-70.91 0,-25.53 -9.81,-51.12 -29.29,-70.62 z"
-   id="path6"
-   inkscape:connector-curvature="0"
-   style="fill:#027aff" />
-	<path
-   class="st0"
-   d="m 469.4,215.73 c -2.75,-2.19 -7.14,-2.19 -9.85,0 -2.7,2.19 -2.7,5.71 0,7.9 15.03,12.04 22.52,27.73 22.54,43.49 -0.03,15.84 -7.48,31.61 -22.54,43.71 -2.71,2.18 -2.7,5.69 0,7.89 1.37,1.06 3.15,1.62 4.93,1.62 1.77,0 3.56,-0.55 4.92,-1.62 17.75,-14.27 26.59,-32.96 26.59,-51.6 0,-18.58 -8.91,-37.2 -26.59,-51.39 z"
-   id="path8"
-   inkscape:connector-curvature="0"
-   style="fill:#027aff" />
-</g>
-<g
-   id="Слой_3"
-   transform="translate(0,-295.28003)">
+<g>
+	<path class="st0" d="M162.9,7.3L87.1,82.5H23.3C2.2,82.5,1,100.6,1,100.6s-2.4,57.8,0,78.8s22.3,22.3,22.3,22.3h70.4
+		c0,0,45.7,49.9,63.8,71c18.1,21.1,30.7,0,30.7,0c0-88.4,0-265.3,0-265.3S175.1-2.8,162.9,7.3z"/>
+	<path class="st0" d="M339.4,31c-4.8-4.7-12.4-4.7-17.1,0c-4.7,4.7-4.7,12.4,0,17.1c26.1,26.1,39.1,60,39.1,94.1
+		c0,34.3-13,68.4-39.1,94.7c-4.7,4.7-4.7,12.3,0,17.1c2.4,2.3,5.5,3.5,8.6,3.5c3.1,0,6.2-1.2,8.5-3.5
+		c30.8-30.9,46.1-71.4,46.1-111.7C385.5,102,370.1,61.7,339.4,31z"/>
+	<path class="st0" d="M274.2,61.3c-4.3-3.5-11.2-3.5-15.5,0c-4.3,3.5-4.3,9,0,12.4c23.7,19,35.5,43.7,35.5,68.5
+		c0,25-11.8,49.8-35.5,68.9c-4.3,3.4-4.3,9,0,12.4c2.2,1.7,5,2.6,7.8,2.6c2.8,0,5.6-0.9,7.8-2.6c28-22.5,41.9-51.9,41.9-81.3
+		C316.1,113,302.1,83.7,274.2,61.3z"/>
 </g>
 </svg>

@@ -1,68 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   id="Слой_1"
-   x="0px"
-   y="0px"
-   viewBox="0 0 276 287.99999"
-   xml:space="preserve"
-   sodipodi:docname="sound-off.svg"
-   width="276"
-   height="288"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"><metadata
-   id="metadata15"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
-   id="defs13" /><sodipodi:namedview
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1"
-   objecttolerance="10"
-   gridtolerance="10"
-   guidetolerance="10"
-   inkscape:pageopacity="0"
-   inkscape:pageshadow="2"
-   inkscape:window-width="1920"
-   inkscape:window-height="1013"
-   id="namedview11"
-   showgrid="false"
-   inkscape:zoom="1.4253643"
-   inkscape:cx="143.21823"
-   inkscape:cy="146.7925"
-   inkscape:window-x="0"
-   inkscape:window-y="0"
-   inkscape:window-maximized="1"
-   inkscape:current-layer="Слой_1" />
-<style
-   type="text/css"
-   id="style2">
-	.st0{fill:#027AFF;}
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 385.5 283.5" style="enable-background:new 0 0 385.5 283.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;fill:#027AFF;}
+	.st2{fill:#027AFF;}
 </style>
-<path
-   class="st0"
-   d="m 19.105084,16.815962 c 10.99,11.039999 240.860006,241.689998 252.460006,253.419998 11.6,11.73 -0.66,25.32 -12.16,13.76 -11.5,-11.56 -246.030006,-247.429999 -255.6600055,-257.259999 -9.63,-9.829999 4.36,-20.9599994 15.3599995,-9.919999 z"
-   id="path4"
-   inkscape:connector-curvature="0"
-   style="fill:#027aff" />
-<path
-   class="st0"
-   d="m 116.85509,197.82596 66.72,74.02 c 10.12,8.5 19.15,7.54 27.02,-3.57 v -8.71 L 37.165084,81.265961 c 0,0 -11.03,4.65 -11.76,13.49 -0.73,8.839999 -1.56,82.419999 -1.56,82.419999 0,0 4.77,20.25 21.62,20.45 16.84,0.2 71.390006,0.2 71.390006,0.2 z"
-   id="path6"
-   inkscape:connector-curvature="0"
-   style="fill:#027aff" />
-<path
-   class="st0"
-   d="m 111.10509,79.545961 75.23,-74.6399994 c 8.53,-6.0400003 16.88,-5.72000027 25.08,0 V 183.91596 l -107.2,-104.379999 z"
-   id="path8"
-   inkscape:connector-curvature="0"
-   style="fill:#027aff" />
+<g class="st0">
+	<path class="st1" d="M162.9,7.3L87.1,82.5H23.3C2.2,82.5,1,100.6,1,100.6s-2.4,57.8,0,78.8s22.3,22.3,22.3,22.3h70.4
+		c0,0,45.7,49.9,63.8,71c18.1,21.1,30.7,0,30.7,0c0-88.4,0-265.3,0-265.3S175.1-2.8,162.9,7.3z"/>
+	<path class="st1" d="M339.4,31c-4.8-4.7-12.4-4.7-17.1,0c-4.7,4.7-4.7,12.4,0,17.1c26.1,26.1,39.1,60,39.1,94.1
+		c0,34.3-13,68.4-39.1,94.7c-4.7,4.7-4.7,12.3,0,17.1c2.4,2.3,5.5,3.5,8.6,3.5c3.1,0,6.2-1.2,8.5-3.5
+		c30.8-30.9,46.1-71.4,46.1-111.7C385.5,102,370.1,61.7,339.4,31z"/>
+	<path class="st1" d="M274.2,61.3c-4.3-3.5-11.2-3.5-15.5,0c-4.3,3.5-4.3,9,0,12.4c23.7,19,35.5,43.7,35.5,68.5
+		c0,25-11.8,49.8-35.5,68.9c-4.3,3.4-4.3,9,0,12.4c2.2,1.7,5,2.6,7.8,2.6c2.8,0,5.6-0.9,7.8-2.6c28-22.5,41.9-51.9,41.9-81.3
+		C316.1,113,302.1,83.7,274.2,61.3z"/>
+</g>
+<path class="st2" d="M71.7,17.1c10.7,10.6,233.6,232.2,244.9,243.4c11.3,11.3-0.6,24.3-11.8,13.2C293.7,262.6,66.2,36.1,56.9,26.6
+	S61.1,6.5,71.7,17.1z"/>
+<path class="st2" d="M170.1,198.3l66.7,74c10.1,8.5,19.1,7.5,27-3.6V260L90.4,81.7c0,0-11,4.6-11.8,13.5c-0.7,8.8-1.6,82.4-1.6,82.4
+	s4.8,20.3,21.6,20.5C115.5,198.3,170.1,198.3,170.1,198.3z"/>
+<path class="st2" d="M164.3,80l75.2-74.6c8.5-6,16.9-5.7,25.1,0v179L157.4,80L164.3,80z"/>
+<g id="Слой_3">
+</g>
 </svg>
