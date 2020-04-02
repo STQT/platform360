@@ -1,21 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 841.89 595.28" style="enable-background:new 0 0 841.89 595.28;" xml:space="preserve">
-<style type="text/css">
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 380 299.99999"
+   xml:space="preserve"
+   id="svg12"
+   sodipodi:docname="sound-on.svg"
+   width="380"
+   height="300"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"><metadata
+   id="metadata18"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs16" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1013"
+   id="namedview14"
+   showgrid="false"
+   inkscape:zoom="1.0078848"
+   inkscape:cx="125.41352"
+   inkscape:cy="96.92992"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg12" />
+<style
+   type="text/css"
+   id="style2">
 	.st0{fill:#027AFF;}
 </style>
-<g id="Слой_2">
-	<path class="st0" d="M398.72,181.45l-48.12,47.74h-40.48c-13.37,0-14.13,11.46-14.13,11.46s-1.53,36.66,0,50.03
-		c1.53,13.37,14.13,14.13,14.13,14.13h44.68c0,0,29.03,31.7,40.48,45.07c11.46,13.37,19.48,0,19.48,0c0-56.14,0-168.42,0-168.42
-		S406.45,175.04,398.72,181.45z"/>
-	<path class="st0" d="M510.76,196.46c-3.02-3.01-7.86-3.01-10.85,0c-2.97,3-2.97,7.85,0,10.85c16.55,16.54,24.8,38.11,24.83,59.76
-		c-0.03,21.77-8.24,43.44-24.83,60.08c-2.98,3-2.97,7.82,0,10.84c1.51,1.46,3.47,2.22,5.43,2.22c1.95,0,3.92-0.76,5.42-2.22
-		c19.55-19.61,29.29-45.3,29.29-70.91C540.05,241.55,530.24,215.96,510.76,196.46z"/>
-	<path class="st0" d="M469.4,215.73c-2.75-2.19-7.14-2.19-9.85,0c-2.7,2.19-2.7,5.71,0,7.9c15.03,12.04,22.52,27.73,22.54,43.49
-		c-0.03,15.84-7.48,31.61-22.54,43.71c-2.71,2.18-2.7,5.69,0,7.89c1.37,1.06,3.15,1.62,4.93,1.62c1.77,0,3.56-0.55,4.92-1.62
-		c17.75-14.27,26.59-32.96,26.59-51.6C495.99,248.54,487.08,229.92,469.4,215.73z"/>
+<g
+   id="Слой_2"
+   transform="matrix(1.4604216,0,0,1.6220159,-409.97761,-283.3612)">
+	<path
+   class="st0"
+   d="m 398.72,181.45 -48.12,47.74 h -40.48 c -13.37,0 -14.13,11.46 -14.13,11.46 0,0 -1.53,36.66 0,50.03 1.53,13.37 14.13,14.13 14.13,14.13 h 44.68 c 0,0 29.03,31.7 40.48,45.07 11.46,13.37 19.48,0 19.48,0 0,-56.14 0,-168.42 0,-168.42 0,0 -8.31,-6.42 -16.04,-0.01 z"
+   id="path4"
+   inkscape:connector-curvature="0"
+   style="fill:#027aff" />
+	<path
+   class="st0"
+   d="m 510.76,196.46 c -3.02,-3.01 -7.86,-3.01 -10.85,0 -2.97,3 -2.97,7.85 0,10.85 16.55,16.54 24.8,38.11 24.83,59.76 -0.03,21.77 -8.24,43.44 -24.83,60.08 -2.98,3 -2.97,7.82 0,10.84 1.51,1.46 3.47,2.22 5.43,2.22 1.95,0 3.92,-0.76 5.42,-2.22 19.55,-19.61 29.29,-45.3 29.29,-70.91 0,-25.53 -9.81,-51.12 -29.29,-70.62 z"
+   id="path6"
+   inkscape:connector-curvature="0"
+   style="fill:#027aff" />
+	<path
+   class="st0"
+   d="m 469.4,215.73 c -2.75,-2.19 -7.14,-2.19 -9.85,0 -2.7,2.19 -2.7,5.71 0,7.9 15.03,12.04 22.52,27.73 22.54,43.49 -0.03,15.84 -7.48,31.61 -22.54,43.71 -2.71,2.18 -2.7,5.69 0,7.89 1.37,1.06 3.15,1.62 4.93,1.62 1.77,0 3.56,-0.55 4.92,-1.62 17.75,-14.27 26.59,-32.96 26.59,-51.6 0,-18.58 -8.91,-37.2 -26.59,-51.39 z"
+   id="path8"
+   inkscape:connector-curvature="0"
+   style="fill:#027aff" />
 </g>
-<g id="Слой_3">
+<g
+   id="Слой_3"
+   transform="translate(0,-295.28003)">
 </g>
 </svg>
