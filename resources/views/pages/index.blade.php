@@ -1458,7 +1458,7 @@
                 }
                 if (typeof data.videos != 'undefined' && data.videos.length > 0) {
                     $('#playaudio').show();
-                    $('#lkbplayaudio').on('click', function() {
+                    $('#playaudio').on('click', function() {
                         $.each(data.videos, function(key) {
                            if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                krpano.set('hotspot[video' + key + '].volume', '1.0');
