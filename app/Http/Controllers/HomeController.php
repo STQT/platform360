@@ -240,7 +240,7 @@ class HomeController extends Controller
             if (count($cities) > 0) {
                 $cityid = json_encode($cities[0]->id);
                 Cookie::queue(Cookie::forever('city', $cityid));
-                return redirect('http://' . getenv('MAIN_DOMAIN') . '/');
+                return redirect('http://' . env('MAIN_DOMAIN') . '/');
             } else {
                 return redirect('/');
             }
