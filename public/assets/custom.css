@@ -66,10 +66,6 @@ body{
 
 .information-modal {
     border-radius: 4px;
-    width: 96%;
-    top: 67px;
-    left: 10px;
-    height: 85%;
 }
 
 .information-modal img {
@@ -97,6 +93,9 @@ body{
     #website_box {
         padding-left: 0;
     }
+}
+
+@media (max-width: 1024px) {
     .information-modal {
         width: 87%;
         top: 0;
