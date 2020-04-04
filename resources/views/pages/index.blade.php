@@ -1676,6 +1676,7 @@
         }
 
         function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image) {
+            hs_name = hs_name + ':' + index;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
                 krpano.set("hotspot[" + hs_name + "].keep", "true");
