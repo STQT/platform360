@@ -56,7 +56,16 @@ task('reload:php-fpm', function() {
     run('sudo /usr/local/bin/restart-php-fpm');
 });
 
+task('clear_cache', function() {
+    run('cd {{release_path}} && php artisan config:clear;
+        php artisan cache:clear;
+        php artisan view:clear;
+        php artisan route:clear;
+    ');
+});
+
 after('deploy', 'reload:php-fpm');
+before('success', 'clear_cache');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
