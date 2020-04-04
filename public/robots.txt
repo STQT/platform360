@@ -1,25 +1,40 @@
 User-agent: *
 Disallow: /en/
 Disallow: /uzb/
-
-Sitemap: https://uzbekistan360.uz/sitemap.xml 
+Disallow: /ru/krpano/
+Disallow: /ru/login
+Disallow: /login
+Disallow: /ru/register
+Disallow: /register
+Disallow: /ru/password
+Disallow: /password
+Sitemap: https://uzbekistan360.uz/sitemap.xml
 
 User-agent: Googlebot
 Disallow: /en/
 Disallow: /uzb/
+Disallow: /ru/krpano/
+Disallow: /ru/login
+Disallow: /login
+Disallow: /ru/register
+Disallow: /register
+Disallow: /ru/password
+Disallow: /password
 Allow: /*.jpg
 Allow: /*.gif
 Allow: /*.png
 Allow: /*.js
 Allow: /*.css
-
-Sitemap: https://uzbekistan360.uz/sitemap.xml 
+Sitemap: https://uzbekistan360.uz/sitemap.xml
 
 User-agent: Yandex
 Disallow: /en/
 Disallow: /uzb/
-
-Sitemap: https://uzbekistan360.uz/sitemap.xml 
-
-
-
+Disallow: /ru/krpano/
+Disallow: /ru/login
+Disallow: /login
+Disallow: /ru/register
+Disallow: /register
+Disallow: /ru/password
+Disallow: /password
+Sitemap: https://uzbekistan360.uz/sitemap.xml
