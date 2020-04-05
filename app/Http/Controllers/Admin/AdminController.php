@@ -13,6 +13,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        return redirect('admin/locations');
         return view('admin.dashboard');
     }
 }

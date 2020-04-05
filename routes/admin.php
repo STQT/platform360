@@ -45,6 +45,12 @@ Route::get('admin/tags/{id}/edit/{lang}', [
 Route::match(['put', 'patch'],'admin/tags/{id}/{language}', 'Admin\\TagsController@update');
 Route::resource('admin/tags', 'Admin\\TagsController');
 
+//Видео
+Route::get('admin/videos/{id}', [
+    'uses' => 'Admin\\VideosController@index'
+])->name('admin.videos');
+Route::resource('admin/videos', 'Admin\\VideosController');
+
 //Подлокации
 Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');
 Route::get('admin/podloc/edit/{id}/{lang}', 'Admin\\PodlocController@edit');
