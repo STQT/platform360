@@ -66,6 +66,7 @@ body{
 
 .information-modal {
     border-radius: 4px;
+    overflow: scroll;
 }
 
 .information-modal img {
@@ -75,7 +76,7 @@ body{
 .information-modal .content {
     padding-top: 20px;
     max-height: 260px;
-    overflow: scroll;
+    /*overflow: scroll;*/
 }
 
 /* mobile */
@@ -100,7 +101,7 @@ body{
         width: 87%;
         top: 0;
         left: 0;
-        height: 100%;
+        height: 84%;
     }
 }
 
