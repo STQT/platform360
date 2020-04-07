@@ -1172,13 +1172,13 @@
         });
         @endif
         @if (empty($location->facebook))
-        $('.socialnetwork-icon.facebook').hide();
+            $('.socialnetwork-icon.facebook').hide();
         @endif
         @if (empty($location->telegram))
-        $('.socialnetwork-icon.telegram').hide();
+            $('.socialnetwork-icon.telegram').hide();
         @endif
         @if (empty($location->instagram))
-        $('.socialnetwork-icon.instagram').hide();
+            $('.socialnetwork-icon.instagram').hide();
         @endif
 
         @foreach ($etaji as $i => $etaj)
@@ -1681,7 +1681,7 @@
                 krpano.call("addhotspot(" + hs_name + ")");
                 krpano.set("hotspot[" + hs_name + "].keep", "true");
                 if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                    krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/information-icon.png");
+                    krpano.set("hotspot[" + hs_name + "].url", "/assets/icons/information-icon.png");
                 } else {
                     krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/" + cat_icon + "");
                 }

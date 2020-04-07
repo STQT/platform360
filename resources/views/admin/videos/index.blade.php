@@ -19,7 +19,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th></th><th>Actions</th>
+                                        <th>#</th><th>Name</th><th>Дата создания</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -27,7 +27,7 @@
                                     <tr>
                                         <td>{{ $video->iteration or $video->id }}</td>
                                         <td>{{ $video->video }}</td>
-                                        <td></td>
+                                        <td>{{ $video->created_at }}</td>
                                         <td>
                                             <a href="{{ url('/admin/videos/' . $video->id . '/edit') }}" title="Edit video"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
