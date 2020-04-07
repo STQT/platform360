@@ -1764,7 +1764,7 @@
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                             $('.information-modal .content').html(information);
-                            if (image.length > 0) {
+                            if (image) {
                                 $('.image-block').html('<img/>');
                                 $('.image-block img').attr('src', '/storage/information/' + image);
                             }
