@@ -1297,7 +1297,7 @@
                     "{{$hotspot->slug}}",
                     "{{$hotspot->color}}",
                     "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
-                    "{{ $hotspot->information }}",
+                    "{{ str_replace("\n", "\n\", $hotspot->information) }}",
                     "{{ $hotspot->image }}"
                 );
                 @endforeach
