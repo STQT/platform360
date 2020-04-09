@@ -1159,7 +1159,9 @@
         $('#playaudio').hide();
         @endif
         @if ($location->videos)
+        $('#playaudio').off('click');
         $('#playaudio').on('click', function () {
+            console.log('toggle sound');
             @foreach ($location->videos as $vKey => $video)
             if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
                 krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
@@ -1606,6 +1608,8 @@
                         $('.floorplan-viewer__header__name').val('');
                     }
 
+                    $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
+
                     if (data.audio) {
                         $('#audio')[0].setSrc('/storage/audio/' + data.audio);
                         $('#playaudio').show();
@@ -1626,7 +1630,9 @@
                     }
                     if (typeof data.videos != 'undefined' && data.videos.length > 0) {
                         $('#playaudio').show();
+                        $('#playaudio').off('click');
                         $('#playaudio').on('click', function () {
+                            console.log('toggle sound dynamic');
                             $.each(data.videos, function (key) {
                                 if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                     krpano.set('hotspot[video' + key + '].volume', '1.0');

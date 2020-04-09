@@ -15,7 +15,9 @@ $(document).ready(function() {
     });
 
     var audioPlayer = $('#audio')[0];
+    // $('#playaudio').off('click');
     $('#playaudio').on('click', function() {
+        //включение и отключение звука у аудио
         if (audioPlayer.src.search('.mp3') !== -1) {
             $(".mejs__controls").find(".mejs__button")[0].click();
             if (audioPlayer.getPaused() === true) {
