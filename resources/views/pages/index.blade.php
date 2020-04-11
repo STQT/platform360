@@ -1166,9 +1166,11 @@
             if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
                 krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
                 $('#playaudio').find('img').attr('src', '/assets/icons/sound-on.svg');
+                currentVideoVolume = '1.0';
             } else {
                 krpano.set('hotspot[video{{ $vKey }}].volume', '0');
                 $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
+                currentVideoVolume = '0';
             }
             @endforeach
         });
@@ -1283,6 +1285,7 @@
         });
 
         var krpano = null;
+        var currentVideoVolume = '0';
 
         function krpano_onready_callback(krpano_interface) {
             krpano = krpano_interface;
@@ -1337,7 +1340,6 @@
             krpano.call("set(fullscreen,true);");
             $('#logo2').css('display', 'block');
             $('#pano1').append(`<div id="logo2" onclick="krpanofullscreenexit()" class="icon-ic_windowed fullScreenIcon" style="display: block; position: absolute; z-index: 99999;"></div>`);
-
         }
 
         function krpanofullscreenexit() {
@@ -1474,6 +1476,7 @@
                         id: 'homepage'
                     }, 'Home | My App', '/{{app()->getLocale()}}/location/' + url + '');
                 }
+
                 $.get('/{{app()->getLocale()}}/api/location/' + url).done(function (data) {
                     $("#location_name").text(data.name);
                     $("#location_name2 h1").text(data.name);
@@ -1637,11 +1640,26 @@
                                 if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                     krpano.set('hotspot[video' + key + '].volume', '1.0');
                                     $('#playaudio').find('img').attr('src', '/assets/icons/sound-on.svg');
+                                    currentVideoVolume = '1.0';
                                 } else {
                                     krpano.set('hotspot[video' + key + '].volume', '0');
                                     $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
+                                    currentVideoVolume = '0';
                                 }
                             });
+                        });
+
+                        //принудительное включение звука для видео
+                        $.each(data.videos, function (key) {
+                            if (currentVideoVolume !== '0' && currentVideoVolume !== null) {
+                                $('#playaudio').find('img').attr('src', '/assets/icons/sound-on.svg');
+                                setTimeout(function () {
+                                    krpano.set('hotspot[video' + key + '].volume', currentVideoVolume);
+                                }, 500);
+
+                            } else {
+                                $('#playaudio').find('img').attr('src', '/assets/icons/sound-off.svg');
+                            }
                         });
                     }
                     if (data.onmap == "on") {
