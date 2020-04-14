@@ -1561,13 +1561,14 @@
                             );
 
                             floorObject = {
-                                maxZoom: 2,
+                                maxZoom: "auto",
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth: "1567px",
+                                frameWidth:  $(window).width(),
                                 iconsize: "15px",
                                 frameHeight: $(window).height() - 300,
-                                fullscreen: true
+                                fullscreen: false,
+                                rubberband: true
                             };
                             code = data.etaji[iFloor].code;
                             code = eval('{' + code + '}');
