@@ -10,10 +10,10 @@
                     <div class="card-header">Редактировать подлокацию {{ $sky->name }}</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/podloc/'.$sky->podlocparent_id.'') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/ru') }}" ><button class="btn btn-success btn-sm">Русский</button></a>
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/ru') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}">Русский</button></a>
 
-                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/uzb') }}" ><button class="btn btn-success btn-sm">Узбекский</button></a>
-                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/en') }}" ><button class="btn btn-info btn-sm">Английский</button></a>
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/uzb') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}">Узбекский</button></a>
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/en') }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}">Английский</button></a>
                         <br />
                         <br />
 

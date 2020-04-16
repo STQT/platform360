@@ -9,11 +9,11 @@
                 <div class="card">
                     <div class="card-header">Edit Location #{{ $location->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/locations') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/ru') }}" ><button class="btn btn-success btn-sm">Русский</button></a>
+                        <a href="{{ url('/admin/locations') }}" title="Back"><button class="lang btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/ru') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}">Русский</button></a>
 
-                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/uzb') }}" ><button class="btn btn-success btn-sm">Узбекский</button></a>
-                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/en') }}" ><button class="btn btn-info btn-sm">Английский</button></a>
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/uzb') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}">Узбекский</button></a>
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/en') }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}">Английский</button></a>
 
                         <br />
                         <br />
