@@ -1186,23 +1186,24 @@
         @endif
 
         @foreach ($etaji as $i => $etaj)
-        @if(!empty($etaj->code))
-        $(".buttonetaj{{$i}}").click(function () {
-            setTimeout(function () {
-                $("#floorid{{$etaj->id}}").annotatorPro({
-                    maxZoom: 2,
-                    navigator: false,
-                    navigatorImagePreview: false,
-                    frameWidth: "auto",
-                    iconsize: "15px",
-                    frameHeight: $(window).height() - 300,
-                    fullscreen: true,
-                    {!! $etaj->code !!}
+            @if(!empty($etaj->code))
+                $(".buttonetaj{{$i}}").click(function () {
+                    setTimeout(function () {
+                        $("#floorid{{$etaj->id}}").annotatorPro({
+                            maxZoom: 2,
+                            navigator: false,
+                            navigatorImagePreview: false,
+                            frameWidth: "auto",
+                            iconsize: "15px",
+                            frameHeight: $(window).height() - 300,
+                            fullscreen: true,
+                            {!! $etaj->code !!}
+                        });
+                    }, 500);
+                    {{--console.log('existing code:' + "{{$etaj->code}}");--}}
                 });
-            }, 500);
-        });
-                @endif
-                @endforeach
+            @endif
+        @endforeach
 
         var isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
         var isIpad = window.matchMedia("only screen and (min-width: 768px)").matches;
@@ -1470,6 +1471,7 @@
                     }
                 }
 
+                //TODO: сделать сначала перевод камеры, а потом смену локации. Также нужно задавать в админку точку, на которой сразу будет показываться панорама
                 krpano.call("movecamera(0,0);");
                 if (nourl != "nooo") {
                     history.pushState({
@@ -1587,6 +1589,7 @@
                             'floorplan-viewer__footer__element--selected is-activated--categories');
 
                         //обработка нажатий кнопок выбора этажей
+                        $('.floorplan-viewer__footer li').off('click');
                         $('.floorplan-viewer__footer li').on('click', function () {
                             var _this = $(this);
                             var curTab = $('#floorplan-tab' + _this.data('tab')).eq(0);
@@ -1600,6 +1603,7 @@
                             $("#floorid" + _this.data('tab')).annotatorPro(
                                 allFloors[_this.data('tab')]
                             );
+                            console.log('handle click (dynamic) ', allFloors[_this.data('tab')]);
                             $('.floorplan-viewer__header__name').html($(this).find('.floorplan-viewer__footer__element__name').html());
 
                             setTimeout(function () {

@@ -46,6 +46,7 @@ $(document).ready(function() {
     //     });
     //  });
 
+    //скрытие тулбара на мобильном
     $(window).on('resize', function () {
         if ($(this).width() > $(this).height() && isMobile) {
             $('.dubai360-header').hide();
