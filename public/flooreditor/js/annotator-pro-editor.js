@@ -1857,7 +1857,6 @@
         var frameWidth = (canvas.settings.frameWidth == "auto") ? '"100%"' : canvas.settings.frameWidth;
         var frameHeight = canvas.settings.frameHeight;
         var maxZoom = (canvas.settings.maxZoom == "auto") ? '"auto"' : canvas.settings.maxZoom;
-
         var annotations = new Array();
 
         for (drawable_id in drawables) {
@@ -1926,7 +1925,6 @@
         }
 
         for (var i = 0; i < annotations.length; i++) {
-
             var tint_color = annotations[i].tint_color;
             var style = annotations[i].style;
             var width = (annotations[i].popup_width == "auto") ? 'auto' : annotations[i].popup_width;

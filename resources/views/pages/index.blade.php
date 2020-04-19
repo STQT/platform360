@@ -1569,8 +1569,8 @@
                                 frameWidth:  $(window).width(),
                                 iconsize: "15px",
                                 frameHeight: $(window).height() - 300,
-                                fullscreen: false,
-                                rubberband: true
+                                fullscreen: false
+                                // rubberband: true
                             };
                             code = data.etaji[iFloor].code;
                             code = eval('{' + code + '}');
@@ -1600,10 +1600,14 @@
 
                             $('.floorplan-tab').fadeOut();
 
-                            $("#floorid" + _this.data('tab')).annotatorPro(
-                                allFloors[_this.data('tab')]
-                            );
-                            console.log('handle click (dynamic) ', allFloors[_this.data('tab')]);
+                            var annotatorImage = null;
+                            setTimeout(function () {
+                                annotatorImage = $(".floorplan-tab").eq(_this.index()).find('img');
+                                annotatorImage.annotatorPro(
+                                    allFloors[_this.data('tab')]
+                                );
+                            }, 500);
+
                             $('.floorplan-viewer__header__name').html($(this).find('.floorplan-viewer__footer__element__name').html());
 
                             setTimeout(function () {
