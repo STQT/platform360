@@ -1,15 +1,15 @@
-;(function ( $, window, document, undefined ) {
+;(function ($, window, document, undefined) {
 
 
-setTimeout(function(){
-        if (	load_jquery($('#oldone').val())) {
+    setTimeout(function () {
+        if (load_jquery($('#oldone').val())) {
 
 
         } else {
 
         }
 
-},900);
+    }, 900);
     // VARIABLES
     var selected_drawable;
     var canvas;
@@ -17,35 +17,35 @@ setTimeout(function(){
     var drawables = new Array();
 
     var canvas_defaults = {
-        frameWidth : 640,
-        frameHeight : 480,
-        maxZoom : "auto",
-        navigator : false,
-        navigatorImagePreview : false,
-        fullscreen : false,
-        rubberband : true
+        frameWidth: 640,
+        frameHeight: 480,
+        maxZoom: "auto",
+        navigator: false,
+        navigatorImagePreview: false,
+        fullscreen: false,
+        rubberband: true
     }
 
     var annotation_defaults = {
-        tint_color : "#000000",
-        style : 1,
-        popup_width : "auto",
-        popup_height : "auto",
-        popup_position : "top",
-        content_type : "text", // or "custom-html"
-        title : "Annotation",
-                location: "1",
-                slug: "1",
-                icon: "1",
-        text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        text_color : "#ffffff",
-        html : "",
-        id : "my-annotation-",
-        spot_left : 0,
-        spot_top : 0,
-        spot_width : 44,
-        spot_height : 44,
-        spot_circle : true
+        tint_color: "#000000",
+        style: 1,
+        popup_width: "auto",
+        popup_height: "auto",
+        popup_position: "top",
+        content_type: "text", // or "custom-html"
+        title: "Annotation",
+        location: "1",
+        slug: "1",
+        icon: "1",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        text_color: "#ffffff",
+        html: "",
+        id: "my-annotation-",
+        spot_left: 0,
+        spot_top: 0,
+        spot_width: 44,
+        spot_height: 44,
+        spot_circle: true
     };
 
     // CLASSES
@@ -74,8 +74,9 @@ setTimeout(function(){
         // events
         this.init(cb);
     }
+
     NDD_Drawable_Canvas.prototype = {
-        init : function(cb) {
+        init: function (cb) {
             var self = this;
 
             canvas = self;
@@ -83,15 +84,15 @@ setTimeout(function(){
 
             if (self.width != 0 && self.height != 0) {
                 self.obj.css({
-                    width : self.width,
-                    height : self.height
+                    width: self.width,
+                    height: self.height
                 });
 
                 self.img.src = self.obj_img.attr('src');
 
                 cb();
             } else {
-                self.img.onload = function() {
+                self.img.onload = function () {
                     self.width = self.img.width;
                     self.height = self.img.height;
 
@@ -110,8 +111,8 @@ setTimeout(function(){
                     }
 
                     self.obj.css({
-                        width : self.width,
-                        height : self.height
+                        width: self.width,
+                        height: self.height
                     });
 
                     cb();
@@ -120,7 +121,7 @@ setTimeout(function(){
                 self.img.src = self.obj_img.attr('src');
             }
         },
-        handle_event : function(e) {
+        handle_event: function (e) {
             var self = this;
 
             if (e.type == "mousedown") {
@@ -150,7 +151,7 @@ setTimeout(function(){
                 }
             }
         },
-        start_drawing : function(pageX, pageY) {
+        start_drawing: function (pageX, pageY) {
             var self = this;
 
             self.obj_drawables_container.append('<div class="ndd-drawable-rect ndd-spot-rect ndd-rect-style-1" id="temp"><div class="ndd-icon-main-element"></div><div class="ndd-icon-border-element"></div></div>');
@@ -160,16 +161,16 @@ setTimeout(function(){
             self.temp_pos_y = pageY - self.obj.offset().top;
 
             self.obj_temp.css({
-                "left" : self.temp_pos_x,
-                "top" : self.temp_pos_y,
-                "width" : 0,
-                "height" : 0
+                "left": self.temp_pos_x,
+                "top": self.temp_pos_y,
+                "width": 0,
+                "height": 0
             });
 
             self.event_initial_x = pageX;
             self.event_initial_y = pageY;
         },
-        draw : function(pageX, pageY) {
+        draw: function (pageX, pageY) {
             var self = this;
 
             self.temp_width = pageX - self.event_initial_x;
@@ -184,11 +185,11 @@ setTimeout(function(){
             }
 
             self.obj_temp.css({
-                "width" : self.temp_width,
-                "height" : self.temp_height
+                "width": self.temp_width,
+                "height": self.temp_height
             });
         },
-        stop_drawing : function() {
+        stop_drawing: function () {
             var self = this;
 
             var x = self.obj_temp.offset().left - self.obj.offset().left;
@@ -205,18 +206,18 @@ setTimeout(function(){
             self.obj_temp.remove();
             self.obj_temp = undefined;
         },
-        apply_settings : function(new_settings) {
+        apply_settings: function (new_settings) {
             var self = this;
 
             self.settings = new_settings;
         },
-        create_circle_spot : function(x, y) {
+        create_circle_spot: function (x, y) {
             var self = this;
 
             var drawable = new NDD_Drawable(x, y, self.obj_drawables_container, self);
             return drawable;
         },
-        create_rect_spot : function(x, y, width, height) {
+        create_rect_spot: function (x, y, width, height) {
             var self = this;
 
             var drawable_rect = new NDD_Drawable_Rect(x, y, width, height, self.obj_drawables_container, self);
@@ -238,8 +239,8 @@ setTimeout(function(){
 
         this.width = 44;
         this.height = 44;
-        this.left = x - this.width/2;
-        this.top = y - this.height/2;
+        this.left = x - this.width / 2;
+        this.top = y - this.height / 2;
 
         this.is_selected = false;
         this.is_moving = false;
@@ -263,16 +264,17 @@ setTimeout(function(){
 
         this.init();
     }
+
     NDD_Drawable.prototype = {
-        init : function() {
+        init: function () {
             var self = this;
 
             drawables[self.id] = self;
 
-            self.obj_parent.append('<div class="ndd-drawable" id="' +self.id+ '"></div>');
+            self.obj_parent.append('<div class="ndd-drawable" id="' + self.id + '"></div>');
             self.obj = $('#' + self.id);
 
-            self.obj.append('<div class="ndd-spot-icon icon-style-'+ self.settings.style +'"><div class="ndd-icon-main-element"></div><div class="ndd-icon-border-element"></div></div>');
+            self.obj.append('<div class="ndd-spot-icon icon-style-' + self.settings.style + '"><div class="ndd-icon-main-element"></div><div class="ndd-icon-border-element"></div></div>');
             self.obj_visible = self.obj.find('.ndd-spot-icon');
 
             self.obj.append('<div class="ndd-drawable-active-area"></div>');
@@ -283,16 +285,16 @@ setTimeout(function(){
             self.constrain_position();
 
             self.obj.css({
-                left : self.left,
-                top : self.top,
-                width : self.width,
-                height : self.height
+                left: self.left,
+                top: self.top,
+                width: self.width,
+                height: self.height
             });
 
             // annotation
             self.annotation = new NDD_Annotation(self.obj, self);
         },
-        handle_event : function(e) {
+        handle_event: function (e) {
             var self = this;
 
             if (e.type == "mousedown") {
@@ -323,7 +325,7 @@ setTimeout(function(){
                 }
             }
         },
-        select : function() {
+        select: function () {
             var self = this;
             apply_settings();
 
@@ -349,7 +351,7 @@ setTimeout(function(){
                 load_settings(self.settings);
             }
         },
-        start_moving : function(pageX, pageY) {
+        start_moving: function (pageX, pageY) {
             var self = this;
 
             self.event_initial_x = pageX;
@@ -359,7 +361,7 @@ setTimeout(function(){
 
             self.obj.addClass("ndd-moving");
         },
-        move : function(pageX, pageY) {
+        move: function (pageX, pageY) {
             var self = this;
 
             var dx = pageX - self.event_initial_x;
@@ -371,12 +373,12 @@ setTimeout(function(){
             self.constrain_position();
             self.redraw();
         },
-        end_moving : function() {
+        end_moving: function () {
             var self = this;
 
             self.obj.removeClass("ndd-moving");
         },
-        constrain_position : function() {
+        constrain_position: function () {
             var self = this;
 
             if (self.left > self.canvas.width - self.width) {
@@ -395,25 +397,25 @@ setTimeout(function(){
                 self.top = 0;
             }
         },
-        redraw : function() {
+        redraw: function () {
             var self = this;
 
             self.obj.css({
-                left : self.left,
-                top : self.top
+                left: self.left,
+                top: self.top
             });
         },
-        apply_settings : function(new_settings) {
+        apply_settings: function (new_settings) {
             var self = this;
 
             self.settings = new_settings;
 
             self.obj_visible.find('.ndd-icon-main-element').css({
-                "background-color" : self.settings.tint_color
+                "background-color": self.settings.tint_color
             });
 
             self.obj_visible.find('.ndd-icon-border-element').css({
-                "border-color" : self.settings.tint_color
+                "border-color": self.settings.tint_color
             });
 
             self.settings.spot_circle = true;
@@ -443,7 +445,7 @@ setTimeout(function(){
 
             if (self.settings.style > 4) {
                 var i = self.settings.style - 4;
-                self.obj_visible.append('<img src="img/annotator-pro/icon_loc_0'+ i +'.png">');
+                self.obj_visible.append('<img src="img/annotator-pro/icon_loc_0' + i + '.png">');
             }
         }
     };
@@ -492,13 +494,14 @@ setTimeout(function(){
 
         this.init();
     }
+
     NDD_Drawable_Rect.prototype = {
-        init : function() {
+        init: function () {
             var self = this;
 
             drawables[self.id] = self;
 
-            self.obj_parent.append('<div class="ndd-drawable-rect" id="' +self.id+ '"></div>');
+            self.obj_parent.append('<div class="ndd-drawable-rect" id="' + self.id + '"></div>');
             self.obj = $('#' + self.id);
 
             self.obj.append('<div class="ndd-spot-rect ndd-rect-style-1"><div class="ndd-icon-main-element"></div><div class="ndd-icon-border-element"></div></div>');
@@ -509,10 +512,10 @@ setTimeout(function(){
             self.constrain_position();
 
             self.obj.css({
-                left : self.x,
-                top : self.y,
-                width : self.width,
-                height : self.height
+                left: self.x,
+                top: self.y,
+                width: self.width,
+                height: self.height
             });
 
             // handles
@@ -521,7 +524,7 @@ setTimeout(function(){
             // annotation
             self.annotation = new NDD_Annotation(self.obj, self);
         },
-        handle_event : function(e) {
+        handle_event: function (e) {
             var self = this;
 
             if (e.type == "mousedown") {
@@ -567,7 +570,7 @@ setTimeout(function(){
                 }
             }
         },
-        select : function() {
+        select: function () {
             var self = this;
             apply_settings();
 
@@ -593,7 +596,7 @@ setTimeout(function(){
                 load_settings(self.settings);
             }
         },
-        start_scaling : function(pageX, pageY, event) {
+        start_scaling: function (pageX, pageY, event) {
             var self = this;
 
             self.event_initial_x = pageX;
@@ -643,7 +646,7 @@ setTimeout(function(){
                 self.scale_amount_y = 0;
             }
         },
-        scale : function(pageX, pageY) {
+        scale: function (pageX, pageY) {
             var self = this;
 
             var dx = pageX - self.event_initial_x;
@@ -717,10 +720,10 @@ setTimeout(function(){
             // redraw annotation
             self.annotation.initialize_dimentions();
         },
-        end_scaling : function() {
+        end_scaling: function () {
             var self = this;
         },
-        start_moving : function(pageX, pageY) {
+        start_moving: function (pageX, pageY) {
             var self = this;
 
             self.event_initial_x = pageX;
@@ -730,7 +733,7 @@ setTimeout(function(){
 
             self.obj.addClass("ndd-moving");
         },
-        move : function(pageX, pageY) {
+        move: function (pageX, pageY) {
             var self = this;
 
             var dx = pageX - self.event_initial_x;
@@ -742,12 +745,12 @@ setTimeout(function(){
             self.constrain_position();
             self.redraw();
         },
-        end_moving : function() {
+        end_moving: function () {
             var self = this;
 
             self.obj.removeClass("ndd-moving");
         },
-        constrain_position : function() {
+        constrain_position: function () {
             var self = this;
 
             if (self.x > self.canvas.width - self.width) {
@@ -766,34 +769,34 @@ setTimeout(function(){
                 self.y = 0;
             }
         },
-        redraw : function() {
+        redraw: function () {
             var self = this;
 
             self.obj.css({
-                width : self.width,
-                height : self.height,
-                left : self.x,
-                top : self.y
+                width: self.width,
+                height: self.height,
+                left: self.x,
+                top: self.y
             });
 
             if (self.settings.style == 1) {
                 self.obj_visible_main_element.css({
-                    width : self.width,
-                    height : self.height
+                    width: self.width,
+                    height: self.height
                 });
             }
 
             if (self.settings.style == 2) {
                 self.obj_visible_main_element.css({
-                    width : self.width - 10,
-                    height : self.height - 10
+                    width: self.width - 10,
+                    height: self.height - 10
                 });
             }
 
             if (self.settings.style == 3) {
                 self.obj_visible_main_element.css({
-                    width : self.width - 6,
-                    height : self.height - 6
+                    width: self.width - 6,
+                    height: self.height - 6
                 });
             }
 
@@ -801,17 +804,17 @@ setTimeout(function(){
 
             }
         },
-        apply_settings : function(new_settings) {
+        apply_settings: function (new_settings) {
             var self = this;
 
             self.settings = new_settings;
 
             self.obj_visible.find('.ndd-icon-main-element').css({
-                "background-color" : 'rgba('+ hexToRgb(self.settings.tint_color).r +', '+ hexToRgb(self.settings.tint_color).g +', '+ hexToRgb(self.settings.tint_color).b +', 0.2)'
+                "background-color": 'rgba(' + hexToRgb(self.settings.tint_color).r + ', ' + hexToRgb(self.settings.tint_color).g + ', ' + hexToRgb(self.settings.tint_color).b + ', 0.2)'
             });
 
             self.obj_visible.find('.ndd-icon-border-element').css({
-                "border-color" : self.settings.tint_color
+                "border-color": self.settings.tint_color
             });
 
             this.settings.spot_left = this.x;
@@ -860,8 +863,9 @@ setTimeout(function(){
 
         this.init();
     }
+
     NDD_Annotation.prototype = {
-        init : function() {
+        init: function () {
             var self = this;
 
             self.obj_parent.append('<div class="ndd-annotation-container"></div>');
@@ -880,47 +884,47 @@ setTimeout(function(){
             self.obj_arrow = self.obj_box.find('.ndd-annotation-arrow-down');
 
             // sample content
-            self.obj_content.append('<h1>'+ self.title +'</h1><p>'+ self.text +'</p>');
+            self.obj_content.append('<h1>' + self.title + '</h1><p>' + self.text + '</p>');
         },
-        show : function() {
+        show: function () {
 
         },
-        hide : function() {
+        hide: function () {
             var self = this;
 
             self.is_visible = false;
 
             self.obj.removeClass('ndd-annotation-visible');
         },
-        initialize_dimentions : function() {
+        initialize_dimentions: function () {
             var self = this;
 
             if (self.width == "auto") {
                 self.obj_box.css({
-                    width : "auto"
+                    width: "auto"
                 });
 
                 self.width = self.obj_box.width();
             } else {
                 self.obj_box.css({
-                    width : self.width
+                    width: self.width
                 });
             }
 
             if (self.height == "auto") {
                 self.obj_box.css({
-                    height : "auto"
+                    height: "auto"
                 });
 
                 self.height = self.obj_box.height();
             } else {
                 self.obj_box.css({
-                    height : self.height
+                    height: self.height
                 });
             }
 
             if (self.drawable.settings.popup_position == "top") {
-                self.left = -self.width/2 + self.drawable.width/2;
+                self.left = -self.width / 2 + self.drawable.width / 2;
                 self.top = -self.height - 20;
 
                 if (self.drawable.settings.style != 1 && self.drawable.settings.style != 2 && self.drawable.settings.style != 3 && self.drawable.settings.style != 4) {
@@ -933,13 +937,13 @@ setTimeout(function(){
                 self.obj_arrow.addClass('ndd-annotation-arrow-down');
 
                 self.obj_arrow.css({
-                    left : self.width/2 - 10,
-                    top : "100%"
+                    left: self.width / 2 - 10,
+                    top: "100%"
                 });
             }
 
             if (self.drawable.settings.popup_position == "bottom") {
-                self.left = -self.width/2 + self.drawable.width/2;
+                self.left = -self.width / 2 + self.drawable.width / 2;
                 self.top = self.drawable.height + 20;
 
                 self.obj_arrow.removeClass('ndd-annotation-arrow-down');
@@ -948,14 +952,14 @@ setTimeout(function(){
                 self.obj_arrow.addClass('ndd-annotation-arrow-up');
 
                 self.obj_arrow.css({
-                    left : self.width/2 - 10,
-                    top : -10
+                    left: self.width / 2 - 10,
+                    top: -10
                 });
             }
 
             if (self.drawable.settings.popup_position == "left") {
                 self.left = -self.width - 20;
-                self.top = -self.height/2 + self.drawable.height/2;
+                self.top = -self.height / 2 + self.drawable.height / 2;
 
                 self.obj_arrow.removeClass('ndd-annotation-arrow-down');
                 self.obj_arrow.removeClass('ndd-annotation-arrow-left');
@@ -963,14 +967,14 @@ setTimeout(function(){
                 self.obj_arrow.addClass('ndd-annotation-arrow-right');
 
                 self.obj_arrow.css({
-                    left : "100%",
-                    top : self.height/2 - 10
+                    left: "100%",
+                    top: self.height / 2 - 10
                 });
             }
 
             if (self.drawable.settings.popup_position == "right") {
                 self.left = self.drawable.width + 20;
-                self.top = -self.height/2 + self.drawable.height/2;
+                self.top = -self.height / 2 + self.drawable.height / 2;
 
                 self.obj_arrow.removeClass('ndd-annotation-arrow-down');
                 self.obj_arrow.removeClass('ndd-annotation-arrow-right');
@@ -978,22 +982,22 @@ setTimeout(function(){
                 self.obj_arrow.addClass('ndd-annotation-arrow-left');
 
                 self.obj_arrow.css({
-                    left : -10,
-                    top : self.height/2 - 10
+                    left: -10,
+                    top: self.height / 2 - 10
                 });
             }
 
             self.obj.css({
-                left : self.left,
-                top : self.top
+                left: self.left,
+                top: self.top
             });
         },
-        apply_settings : function(new_settings) {
+        apply_settings: function (new_settings) {
             var self = this;
 
             // tint color
             self.obj_box.css({
-                "background-color" : new_settings.tint_color
+                "background-color": new_settings.tint_color
             });
 
             // width
@@ -1005,26 +1009,26 @@ setTimeout(function(){
             // popup position
             if (new_settings.popup_position == "top") {
                 self.obj_arrow.css({
-                    "border-color" : 'transparent',
-                    "border-top-color" : new_settings.tint_color
+                    "border-color": 'transparent',
+                    "border-top-color": new_settings.tint_color
                 });
             }
             if (new_settings.popup_position == "bottom") {
                 self.obj_arrow.css({
-                    "border-color" : 'transparent',
-                    "border-bottom-color" : new_settings.tint_color
+                    "border-color": 'transparent',
+                    "border-bottom-color": new_settings.tint_color
                 });
             }
             if (new_settings.popup_position == "left") {
                 self.obj_arrow.css({
-                    "border-color" : 'transparent',
-                    "border-left-color" : new_settings.tint_color
+                    "border-color": 'transparent',
+                    "border-left-color": new_settings.tint_color
                 });
             }
             if (new_settings.popup_position == "right") {
                 self.obj_arrow.css({
-                    "border-color" : 'transparent',
-                    "border-right-color" : new_settings.tint_color
+                    "border-color": 'transparent',
+                    "border-right-color": new_settings.tint_color
                 });
             }
 
@@ -1038,20 +1042,20 @@ setTimeout(function(){
             self.content_type = new_settings.content_type;
 
             if (self.content_type == "text") {
-                self.obj_content.html('<h1>'+ self.title +'</h1><p>'+ self.text +'</p>');
+                self.obj_content.html('<h1>' + self.title + '</h1><p>' + self.text + '</p>');
             } else {
                 self.obj_content.html(self.html);
             }
 
             // text color
             self.obj_content.css({
-                color : new_settings.text_color
+                color: new_settings.text_color
             });
             self.obj_content.find('h1').css({
-                color : new_settings.text_color
+                color: new_settings.text_color
             });
             self.obj_content.find('p').css({
-                color : new_settings.text_color
+                color: new_settings.text_color
             });
 
             if (self.is_visible) {
@@ -1065,13 +1069,13 @@ setTimeout(function(){
     // FUNCTIONS
 
     function init_canvas(width, height, cb) {
-        var tmp = new NDD_Drawable_Canvas($('.ndd-drawable-canvas'), width, height, function() {
+        var tmp = new NDD_Drawable_Canvas($('.ndd-drawable-canvas'), width, height, function () {
             cb();
         });
     }
 
     function init_global_events() {
-        $(document).on('mousedown', function(e) {
+        $(document).on('mousedown', function (e) {
             active_object = undefined;
 
             if ($(e.target).hasClass('ndd-drawable-canvas') || $(e.target).hasClass('ndd-drawable-canvas-image')) {
@@ -1102,7 +1106,7 @@ setTimeout(function(){
             }
         });
 
-        $(document).on('mousemove', function(e) {
+        $(document).on('mousemove', function (e) {
             if (active_object != undefined) {
                 e.preventDefault();
 
@@ -1112,7 +1116,7 @@ setTimeout(function(){
             }
         });
 
-        $(document).on('mouseup', function(e) {
+        $(document).on('mouseup', function (e) {
             if (active_object != undefined) {
                 active_object.handle_event(e);
             }
@@ -1122,9 +1126,9 @@ setTimeout(function(){
     }
 
     function form_events() {
-        $('form input, form button, form textarea').on('change', function() {
+        $('form input, form button, form textarea').on('change', function () {
             refresh_form();
-            validate_form(function(success) {
+            validate_form(function (success) {
                 if (success) {
                     apply_settings();
                     generate_jquery();
@@ -1136,13 +1140,13 @@ setTimeout(function(){
             });
         });
 
-        $(document).on('keyup', function(e) {
+        $(document).on('keyup', function (e) {
             if (e.keyCode == 46 && selected_drawable != undefined) {
                 $('#modal-delete').modal();
             }
         });
 
-        $('#delete-annotation-button').on('click', function() {
+        $('#delete-annotation-button').on('click', function () {
             if (selected_drawable != undefined) {
                 selected_drawable.obj.remove();
 
@@ -1158,21 +1162,21 @@ setTimeout(function(){
             }
         });
 
-        $('#etajupdatee').on('click', function() {
+        $('#etajupdatee').on('click', function () {
             generate_jquery();
         });
 
-        $('#radio-editor-mode-preview-label').on('mouseup', function() {
-            setTimeout(function() {
+        $('#radio-editor-mode-preview-label').on('mouseup', function () {
+            setTimeout(function () {
                 generate_preview();
             }, 30);
         });
 
-        $('#button-select-jquery').on('click', function() {
+        $('#button-select-jquery').on('click', function () {
             selectText('well-jquery');
         });
 
-        $('#textarea-load').on('change', function() {
+        $('#textarea-load').on('change', function () {
             $('#button-load').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary');
             $('#button-load').html('Load');
 
@@ -1183,7 +1187,7 @@ setTimeout(function(){
             }
         });
 
-        $('#textarea-load').on('keyup', function() {
+        $('#textarea-load').on('keyup', function () {
             $('#button-load').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary');
             $('#button-load').html('Load');
 
@@ -1194,7 +1198,7 @@ setTimeout(function(){
             }
         });
 
-        $('#button-load').on('click', function() {
+        $('#button-load').on('click', function () {
             if (load_jquery($('#textarea-load').val())) {
                 $(this).removeClass('btn-primary').addClass('btn-success').attr('disabled', 'disabled');
                 $(this).html('<span class="glyphicon glyphicon-ok"></span> Success');
@@ -1256,7 +1260,7 @@ setTimeout(function(){
 
         if ($('#radio-content-type-text').get(0).checked) {
             $('#input-title').removeAttr('disabled');
-    $('#input-location').removeAttr('disabled');
+            $('#input-location').removeAttr('disabled');
             $('#textarea-text').removeAttr('disabled');
             $('#color-text-color').removeAttr('disabled');
             $('#textarea-html').attr('disabled', 'disabled');
@@ -1302,7 +1306,7 @@ setTimeout(function(){
             $('#input-width').removeAttr('disabled');
             $('#input-width-addon').html('px');
         }
-            // $('#input-height-addon').html('px');
+        // $('#input-height-addon').html('px');
         // }
 
         if ($('#radio-max-zoom-custom').get(0).checked) {
@@ -1769,8 +1773,8 @@ setTimeout(function(){
             // Title
             current_settings.title = $('#input-title').val();
             current_settings.location = $('#input-location').val();
-            current_settings.slug =$("#input-location option:selected").attr('data-slug');
-            current_settings.icon =$("#input-location option:selected").attr('data-icon');
+            current_settings.slug = $("#input-location option:selected").attr('data-slug');
+            current_settings.icon = $("#input-location option:selected").attr('data-icon');
 
             // Text
             current_settings.text = $('#textarea-text').val();
@@ -1837,9 +1841,13 @@ setTimeout(function(){
         }
     }
 
-    function enable_form() { $('#panel-disabler').hide(); }
+    function enable_form() {
+        $('#panel-disabler').hide();
+    }
 
-    function disable_form() { $('#panel-disabler').show(); }
+    function disable_form() {
+        $('#panel-disabler').show();
+    }
 
     function generate_annotation_id() {
         return "my-annotation-" + Math.floor(Math.random() * 10000000) + 1;
@@ -1859,8 +1867,8 @@ setTimeout(function(){
                 annotations.push(drawable.settings);
             }
         }
-var floorid = $("#floorid").val();
-floorid = "#floorid"+floorid+"";
+        var floorid = $("#floorid").val();
+        floorid = "#floorid" + floorid + "";
 
         var result = '';
         var has_canvas_option = false;
@@ -1917,7 +1925,7 @@ floorid = "#floorid"+floorid+"";
             result = result.replace(regex, '');
         }
 
-        for (var i=0; i<annotations.length; i++) {
+        for (var i = 0; i < annotations.length; i++) {
 
             var tint_color = annotations[i].tint_color;
             var style = annotations[i].style;
@@ -1953,8 +1961,8 @@ floorid = "#floorid"+floorid+"";
             result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{";
 
             if (id != annotation_defaults.id) {
-                            result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id : " + '"' + id + '"' + ',';
-                        }
+                result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id : " + '"' + id + '"' + ',';
+            }
             if (title != annotation_defaults.title) {
                 result += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title : " + '"' + title + '"' + ',';
             }
@@ -1993,7 +2001,7 @@ floorid = "#floorid"+floorid+"";
         var plugin_container = $('#plugin-container');
 
         plugin_container.html('');
-        plugin_container.append('<img src="'+ canvas.img.src +'" id="the-img-tag">');
+        plugin_container.append('<img src="' + canvas.img.src + '" id="the-img-tag">');
 
         var frameWidth = (canvas.settings.frameWidth == "auto") ? '100%' : canvas.settings.frameWidth;
         var frameHeight = (canvas.settings.frameHeight == "auto") ? '100%' : canvas.settings.frameHeight;
@@ -2013,7 +2021,7 @@ floorid = "#floorid"+floorid+"";
             }
         }
 
-        for (var i=0; i<annotations.length; i++) {
+        for (var i = 0; i < annotations.length; i++) {
             // var tint_color = annotations[i].tint_color;
             // var style = annotations[i].style;
             // var width = (annotations[i].popup_width == "auto") ? 'auto' : annotations[i].popup_width;
@@ -2043,37 +2051,37 @@ floorid = "#floorid"+floorid+"";
             }
 
             annotations[i] = {
-                tint_color : annotations[i].tint_color,
-                style : annotations[i].style,
-                popup_width : annotations[i].popup_width,
-                popup_height : annotations[i].popup_height,
-                popup_position : annotations[i].popup_position,
-                content_type : annotations[i].content_type,
-                title : annotations[i].title,
-                location : annotations[i].location,
-                slug : annotations[i].slug,
-                icon : annotations[i].icon,
-                text : annotations[i].text,
-                text_color : annotations[i].text_color,
-                html : annotations[i].html,
-                id : annotations[i].id,
-                spot_left : spot_left,
-                spot_top : spot_top,
-                spot_width : spot_width,
-                spot_height : spot_height,
-                spot_circle : annotations[i].spot_circle
+                tint_color: annotations[i].tint_color,
+                style: annotations[i].style,
+                popup_width: annotations[i].popup_width,
+                popup_height: annotations[i].popup_height,
+                popup_position: annotations[i].popup_position,
+                content_type: annotations[i].content_type,
+                title: annotations[i].title,
+                location: annotations[i].location,
+                slug: annotations[i].slug,
+                icon: annotations[i].icon,
+                text: annotations[i].text,
+                text_color: annotations[i].text_color,
+                html: annotations[i].html,
+                id: annotations[i].id,
+                spot_left: spot_left,
+                spot_top: spot_top,
+                spot_width: spot_width,
+                spot_height: spot_height,
+                spot_circle: annotations[i].spot_circle
             }
         }
 
         $(floorid).annotatorPro({
-            frameWidth : frameWidth,
-            frameHeight : frameHeight,
-            maxZoom : maxZoom,
-            navigator : navigator,
-            navigatorImagePreview : navigatorImagePreview,
-            fullscreen : fullscreen,
-            rubberband : rubberband,
-            annotations : annotations
+            frameWidth: frameWidth,
+            frameHeight: frameHeight,
+            maxZoom: maxZoom,
+            navigator: navigator,
+            navigatorImagePreview: navigatorImagePreview,
+            fullscreen: fullscreen,
+            rubberband: rubberband,
+            annotations: annotations
         });
     }
 
@@ -2088,7 +2096,7 @@ floorid = "#floorid"+floorid+"";
             eval(text_filtered);
 
             // delete old canvas
-            $('.ndd-drawable-canvas').html('<img src="'+canvas.img.src+'" class="ndd-drawable-canvas-image"><div class="ndd-drawables-container"></div>');
+            $('.ndd-drawable-canvas').html('<img src="' + canvas.img.src + '" class="ndd-drawable-canvas-image"><div class="ndd-drawables-container"></div>');
 
             // reset global variables
             var canvasWidth = canvas.width;
@@ -2100,7 +2108,7 @@ floorid = "#floorid"+floorid+"";
             drawables = new Array();
 
             // initialize canvas
-            init_canvas(canvasWidth, canvasHeight, function() {
+            init_canvas(canvasWidth, canvasHeight, function () {
                 var canvasSettings = $.extend({}, canvas_defaults);
 
                 if (options.frameWidth != undefined) {
@@ -2134,7 +2142,7 @@ floorid = "#floorid"+floorid+"";
 
                 // rebuild annotations
                 if (options.annotations != undefined) {
-                    for (var i=0; i<options.annotations.length; i++) {
+                    for (var i = 0; i < options.annotations.length; i++) {
                         var annotation = options.annotations[i];
 
                         var drawable = undefined;
@@ -2144,17 +2152,17 @@ floorid = "#floorid"+floorid+"";
 
                         if (annotation.spot_circle === false) {
                             // is rect
-                            x = parseFloat(annotation.spot_left)/100 * canvas.width;
-                            y = parseFloat(annotation.spot_top)/100 * canvas.height;
-                            width = parseFloat(annotation.spot_width)/100 * canvas.width;
-                            height = parseFloat(annotation.spot_height)/100 * canvas.height;
+                            x = parseFloat(annotation.spot_left) / 100 * canvas.width;
+                            y = parseFloat(annotation.spot_top) / 100 * canvas.height;
+                            width = parseFloat(annotation.spot_width) / 100 * canvas.width;
+                            height = parseFloat(annotation.spot_height) / 100 * canvas.height;
                             spot_circle = false;
 
                             drawable = canvas.create_rect_spot(x, y, width, height);
                         } else {
                             // is circle
-                            x = parseFloat(annotation.spot_left)/100 * canvas.width;
-                            y = parseFloat(annotation.spot_top)/100 * canvas.height;
+                            x = parseFloat(annotation.spot_left) / 100 * canvas.width;
+                            y = parseFloat(annotation.spot_top) / 100 * canvas.height;
                             spot_circle = true;
 
                             drawable = canvas.create_circle_spot(x, y);
@@ -2232,9 +2240,9 @@ floorid = "#floorid"+floorid+"";
         }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // return;
-        init_canvas(0, 0, function() {
+        init_canvas(0, 0, function () {
             init_global_events();
             form_events();
             load_settings({});
@@ -2242,42 +2250,16 @@ floorid = "#floorid"+floorid+"";
         });
     });
 
-})( jQuery, window, document );
+})(jQuery, window, document);
 
 
+function log(obj) {
+    console.log(obj);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function log(obj) { console.log(obj); }
-
-function escapeHTML(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escapeHTML(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
 function componentToHex(c) {
     var hex = c.toString(16);
@@ -2297,14 +2279,14 @@ function hexToRgb(hex) {
     } : null;
 }
 
-function toFixed ( number, precision ) {
-    var multiplier = Math.pow( 10, precision + 1 ),
-        wholeNumber = Math.floor( number * multiplier );
-    return Math.round( wholeNumber / 10 ) * 10 / multiplier;
+function toFixed(number, precision) {
+    var multiplier = Math.pow(10, precision + 1),
+        wholeNumber = Math.floor(number * multiplier);
+    return Math.round(wholeNumber / 10) * 10 / multiplier;
 }
 
 function replaceAll(string, find, replace) {
-  return string.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    return string.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 }
 
 function escapeRegExp(string) {
