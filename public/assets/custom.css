@@ -76,6 +76,7 @@ body{
 .information-modal .content {
     padding-top: 20px;
     max-height: 260px;
+    text-align: justify;
     /*overflow: scroll;*/
 }
 
