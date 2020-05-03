@@ -246,7 +246,7 @@
                     {{ $hotspot->v }},
                     {{$hotspot->id}},
                     {{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}},
-                    "{{ $hotspot->information}}",
+                    "{{ str_replace("\r", "\\\r", $hotspot->information) }}",
                     "{{ $hotspot->image}}"
             );
             @endforeach
