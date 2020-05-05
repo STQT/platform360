@@ -1082,7 +1082,8 @@ class LocationsController extends Controller
         $hotspot->destination_id = $data['location'];
         $hotspot->h = $data['h'];
         $hotspot->v = $data['v'];
-        $hotspot->information = $data['information'];
+        $hotspotInformation = $data['information'];
+        $hotspot->information = $hotspotInformation;
         if (isset($image)) {
             $hotspot->image = $newName;
         }
@@ -1159,7 +1160,12 @@ class LocationsController extends Controller
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
-                    $krhotspots[$key]->information = $krhotspots[$key]->information;
+                    $hotspotInformation = $krhotspots[$key]->information;
+                    $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);
+                    $hotspotInformation = str_replace('"', '\"', $hotspotInformation);
+                    $hotspotInformation = str_replace("'", "\'", $hotspotInformation);
+                    $hotspotInformation = str_replace("\r", '\\\r', $hotspotInformation);
+                    $krhotspots[$key]->information = $hotspotInformation;
                 }
             }
         }

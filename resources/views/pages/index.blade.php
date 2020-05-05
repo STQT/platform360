@@ -1291,6 +1291,12 @@
             krpano = krpano_interface;
             setTimeout(function () {
                 @foreach($krhotspots as $index => $hotspot)
+                @php
+                $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));
+                $informationText = str_replace('"', '\"', $informationText);
+                $informationText = str_replace("'", "\'", $informationText);
+                $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);
+                @endphp
                 add_exist_hotspot(
                         {{ $hotspot->h }},
                         {{ $hotspot->v }},
@@ -1302,7 +1308,7 @@
                     "{{$hotspot->slug}}",
                     "{{$hotspot->color}}",
                     "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
-                    "{{ str_replace("\r", "\\\r", $hotspot->information) }}",
+                    "{!! $informationText !!}",
                     "{{ $hotspot->image }}"
                 );
                 @endforeach
