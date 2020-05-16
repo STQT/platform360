@@ -1582,7 +1582,30 @@
                             code = eval('{' + code + '}');
                             floorObject.annotations = code;
                             allFloors[iFloor] = floorObject;
-                            console.log(floorObject);
+                        }
+
+                        //добавление других локаций в мультиэтажности
+                        $('.ReactVirtualized__Grid__innerScrollContainer').html('');
+                        for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
+                            let floorLocationItem = data.floors_locations[floorLocation];
+                            $('.ReactVirtualized__Grid__innerScrollContainer').append('<div class="listItem-wrapper" style="height: 260px;"\
+                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\')">\
+                                <div class="listItem" style="width: 224px; height: 244px;">\
+                                    <div class="listItem__img"><img\
+                                                src="/storage/panoramas/unpacked/' + floorLocationItem.img + '/thumb.jpg"\
+                                                class="listItem__img--scene"></div>\
+                                    <div class="listItem__icon-category">\
+                                        <div class="icon-wrapper__icon--category category-normal"\
+                                             style="background-color:color">\
+                                            <img src="/storage/cat_icons/' + floorLocationItem.categorylocation.cat_icon_svg + '">\
+                                        </div>\
+                                    </div>\
+                                    <div class="listItem__text">\
+                                    {{-- TODO: сделать определение и подставку языка --}}\
+                                        <div><span>' + floorLocationItem.name.ru + '</span></div>\
+                                    </div>\
+                                </div>\
+                            </div>');
                         }
 
                         //показ первого этажа

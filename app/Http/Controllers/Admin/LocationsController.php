@@ -682,7 +682,7 @@ class LocationsController extends Controller
     //API Локация
     public function show2($slug)
     {
-        //Проверка куков на город
+        //Проверка кук на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
         } else {
@@ -734,6 +734,8 @@ class LocationsController extends Controller
             $locationArray['videos'] = $location->videos;
         }
         $locationArray['category_icon'] = $location->category->cat_icon_svg;
+        $locationArray['floors_locations'] = $etajlocations;
+
         return $locationArray;
     }
 

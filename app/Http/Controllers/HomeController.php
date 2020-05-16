@@ -81,9 +81,9 @@ class HomeController extends Controller
             }
             preg_match_all('/location : "([0-9]+)"/', $code, $matches);
             $etajlocations = Location::whereIn('id', $matches[1])->with('categorylocation')->get();
-            $sss = Location::folderNames($etajlocations);
+            $folderNames = Location::folderNames($etajlocations);
             foreach ($etajlocations as $key2 => $value2) {
-                $etajlocations[$key2]->img = $sss[$key2];
+                $etajlocations[$key2]->img = $folderNames[$key2];
             }
         }
 
