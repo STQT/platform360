@@ -25,9 +25,8 @@ class HomeController extends Controller
 
     //Главная страница
 
-    public function getIndex($home = null, $category = null)
+    public function getIndex($category = null, $home = null)
     {
-//        die(var_dump($home, $category));
         //Проверка кук на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');

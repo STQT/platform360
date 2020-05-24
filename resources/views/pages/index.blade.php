@@ -383,7 +383,15 @@
                                                              style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;">
                                                             <img src="/storage/cat_icons/{{$category->cat_icon_svg}}">
                                                         </div>
-                                                        <span class="icon-wrapper__text">{{ $category->name }}</span>
+                                                        <span class="icon-wrapper__text">
+                                                            @if (!empty($category->slug))
+                                                                <a href="/category/{{$category->slug}}">
+                                                            @endif
+                                                            {{ $category->name }}
+                                                            @if (!empty($category->slug))
+                                                                </a>
+                                                            @endif
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 @if($loop->last == true or $loop->iteration % 8 == 0)
@@ -396,8 +404,10 @@
                             </div>
                         </div>
 
+                        @if (!isset($openedCategory))
                         <div class="searchPanel__results"><span
                                     class="color-opacity">{{ trans('uzb360.noresult')}}</span></div>
+                        @endif
                         <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
                         <div class="searchPanel__resultscontainer">
                             <div class="virtualizedGrid__content " style="position: relative;">
@@ -408,7 +418,21 @@
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
-
+                                            @if (isset($openedCategory))
+                                                @foreach($openedCategory->locations as $categoryLocation)
+                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}')">
+                                                        <div class="listItem">
+                                                            <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$categoryLocation->folderName()}}/thumb.jpg" class="listItem__img--scene"></div>
+                                                            <div class="listItem__icon-category">
+                                                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$openedCategory->color}};"><img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}"></div>
+                                                            </div>
+                                                            <div class="listItem__text">
+                                                            <div><span><span>{{$categoryLocation->name}}</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                                                            </div>
+                                                      </div>
+                                                  </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

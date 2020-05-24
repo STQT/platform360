@@ -184,7 +184,9 @@ $(function() {
 
     // При клике на категории :: ПОИСК
 
-    $('.js-icon').on('click', function() {
+    $('.js-icon').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         // $(".searchPanel__button").css("display", "block")
         // $('.searchPanel__results').fadeIn();
         $('.searchPanel__results').removeAttr('style');

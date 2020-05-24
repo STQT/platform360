@@ -30,7 +30,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $translatable = ['name', 'slug'];
+    protected $translatable = ['name'];
     protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug'];
 
     public function locations()
