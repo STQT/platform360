@@ -11,4 +11,11 @@
             <priority>0.8</priority>
         </url>
     @endforeach
+    @foreach($categories as $category)
+        <url>
+            <loc>{{ $baseName }}/ru/category/{{ $category->slug }}</loc>
+            <lastmod>{{ $category->updated_at->tz('UTC')->toAtomString() }}</lastmod>
+            <priority>0.8</priority>
+        </url>
+    @endforeach
 </urlset>

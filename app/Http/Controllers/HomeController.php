@@ -179,6 +179,8 @@ class HomeController extends Controller
             $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
         }
 
+        $sitemap = $this->generateSiteMap();
+
         return view('pages.index', [
             'location' => $location,
             'categories' => $categories,
@@ -194,6 +196,7 @@ class HomeController extends Controller
             'isnew' => $isnew,
             'etaji' => $etaji,
             'etajlocations' => $etajlocations,
+            'sitemap' => $sitemap
         ]);
     }
 
@@ -289,5 +292,21 @@ class HomeController extends Controller
                     $message->to('sherzod.nosirov@gmail.com');
                 });
         }
+    }
+
+    private function generateSiteMap()
+    {
+        $baseName = $_SERVER['HTTP_HOST'];
+        $links = [];
+        $links[$baseName] = ucfirst($baseName);
+        $locations = Location::get();
+        $categories = Category::whereNotNull('slug')->get();
+        foreach($locations as $location) {
+            $links[$baseName . '/ru/location/' . $location->slug] = $location->name;
+        }
+        foreach($categories as $category) {
+            $links[$baseName . '/ru/category/' . $location->slug] = $category->name;
+        }
+        return $links;
     }
 }

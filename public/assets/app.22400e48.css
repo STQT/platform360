@@ -3713,6 +3713,7 @@ screen and (max-height: 600px) {
   width: 670px;
   top: 60px;
   overflow-x: hidden;
+  overflow-y: scroll !important;
 }
 
 @media (max-width: 48em) {

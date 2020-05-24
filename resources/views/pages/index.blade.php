@@ -385,7 +385,7 @@
                                                         </div>
                                                         <span class="icon-wrapper__text">
                                                             @if (!empty($category->slug))
-                                                                <a href="/category/{{$category->slug}}">
+                                                                <a href="/ru/category/{{$category->slug}}">
                                                             @endif
                                                             {{ $category->name }}
                                                             @if (!empty($category->slug))
@@ -558,6 +558,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="sitemap-block section-help"><a href="#" class="site-map">Карта сайта</a></div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
                             <span class="section-help__content__title"><span>Подсказки</span></span>
@@ -2146,4 +2147,10 @@
             onready: krpano_onready_callback
         });
     </script>
+
+    <div id="site-map" style="display: none">
+        @foreach ($sitemap as $href => $title)
+            <a href="https://{{ $href }}">{{ $title }}</a><br>
+        @endforeach
+    </div>
 @endsection

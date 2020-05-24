@@ -119,3 +119,8 @@ body{
     text-decoration: none;
     color: #2a2a2f;
 }
+
+.site-map-content {
+    padding: 30px;
+    overflow-y: scroll;
+}
