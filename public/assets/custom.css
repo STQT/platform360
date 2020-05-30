@@ -120,7 +120,6 @@ body{
     color: #2a2a2f;
 }
 
-.site-map-content {
-    padding: 30px;
-    overflow-y: scroll;
+.sitemap-block.section-help {
+    flex-direction: column;
 }

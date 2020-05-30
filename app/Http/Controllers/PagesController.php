@@ -6,19 +6,24 @@ use App\Location;
 use App\Category;
 
 
-class PageController extends Controller
+class PagesController extends Controller
 {
     public function sitemap()
     {
         $location = [];
         $sitemap = $this->generateSiteMap();
 
-        return view('page.sitemap', ['sitemap' => $sitemap]);
+        return view('pages.sitemap', ['sitemap' => $sitemap]);
     }
 
-    public function help()
+    public function show($slug)
     {
-        return view('page.help');
+        $page = \App\Page::where('slug', $slug)->firstOrFail();
+        return view('pages.show',
+            [
+                'page' => $page
+            ]
+        );
     }
 
     //TODO: вынести генерацию карты сайта в отдельный сервис

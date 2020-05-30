@@ -30,7 +30,7 @@ class Page extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'slug'];
 
     /**
      * Change activity log event description

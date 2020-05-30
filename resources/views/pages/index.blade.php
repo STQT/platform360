@@ -545,7 +545,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sitemap-block section-help"><a href="/sitemap" class="site-map">Карта сайта</a></div>
+                    <div class="sitemap-block section-help">
+                        <div><a href="/how-to-use" class="site-map">Как пользоваться сайтом</a></div>
+                        <div><a href="/sitemap" class="site-map">Карта сайта</a></div>
+                    </div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
                             <span class="section-help__content__title"><span>Подсказки</span></span>

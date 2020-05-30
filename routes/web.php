@@ -25,7 +25,7 @@ Route::get('/clear', function() {
 });
 
 //разные страницы сайта
-Route::get('/sitemap', 'PageController@sitemap');
+Route::get('/sitemap', 'PagesController@sitemap');
 Route::get('/help', 'PageController@help');
 
 Route::get('/scene/{id}', 'HomeController@loadScene');
@@ -39,6 +39,7 @@ Route::get('/getDirectories/{id}', 'Admin\\LocationsController@getDirectory');
 Auth::routes();
 Route::get('/krpano/{index}/{id}', 'HomeController@krpano');
 Route::post('/savescreenshot', 'HomeController@savescreenshot');
+Route::get('/{slug}', 'PagesController@show');
 
 Route::group(['prefix' => 'api'], function() {
     Route::get('/location/{id}', 'Admin\\LocationsController@show2');

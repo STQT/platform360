@@ -1583,7 +1583,7 @@ template {
   height: auto;
   border-radius: 4px;
   max-height: calc(100vh - 71px);
-  z-index: 2003;
+  z-index: 1;
   overflow: auto;
 }
 
