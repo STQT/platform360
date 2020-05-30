@@ -121,5 +121,7 @@ body{
 }
 
 .sitemap-block.section-help {
+    height: auto;
+    padding-top: 40px;
     flex-direction: column;
 }
