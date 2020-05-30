@@ -24,6 +24,10 @@ Route::get('/clear', function() {
     return "Cleareds2";
 });
 
+//разные страницы сайта
+Route::get('/sitemap', 'PageController@sitemap');
+Route::get('/help', 'PageController@help');
+
 Route::get('/scene/{id}', 'HomeController@loadScene');
 Route::get('/city/{id}', 'HomeController@changeCity');
 Route::get('/location/{slug}', 'Admin\\LocationsController@generatePano');

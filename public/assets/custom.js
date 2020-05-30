@@ -71,9 +71,4 @@ $(document).ready(function() {
     $('.modal .close').on('click', function() {
        $(this).parent().fadeOut();
     });
-
-    $('.site-map').on('click', function (e) {
-        e.preventDefault();
-        $('.helpPanel').html('<div class="site-map-content">' + $('#site-map').html() + '</div>');
-    });
 });

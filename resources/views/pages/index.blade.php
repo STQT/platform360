@@ -16,7 +16,6 @@
                 <div style="opacity:0" class="currentlocationcordinates"
                      @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}"
                      @else data-map="no" @endif ></div>
-                <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
                 <header class="dubai360-header">
                     <div class="dubai360-header__logo-languaje dubai360-header__logo-slider"
@@ -178,16 +177,6 @@
                         </div>
                     </div>
                 </header>
-                {{--<div class="customBtns">
-                    <ul>
-                        <li class="icon-plus"></li>
-                        <li class="icon-minus"></li>
-                        <li class="icon-left"></li>
-                        <li class="icon-right"></li>
-                        <li class="icon-up"></li>
-                        <li class="icon-down"></li>
-                    </ul>
-                </div>--}}
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 <footer class="dubai360-footer">
@@ -261,8 +250,6 @@
                             </div>
                         </div>
                     @endif
-
-
                 </footer>
 
 
@@ -558,7 +545,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sitemap-block section-help"><a href="#" class="site-map">Карта сайта</a></div>
+                    <div class="sitemap-block section-help"><a href="/sitemap" class="site-map">Карта сайта</a></div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
                             <span class="section-help__content__title"><span>Подсказки</span></span>
@@ -2147,10 +2134,4 @@
             onready: krpano_onready_callback
         });
     </script>
-
-    <div id="site-map" style="display: none">
-        @foreach ($sitemap as $href => $title)
-            <a href="https://{{ $href }}">{{ $title }}</a><br>
-        @endforeach
-    </div>
 @endsection
