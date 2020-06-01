@@ -25,7 +25,7 @@ Route::get('/clear', function() {
 });
 
 //разные страницы сайта
-Route::get('/{slug}', 'PagesController@show');
+Route::get('/how-to-use', 'PagesController@help');
 Route::get('/sitemap', 'PagesController@sitemap');
 Route::get('/help', 'PageController@help');
 

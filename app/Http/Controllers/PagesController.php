@@ -16,9 +16,9 @@ class PagesController extends Controller
         return view('pages.sitemap', ['sitemap' => $sitemap]);
     }
 
-    public function show($slug)
+    public function help()
     {
-        $page = \App\Page::where('slug', $slug)->firstOrFail();
+        $page = \App\Page::where('slug', 'how-to-use')->firstOrFail();
         return view('pages.show',
             [
                 'page' => $page
