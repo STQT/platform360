@@ -650,7 +650,7 @@
 
                         <div class="numberr" id="website_box">
                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
-                            <span id="website"><a href="{{$location->website }}"
+                            <span id="website"><a href="{{ strpos($location->website, 'http://') !== false ? $location->website : 'http://' . $location->website }}"
                                                   target="_blank">{{$location->website }}</a></span>
                         </div>
                     </div>
