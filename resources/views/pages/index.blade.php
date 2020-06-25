@@ -1448,10 +1448,10 @@
                             );
 
                             floorObject = {
-                                maxZoom: "auto",
+                                maxZoom: 2,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth:  $(window).width(),
+                                frameWidth:  $(window).width() - 355,
                                 iconsize: "15px",
                                 frameHeight: $(window).height() - 300,
                                 fullscreen: false
