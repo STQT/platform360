@@ -187,14 +187,18 @@ $(function() {
     $('.js-icon').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        // $(".searchPanel__button").css("display", "block")
-        // $('.searchPanel__results').fadeIn();
+
         $('.searchPanel__results').removeAttr('style');
 
+        $('.js-icon').not($(this)).removeClass('icon-wrapper--selected').addClass('icon-wrapper__icon');
+
         if ($(this).hasClass('icon-wrapper__icon')) {
-            $(this).removeClass('icon-wrapper__icon').addClass('icon-wrapper--selected');
+            $(this).removeClass('icon-wrapper__icon');
+            $(this).addClass('icon-wrapper--selected');
         } else {
-            $(this).removeClass('icon-wrapper--selected').addClass('icon-wrapper__icon');
+            $(this).addClass('icon-wrapper__icon');
+            $(this).removeClass('icon-wrapper--selected');
+            $('.searchPanel__results').hide();
         }
 
         var _this = $('.search-input');
@@ -205,25 +209,15 @@ $(function() {
 
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
             if (_this.val() != "") {
-                $.get(
-                    "/ru/search/" + _this.val() + '/' + categoryId,
-                    onAjaxSuccess
-                );
+                _this.val('');
             } else {
                 $.get(
                     "/ru/search/noresult/" + categoryId,
                     onAjaxSuccess
                 );
             }
-        } else {
-            if (_this.val() != "") {
-                $.get(
-                    "/ru/search/" + _this.val() + '/0',
-                    onAjaxSuccess
-                );
-            }
         }
-        //Дебильная функция
+
         function onAjaxSuccess(data) {
             if (data === 'Null') {
                 $('#searchContainer').empty();
@@ -293,7 +287,6 @@ $(function() {
                 }
             }
         }
-        //КОНЕЦ Дебильная функция
 
         if (_this.val() == '') {
             $('.searchPanel__results span').text('Объект не найден');
@@ -328,19 +321,13 @@ $(function() {
             }).get().join(",");
 
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
-            if (_this.val() != "") {
-                $.get(
-                    "/ru/search/" + _this.val() + '/' + categoryId,
-                    onAjaxSuccess
-                );
-            }
-        } else {
-            if (_this.val() != "") {
-                $.get(
-                    "/ru/search/" + _this.val() + '/0',
-                    onAjaxSuccess
-                );
-            }
+            $('.js-icon').addClass('icon-wrapper__icon').removeClass('icon-wrapper--selected');
+        }
+        if (_this.val() != "") {
+            $.get(
+                "/ru/search/" + _this.val() + '/0',
+                onAjaxSuccess
+            );
         }
 
         function onAjaxSuccess(data) {
