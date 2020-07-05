@@ -1130,11 +1130,8 @@
         Your browser does not support the audio element.
     </audio>
 
-    <div class="information-modal modal" style="display: none">
-        <img class="close"
-             src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
-        <div class="image-block"></div>
-        <div class="content"></div>
+    <div class="information-modal" id="information-modal" style="display: none">
+
     </div>
 @endsection
 
@@ -1490,7 +1487,7 @@
                     $("#location_name2 h1").text(data.name);
                     $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
 
-                    $('.information-modal').hide();
+                    $.fancybox.close();
 
                     if (data.working_hours) {
                         $("#vremyarabotibox").show();
@@ -1802,12 +1799,18 @@
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                            $('.information-modal .content').html(information);
+                            $('#information-modal').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
                                 $('.image-block img').attr('src', '/storage/information/' + image);
                             }
-                            $('.information-modal').fadeIn();
+                            $.fancybox.open(
+                                $('#information-modal'),
+                                {
+                                    // type: 'html',
+                                    touch: false
+                                }
+                            );
                         } else {
                             loadpano(hs_name, index, slug);
                         }
