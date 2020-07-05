@@ -1451,10 +1451,11 @@
                                 maxZoom: 2,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth:  $(window).width() - 355,
+                                // frameWidth:  $(window).width() - 355,
+                                frameWidth: $(window).width(),
                                 iconsize: "15px",
                                 frameHeight: $(window).height() - 300,
-                                fullscreen: false
+                                fullscreen: true
                                 // rubberband: true
                             };
                             code = data.etaji[iFloor].code;
@@ -1510,7 +1511,7 @@
 
                             var annotatorImage = null;
                             setTimeout(function () {
-                                annotatorImage = $(".floorplan-tab").eq(_this.index()).find('img');
+                                annotatorImage = $(".floorplan-tab").eq(_this.index()).find('img.planClass');
                                 annotatorImage.annotatorPro(
                                     allFloors[_this.data('tab')]
                                 );
