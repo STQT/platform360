@@ -1010,7 +1010,8 @@
     </audio>
 
     <div class="information-modal" id="information-modal" style="display: none">
-
+        <div class="image-block"></div>
+        <div class="content"></div>
     </div>
 @endsection
 
@@ -1702,7 +1703,7 @@
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                            $('#information-modal').html(information);
+                            $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
                                 $('.image-block img').attr('src', '/storage/information/' + image);
