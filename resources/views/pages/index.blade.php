@@ -1476,7 +1476,7 @@
                 }
 
                 //TODO: сделать сначала перевод камеры, а потом смену локации. Также нужно задавать в админку точку, на которой сразу будет показываться панорама
-                krpano.call("movecamera(0,0);");
+                // krpano.call("movecamera(0,0);");
                 if (nourl != "nooo") {
                     history.pushState({
                         id: 'homepage'
