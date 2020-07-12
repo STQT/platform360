@@ -97,7 +97,14 @@ body{
     flex-direction: column;
 }
 
+#information-modal {
+    height: auto;
+}
+
 .information-modal {
     width: 80%;
-    height: 80%;
+}
+
+.image-block img {
+    max-width: 100%;
 }
