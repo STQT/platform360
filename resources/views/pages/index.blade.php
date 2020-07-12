@@ -1070,9 +1070,9 @@
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            frameWidth: "auto",
+                            // frameWidth: "auto",
                             iconsize: "15px",
-                            frameHeight: $(window).height() - 300,
+                            // frameHeight: $(window).height() - 300,
                             fullscreen: true,
                             {!! $etaj->code !!}
                         });
@@ -1446,14 +1446,13 @@
                             );
 
                             floorObject = {
-                                maxZoom: 2,
+                                maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                // frameWidth:  $(window).width() - 355,
-                                frameWidth: $(window).width(),
+                                // frameWidth: "auto",
+                                // frameHeight: $(window).height() - 300,
+                                fullscreen: true,
                                 iconsize: "15px",
-                                frameHeight: $(window).height() - 300,
-                                fullscreen: true
                                 // rubberband: true
                             };
                             code = data.etaji[iFloor].code;
