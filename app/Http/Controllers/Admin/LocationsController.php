@@ -782,6 +782,13 @@ class LocationsController extends Controller
 
         if (!empty($data['isDefault'])) {
             $requestData['isDefault'] = 1;
+
+            $otherLocations = Location::where('isDefault', 1)->where('city_id',
+            $location->city_id)->get();
+            foreach($otherLocations as $otherLocation) {
+                $otherLocation->isDefault = 0;
+                $otherLocation->save();
+            }
         } else {
             $requestData['isDefault'] = 0;
         }

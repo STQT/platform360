@@ -1070,9 +1070,9 @@
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            // frameWidth: "auto",
+                            frameWidth: $(window).width(),
                             iconsize: "15px",
-                            // frameHeight: $(window).height() - 300,
+                            frameHeight: $(window).height() - 300,
                             fullscreen: true,
                             {!! $etaj->code !!}
                         });
@@ -1449,7 +1449,7 @@
                                 maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                // frameWidth: "auto",
+                                frameWidth: "auto",
                                 // frameHeight: $(window).height() - 300,
                                 fullscreen: true,
                                 iconsize: "15px",
