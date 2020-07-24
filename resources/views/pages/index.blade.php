@@ -1706,6 +1706,8 @@
                             if (image) {
                                 $('.image-block').html('<img/>');
                                 $('.image-block img').attr('src', '/storage/information/' + image);
+                            } else {
+                                $('.image-block').html('');
                             }
                             $.fancybox.open(
                                 $('#information-modal'),
@@ -1715,7 +1717,10 @@
                                 }
                             );
                         } else {
-                            loadpano(hs_name, index, slug);
+                            krpano.call("moveto("+h+","+v+",linear(20))");
+                            setTimeout(function() {
+                                loadpano(hs_name, index, slug, null, null, null);
+                            }, 2000);
                         }
 
                     }.bind(null, hs_name));
