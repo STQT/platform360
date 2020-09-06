@@ -51,7 +51,7 @@ class HomeController extends Controller
                 ])->with('categorylocation')->firstOrFail();
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
-                $subdomainLocation = Location::where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
+                $subdomainLocation = Location::withoutGlobalScope('published')->where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
                 if (!Input::get('home')) {
                     Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
@@ -252,7 +252,7 @@ class HomeController extends Controller
     //Krpano
     public function krpano($index, $id)
     {
-        $location = Location::find($id);
+        $location = Location::withoutGlobalScope('published')->find($id);
         return view('partials.xml', [
             'location' => $location,
             'index' => $index

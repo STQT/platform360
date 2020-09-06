@@ -890,7 +890,7 @@ class LocationsController extends Controller
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
         //Загрузка основноч точки
-        $location = Location::where('slug', $slug)->with('categorylocation')->firstOrFail();
+        $location = Location::withoutGlobalScope('published')->where('slug', $slug)->with('categorylocation')->firstOrFail();
 
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
