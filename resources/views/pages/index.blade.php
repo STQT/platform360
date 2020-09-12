@@ -1717,7 +1717,7 @@
                                 }
                             );
                         } else {
-                            krpano.call("moveto("+h+","+v+",linear(20))");
+                            krpano.call("moveto("+h+","+v+",linear(45))");
                             setTimeout(function() {
                                 loadpano(hs_name, index, slug, null, null, null);
                             }, 2000);
