@@ -16,7 +16,6 @@
                 <div style="opacity:0" class="currentlocationcordinates"
                      @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}"
                      @else data-map="no" @endif ></div>
-                <!-- <div id="logo2" class="icon-ic_windowed fullScreenIcon" style="display: block;"></div> -->
                 <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
                 <header class="dubai360-header">
                     <div class="dubai360-header__logo-languaje dubai360-header__logo-slider"
@@ -178,16 +177,6 @@
                         </div>
                     </div>
                 </header>
-                {{--<div class="customBtns">
-                    <ul>
-                        <li class="icon-plus"></li>
-                        <li class="icon-minus"></li>
-                        <li class="icon-left"></li>
-                        <li class="icon-right"></li>
-                        <li class="icon-up"></li>
-                        <li class="icon-down"></li>
-                    </ul>
-                </div>--}}
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 <footer class="dubai360-footer">
@@ -261,8 +250,6 @@
                             </div>
                         </div>
                     @endif
-
-
                 </footer>
 
 
@@ -383,7 +370,15 @@
                                                              style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;">
                                                             <img src="/storage/cat_icons/{{$category->cat_icon_svg}}">
                                                         </div>
-                                                        <span class="icon-wrapper__text">{{ $category->name }}</span>
+                                                        <span class="icon-wrapper__text">
+                                                            @if (!empty($category->slug))
+                                                                <a href="/ru/category/{{$category->slug}}">
+                                                            @endif
+                                                            {{ $category->name }}
+                                                            @if (!empty($category->slug))
+                                                                </a>
+                                                            @endif
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 @if($loop->last == true or $loop->iteration % 8 == 0)
@@ -396,8 +391,10 @@
                             </div>
                         </div>
 
+                        @if (!isset($openedCategory))
                         <div class="searchPanel__results"><span
                                     class="color-opacity">{{ trans('uzb360.noresult')}}</span></div>
+                        @endif
                         <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
                         <div class="searchPanel__resultscontainer">
                             <div class="virtualizedGrid__content " style="position: relative;">
@@ -408,7 +405,21 @@
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
-
+                                            @if (isset($openedCategory))
+                                                @foreach($openedCategory->locations as $categoryLocation)
+                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}')">
+                                                        <div class="listItem">
+                                                            <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$categoryLocation->folderName()}}/thumb.jpg" class="listItem__img--scene"></div>
+                                                            <div class="listItem__icon-category">
+                                                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$openedCategory->color}};"><img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}"></div>
+                                                            </div>
+                                                            <div class="listItem__text">
+                                                            <div><span><span>{{$categoryLocation->name}}</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                                                            </div>
+                                                      </div>
+                                                  </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -534,6 +545,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="sitemap-block section-help">
+                        <div><a href="/how-to-use" class="site-map">Как пользоваться сайтом</a></div>
+                        <div><a href="/sitemap" class="site-map">Карта сайта</a></div>
+                    </div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
                             <span class="section-help__content__title"><span>Подсказки</span></span>
@@ -587,149 +602,13 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tab3" class="section-help" style="display: none;">
-                        <div class="section-help__content">
-                            <span class="section-help__content__title"><span>Categories</span></span>
-                            <div class="category-wrapper-mobile">
-                                <div class="category-wrapper ">
-                                    <span class="icon-ic_arrow_left_active_v2 icon-ic_arrow_left_active_v2_sec category-wrapper--arrow is-activated--element"></span>
-                                    <div class="cotegory-slick_sec">
-                                        <div class="category-wrapper--category">
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(66, 213, 175); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/a660166c-2124-4384-9db7-263868b2054d.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Sports &amp; Recreation</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(170, 101, 229); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/c4716106-b3e8-4e4b-a802-638f37ab5532.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Aerial</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(140, 85, 36); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/f2e8db22-b04a-4a36-9541-bfce68047d8b.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Transports</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(7, 145, 208); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/bf94159a-0df2-4746-a72a-872a1ecbaa5a.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">General</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(237, 68, 104); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/82d3fa8f-cede-4ef2-bd7d-a14eda2a176e.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Shopping</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(67, 151, 101); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/5a415d97-77ac-420a-a189-bbde30ce14b9.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Culture &amp; Museum</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(205, 171, 53); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/330f2921-c1e9-4654-9c25-e6a439f313e4.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Rooftop</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(2, 180, 227); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/855eeadb-8821-495a-9ad9-78e5975addb4.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Hotel</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="category-wrapper--category">
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(0, 173, 159); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/447aa566-4e20-4a69-80b1-80dddd5fba9a.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Ultimate Luxury</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(241, 107, 36); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/9e042238-2ddf-4529-aa63-96c7ace4409f.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Food &amp; Beverages</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(0, 71, 186); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/a9ddd1e8-b753-437d-ae15-cc8895c06985.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Night</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(232, 189, 81); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/2c881895-4bbb-468a-b9e4-53c1f3974be8.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Entertainment</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(103, 83, 193); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/1097aae0-893a-414a-878a-cce9ea5878a7.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Theme Park</span>
-                                                </div>
-                                            </div>
-                                            <div class="icon-wrapper fade--in">
-                                                <div class="icon-wrapper__icon">
-                                                    <div class="icon-wrapper__icon--category category-normal"
-                                                         style="background-color: rgb(67, 151, 101); margin-right: 10px; margin-left: 10px;">
-                                                        <img src="https://d360-cdn-prod.azureedge.net/assets/c2421fc9-236b-4da0-8486-1c12e820906f.svg">
-                                                    </div>
-                                                    <span class="icon-wrapper__text">Park</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="icon-ic_arrow_right__active_v2 icon-ic_arrow_right__active_v2_sec category-wrapper--arrow is-activated--element"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div id="tab3" class="section-help" style="display: none;">--}}
+{{--                        <div class="section-help__content">--}}
+{{--                            <span class="section-help__content__title"><span>Categories</span></span>--}}
+{{--                            <div class="category-wrapper-mobile">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     {{--                        <div class="pagination">--}}
                     {{--                            <ul>--}}
                     {{--                                <li class="pagination__wrapper is-activated--categories" data-tab="tab1">--}}
@@ -771,7 +650,7 @@
 
                         <div class="numberr" id="website_box">
                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
-                            <span id="website"><a href="{{$location->website }}"
+                            <span id="website"><a href="{{ strpos($location->website, 'http://') !== false ? $location->website : 'http://' . $location->website }}"
                                                   target="_blank">{{$location->website }}</a></span>
                         </div>
                     </div>
@@ -1191,7 +1070,7 @@
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            frameWidth: "auto",
+                            frameWidth: $(window).width(),
                             iconsize: "15px",
                             frameHeight: $(window).height() - 300,
                             fullscreen: true,
@@ -1567,20 +1446,43 @@
                             );
 
                             floorObject = {
-                                maxZoom: "auto",
+                                maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth:  $(window).width(),
+                                frameWidth: "auto",
+                                // frameHeight: $(window).height() - 300,
+                                fullscreen: true,
                                 iconsize: "15px",
-                                frameHeight: $(window).height() - 300,
-                                fullscreen: false
                                 // rubberband: true
                             };
                             code = data.etaji[iFloor].code;
                             code = eval('{' + code + '}');
                             floorObject.annotations = code;
                             allFloors[iFloor] = floorObject;
-                            console.log(floorObject);
+                        }
+
+                        //добавление других локаций в мультиэтажности
+                        $('.ReactVirtualized__Grid__innerScrollContainer').html('');
+                        for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
+                            let floorLocationItem = data.floors_locations[floorLocation];
+                            $('.ReactVirtualized__Grid__innerScrollContainer').append('<div class="listItem-wrapper" style="height: 260px;"\
+                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\')">\
+                                <div class="listItem" style="width: 224px; height: 244px;">\
+                                    <div class="listItem__img"><img\
+                                                src="/storage/panoramas/unpacked/' + floorLocationItem.img + '/thumb.jpg"\
+                                                class="listItem__img--scene"></div>\
+                                    <div class="listItem__icon-category">\
+                                        <div class="icon-wrapper__icon--category category-normal"\
+                                             style="background-color:color">\
+                                            <img src="/storage/cat_icons/' + floorLocationItem.categorylocation.cat_icon_svg + '">\
+                                        </div>\
+                                    </div>\
+                                    <div class="listItem__text">\
+                                    {{-- TODO: сделать определение и подставку языка --}}\
+                                        <div><span>' + floorLocationItem.name.ru + '</span></div>\
+                                    </div>\
+                                </div>\
+                            </div>');
                         }
 
                         //показ первого этажа
@@ -1606,7 +1508,7 @@
 
                             var annotatorImage = null;
                             setTimeout(function () {
-                                annotatorImage = $(".floorplan-tab").eq(_this.index()).find('img');
+                                annotatorImage = $(".floorplan-tab").eq(_this.index()).find('img.planClass');
                                 annotatorImage.annotatorPro(
                                     allFloors[_this.data('tab')]
                                 );
@@ -1804,6 +1706,8 @@
                             if (image) {
                                 $('.image-block').html('<img/>');
                                 $('.image-block img').attr('src', '/storage/information/' + image);
+                            } else {
+                                $('.image-block').html('');
                             }
                             $.fancybox.open(
                                 $('#information-modal'),
@@ -1813,7 +1717,10 @@
                                 }
                             );
                         } else {
-                            loadpano(hs_name, index, slug);
+                            krpano.call("moveto("+h+","+v+",linear(45))");
+                            setTimeout(function() {
+                                loadpano(hs_name, index, slug, null, null, null);
+                            }, 2000);
                         }
 
                     }.bind(null, hs_name));
