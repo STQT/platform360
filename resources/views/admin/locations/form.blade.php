@@ -23,7 +23,6 @@
           {{Form::label('city_id', 'Город', ['class' => 'control-label'])}}
 
           {{Form::select('city_id', $cities->pluck('name', 'id') ,null,array('name'=>'city_id', 'class' => 'form-control'))}}
-
       </div>
 
       <div class="form-group{{ $errors->has('sky_id') ? 'has-error' : '' }}">
@@ -109,6 +108,18 @@
       </div>
       <div class="form-group">
           <input {{ isset($location) ? ($location->published ? 'checked' : '') : ''}} id="published" type="checkbox" class="" value="1" name="published"> Опубликовано
+      </div>
+
+      <div class="form-group{{ $errors->has('visibility') ? 'has-error' : '' }}">
+          {{Form::label('visibility', 'Видимость', ['class' => 'control-label'])}}
+
+          {{Form::select('visibility', $location->getVisibilityOptions() ,null,array('name'=>'visibility', 'class' => 'form-control'))}}
+      </div>
+
+      <div class="form-group">
+          <p>Ссылка: <a href="http://<?= getenv('MAIN_DOMAIN') ?>/ru/location/<?= $location->slug ?>" target="_blank">
+                  <?= getenv('MAIN_DOMAIN') ?>/ru/location/<?= $location->slug ?></a>
+          </p>
       </div>
 
       <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
