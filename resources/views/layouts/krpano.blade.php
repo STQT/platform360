@@ -97,6 +97,7 @@
     <link href="/assets/slick-carousel/slick.css" rel="stylesheet">
     <link href="/assets/slick-carousel/slick-theme.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/flooreditor/css/annotator-pro.min.css">
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox.min.css">
     <link href="/assets/custom.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicons/apple-icon-60x60.png">
@@ -179,6 +180,7 @@
 <script src="/assets/jquery-resizable.js"></script>
 <script src="/assets/slick-carousel/slick.min.js"></script>
 <script src="/assets/google-maps.js"></script>
+<script src="/assets/js/jquery.fancybox.min.js"></script>
 <script src="/assets/main.js"></script>
 <script src="/assets/custom.js"></script>
 <script src="/js/mediaelement-and-player.min.js"></script>
