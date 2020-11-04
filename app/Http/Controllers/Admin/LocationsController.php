@@ -107,7 +107,6 @@ class LocationsController extends Controller
 
         if (!empty($keyword) && $category == '') {
             $locations = Location::where('is_sky', '!=', 'on')
-                ->whereNull('podlocparent_id')
                 ->where(function ($q) use ($keyword, $city) {
                     $q->where('isDefault', '1')->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
@@ -129,7 +128,6 @@ class LocationsController extends Controller
             where('category_id', $category)
                 ->where('isDefault', '1')
                 ->where('is_sky', '!=', 'on')
-                ->whereNull('podlocparent_id')
                 ->where(function ($q) use ($keyword, $city, $category) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
@@ -152,8 +150,7 @@ class LocationsController extends Controller
         } else {
             $locations = Location::where(function ($q) use ($category, $city, $perPage) {
                 $q->where('is_sky', '!=', 'on')
-                    ->where('isDefault', '1')
-                    ->whereNull('podlocparent_id');
+                    ->where('isDefault', '1');
                 if ($city) {
                     $q->where('city_id', $city);
                 }
@@ -209,7 +206,6 @@ class LocationsController extends Controller
 
         if (!empty($keyword) && $category == '') {
             $locations = Location::where('is_sky', '!=', 'on')
-                ->whereNull('podlocparent_id')
                 ->where(function ($q) use ($keyword, $city) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
@@ -230,7 +226,6 @@ class LocationsController extends Controller
             $locations = Location::
             where('category_id', $category)
                 ->where('is_sky', '!=', 'on')
-                ->whereNull('podlocparent_id')
                 ->where(function ($q) use ($keyword, $city, $category) {
                     $q->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
@@ -254,8 +249,7 @@ class LocationsController extends Controller
         } else {
             $locations = Location::where(function ($q) use ($perPage, $city, $category) {
                 $q->where('is_sky', '!=', 'on')
-                    ->where('published', '!=', '1')
-                    ->whereNull('podlocparent_id');
+                    ->where('published', '!=', '1');
                 if ($city) {
                     $q->where('city_id', $city);
                 }

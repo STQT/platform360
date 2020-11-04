@@ -101,22 +101,6 @@ body{
     height: auto;
 }
 
-.fancybox-button.fancybox-close-small {
-    width: 44px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: 10px;
-}
-
-.fancybox-button.fancybox-close-small svg {
-    width: 44px;
-    position: fixed;
-    height: 44px;
-    top: 6px;
-}
-
-
 .information-modal {
     width: 80%;
 }
