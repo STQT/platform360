@@ -803,7 +803,7 @@
                                     <div id="floorplan-tab{{ $i }}" class="floorplan-tab" tabindex="-1"
                                          style="display: none;">
                                         <div class="plan">
-                                            <img class="planClass" id="floorid{{$floor->id}}"
+                                            <img class="planClass" id="floorid{{$floor->id}}" data-width="{{getimagesize('storage/floors/' . $floor->image)[0]}}" data-height="{{getimagesize('storage/floors/' . $floor->image)[1]}}"
                                                  src="/storage/floors/{{$floor->image}}">
                                             <span></span>
                                         </div>
@@ -1066,13 +1066,20 @@
             @if(!empty($etaj->code))
                 $(".buttonetaj{{$i}}").click(function () {
                     setTimeout(function () {
+                        let initHeight = $("#floorid{{$etaj->id}}").data('height');
+                        let frameHeight = initHeight > 600 ? initHeight - 300 : initHeight;
                         $("#floorid{{$etaj->id}}").annotatorPro({
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            frameWidth: $(window).width(),
+                            frameWidth: $("#floorid{{$etaj->id}}").data('width') + 'px',
+                            frameHeight: frameHeight + 'px',
+                            // frameHeight: $(window).height() - 300,
+                            // frameWidth: "auto",
+                            // frameWidth: $(window).width(),
                             iconsize: "15px",
-                            frameHeight: $(window).height() - 300,
+                            rubberband: false,
+                            // frameHeight: $(window).height() - 300,
                             fullscreen: true,
                             {!! $etaj->code !!}
                         });
@@ -1449,8 +1456,8 @@
                                 maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth: "auto",
-                                // frameHeight: $(window).height() - 300,
+                                frameWidth: data.etaji[iFloor].width,
+                                frameHeight: data.etaji[iFloor].height,
                                 fullscreen: true,
                                 iconsize: "15px",
                                 // rubberband: true

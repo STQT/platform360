@@ -8,7 +8,7 @@ use Spatie\Translatable\HasTranslations;
 class Floors extends Model
 {
     use LogsActivity;
-use HasTranslations;
+    use HasTranslations;
 
     /**
      * The database table used by the model.
@@ -24,6 +24,8 @@ use HasTranslations;
     */
     protected $primaryKey = 'id';
 
+    protected $appends = ['width', 'height'];
+
     /**
      * Attributes that should be mass-assignable.
      *
@@ -38,6 +40,16 @@ use HasTranslations;
     public function location()
     {
         return $this->belongsTo('App\Location', 'parrentid', 'id');
+    }
+
+    public function getWidthAttribute()
+    {
+        return getimagesize('storage/floors/' . $this->image)[0];
+    }
+
+    public function getHeightAttribute()
+    {
+        return getimagesize('storage/floors/' . $this->image)[1];
     }
 
     /**

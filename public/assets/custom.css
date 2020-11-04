@@ -108,3 +108,7 @@ body{
 .image-block img {
     max-width: 100%;
 }
+
+.ndd-annotator-container {
+    margin: 0 auto;
+}
