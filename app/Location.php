@@ -13,6 +13,9 @@ class Location extends Model
     use LogsActivity;
     use HasTranslations;
 
+    const VISIBILITY_PUBLIC = 1;
+    const VISIBILITY_LINK = 2;
+
     /**
      * The database table used by the model.
      *
@@ -58,6 +61,7 @@ class Location extends Model
         'sky_id',
         'subdomain',
         'published',
+        'visibility',
         'show_sublocation',
         'seo_title',
         'audio',
@@ -296,5 +300,14 @@ class Location extends Model
     {
         $baseName = request()->getSchemeAndHttpHost();
         return $baseName . '/' . \Lang::locale() . '/location/' . $this->slug;
+    }
+
+//    TODO: использовать встроенный механизм Laravel для получения опций
+    public function getVisibilityOptions()
+    {
+        return [
+            self::VISIBILITY_PUBLIC => 'Опубликовано для всех',
+            self::VISIBILITY_LINK => 'Доступ по ссылке',
+        ];
     }
 }

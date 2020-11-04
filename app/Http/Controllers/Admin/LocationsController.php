@@ -528,6 +528,7 @@ class LocationsController extends Controller
                 ->where(function ($query) {
                     $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                 })
+                ->where('visibility', Location::VISIBILITY_PUBLIC)
                 ->orderBy('order', 'asc')
                 ->get();
 
@@ -541,6 +542,7 @@ class LocationsController extends Controller
                         });
                     })
                     ->where('city_id', '=', $defaultlocation)
+                    ->where('visibility', Location::VISIBILITY_PUBLIC)
                     ->where(function ($query) {
                         $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                     })->get();
@@ -550,7 +552,9 @@ class LocationsController extends Controller
                     ->where(function ($query) {
                         $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
                     })
-                    ->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)->get();
+                    ->where('name', 'LIKE', '%' . $search . '%')->whereIn('category_id', $categories)
+                    ->where('visibility', Location::VISIBILITY_PUBLIC)
+                    ->get();
             }
         }
         if ($results->count()) {
@@ -884,7 +888,7 @@ class LocationsController extends Controller
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
         //Загрузка основноч точки
-        $location = Location::withoutGlobalScope('published')->where('slug', $slug)->with('categorylocation')->firstOrFail();
+        $location = Location::where('slug', $slug)->with('categorylocation')->firstOrFail();
 
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
