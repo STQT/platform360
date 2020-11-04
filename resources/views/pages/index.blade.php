@@ -1067,7 +1067,7 @@
                 $(".buttonetaj{{$i}}").click(function () {
                     setTimeout(function () {
                         let initHeight = $("#floorid{{$etaj->id}}").data('height');
-                        let frameHeight = initHeight > 600 ? initHeight - 300 : initHeight;
+                        let frameHeight = initHeight > 900 ? $(window).height() - 300 : initHeight;
                         $("#floorid{{$etaj->id}}").annotatorPro({
                             maxZoom: 2,
                             navigator: false,
@@ -1452,12 +1452,15 @@
                             </li>'
                             );
 
+                            let initHeight = data.etaji[iFloor].height;
+                            let frameHeight = initHeight > 1029 ? $(window).height() - 300 : initHeight;
+
                             floorObject = {
                                 maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
                                 frameWidth: data.etaji[iFloor].width,
-                                frameHeight: data.etaji[iFloor].height,
+                                frameHeight: frameHeight,
                                 fullscreen: true,
                                 iconsize: "15px",
                                 // rubberband: true
