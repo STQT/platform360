@@ -770,6 +770,7 @@ class LocationsController extends Controller
             'name' => 'required'
         ]);
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
+        $initialLocationTitle = $location->name;
         $data = $request->all();
         $requestData = $request->all();
 
@@ -846,6 +847,9 @@ class LocationsController extends Controller
                 $meta->update($requestData['meta']);
             }
             $location = Location::withoutGlobalScope('published')->with('meta')->findOrFail($id);
+            if ($initialLocationTitle != $requestData['name']) {
+                $requestData['slug'] = Str::slug($requestData['name'], '-');
+            }
             $location->update($requestData);
             $returnUrl = $request->session()->get('returnUrl');
 
