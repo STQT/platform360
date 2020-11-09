@@ -1068,15 +1068,21 @@
                     setTimeout(function () {
                         let initHeight = $("#floorid{{$etaj->id}}").data('height');
                         let frameHeight = initHeight > 900 ? $(window).height() - 300 : initHeight;
+                        let frameWidth = 'auto';
+                        if (isMobile) {
+                            frameHeight = $(window).height() - 300;
+                        } else {
+                            frameWidth = $("#floorid{{$etaj->id}}").data('width') + 'px',
+                            frameHeight = frameHeight + 'px';
+                        }
                         $("#floorid{{$etaj->id}}").annotatorPro({
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            frameWidth: $("#floorid{{$etaj->id}}").data('width') + 'px',
-                            frameHeight: frameHeight + 'px',
+                            frameWidth: frameWidth,
+                            frameHeight: frameHeight,
                             // frameHeight: $(window).height() - 300,
                             // frameWidth: "auto",
-                            // frameWidth: $(window).width(),
                             iconsize: "15px",
                             rubberband: false,
                             // frameHeight: $(window).height() - 300,
@@ -1454,12 +1460,19 @@
 
                             let initHeight = data.etaji[iFloor].height;
                             let frameHeight = initHeight > 1029 ? $(window).height() - 300 : initHeight;
+                            let frameWidth = 'auto';
+                            if (isMobile) {
+                                frameHeight = ($(window).height() - 300) + 'px';
+                            } else {
+                                frameWidth = data.etaji[iFloor].width + 'px';
+                                frameHeight = frameHeight + 'px';
+                            }
 
                             floorObject = {
                                 maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth: data.etaji[iFloor].width,
+                                frameWidth: frameWidth,
                                 frameHeight: frameHeight,
                                 fullscreen: true,
                                 iconsize: "15px",
