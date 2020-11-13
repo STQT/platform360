@@ -4287,6 +4287,7 @@ screen and (max-height: 600px) {
 .floorplan-tab {
     overflow: hidden;
     margin-bottom: 300px;
+    max-height: 739px;
 }
 
 @media (max-width: 64em) {
