@@ -4284,6 +4284,11 @@ screen and (max-height: 600px) {
   padding: 8px 8px;
 }
 
+.floorplan-tab {
+    overflow: hidden;
+    margin-bottom: 300px;
+}
+
 @media (max-width: 64em) {
   .floorplan-viewer__header__img {
     margin: 0 8px;
