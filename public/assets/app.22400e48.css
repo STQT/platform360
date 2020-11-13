@@ -4284,10 +4284,15 @@ screen and (max-height: 600px) {
   padding: 8px 8px;
 }
 
+#floor-krpano {
+  max-height: 739px;
+  overflow: hidden;
+}
+
 .floorplan-tab {
-    overflow: hidden;
-    margin-bottom: 300px;
-    max-height: 739px;
+  overflow: hidden;
+  margin-bottom: 300px;
+  max-height: 739px;
 }
 
 @media (max-width: 64em) {
