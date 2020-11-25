@@ -576,7 +576,9 @@ class LocationsController extends Controller
     {
         $sky = Location::withoutGlobalScope('published')->where('is_sky', 'on')->get();
         $tags = Tag::pluck('name', 'id')->all();
+        $location = new Location;
         return view('admin.locations.create', [
+            'location' => $location,
             'categories' => Category::all(),
             'cities' => Cities::all(),
             'sky' => $sky,
