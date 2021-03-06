@@ -7,7 +7,7 @@ require 'recipe/laravel.php';
 set('application', 'uzbekistan360.uz');
 
 // Project repository
-set('repository', 'git@git.sergeykulichkin.com:arbuz/uzbekistan360.uz.git');
+set('repository', 'git@git.makegood.uz:makegood/uzbekistan360.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
