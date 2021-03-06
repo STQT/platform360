@@ -748,7 +748,7 @@
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr;  position: relative; width: 273px; will-change: transform; overflow: hidden auto;">
-                                        <div class="ReactVirtualized__Grid__innerScrollContainer" role="rowgroup"
+                                        <div class="ReactVirtualized__Grid__innerScrollContainer" id="multifloor-other-locations" role="rowgroup"
                                              style="width: 240px; max-width: 240px; max-height: 3900px; overflow: hidden; position: relative;">
                                             @if (is_array($etajlocations) || is_object($etajlocations))
                                                 @foreach ($etajlocations as $key => $etajlocation)
@@ -1485,10 +1485,10 @@
                         }
 
                         //добавление других локаций в мультиэтажности
-                        $('.ReactVirtualized__Grid__innerScrollContainer').html('');
+                        $('#multifloor-other-locations').html('');
                         for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
                             let floorLocationItem = data.floors_locations[floorLocation];
-                            $('.ReactVirtualized__Grid__innerScrollContainer').append('<div class="listItem-wrapper" style="height: 260px;"\
+                            $('#multifloor-other-locations').append('<div class="listItem-wrapper" style="height: 260px;"\
                                  onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\')">\
                                 <div class="listItem" style="width: 224px; height: 244px;">\
                                     <div class="listItem__img"><img\
