@@ -65,7 +65,8 @@ class Location extends Model
         'show_sublocation',
         'seo_title',
         'audio',
-        'order'
+        'order',
+        'video',
     ];
 
     /**

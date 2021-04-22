@@ -38,6 +38,7 @@ Route::post('/form/{id}', 'HomeController@formProcessing');
 Route::get('/hasFloors/{id}', 'Admin\\LocationsController@hasFloors');
 Route::get('/getDirectories/{id}', 'Admin\\LocationsController@getDirectory');
 Auth::routes();
+Route::get('/krpano/video/{id}', 'HomeController@krpanoVideo');
 Route::get('/krpano/{index}/{id}', 'HomeController@krpano');
 Route::post('/savescreenshot', 'HomeController@savescreenshot');
 

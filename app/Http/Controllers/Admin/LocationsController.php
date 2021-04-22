@@ -594,6 +594,7 @@ class LocationsController extends Controller
             'name' => 'required',
             'panorama' => 'file',
             'audio' => 'file',
+            'video' => 'file'
         ]);
         $data = $request->all();
         $requestData = $request->all();
@@ -633,6 +634,19 @@ class LocationsController extends Controller
                 '/storage/panoramas/unpacked/' . $xmllocation . '', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
+
+        if (!empty($data['video'])) {
+            $randomStr = Str::random(10);
+            //$file = $data['video']->store($randomStr);
+
+            $file = $data['video'];
+
+            $filenameVideo = $randomStr .$file->getClientOriginalName();
+            $path = public_path().'/storage/panoramas/video';
+
+            $file->move($path, $filenameVideo);
+        }
+
         if (!empty($data['audio'])) {
             $randomStr = Str::random(40);
             $extension = $data['audio']->getClientOriginalExtension();
@@ -643,6 +657,19 @@ class LocationsController extends Controller
         }
         if (!empty($panoramas)) {
             $requestData['panorama'] = json_encode($panoramas);
+            $location = Location::create($requestData);
+            $meta = \App\Meta::create($requestData['meta']);
+            $location->meta_id = $meta->id;
+            $location->save();
+
+            if (isset($requestData['tags'])) {
+                $tagIds = $requestData['tags'];
+                $location->tags()->sync($tagIds);
+            }
+
+            return redirect('admin/locations')->with('flash_message', 'Location added!');
+        } elseif (!empty($filenameVideo)) {
+            $requestData['video'] = $filenameVideo;
             $location = Location::create($requestData);
             $meta = \App\Meta::create($requestData['meta']);
             $location->meta_id = $meta->id;
@@ -737,6 +764,15 @@ class LocationsController extends Controller
         $locationArray['floors_locations'] = $etajlocations;
 
         return $locationArray;
+    }
+
+    public function showVideo($id)
+    {
+        $location = Location::withoutGlobalScope('published')->findOrFail($id);
+
+        return view('admin.locations.video', compact('location'));
+
+
     }
 
     //Редактирование локации
@@ -896,6 +932,11 @@ class LocationsController extends Controller
         //Загрузка основноч точки
         $location = Location::where('slug', $slug)->with('categorylocation')->firstOrFail();
 
+        /*if ($location->video) {
+            return view('partials.video', [
+                'location' => $location,
+            ]);
+        }*/
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations = "";

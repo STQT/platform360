@@ -259,6 +259,15 @@ class HomeController extends Controller
         ]);
     }
 
+    //Krpano panoramic video
+    public function krpanoVideo($id)
+    {
+        $location = Location::find($id);
+        return view('partials.video', [
+            'location' => $location,
+        ]);
+    }
+
     //Создание скриншота
     public function savescreenshot(Request $request)
     {

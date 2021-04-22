@@ -2024,13 +2024,24 @@
             });
         }
 
-        embedpano({
-            target: "pano",
-            id: "pano1",
-            xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}",
-            passQueryParameters: true,
-            html5: "only+webgl",
-            onready: krpano_onready_callback
-        });
+        @if($location->panorama)
+            embedpano({
+                target: "pano",
+                id: "pano1",
+                xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}",
+                passQueryParameters: true,
+                html5: "only+webgl",
+                onready: krpano_onready_callback
+            });
+        @elseif($location->video)
+            embedpano({
+                target: "pano",
+                id: "pano1",
+                xml: "/{{ app()->getLocale() }}/krpano/video/{{ $location->id }}",
+                passQueryParameters: true,
+                html5: "only+webgl",
+                onready: krpano_onready_callback
+            });
+        @endif
     </script>
 @endsection
