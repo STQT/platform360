@@ -153,6 +153,9 @@ class Location extends Model
     public static function folderNames($loc)
     {
         foreach ($loc as $key2 => $value2) {
+            if (!isset($loc[$key2]->panorama[0]->panoramas)) {
+                continue;
+            }
             $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
             try {
                 $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
