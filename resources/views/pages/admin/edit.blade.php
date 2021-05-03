@@ -186,8 +186,8 @@
 
                     for (var i = 0; i < data.data.length; i++) {
                         var panos = JSON.parse(data.data[i].panorama);
-
-                        if(panos.length == 1) {
+                        var panosvideo = data.data[i].video;
+                        if(panos && panos.length == 1) {
 
                             if (data.data[i].podlocparent_id == null) {
                                 xmlDoc =  $.parseXML(data.data[i].xmllocation.replace('/>','>') + '</view>');
@@ -210,8 +210,17 @@
                             }
                         }
                         else {
-                            for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
-                                $('.info-list').append('<li><a class="locationItem" data-index="' + floorIndex +'" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '(' + panos[i].name + ')' + '</a></li>');
+                            if (panosvideo.length >= 1) {
+
+                                if (data.data[i].podlocparent_id == null) {
+                                    $preview = data.data[i].preview;
+                                    var parentId = data.data[i].id;
+                                    $('.info-list').append('<li data-id="' + data.data[i].id + '"><a class="locationItem" data-location="' + data.data[i].id + '" href="#none"><img src="'+ '/storage/panoramas/preview/' + $preview+'" width="150">' + data.data[i].name + '</a><a class="expand-subcategories"><img src="/images/admin/expand.png"></a><ul class="' + (parentId != {{ $location->id }} ? 'hidden' : '') + '"></ul></li>');
+                                }
+                            } else {
+                                for (var floorIndex = 0; floorIndex < panos.length; floorIndex++) {
+                                    $('.info-list').append('<li><a class="locationItem" data-index="' + floorIndex +'" data-location="' + data.data[i].id + '" href="#none">' + data.data[i].name + '(' + panos[i].name + ')' + '</a></li>');
+                                }
                             }
                         }
                     }

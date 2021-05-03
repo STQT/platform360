@@ -138,6 +138,14 @@
           </div>
       </div>
 
+      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+          <div class="form-group{{ $errors->has('preview') ? 'has-error' : ''}}">
+              {!! Form::label('preview', 'Preview', ['class' => 'control-label']) !!}
+              {!! Form::file('preview', null, ['class' => 'form-control']) !!}
+              {!! $errors->first('preview', '<p class="help-block">:message</p>') !!}
+          </div>
+      </div>
+
       <div class="hasNo">
           <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">
               {!! Form::label('audio', 'Аудио', ['class' => 'control-label']) !!}

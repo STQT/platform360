@@ -67,6 +67,7 @@ class Location extends Model
         'audio',
         'order',
         'video',
+        'preview',
     ];
 
     /**
