@@ -713,15 +713,22 @@
                                     <div class="listItem-wrapper"
                                          onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}')">
                                         <div class="listItem">
-                                            <div class="listItem__img"><img
-                                                        src="/storage/panoramas/unpacked/{{$otherlocation->img}}/thumb.jpg"
-                                                        class="listItem__img--scene"></div>
-                                            <div class="listItem__icon-category">
-                                                <div class="icon-wrapper__icon--category category-normal"
-                                                     style="background-color:{{$otherlocation->categorylocation->color}}">
-                                                    <img src="/storage/cat_icons/{{$otherlocation->categorylocation->cat_icon_svg}}">
+                                            @if($otherlocation->preview)
+                                                <div class="listItem__img">
+                                                    <img src="{{$otherlocation->preview}}"
+                                                            class="listItem__img--scene">
                                                 </div>
-                                            </div>
+                                            @else
+                                                <div class="listItem__img"><img
+                                                            src="/storage/panoramas/unpacked/{{$otherlocation->img}}/thumb.jpg"
+                                                            class="listItem__img--scene"></div>
+                                                <div class="listItem__icon-category">
+                                                    <div class="icon-wrapper__icon--category category-normal"
+                                                         style="background-color:{{$otherlocation->categorylocation->color}}">
+                                                        <img src="/storage/cat_icons/{{$otherlocation->categorylocation->cat_icon_svg}}">
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="listItem__text">
                                                 <div><span>{{$otherlocation->name}}</span></div>
                                             </div>
@@ -1617,6 +1624,7 @@
                     }
                 });
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
+                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         add_exist_hotspot(data[i].h,
                             data[i].v,
@@ -1637,7 +1645,7 @@
             }
         }
 
-        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image) {
+        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image,) {
             hs_name = hs_name + ':' + index;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
@@ -1717,7 +1725,8 @@
                     hotspottext.text(name);
                     hotspoticon.attr("src", "/storage/cat_icons/" + cat_icon_svg + "");
                     hotspoticon.css("background-color", color)
-                    hotspotimg.attr("src", "/storage/panoramas/unpacked/" + img + "/thumb.jpg");
+                    /*hotspotimg.attr("src", "/storage/panoramas/unpacked/" + img + "/thumb.jpg");*/
+                    hotspotimg.attr("src", "/storage/panoramas/preview/" +img);
                 });
 
                 krpano.set("hotspot[" + hs_name + "].distorted", false);
