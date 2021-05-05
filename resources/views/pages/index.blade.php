@@ -1185,6 +1185,7 @@
         var krpano = null;
         var currentVideoVolume = '0';
 
+        //код выполняется, когда панорама загружена (preload)
         function krpano_onready_callback(krpano_interface) {
             krpano = krpano_interface;
             setTimeout(function () {
@@ -1355,8 +1356,14 @@
                 var tmp = xmlname;
                 xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
                 remove_all_hotspots();
-                krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-                krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
+                // krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+                // krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
+                let videoXml = '';
+                let xmlVideo = $.get('http://uzbekistan360/' + xmlname, function (response) {
+                    videoXml = response;
+                    krpano.call("loadxml("+videoXml+")");
+                    krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
+                });
 
                 xmlname = xmlname.split('/').join(':');
                 xmlname = xmlname.replace(':', '/');
