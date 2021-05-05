@@ -1017,7 +1017,7 @@ class LocationsController extends Controller
         foreach ($krhotspots as $key => $value) {
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
-                    if ($location->video == '') {
+                    if (!empty($krhotspotinfo->video)) {
                         $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
                         $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
                         foreach ($old as $item) {
@@ -1027,7 +1027,7 @@ class LocationsController extends Controller
                             }
                         }
                     } else {
-                        $krhotspots[$key]->img = $location->preview;
+                        $krhotspots[$key]->img = $krhotspotinfo[$key2]->preview;
                     }
 
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
