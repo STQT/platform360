@@ -1185,6 +1185,7 @@
         var krpano = null;
         var currentVideoVolume = '0';
 
+        //код выполняется, когда панорама загружена (preload)
         function krpano_onready_callback(krpano_interface) {
             krpano = krpano_interface;
             setTimeout(function () {
@@ -1200,7 +1201,7 @@
                         {{ $hotspot->v }},
                     "{!! str_replace('"', '\"', $hotspot->name) !!}",
                     "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",
-                    "{{$hotspot->img}}",
+                    "{{$hotspot->mainlocation->video ? '/panoramas/preview/' . $hotspot->mainlocation->preview : $hotspot->img}}",
                     "uzbekistan:{{ $hotspot->destination_id }}",
                         {{ $index }},
                     "{{$hotspot->slug}}",
