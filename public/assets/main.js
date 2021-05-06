@@ -235,9 +235,13 @@ $(function() {
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-                    xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
-                    $preview = $( xmlDoc ).find('preview');
-                    var img = $preview.attr("url").replace('preview', 'thumb');
+                    if (data[i].video == '') {
+                        xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
+                        $preview = $( xmlDoc ).find('preview');
+                        var img = $preview.attr("url").replace('preview', 'thumb');
+                    } else {
+                        var img = '/storage/panoramas/preview/' + data[i].preview;
+                    }
 
                     if (screen.width >= 1024) {
                         searchItem += `

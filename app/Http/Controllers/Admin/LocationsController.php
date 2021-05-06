@@ -1235,6 +1235,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
+                    $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);
                     $hotspotInformation = str_replace('"', '\"', $hotspotInformation);

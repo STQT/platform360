@@ -711,7 +711,7 @@
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
                                     <div class="listItem-wrapper"
-                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}')">
+                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, $otherlocation->video)">
                                         <div class="listItem">
                                             @if($otherlocation->preview)
                                                 <div class="listItem__img">
@@ -760,7 +760,7 @@
                                             @if (is_array($etajlocations) || is_object($etajlocations))
                                                 @foreach ($etajlocations as $key => $etajlocation)
                                                     <div class="listItem-wrapper" style="height: 260px;"
-                                                         onclick="loadpano('uzbekistan:{{$etajlocation->id}}', {{$i}}, '{{$etajlocation->slug}}')">
+                                                         onclick="loadpano('uzbekistan:{{$etajlocation->id}}', {{$i}}, '{{$etajlocation->slug}}', null, null, null, '{{$etajlocation->video}}')">
                                                         <div class="listItem" style="width: 224px; height: 244px;">
                                                             <div class="listItem__img"><img
                                                                         src="/storage/panoramas/unpacked/{{$etajlocation->img}}/thumb.jpg"
@@ -915,7 +915,7 @@
                                 @foreach ($isfeatured as $i => $featured)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$featured->lat}}"
                                          data-lng="{{$featured->lng}}"
-                                         onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}')">
+                                         onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}', null, null, null, {{$featured->video}})">
                                     <div class="listItem">
                                       <div class="listItem__img"><img
                                                   src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg"
@@ -951,7 +951,7 @@
                               @foreach ($isnew as $i => $new)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$new->lat}}"
                                          data-lng="{{$new->lng}}"
-                                         onclick="loadpano('uzbekistan:{{$new->id}}', {{$i}}, '{{$new->slug}}')">
+                                         onclick="loadpano('uzbekistan:{{$new->id}}', {{$i}}, '{{$new->slug}}', null, null, null, '{{$new->video}}')">
                                     <div class="listItem">
                                       <div class="listItem__img"><img
                                                   src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg"
@@ -1121,7 +1121,7 @@
                 );
 
                 function onAjaxSuccess2(data) {
-                    loadpano('uzbekistan:' + data.id + '', 0, data.slug, '', '', 'nooo');
+                    loadpano('uzbekistan:' + data.id + '', 0, data.slug, '', '', 'nooo', data.video);
                 }
             } else {
                 pathname = pathname.replace('/{{ app()->getLocale() }}/location/', '');
@@ -1133,7 +1133,7 @@
                 );
 
                 function onAjaxSuccess2(data) {
-                    loadpano('uzbekistan:' + data.id + '', 0, data.slug, '', '', 'nooo');
+                    loadpano('uzbekistan:' + data.id + '', 0, data.slug, '', '', 'nooo', data.video);
                 }
             }
         });
@@ -1208,7 +1208,8 @@
                     "{{$hotspot->color}}",
                     "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
                     "{!! $informationText !!}",
-                    "{{ $hotspot->image }}"
+                    "{{ $hotspot->image }}",
+                    "{{ $hotspot->destinationlocation->video }}"
                 );
                 @endforeach
             }, 3000);
@@ -1346,7 +1347,7 @@
             }
         }
 
-        function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl) {
+        function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl, video) {
             if (krpano) {
                 originalxmlnam = xmlname;
                 originalxmlname = originalxmlnam.match(/\d/g);
@@ -1356,14 +1357,17 @@
                 var tmp = xmlname;
                 xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
                 remove_all_hotspots();
-                // krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
-                // krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
-                let videoXml = '';
-                let xmlVideo = $.get('http://uzbekistan360/' + xmlname, function (response) {
-                    videoXml = response;
-                    krpano.call("loadxml("+videoXml+")");
-                    krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
-                });
+                if (!video) {
+                    krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
+                    krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
+                } else {
+                    let videoXml = '';
+                    let xmlVideo = $.get('http://uzbekistan360/' + xmlname, function (response) {
+                        videoXml = response;
+                        krpano.call("loadxml(" + videoXml + ")");
+                        krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
+                    });
+                }
 
                 xmlname = xmlname.split('/').join(':');
                 xmlname = xmlname.replace(':', '/');
@@ -1644,14 +1648,15 @@
                             data[i].color,
                             data[i].type,
                             data[i].information,
-                            data[i].image
+                            data[i].image,
+                            data[i].video,
                         );
                     }
                 });
             }
         }
 
-        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image,) {
+        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video) {
             hs_name = hs_name + ':' + index;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
@@ -1757,7 +1762,7 @@
                         } else {
                             krpano.call("moveto("+h+","+v+",linear(45))");
                             setTimeout(function() {
-                                loadpano(hs_name, index, slug, null, null, null);
+                                loadpano(hs_name, index, slug, null, null, null, video);
                             }, 2000);
                         }
 
