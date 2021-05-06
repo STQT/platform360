@@ -1736,8 +1736,12 @@
                     hotspottext.text(name);
                     hotspoticon.attr("src", "/storage/cat_icons/" + cat_icon_svg + "");
                     hotspoticon.css("background-color", color)
-                    /*hotspotimg.attr("src", "/storage/panoramas/unpacked/" + img + "/thumb.jpg");*/
-                    hotspotimg.attr("src", "/storage/panoramas/preview/" +img);
+                    if (!video) {
+                        hotspotimg.attr("src", "/storage/panoramas/unpacked/" + img + "/thumb.jpg");
+                    } else {
+                        hotspotimg.attr("src", "/storage/panoramas/preview/" + img);
+                    }
+
                 });
 
                 krpano.set("hotspot[" + hs_name + "].distorted", false);
