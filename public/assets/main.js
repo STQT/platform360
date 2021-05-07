@@ -235,7 +235,7 @@ $(function() {
                 var img = "";
 
                 for (i = 0; i < data.length; i++) {
-                    if (data[i].video == '') {
+                    if (data[i].video == null) {
                         xmlDoc =  $.parseXML(data[i].xmllocation.replace('/>','>') + '</view>');
                         $preview = $( xmlDoc ).find('preview');
                         var img = $preview.attr("url").replace('preview', 'thumb');
@@ -245,7 +245,7 @@ $(function() {
 
                     if (screen.width >= 1024) {
                         searchItem += `
-                      <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
+                      <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, '` + data[i].video + `')">
                       <div class="listItem">
                           <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
@@ -259,7 +259,7 @@ $(function() {
                   `;
                     } else {
                         searchItem += `
-                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `')">
+                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, '` + data[i].video + `')">
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
