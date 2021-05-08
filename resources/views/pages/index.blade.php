@@ -1201,7 +1201,7 @@
                         {{ $hotspot->v }},
                     "{!! str_replace('"', '\"', $hotspot->name) !!}",
                     "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",
-                    "{{$hotspot->mainlocation->video ? '/panoramas/preview/' . $hotspot->mainlocation->preview : $hotspot->img}}",
+                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",
                     "uzbekistan:{{ $hotspot->destination_id }}",
                         {{ $index }},
                     "{{$hotspot->slug}}",
@@ -1362,7 +1362,7 @@
                     krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
                 } else {
                     let videoXml = '';
-                    let xmlVideo = $.get('http://uzbekistan360/' + xmlname, function (response) {
+                    let xmlVideo = $.get('http://{{request()->getHost()}}' + xmlname, function (response) {
                         videoXml = response;
                         krpano.call("loadxml(" + videoXml + ")");
                         krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
@@ -1739,7 +1739,7 @@
                     if (!video) {
                         hotspotimg.attr("src", "/storage/panoramas/unpacked/" + img + "/thumb.jpg");
                     } else {
-                        hotspotimg.attr("src", "/storage/panoramas/preview/" + img);
+                        hotspotimg.attr("src", img);
                     }
 
                 });
