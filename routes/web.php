@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/locations/add-information', 'Admin\\LocationsController@apiAddInformationhotspot');
         Route::post('/locations/upload-video', 'Admin\\LocationsController@uploadVideo');
         Route::get('/deletehotspot/{id}', 'Admin\\HotspotsController@deletehotspot');
+        Route::get('/deleteinformation/{id}', 'Admin\\HotspotsController@deleteinformation');
         Route::get('/getcitydefaultlocation/{id}', 'Admin\\LocationsController@getcitydefaultlocation');
         Route::resource('admin/hotspots', 'ADmin\\HotspotsController');
     });
