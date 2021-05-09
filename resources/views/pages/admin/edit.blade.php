@@ -57,6 +57,9 @@
             <div class="form-group">
                 <img src="" alt="" style="display: none" class="preview">
             </div>
+
+            <div id="deleteinformation" onclick="deleteinformation()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>
@@ -313,6 +316,21 @@
               alert('Удалили точку');
           }
       }
+
+        function deleteinformation() {
+            krpano.call("removehotspot(" + hotspotname + ")");
+            if (hotspotid != "new") {
+
+                $.get('/ru/api/deleteinformation/' + hotspotid).done(function (data) {
+                    $('.modal').fadeOut();
+                    alert('Удалили точку: ' + hotspotid);
+                });
+            } else {
+
+                $('.modal').fadeOut();
+                alert('Удалили точку');
+            }
+        }
       function add_hotspot() {
          $('body').dblclick(function() {
             if (krpano) {

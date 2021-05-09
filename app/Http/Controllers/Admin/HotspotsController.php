@@ -120,6 +120,22 @@ class HotspotsController extends Controller
          return 'no';
        }
      }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+     public function deleteinformation($id) {
+       if (Auth::check()) {
+         Hotspot::destroy($id);
+         return 'ok';
+       } else {
+         return 'no';
+       }
+     }
     public function destroy($id)
     {
         Hotspot::destroy($id);
