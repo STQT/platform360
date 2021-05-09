@@ -1362,7 +1362,14 @@
                     krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
                 } else {
                     let videoXml = '';
-                    let xmlVideo = $.get('{{(stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://') . request()->getHost()}}' + xmlname, function (response) {
+                    @php
+                    if(config('app.env') === 'production') {
+                        $protocolName = 'https://';
+                    } else {
+                        $protocolName = 'http://';
+                    }
+                    @endphp
+                    let xmlVideo = $.get('{{$protocolName . request()->getHost()}}' + xmlname, function (response) {
                         videoXml = response;
                         krpano.call("loadxml(" + videoXml + ")");
                         krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
