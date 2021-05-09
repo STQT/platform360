@@ -1362,7 +1362,7 @@
                     krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
                 } else {
                     let videoXml = '';
-                    let xmlVideo = $.get('http://{{request()->getHost()}}' + xmlname, function (response) {
+                    let xmlVideo = $.get('{{Request::getSchemeAndHttpHost()}}' + xmlname, function (response) {
                         videoXml = response;
                         krpano.call("loadxml(" + videoXml + ")");
                         krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
