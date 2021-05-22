@@ -9,7 +9,7 @@
         );
     </action>
 
-    <scene name="scene1" title="krpano Panoramic Video Example">
+    <scene name="scene1" title="">
 
         <!-- include the videoplayer interface / skin (with VR support) -->
         <include url="{{asset("/skin/videointerface.xml")}}" />

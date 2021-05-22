@@ -8,7 +8,7 @@
                    layout_maxwidth="814"
                    controlbar_width="-24"
                    controlbar_height="40"
-                   controlbar_offset="20"
+                   controlbar_offset="60"
                    design_skin_images="vtourskin.png"
                    design_bgcolor="0x2D3E50"
                    design_bgalpha="0.8"

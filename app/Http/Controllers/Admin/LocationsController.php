@@ -641,8 +641,8 @@ class LocationsController extends Controller
             //$file = $data['video']->store($randomStr);
 
             $file = $data['video'];
-
-            $filenameVideo = $randomStr .$file->getClientOriginalName();
+            $extension = pathinfo($file->getClientOriginalName())['extension'];
+            $filenameVideo = $randomStr . '.' . $extension;
             $path = public_path().'/storage/panoramas/video';
 
             $file->move($path, $filenameVideo);
