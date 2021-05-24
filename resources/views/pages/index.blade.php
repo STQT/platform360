@@ -1113,7 +1113,8 @@
         }
         $(window).on('popstate', function (event) {
             var pathname = window.location.pathname;
-            if (pathname == "/") {
+            let rootLangPattern = /\/[a-zA-Z]{2}$/;
+            if (rootLangPattern.test(pathname)) {
                 pathname = "/{{ app()->getLocale() }}/api/getcitydefaultlocation/{{$defaultlocation}}";
                 $.get(pathname,
                     {},
