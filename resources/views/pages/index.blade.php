@@ -915,7 +915,7 @@
                                 @foreach ($isfeatured as $i => $featured)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$featured->lat}}"
                                          data-lng="{{$featured->lng}}"
-                                         onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}', null, null, null, {{$featured->video}})">
+                                         onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}', null, null, null, '{{$featured->video}}')">
                                     <div class="listItem">
                                       <div class="listItem__img"><img
                                                   src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg"
