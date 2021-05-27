@@ -125,8 +125,24 @@
       <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
           <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">
               {!! Form::label('panorama', 'Panorama', ['class' => 'control-label']) !!}
-              {!! Form::file('panorama', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+              {!! Form::file('panorama', null, ['class' => 'form-control']) !!}
               {!! $errors->first('panorama', '<p class="help-block">:message</p>') !!}
+          </div>
+      </div>
+
+      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+          <div class="form-group{{ $errors->has('video') ? 'has-error' : ''}}">
+              {!! Form::label('video', 'Video', ['class' => 'control-label']) !!}
+              {!! Form::file('video', null, ['class' => 'form-control']) !!}
+              {!! $errors->first('video', '<p class="help-block">:message</p>') !!}
+          </div>
+      </div>
+
+      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+          <div class="form-group{{ $errors->has('preview') ? 'has-error' : ''}}">
+              {!! Form::label('preview', 'Preview', ['class' => 'control-label']) !!}
+              {!! Form::file('preview', null, ['class' => 'form-control']) !!}
+              {!! $errors->first('preview', '<p class="help-block">:message</p>') !!}
           </div>
       </div>
 

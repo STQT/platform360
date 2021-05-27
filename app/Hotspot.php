@@ -49,6 +49,12 @@ class Hotspot extends Model
         return $this->hasMany('App\Location', 'id', 'destination_id');
     }
 
+    public function destinationlocation()
+    {
+
+        return $this->hasOne('App\Location', 'id', 'destination_id');
+    }
+
     /**
      * Change activity log event description
      *

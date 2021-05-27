@@ -67,7 +67,6 @@
 
     <scene name="scene1" title="scene1" onstart="" thumburl="/storage/panoramas/unpacked/{{ $location->folderName() }}/thumb.jpg" lat="" lng="" heading="">
 
-
 {!!$location->xmllocation!!}
 
 

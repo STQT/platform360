@@ -174,21 +174,22 @@ class LocationsController extends Controller
         ));
     }
 
-//    public function hasFloors($id) {
-//        if (strpos($id, ':') !== false) {
-//            $ids = explode(':', $id);
-//            //получаем ID панорамы
-//            $location = Location::find(end($ids));
-//
-//            if(!empty($location)) {
-//                if($location->etaji) {
-//                    return 1;
-//                }
-//            }
-//        }
-//
-//        return 0;
-//    }
+    public function hasFloors($id)
+    {
+        if (strpos($id, ':') !== false) {
+            $ids = explode(':', $id);
+            //получаем ID панорамы
+            $location = Location::find(end($ids));
+
+            if(!empty($location)) {
+                if($location->etaji) {
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+    }
 
     public function unpublished(Request $request)
     {
@@ -594,6 +595,7 @@ class LocationsController extends Controller
             'name' => 'required',
             'panorama' => 'file',
             'audio' => 'file',
+            'video' => 'file'
         ]);
         $data = $request->all();
         $requestData = $request->all();
@@ -633,6 +635,31 @@ class LocationsController extends Controller
                 '/storage/panoramas/unpacked/' . $xmllocation . '', $d);;
             $panoramas = [['panoramas' => [['panorama' => $randomStr]]]];
         }
+
+        if (!empty($data['video'])) {
+            $randomStr = Str::random(10);
+            //$file = $data['video']->store($randomStr);
+
+            $file = $data['video'];
+            $extension = pathinfo($file->getClientOriginalName())['extension'];
+            $filenameVideo = $randomStr . '.' . $extension;
+            $path = public_path().'/storage/panoramas/video';
+
+            $file->move($path, $filenameVideo);
+        }
+
+        if (!empty($data['preview'])) {
+            $randomStr = Str::random(10);
+            //$file = $data['video']->store($randomStr);
+
+            $file = $data['preview'];
+
+            $filename = $randomStr .$file->getClientOriginalName();
+            $path = public_path().'/storage/panoramas/preview';
+            $requestData['preview'] = $filename;
+            $file->move($path, $filename);
+        }
+
         if (!empty($data['audio'])) {
             $randomStr = Str::random(40);
             $extension = $data['audio']->getClientOriginalExtension();
@@ -643,6 +670,20 @@ class LocationsController extends Controller
         }
         if (!empty($panoramas)) {
             $requestData['panorama'] = json_encode($panoramas);
+            $location = Location::create($requestData);
+            $meta = \App\Meta::create($requestData['meta']);
+            $location->meta_id = $meta->id;
+            $location->save();
+
+            if (isset($requestData['tags'])) {
+                $tagIds = $requestData['tags'];
+                $location->tags()->sync($tagIds);
+            }
+
+            return redirect('admin/locations')->with('flash_message', 'Location added!');
+        } elseif (!empty($filenameVideo)) {
+            $requestData['video'] = $filenameVideo;
+            $requestData['preview'] = $filename;
             $location = Location::create($requestData);
             $meta = \App\Meta::create($requestData['meta']);
             $location->meta_id = $meta->id;
@@ -737,6 +778,15 @@ class LocationsController extends Controller
         $locationArray['floors_locations'] = $etajlocations;
 
         return $locationArray;
+    }
+
+    public function showVideo($id)
+    {
+        $location = Location::withoutGlobalScope('published')->findOrFail($id);
+
+        return view('admin.locations.video', compact('location'));
+
+
     }
 
     //Редактирование локации
@@ -896,6 +946,11 @@ class LocationsController extends Controller
         //Загрузка основноч точки
         $location = Location::where('slug', $slug)->with('categorylocation')->firstOrFail();
 
+        /*if ($location->video) {
+            return view('partials.video', [
+                'location' => $location,
+            ]);
+        }*/
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations = "";
@@ -958,20 +1013,24 @@ class LocationsController extends Controller
         //Загрузка хотспотов основной точки
         $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
-
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
-                    $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
-                    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    foreach ($old as $item) {
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
-                            $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;
+                    if ($krhotspotinfo[$key2]->video) {
+                        $krhotspots[$key]->img = $krhotspotinfo[$key2]->preview;
+                    } else {
+                        $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
+                        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+                        foreach ($old as $item) {
+                            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
+                                $filename = $test . '/' . $item;
+                                $krhotspots[$key]->img = $filename;
+                            }
                         }
                     }
+
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
                     $krhotspots[$key]->cat_icon = $krhotspotinfo[$key2]->categorylocation->cat_icon;
@@ -986,7 +1045,11 @@ class LocationsController extends Controller
             $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
         $sss = Location::folderNames($otherlocations);
         foreach ($otherlocations as $key2 => $value2) {
-            $otherlocations[$key2]->img = $sss[$key2];
+            if ($location->video == '') {
+                $otherlocations[$key2]->img = $sss[$key2];
+            } else {
+                $otherlocations[$key2]->img = $location->preview;
+            }
         }
 
         //Загрузка всех категорий
@@ -1157,12 +1220,16 @@ class LocationsController extends Controller
         foreach ($krhotspots as $key => $value) {
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
-                    $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
-                    $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    foreach ($old as $item) {
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
-                            $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;
+                    if ($krhotspotinfo[$key2]->video) {
+                        $krhotspots[$key]->img = $krhotspotinfo[$key2]->preview;
+                    } else {
+                        $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
+                        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+                        foreach ($old as $item) {
+                            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
+                                $filename = $test . '/' . $item;
+                                $krhotspots[$key]->img = $filename;
+                            }
                         }
                     }
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
@@ -1173,6 +1240,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
+                    $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);
                     $hotspotInformation = str_replace('"', '\"', $hotspotInformation);

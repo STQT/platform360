@@ -10,6 +10,7 @@ use DB;
 use App\Sky;
 use App\Hotspot;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Mail;
 use Illuminate\Support\Facades\Cookie;
 use Spatie\Translatable\HasTranslations;
@@ -102,6 +103,7 @@ class HomeController extends Controller
             'on')->with('categorylocation')->get();
         if ($locationscordinate->isNotEmpty()) {
             $sss = Location::folderNames($locationscordinate);
+            Log::info(print_r($sss, true));
             foreach ($locationscordinate as $key2 => $value2) {
                 $locationscordinate[$key2]->img = $sss[$key2];
             }
@@ -137,17 +139,21 @@ class HomeController extends Controller
         foreach ($krhotspots as $key => $value) {
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
-                    $test = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
-                    try {
-                        $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-                    } catch (\Exception $e) {
-                        $dirs = [];
-                    }
-                    foreach ($dirs as $item) {
-                        if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
-                            $filename = $test . '/' . $item;
-                            $krhotspots[$key]->img = $filename;
+                    if (empty($krhotspotinfo[$key2]->video)) {
+                        $panoPath = json_decode($krhotspotinfo[$key2]->panorama)[0]->panoramas[0]->panorama;
+                        try {
+                            $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $panoPath);
+                        } catch (\Exception $e) {
+                            $dirs = [];
                         }
+                        foreach ($dirs as $item) {
+                            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $panoPath . '/' . $item)) {
+                                $filename = $panoPath . '/' . $item;
+                                $krhotspots[$key]->img = $filename;
+                            }
+                        }
+                    } else {
+                         $krhotspots[$key]->img = '/storage/panoramas/preview/' . $krhotspotinfo[$key2]->preview;
                     }
                     $krhotspots[$key]->name = $krhotspotinfo[$key2]->name;
                     $krhotspots[$key]->slug = $krhotspotinfo[$key2]->slug;
@@ -163,6 +169,7 @@ class HomeController extends Controller
             $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
         $sss = Location::folderNames($otherlocations);
         foreach ($otherlocations as $key2 => $value2) {
+            Log::info($otherlocations[$key2]);
             $otherlocations[$key2]->img = $sss[$key2];
         }
 
@@ -253,9 +260,19 @@ class HomeController extends Controller
     public function krpano($index, $id)
     {
         $location = Location::find($id);
-        return view('partials.xml', [
+        $view = $location->video ? 'video' : 'xml';
+        return view('partials.' . $view, [
             'location' => $location,
             'index' => $index
+        ]);
+    }
+
+    //Krpano panoramic video
+    public function krpanoVideo($id)
+    {
+        $location = Location::find($id);
+        return view('partials.video', [
+            'location' => $location,
         ]);
     }
 

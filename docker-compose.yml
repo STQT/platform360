@@ -8,8 +8,8 @@ services:
         links:
             - phpfpm
         volumes:
-            - ./logs/access.log:/opt/bitnami/nginx/logs/myapp-access.log
-            - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
+            - ./logs/access.log:/opt/bitnami/nginx/logs/access.log
+            - ./logs/error.log:/opt/bitnami/nginx/logs/error.log
             - ./docker/nginx/app.conf:/opt/bitnami/nginx/conf/server_blocks/app.conf
             - ./:/myapps
 #            - /media/skey/Elements/panoramas:/myapps/storage/app/public/panoramas
