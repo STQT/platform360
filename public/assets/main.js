@@ -243,9 +243,11 @@ $(function() {
                         var img = '/storage/panoramas/preview/' + data[i].preview;
                     }
 
+                    let videoFile = data[i].video ? ("'" + data[i].video + "'") : null;
                     if (screen.width >= 1024) {
+                        console.log("video:", data[i].video);
                         searchItem += `
-                      <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, '` + data[i].video + `')">
+                      <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, ` + videoFile + `)">
                       <div class="listItem">
                           <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                           <div class="listItem__icon-category">
@@ -259,7 +261,7 @@ $(function() {
                   `;
                     } else {
                         searchItem += `
-                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, '` + data[i].video + `')">
+                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, ` + videoFile + `)">
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">
