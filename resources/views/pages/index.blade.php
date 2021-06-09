@@ -901,8 +901,7 @@
                       <div class="wrapper-slider__slider"><span class="icon-ic_arrow_up"></span><span
                                   class="icon-ic_arrow_down"></span></div>
                     </div>
-                    <div class="mybtn wrapper-button"
-                         onclick="alert('ok')"><span>{{ trans('uzb360.filtr')}}</span></div>
+                    <div class="mybtn wrapper-button"><span>{{ trans('uzb360.filtr')}}</span></div>
                   </div>
                   <div class="Pane horizontal Pane2  ">
                     <div class="explore__listContainer">
@@ -917,9 +916,15 @@
                                          data-lng="{{$featured->lng}}"
                                          onclick="loadpano('uzbekistan:{{$featured->id}}', {{$i}}, '{{$featured->slug}}', null, null, null, '{{$featured->video}}')">
                                     <div class="listItem">
-                                      <div class="listItem__img"><img
-                                                  src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg"
-                                                  class="listItem__img--scene"></div>
+                                      <div class="listItem__img">
+                                          @if ($featured->video && $featured->preview)
+                                          <img src="/storage/panoramas/preview/{{$featured->img}}"
+                                                  class="listItem__img--scene">
+                                          @else
+                                              <img src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg"
+                                                  class="listItem__img--scene">
+                                          @endif
+                                      </div>
                                       <div class="listItem__icon-category">
                                         <div class="icon-wrapper__icon--category category-normal"
                                              style="background-color: {{$featured->categorylocation->color}}"><img
@@ -953,9 +958,15 @@
                                          data-lng="{{$new->lng}}"
                                          onclick="loadpano('uzbekistan:{{$new->id}}', {{$i}}, '{{$new->slug}}', null, null, null, '{{$new->video}}')">
                                     <div class="listItem">
-                                      <div class="listItem__img"><img
-                                                  src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg"
-                                                  class="listItem__img--scene"></div>
+                                      <div class="listItem__img">
+                                          @if ($new->video && $new->preview)
+                                          <img src="/storage/panoramas/preview/{{$new->img}}"
+                                                  class="listItem__img--scene">
+                                          @else
+                                              <img src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg"
+                                                  class="listItem__img--scene">
+                                          @endif
+                                      </div>
                                       <div class="listItem__icon-category">
                                         <div class="icon-wrapper__icon--category category-normal"
                                              style="background-color: {{$new->categorylocation->color}}"><img
