@@ -995,7 +995,12 @@ class LocationsController extends Controller
         if ($isfeatured->isNotEmpty()) {
             $sss = Location::folderNames($isfeatured);
             foreach ($isfeatured as $key2 => $value2) {
-                $isfeatured[$key2]->img = $sss[$key2];
+                  if ($isfeatured[$key2]->video) {
+                      $isfeatured[$key2]->img = $isfeatured[$key2]->preview;
+                  } else {
+                        $isfeatured[$key2]->img = $sss[$key2];
+                  }
+
             }
         }
 
@@ -1006,7 +1011,11 @@ class LocationsController extends Controller
         if ($isnew->isNotEmpty()) {
             $sss = Location::folderNames($isnew);
             foreach ($isnew as $key2 => $value2) {
-                $isnew[$key2]->img = $sss[$key2];
+                if ($isnew[$key2]->video) {
+                    $isnew[$key2]->img = $isnew[$key2]->preview;
+                } else {
+                    $isnew[$key2]->img = $sss[$key2];
+                }
             }
         }
 

@@ -114,9 +114,13 @@ class HomeController extends Controller
         $isfeatured = Location::where('isfeatured', 'on')->where('onmap', 'on')->where('city_id',
             $defaultlocation)->where('onmap', 'on')->with('categorylocation')->orderBy('id', 'DESC')->limit(8)->get();
         if ($isfeatured->isNotEmpty()) {
-            $sss = Location::folderNames($isfeatured);
+            $folderNames = Location::folderNames($isfeatured);
             foreach ($isfeatured as $key2 => $value2) {
-                $isfeatured[$key2]->img = $sss[$key2];
+                if ($isfeatured[$key2]->video) {
+                    $isfeatured[$key2]->img = $isfeatured[$key2]->preview;
+                } else {
+                    $isfeatured[$key2]->img = $folderNames[$key2];
+                }
             }
         }
 
@@ -124,9 +128,13 @@ class HomeController extends Controller
         $isnew = Location::where('onmap', 'on')->where('city_id', $defaultlocation)->where('onmap',
             'on')->with('categorylocation')->inRandomOrder()->limit(8)->get();
         if ($isnew->isNotEmpty()) {
-            $sss = Location::folderNames($isnew);
+            $folderNames = Location::folderNames($isnew);
             foreach ($isnew as $key2 => $value2) {
-                $isnew[$key2]->img = $sss[$key2];
+                if ($isnew[$key2]->video) {
+                    $isnew[$key2]->img = $isnew[$key2]->preview;
+                } else {
+                    $isnew[$key2]->img = $folderNames[$key2];
+                }
             }
         }
 
