@@ -158,7 +158,12 @@ class Location extends Model
             if (!isset($jsonData[0]->panoramas)) {
                 $filename[$key2] = '';
             }
-            $test = json_decode($loc[$key2]->panorama)[0]->panoramas[0]->panorama;
+            $test = json_decode($loc[$key2]->panorama);
+            if (isset($test[0]->panoramas)) {
+                $test = $test[0]->panoramas[0]->panorama;
+            } else {
+                continue;
+            }
             try {
                 $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
             } catch(\Exception $e) {
