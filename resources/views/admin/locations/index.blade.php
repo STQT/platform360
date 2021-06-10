@@ -43,7 +43,6 @@
                                 <tbody>
                                 @foreach($locations as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->sublocations->count() }}</td>
                                         <td>
