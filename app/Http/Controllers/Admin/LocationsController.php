@@ -1181,7 +1181,7 @@ class LocationsController extends Controller
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [
-            'video' => 'required|file|max:150000'
+            'video' => 'required|file|max:500000'
         ]);
 
         if ($validation->passes()) {

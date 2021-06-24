@@ -37,12 +37,13 @@
                             <table class="table table-borderless">
                                 <thead>
                                 <tr>
-                                    <th>Название</th><th>Подлокации</th><th>Действия</th>
+                                    <th>№</th><th>Название</th><th>Подлокации</th><th>Действия</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($locations as $item)
+                                @foreach($locations as $key => $item)
                                     <tr>
+                                        <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->sublocations->count() }}</td>
                                         <td>
