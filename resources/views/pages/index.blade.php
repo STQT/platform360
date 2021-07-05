@@ -1361,6 +1361,7 @@
 
         function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl, video) {
             if (krpano) {
+                console.log(video);
                 originalxmlnam = xmlname;
                 originalxmlname = originalxmlnam.match(/\d/g);
                 originalxmlname = originalxmlname.join("");
@@ -1369,10 +1370,12 @@
                 var tmp = xmlname;
                 xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
                 remove_all_hotspots();
-                if (!video) {
+                if (video == null) {
+                    krpano.call("removelayer('skin_layer', true)");
                     krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
                     krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
                 } else {
+
                     let videoXml = '';
                     @php
                     if(config('app.env') === 'production') {
@@ -1384,7 +1387,7 @@
                     let xmlVideo = $.get('{{$protocolName . request()->getHost()}}' + xmlname, function (response) {
                         videoXml = response;
                         krpano.call("loadxml(" + videoXml + ")");
-                        krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
+                        krpano.call("loadscene('scene2', null, MERGE, ZOOMBLEND(1,2))");
                     });
                 }
 
