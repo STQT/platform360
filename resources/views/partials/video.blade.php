@@ -5,11 +5,13 @@
         if(device.panovideosupport == false,
         error('Sorry, but panoramic videos are not supported by your current browser!');
         ,
-        loadscene(scene1);
+        loadscene(scene2);
         );
     </action>
 
-    <scene name="scene1" title="">
+    @if($location->video)
+
+    <scene name="scene2" title="">
 
         <!-- include the videoplayer interface / skin (with VR support) -->
         <include url="{{asset("/skin/videointerface.xml")}}" />
@@ -39,5 +41,6 @@
         </action>
 
     </scene>
+    @endif
 
 </krpano>
