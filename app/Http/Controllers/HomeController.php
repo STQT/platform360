@@ -194,6 +194,7 @@ class HomeController extends Controller
             $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
         }
 
+        $referer = '';
 
         return view('pages.index', [
             'location' => $location,
@@ -210,6 +211,7 @@ class HomeController extends Controller
             'isnew' => $isnew,
             'etaji' => $etaji,
             'etajlocations' => $etajlocations,
+            'referer' => $referer
         ]);
     }
 

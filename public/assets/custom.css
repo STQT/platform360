@@ -128,3 +128,33 @@ body{
 .ndd-annotator-container {
     margin: 0 auto;
 }
+
+.gobacktosite {
+    position: absolute;
+    width: 172px;
+    height: 40px;
+    left: 62px;
+    top: 77px;
+    display: block;
+    z-index: 1000;
+    background: yellow;
+    padding: 10px;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+}
+
+.gobacktosite span {
+    padding-left: 6px;
+}
+
+.gobacktosite a {
+    color: #000;
+}
+
+.gobacktosite img {
+    width: 24px;
+}

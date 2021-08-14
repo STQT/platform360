@@ -943,14 +943,9 @@ class LocationsController extends Controller
         $cities = Cities::all();
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
-        //Загрузка основноч точки
+        //Загрузка основной точки
         $location = Location::where('slug', $slug)->with('categorylocation')->firstOrFail();
 
-        /*if ($location->video) {
-            return view('partials.video', [
-                'location' => $location,
-            ]);
-        }*/
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations = "";
@@ -1070,6 +1065,11 @@ class LocationsController extends Controller
 
         $openedCategory = null;
 
+        $referer = '';
+        if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'makegood.uz') !== false) {
+            $referer = $_SERVER['HTTP_REFERER'];
+        }
+
         if ($location->count()) {
             return view('pages.index', [
                 'location' => $location,
@@ -1086,6 +1086,7 @@ class LocationsController extends Controller
                 'etaji' => $etaji,
                 'etajlocations' => $etajlocations,
                 'openedCategory' => $openedCategory,
+                'referer' => $referer
             ]);
         } else {
             return response()->json([]);

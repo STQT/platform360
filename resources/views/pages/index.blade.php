@@ -179,6 +179,13 @@
                 </header>
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
+                @if(isset($referer) && $referer)
+                <a href="{{$referer}}">
+                    <div class="gobacktosite">
+                        <img src="/assets/icons/home.svg"> <span>Назад на сайт</span>
+                    </div>
+                </a>
+                @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
                                                       @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span>
