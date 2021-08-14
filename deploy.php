@@ -13,7 +13,7 @@ set('repository', 'git@git.makegood.uz:makegood/uzbekistan360.git');
 //set('git_tty', true);
 
 // Shared files/dirs between deploys
-add('shared_files', ['.env']);
+add('shared_files', ['.env', 'public/robots.txt']);
 add('shared_dirs', ['storage', 'vendor']);
 
 // Writable dirs by web server

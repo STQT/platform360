@@ -22,7 +22,7 @@
                 url.flash="{{asset('/plugins/videoplayer.swf')}}"
                 pausedonstart="false"
                 loop="true"
-                volume="0"
+                volume="1.0"
                 onloaded="add_video_sources();"
         />
 
