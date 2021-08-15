@@ -668,33 +668,42 @@ class LocationsController extends Controller
 
             $requestData['audio'] = $fullName;
         }
-        if (!empty($panoramas)) {
-            $requestData['panorama'] = json_encode($panoramas);
+        if (!empty($panoramas) || !empty($filenameVideo)) {
+            if (!empty($panoramas)) {
+                $requestData['panorama'] = json_encode($panoramas);
+            }
+            if (!empty($filenameVideo)) {
+                $requestData['video'] = $filenameVideo;
+                if (isset($filename)) {
+                    $requestData['preview'] = $filename;
+                }
+            }
             $location = Location::create($requestData);
             $meta = \App\Meta::create($requestData['meta']);
             $location->meta_id = $meta->id;
             $location->save();
+
+            if (isset($requestData['information']['back_button_file']) && $requestData['information']['back_button_file']) {
+                $randomStr = Str::random(40);
+                $extension = $requestData['information']['back_button_file']->getClientOriginalExtension();
+                $fullName = $randomStr . '.' . $extension;
+                $file = $requestData['information']['back_button_file']->move(public_path('storage/locations_information'),
+                    $fullName);
+
+                $requestData['information']['back_button_image'] = $fullName;
+            }
+
+
+            $information = \App\LocationInformation::create($requestData['information']);
+            $information->location_id = $location->id;
+            $information->save();
 
             if (isset($requestData['tags'])) {
                 $tagIds = $requestData['tags'];
                 $location->tags()->sync($tagIds);
             }
 
-            return redirect('admin/locations')->with('flash_message', 'Location added!');
-        } elseif (!empty($filenameVideo)) {
-            $requestData['video'] = $filenameVideo;
-            $requestData['preview'] = $filename;
-            $location = Location::create($requestData);
-            $meta = \App\Meta::create($requestData['meta']);
-            $location->meta_id = $meta->id;
-            $location->save();
-
-            if (isset($requestData['tags'])) {
-                $tagIds = $requestData['tags'];
-                $location->tags()->sync($tagIds);
-            }
-
-            return redirect('admin/locations')->with('flash_message', 'Location added!');
+            return redirect('admin/locations')->with('flash_message', 'Локация добавлена');
         } else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');
         }
@@ -898,6 +907,24 @@ class LocationsController extends Controller
                 $meta = $location->meta;
                 $meta->update($requestData['meta']);
             }
+
+            if (isset($requestData['information']['back_button_file']) && $requestData['information']['back_button_file']) {
+                $randomStr = Str::random(40);
+                $extension = $requestData['information']['back_button_file']->getClientOriginalExtension();
+                $fullName = $randomStr . '.' . $extension;
+                $file = $requestData['information']['back_button_file']->move(public_path('storage/locations_information'), $fullName);
+
+                $requestData['information']['back_button_image'] = $fullName;
+            }
+
+            if (!$location->information) {
+                $information = \App\LocationInformation::create($requestData['information']);
+                $information->location_id = $location->id;
+                $information->save();
+            } else {
+                $information = $location->information;
+                $information->update($requestData['information']);
+            }
             $location = Location::withoutGlobalScope('published')->with('meta')->findOrFail($id);
             if ($initialLocationTitle != $requestData['name']) {
                 $requestData['slug'] = Str::slug($requestData['name'], '-');
@@ -971,7 +998,7 @@ class LocationsController extends Controller
             }
         } else {
             $sky = "no";
-        };
+        }
 
         //Координаты локаций
         $locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap',
@@ -1066,7 +1093,9 @@ class LocationsController extends Controller
         $openedCategory = null;
 
         $referer = '';
-        if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'makegood.uz') !== false) {
+        if ($location->information && $location->information && $location->information->back_button_from_domain &&
+            isset($_SERVER['HTTP_REFERER']) &&
+            strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
             $referer = $_SERVER['HTTP_REFERER'];
         }
 

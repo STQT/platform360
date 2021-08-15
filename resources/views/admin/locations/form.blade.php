@@ -110,41 +110,46 @@
           <input {{ isset($location) ? ($location->published ? 'checked' : '') : ''}} id="published" type="checkbox" class="" value="1" name="published"> Опубликовано
       </div>
 
-      <div class="form-group{{ $errors->has('visibility') ? 'has-error' : '' }}">
-          {{Form::label('visibility', 'Видимость', ['class' => 'control-label'])}}
+      <ul class="nav nav-tabs" id="pano-tabs" role="tablist">
+          <li class="nav-item">
+              <a class="nav-link active" id="pano-tab" data-toggle="tab" href="#pano" role="tab" aria-controls="pano"
+                 aria-selected="true">Панорама</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" id="video-pano-tab" data-toggle="tab" href="#video" role="tab" aria-controls="video"
+                 aria-selected="false">Видео</a>
+          </li>
+      </ul>
+      <div class="tab-content">
+          <div class="tab-pane fade show active" id="pano" role="tabpanel" aria-labelledby="pano-tab">
+              <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+                  <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">
+                      {!! Form::label('panorama', 'Панорама', ['class' => 'control-label']) !!}
+                      {!! Form::file('panorama', null, ['class' => 'form-control']) !!}
+                      {!! $errors->first('panorama', '<p class="help-block">:message</p>') !!}
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-pano-tab">
+              <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+                  <div class="form-group{{ $errors->has('video') ? 'has-error' : ''}}">
+                      {!! Form::label('video', 'Видео', ['class' => 'control-label']) !!}
+                      {!! Form::file('video', null, ['class' => 'form-control']) !!}
+                      {!! $errors->first('video', '<p class="help-block">:message</p>') !!}
+                  </div>
+              </div>
 
-          {{Form::select('visibility', $location->getVisibilityOptions() ,null,array('name'=>'visibility', 'class' => 'form-control'))}}
-      </div>
-
-      <div class="form-group">
-          <p>Ссылка: <a href="http://<?= getenv('MAIN_DOMAIN') ?>/ru/location/<?= $location->slug ?>" target="_blank">
-                  <?= getenv('MAIN_DOMAIN') ?>/ru/location/<?= $location->slug ?></a>
-          </p>
-      </div>
-
-      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
-          <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">
-              {!! Form::label('panorama', 'Panorama', ['class' => 'control-label']) !!}
-              {!! Form::file('panorama', null, ['class' => 'form-control']) !!}
-              {!! $errors->first('panorama', '<p class="help-block">:message</p>') !!}
+              <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+                  <div class="form-group{{ $errors->has('preview') ? 'has-error' : ''}}">
+                      {!! Form::label('preview', 'Обложка', ['class' => 'control-label']) !!}
+                      {!! Form::file('preview', null, ['class' => 'form-control']) !!}
+                      {!! $errors->first('preview', '<p class="help-block">:message</p>') !!}
+                  </div>
+              </div>
           </div>
       </div>
 
-      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
-          <div class="form-group{{ $errors->has('video') ? 'has-error' : ''}}">
-              {!! Form::label('video', 'Video', ['class' => 'control-label']) !!}
-              {!! Form::file('video', null, ['class' => 'form-control']) !!}
-              {!! $errors->first('video', '<p class="help-block">:message</p>') !!}
-          </div>
-      </div>
-
-      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
-          <div class="form-group{{ $errors->has('preview') ? 'has-error' : ''}}">
-              {!! Form::label('preview', 'Preview', ['class' => 'control-label']) !!}
-              {!! Form::file('preview', null, ['class' => 'form-control']) !!}
-              {!! $errors->first('preview', '<p class="help-block">:message</p>') !!}
-          </div>
-      </div>
+      <hr>
 
       <div class="hasNo">
           <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">
@@ -154,50 +159,11 @@
           </div>
       </div>
 
-      <div class="form-group{{ $errors->has('subdomain') ? 'has-error' : ''}}">
-          {!! Form::label('subdomain', 'Субдомен', ['class' => 'control-label']) !!}
-          {!! Form::text('subdomain', null, ['class' => 'form-control']) !!}
-          {!! $errors->first('subdomain', '<p class="help-block">:message</p>') !!}
-      </div>
-
-      <div class="form-group{{ $errors->has('order') ? 'has-error' : ''}}">
-          {!! Form::label('order', 'Порядок', ['class' => 'control-label']) !!}
-          {!! Form::text('order', null, ['class' => 'form-control']) !!}
-          {!! $errors->first('order', '<p class="help-block">:message</p>') !!}
-      </div>
-
       <div class="form-group">
           {!! Form::submit($formMode === 'edit' ? 'Сохранить' : 'Создать', ['class' => 'btn btn-primary']) !!}
       </div>
   </div>
   <div class="tab-pane fade" id="meta" role="tabpanel" aria-labelledby="profile-tab">
-      <div class="form-group{{ $errors->has('name') ? 'has-error' : ''}}">
-          {!! Form::label('seo_title', 'Название SEO', ['class' => 'control-label']) !!}
-          {!! Form::text('seo_title', null, ['class' => 'form-control']) !!}
-          {!! $errors->first('seo_title', '<p class="help-block">:message</p>') !!}
-      </div>
-
-      <div class="form-group{{ $errors->has('meta[title]') ? 'has-error' : ''}}">
-          {!! Form::label('meta[title]', 'Title (тег)', ['class' => 'control-label']) !!}
-          {!! Form::text('meta[title]', null, ['class' => 'form-control']) !!}
-          {!! $errors->first('meta[title]', '<p class="help-block">:message</p>') !!}
-      </div>
-      <div class="form-group{{ $errors->has('meta[description]') ? 'has-error' : ''}}">
-          {!! Form::label('meta[description]', 'Description (meta тег)', ['class' => 'control-label']) !!}
-          {!! Form::text('meta[description]', null, ['class' => 'form-control']) !!}
-          {!! $errors->first('meta[description]', '<p class="help-block">:message</p>') !!}
-      </div>
-      <div class="form-group{{ $errors->has('meta[keywords]') ? 'has-error' : ''}}">
-          {!! Form::label('meta[keywords]', 'Keywords (meta тег)', ['class' => 'control-label']) !!}
-          {!! Form::text('meta[keywords]', null, ['class' => 'form-control']) !!}
-          {!! $errors->first('meta[keywords]', '<p class="help-block">:message</p>') !!}
-      </div>
-      <div class="form-group{{ $errors->has('tags') ? 'has-error' : '' }}">
-          {{Form::label('tags', 'Теги', ['class' => 'control-label'])}}
-          {{Form::select('tags[]', $tags, null, array('id' => 'tags_list', 'class' => 'form-control', 'multiple'))}}
-      </div>
-      <div class="form-group">
-          {!! Form::submit($formMode === 'edit' ? 'Сохранить' : 'Создать', ['class' => 'btn btn-primary']) !!}
-      </div>
+    @include ('admin.locations.meta', [])
   </div>
 </div>

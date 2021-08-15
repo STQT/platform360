@@ -179,10 +179,10 @@
                 </header>
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
-                @if(isset($referer) && $referer)
+                @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
                 <a href="{{$referer}}">
                     <div class="gobacktosite">
-                        <img src="/assets/icons/home.svg"> <span>Назад на сайт</span>
+                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? $location->information->back_button_image : '/assets/icons/home.svg' }}"> <span>Назад на сайт</span>
                     </div>
                 </a>
                 @endif
