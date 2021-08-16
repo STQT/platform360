@@ -695,9 +695,11 @@ class LocationsController extends Controller
             }
 
 
-            $information = \App\LocationInformation::create($requestData['information']);
-            $information->location_id = $location->id;
-            $information->save();
+            if (isset($requestData['information'])) {
+                $information = \App\LocationInformation::create($requestData['information']);
+                $information->location_id = $location->id;
+                $information->save();
+            }
 
             if (isset($requestData['tags'])) {
                 $tagIds = $requestData['tags'];
