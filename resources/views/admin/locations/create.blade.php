@@ -1,17 +1,18 @@
 @extends('layouts.backend')
 
 @section('content')
+    {!! Form::open(['url' => '/admin/locations', 'class' => 'form-horizontal', 'files' => true]) !!}
     <div class="container">
         <div class="row">
             @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Create New Location</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/locations') }}" title="Back">
                             <button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i>
-                                Back
+                                Назад
                             </button>
                         </a>
                         <br/>
@@ -25,14 +26,20 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/admin/locations', 'class' => 'form-horizontal', 'files' => true]) !!}
-
                         @include ('admin.locations.form', ['formMode' => 'create'])
 
-                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Настройки</div>
+                    <div class="card-body">
+                        @include ('admin.locations.settings', [])
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {!! Form::close() !!}
 @endsection

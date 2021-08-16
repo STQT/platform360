@@ -669,6 +669,7 @@ class LocationsController extends Controller
             $requestData['audio'] = $fullName;
         }
         if (!empty($panoramas) || !empty($filenameVideo)) {
+            $requestData['preview'] = '';
             if (!empty($panoramas)) {
                 $requestData['panorama'] = json_encode($panoramas);
             }

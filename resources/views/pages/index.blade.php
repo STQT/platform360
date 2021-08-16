@@ -182,7 +182,7 @@
                 @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
                 <a href="{{$referer}}">
                     <div class="gobacktosite">
-                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? $location->information->back_button_image : '/assets/icons/home.svg' }}"> <span>Назад на сайт</span>
+                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}"> <span>Назад на сайт</span>
                     </div>
                 </a>
                 @endif
