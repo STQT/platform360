@@ -271,10 +271,12 @@ class HomeController extends Controller
     {
         $location = Location::find($id);
         $view = $location->video ? 'video' : 'xml';
-        return view('partials.' . $view, [
+
+        return response(view('partials.' . $view, [
             'location' => $location,
             'index' => $index
-        ]);
+        ]));
+//        ->header('Content-type', 'text/plain');
     }
 
     //Krpano panoramic video

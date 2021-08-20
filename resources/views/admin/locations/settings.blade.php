@@ -29,6 +29,12 @@
     {!! $errors->first('information[back_button_from_domain]', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group{{ $errors->has('information[back_button_background_color]') ? 'has-error' : ''}}">
+    {!! Form::label('information[back_button_background_color]', 'Фон кнопки', ['class' => 'control-label']) !!}
+    {!! Form::text('information[back_button_background_color]', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('information[back_button_background_color]', '<p class="help-block">:message</p>') !!}
+</div>
+
 <div class="form-group{{ $errors->has('information[back_button_from_domain]') ? 'has-error' : ''}}">
   {!! Form::label('information[back_button_file]', 'Иконка "Назад"', ['class' => 'control-label']) !!}
   {!! Form::file('information[back_button_file]', null, ['class' => 'form-control']) !!}
