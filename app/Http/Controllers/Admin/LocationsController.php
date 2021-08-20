@@ -34,6 +34,7 @@ class LocationsController extends Controller
         $keyword = $request->get('search');
         $category = $request->get('category');
         $city = $request->get('city');
+        $video = $request->get('video');
         $perPage = 25;
 
         $totalLocations = Location::withoutGlobalScope('published')->count();
@@ -45,7 +46,7 @@ class LocationsController extends Controller
         if (!empty($keyword)) {
             $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function ($query) use ($keyword, $category, $city) {
+                ->where(function ($query) use ($keyword, $category, $city, $video) {
                     $query->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -61,12 +62,15 @@ class LocationsController extends Controller
                     if ($category) {
                         $query->where('category_id', $category);
                     }
+                    if ($video) {
+                        $query->where('video', '!=', '');
+                    }
                 }
                 )
                 ->latest()
                 ->paginate($perPage);
         } else {
-            $locations = Location::where(function ($query) use ($category, $city, $perPage) {
+            $locations = Location::where(function ($query) use ($category, $city, $perPage, $video) {
                 $query->where('is_sky', '!=', 'on')
                     ->whereNull('podlocparent_id');
                 if ($city) {
@@ -74,6 +78,9 @@ class LocationsController extends Controller
                 }
                 if ($category) {
                     $query->where('category_id', $category);
+                }
+                if ($video) {
+                    $query->where('video', '!=', '');
                 }
             })->withoutGlobalScope('published')
                 ->latest()
