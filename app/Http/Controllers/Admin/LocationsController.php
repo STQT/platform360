@@ -1052,7 +1052,8 @@ class LocationsController extends Controller
         }
 
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $location->id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
@@ -1261,7 +1262,8 @@ class LocationsController extends Controller
     public function apiHotspots($id)
     {
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки

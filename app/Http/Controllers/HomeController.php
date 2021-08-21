@@ -139,7 +139,8 @@ class HomeController extends Controller
         }
 
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $location->id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки
