@@ -10,6 +10,7 @@ use DB;
 use App\Sky;
 use App\Hotspot;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Mail;
 use Illuminate\Support\Facades\Cookie;
@@ -258,7 +259,7 @@ class HomeController extends Controller
             if (count($cities) > 0) {
                 $cityid = json_encode($cities[0]->id);
                 Cookie::queue(Cookie::forever('city', $cityid));
-                return redirect('http://' . request()->getHost() . '/?home=1');
+                return redirect('http://' . request()->getHost() . '/' . Lang::locale() . '/?home=1');
             } else {
                 return redirect('/');
             }
