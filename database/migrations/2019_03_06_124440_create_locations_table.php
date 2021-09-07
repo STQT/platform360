@@ -26,6 +26,7 @@ class CreateLocationsTable extends Migration
             $table->string('telegram')->nullable();
             $table->tinyInteger('isDefault')->default(0);
             $table->text('panorama')->nullable();
+            $table->text('xmllocation');
             });
     }
 
