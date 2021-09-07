@@ -10,6 +10,7 @@ use DB;
 use App\Sky;
 use App\Hotspot;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Mail;
 use Illuminate\Support\Facades\Cookie;
@@ -139,7 +140,8 @@ class HomeController extends Controller
         }
 
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $location->id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки
@@ -194,6 +196,7 @@ class HomeController extends Controller
             $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
         }
 
+        $referer = '';
 
         return view('pages.index', [
             'location' => $location,
@@ -210,6 +213,7 @@ class HomeController extends Controller
             'isnew' => $isnew,
             'etaji' => $etaji,
             'etajlocations' => $etajlocations,
+            'referer' => $referer
         ]);
     }
 
@@ -255,7 +259,7 @@ class HomeController extends Controller
             if (count($cities) > 0) {
                 $cityid = json_encode($cities[0]->id);
                 Cookie::queue(Cookie::forever('city', $cityid));
-                return redirect('http://' . request()->getHost() . '/');
+                return redirect('http://' . request()->getHost() . '/' . Lang::locale() . '/?home=1');
             } else {
                 return redirect('/');
             }
@@ -269,10 +273,12 @@ class HomeController extends Controller
     {
         $location = Location::find($id);
         $view = $location->video ? 'video' : 'xml';
-        return view('partials.' . $view, [
+
+        return response(view('partials.' . $view, [
             'location' => $location,
             'index' => $index
-        ]);
+        ]));
+//        ->header('Content-type', 'text/plain');
     }
 
     //Krpano panoramic video

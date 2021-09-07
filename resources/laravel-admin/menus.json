@@ -16,6 +16,10 @@
           "url": "\/admin\/locations"
         },
         {
+          "title": "Видео",
+          "url": "\/admin\/locations\/?video=1"
+        },
+        {
           "title": "Категории",
           "url": "\/admin\/categories"
         },

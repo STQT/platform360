@@ -179,6 +179,13 @@
                 </header>
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
+                @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
+                <a href="{{$referer}}">
+                    <div class="gobacktosite" style="background-color: {{ $location->information->back_button_background_color ? $location->information->back_button_background_color : 'yellow' }}">
+                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}"> <span>Назад на сайт</span>
+                    </div>
+                </a>
+                @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
                                                       @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span>
@@ -1369,7 +1376,8 @@
                 var tmp = xmlname;
                 xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
                 remove_all_hotspots();
-                if (!video) {
+                if (video === null || video === '') {
+                    krpano.call("removelayer('skin_layer', true)");
                     krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
                     krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
                 } else {
@@ -1382,9 +1390,8 @@
                     }
                     @endphp
                     let xmlVideo = $.get('{{$protocolName . request()->getHost()}}' + xmlname, function (response) {
-                        videoXml = response;
-                        krpano.call("loadxml(" + videoXml + ")");
-                        krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
+                        krpano.call("loadxml(" + response + ")");
+                        krpano.call("loadscene('scene2', null, MERGE, ZOOMBLEND(1,2))");
                     });
                 }
 

@@ -1,14 +1,20 @@
 @extends('layouts.backend')
 
 @section('content')
+    {!! Form::model($location, [
+                'method' => 'PATCH',
+                'url' => ['/admin/locations', $location->id, $language],
+                'class' => 'form-horizontal',
+                'files' => true
+            ]) !!}
     <div class="container">
         <div class="row">
             @include('admin.sidebar')
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Edit Location #{{ $location->id }}</div>
+                    <div class="card-header">Редактировать локацию #{{ $location->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/locations') }}" title="Back"><button class="lang btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/locations') }}" title="Назад"><button class="lang btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Назад</button></a>
                         <a href="{{ url('/admin/locations/'.$location->id.'/edit/ru') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}">Русский</button></a>
 
                         <a href="{{ url('/admin/locations/'.$location->id.'/edit/uzb') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}">Узбекский</button></a>
@@ -25,22 +31,22 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($location, [
-                            'method' => 'PATCH',
-                            'url' => ['/admin/locations', $location->id, $language],
-                            'class' => 'form-horizontal',
-                            'files' => true
-                        ]) !!}
-
                         @include ('admin.locations.form', ['formMode' => 'edit'])
-
-                        {!! Form::close() !!}
-
                     </div>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Настройки</div>
+                    <div class="card-body">
+                        @include ('admin.locations.settings', [])
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+    {!! Form::close() !!}
 @endsection
 
 @section('scripts')
