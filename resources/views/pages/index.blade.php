@@ -658,7 +658,7 @@
                         <div class="numberr" id="website_box">
                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
                             <span id="website"><a href="{{ strpos($location->website, 'http://') !== false ? $location->website : 'http://' . $location->website }}"
-                                                  target="_blank">{{$location->website }}</a></span>
+                                                  target="_blank" rel="nofollow">{{$location->website }}</a></span>
                         </div>
                     </div>
                 <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
@@ -689,7 +689,7 @@
                     </div>
                     <ul class="sharePanel__social__icons" style="    width: 200px;">
                         <li class="socialnetwork-icon facebook">
-                            <a href="{{$location->facebook}}" id="locationsocialfb" target="_blank">
+                            <a href="{{strpos($location->facebook, 'http') !== false ? $location->facebook : 'https://facebook.com/' . str_replace('@', '', $location->facebook)}}" id="locationsocialfb" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/facebook.png" alt="facebook share"/>
                                 </div>
@@ -697,7 +697,7 @@
                         </li>
 
                         <li class="socialnetwork-icon telegram">
-                            <a href="{{$location->telegram}}" id="locationsocialtg" target="_blank">
+                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : 'https://t.me/' . str_replace('@', '', $location->telegram)}}" id="locationsocialtg" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/telegram.png" alt="telegram share"/>
                                 </div>
@@ -705,7 +705,7 @@
                         </li>
 
                         <li class="socialnetwork-icon instagram">
-                            <a href="{{$location->instagram}}" id="locationsocialig" target="_blank">
+                            <a href="{{strpos($location->instagram, 'http') !== false ? $location->instagram : 'https://instagram.com/' . str_replace('@', '', $location->instagram)}}" id="locationsocialig" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/instagram.png" alt="whatsapp share"/>
                                 </div>
@@ -718,7 +718,7 @@
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
                                     <div class="listItem-wrapper"
-                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, {{$otherlocation->video ? $otherlocation->video : 'null'}})">
+                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, {{$otherlocation->video ? "'" . $otherlocation->video . "'" : 'null'}})">
                                         <div class="listItem">
                                             @if($otherlocation->preview)
                                                 <div class="listItem__img">
