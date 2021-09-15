@@ -718,7 +718,7 @@
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
                                     <div class="listItem-wrapper"
-                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, $otherlocation->video)">
+                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, {{$otherlocation->video ? $otherlocation->video : 'null'}})">
                                         <div class="listItem">
                                             @if($otherlocation->preview)
                                                 <div class="listItem__img">
