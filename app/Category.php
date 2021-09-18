@@ -30,7 +30,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $translatable = ['name'];
+    protected $translatable = ['name', 'slug'];
     protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug'];
 
     public function locations()
@@ -55,9 +55,31 @@ class Category extends Model
     {
         return __CLASS__ . " model has been {$eventName}";
     }
-//    public function createUrl()
-//    {
-//        $baseName = request()->getSchemeAndHttpHost();
-//        return $baseName . '/' . \Lang::locale() . '/category/' . $this->slug;
-//    }
+    public function createUrl()
+    {
+        $baseName = request()->getSchemeAndHttpHost();
+        return $baseName . '/' . \Lang::locale() . '/category/' . $this->slug;
+    }
+
+    public function meta()
+    {
+        return $this->hasOne('App\Meta', 'id', 'meta_id');
+    }
+
+    protected function getSlugSourceString(): string
+    {
+        $slugSourceString = collect($this->slugOptions->generateSlugFrom)
+            ->map(function (string $fieldName): string {
+                if (in_array($fieldName, $this->translatable)) {
+                    return $this->getTranslations($fieldName, app()->getLocale())[app()->getLocale()];
+                    // if your field in the database is json type
+                    // return $this->getTranslations($fieldName,app()->getLocale());
+                }
+                return data_get($this, $fieldName, '');
+            })
+            ->implode($this->slugOptions->slugSeparator);
+
+
+        return substr($slugSourceString, 0, $this->slugOptions->maximumLength);
+    }
 }
