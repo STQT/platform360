@@ -14,7 +14,6 @@ use App\Video;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -818,7 +817,7 @@ class LocationsController extends Controller
         $cities = Cities::all();
         $tags = Tag::pluck('name', 'id')->all();
 
-        $returnUrl = Input::get('returnUrl');
+        $returnUrl = $request->get('returnurl');
 
         if ($returnUrl) {
             $request->session()->put('returnUrl', $returnUrl);
