@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+//use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
     use LogsActivity;
     use HasTranslations;
+//    use HasTranslatableSlug;
 
     /**
      * The database table used by the model.
@@ -55,6 +57,7 @@ class Category extends Model
     {
         return __CLASS__ . " model has been {$eventName}";
     }
+
     public function createUrl()
     {
         $baseName = request()->getSchemeAndHttpHost();
@@ -64,22 +67,5 @@ class Category extends Model
     public function meta()
     {
         return $this->hasOne('App\Meta', 'id', 'meta_id');
-    }
-
-    protected function getSlugSourceString(): string
-    {
-        $slugSourceString = collect($this->slugOptions->generateSlugFrom)
-            ->map(function (string $fieldName): string {
-                if (in_array($fieldName, $this->translatable)) {
-                    return $this->getTranslations($fieldName, app()->getLocale())[app()->getLocale()];
-                    // if your field in the database is json type
-                    // return $this->getTranslations($fieldName,app()->getLocale());
-                }
-                return data_get($this, $fieldName, '');
-            })
-            ->implode($this->slugOptions->slugSeparator);
-
-
-        return substr($slugSourceString, 0, $this->slugOptions->maximumLength);
     }
 }
