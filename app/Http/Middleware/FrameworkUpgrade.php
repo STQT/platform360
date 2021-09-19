@@ -9,9 +9,8 @@ class FrameworkUpgrade {
 
     public function handle($request, Closure $next)
     {
-        if (Cookie::has('has_migrated')) {
+        if (!Cookie::has('has_migrated')) {
             Cookie::unqueue('city');
-        } else {
             Cookie::queue(Cookie::forever('has_migrated', '1'));
         }
 
