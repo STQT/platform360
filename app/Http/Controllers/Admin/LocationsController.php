@@ -972,7 +972,7 @@ class LocationsController extends Controller
             $defaultlocation = Cookie::get('city');
         } else {
             $defaultlocation = "1";
-            Cookie::queue(Cookie::forever('city', '1'));
+            Cookie::queue(Cookie::forever('city', $defaultlocation));
         }
 
         //Загрузка всех городов и координаты текущего города
