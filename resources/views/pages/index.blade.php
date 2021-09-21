@@ -181,8 +181,15 @@
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
                 <a href="{{$referer}}">
+                    @php
+                            $fontStyle = '';
+                            $fontStyle .= $location->information->back_button_font ?  ('font-family: "' . $location->information->back_button_font . '";') : '';
+                            $fontStyle .= $location->information->back_button_font_size ?  ('font-size: ' . $location->information->back_button_font_size . ';') : '';
+                            $fontStyle .= $location->information->back_button_font_color ?  ('color: ' . $location->information->back_button_font_color . ';') : '';
+                    @endphp
                     <div class="gobacktosite" style="background-color: {{ $location->information->back_button_background_color ? $location->information->back_button_background_color : 'yellow' }}">
-                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}"> <span>Назад на сайт</span>
+                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}">
+                        <span style="{{$fontStyle}}">Назад на сайт</span>
                     </div>
                 </a>
                 @endif

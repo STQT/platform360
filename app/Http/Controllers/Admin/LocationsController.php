@@ -1106,7 +1106,7 @@ class LocationsController extends Controller
         $openedCategory = null;
 
         $referer = '';
-        if ($location->information && $location->information && $location->information->back_button_from_domain &&
+        if ($location->information && $location->information->back_button_from_domain &&
             isset($_SERVER['HTTP_REFERER']) &&
             strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
             $referer = $_SERVER['HTTP_REFERER'];

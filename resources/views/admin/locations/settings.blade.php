@@ -35,7 +35,25 @@
     {!! $errors->first('information[back_button_background_color]', '<p class="help-block">:message</p>') !!}
 </div>
 
-<div class="form-group{{ $errors->has('information[back_button_from_domain]') ? 'has-error' : ''}}">
+<div class="form-group{{ $errors->has('information[back_button_font]') ? 'has-error' : ''}}">
+    {!! Form::label('information[back_button_font]', 'Шрифт', ['class' => 'control-label']) !!}
+    {!! Form::text('information[back_button_font]', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('information[back_button_font]', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group{{ $errors->has('information[back_button_font_size]') ? 'has-error' : ''}}">
+    {!! Form::label('information[back_button_font_size]', 'Размер шрифта', ['class' => 'control-label']) !!}
+    {!! Form::text('information[back_button_font_size]', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('information[back_button_font_size]', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group{{ $errors->has('information[back_button_font_color]') ? 'has-error' : ''}}">
+    {!! Form::label('information[back_button_font_color]', 'Цвет ссылки', ['class' => 'control-label']) !!}
+    {!! Form::text('information[back_button_font_color]', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('information[back_button_font_color]', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group{{ $errors->has('information[back_button_file]') ? 'has-error' : ''}}">
   {!! Form::label('information[back_button_file]', 'Иконка "Назад"', ['class' => 'control-label']) !!}
   {!! Form::file('information[back_button_file]', null, ['class' => 'form-control']) !!}
   {!! $errors->first('information[back_button_file]', '<p class="help-block">:message</p>') !!}
