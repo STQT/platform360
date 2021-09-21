@@ -8,6 +8,7 @@ use App\Hotspot;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Location;
+use App\LocationInformation;
 use App\Sky;
 use App\Tag;
 use App\Video;
@@ -960,6 +961,7 @@ class LocationsController extends Controller
         Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
         Hotspot::where('location_id', $id)->delete();
         Hotspot::where('destination_id', $id)->delete();
+        LocationInformation::where('location_id', $id)->delete();
         Location::where('sky_id', $id)->withoutGlobalScope('published')->update(array('sky_id' => ''));
 
         return redirect('admin/locations')->with('flash_message', 'Location deleted!');
