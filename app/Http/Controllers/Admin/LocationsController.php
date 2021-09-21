@@ -957,11 +957,11 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         Video::where('location_id', $id)->delete();
+        LocationInformation::where('location_id', $id)->delete();
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();
         Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
         Hotspot::where('location_id', $id)->delete();
         Hotspot::where('destination_id', $id)->delete();
-        LocationInformation::where('location_id', $id)->delete();
         Location::where('sky_id', $id)->withoutGlobalScope('published')->update(array('sky_id' => ''));
 
         return redirect('admin/locations')->with('flash_message', 'Location deleted!');
