@@ -25,7 +25,7 @@
                     </div>
                     <div class="dubai360-header__icons">
                         <div class="wrapper-button" id="hubviewlink"
-                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif>
+                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : null}})"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
                             <div class="dubai360-tooltip"><span>{{ trans('uzb360.hubrejim')}}</span></div>
                         </div>
@@ -195,7 +195,7 @@
                 @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
-                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span>
+                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : null}})"@endif></span>
                     </div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon "
                                                       data-pannel="explorePannel"></span></div>
@@ -1659,12 +1659,19 @@
                         $('.currentlocationcordinates').data('lat', 'no');
                         $('.currentlocationcordinates').data('lng', 'no');
                     }
+                    let videoVal = null;
                     if (data.is_sky == "on") {
-                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "');");
-                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "');");
+                        if (video) {
+                            videoVal = "'" + video + "'";
+                        }
+                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
+                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     } else {
-                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "');");
-                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "');");
+                        if (data.sky_video) {
+                            videoVal = "'" + data.sky_video + "'";
+                        }
+                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo',  " + videoVal + ");");
+                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     }
                 });
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {

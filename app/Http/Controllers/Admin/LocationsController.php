@@ -775,16 +775,15 @@ class LocationsController extends Controller
 
         if (empty($location->is_sky)) {
             if (!empty($location->sky_id)) {
-                $location->skyslug = Sky::where('id', $location->sky_id)->pluck('slug')->first();
+                $sky = Sky::where('id', $location->sky_id)->first();
+                $location->skyslug = $sky->slug;
             } else {
-                $location->skyslug = Sky::where([
+                $sky = Sky::where([
                     ['skymainforcity', 'on'],
                     ['city_id', $defaultlocation]
-                ])->pluck('slug')->first();
-                $location->sky_id = Sky::where([
-                    ['skymainforcity', 'on'],
-                    ['city_id', $defaultlocation]
-                ])->pluck('id')->first();
+                ])->first();
+                $location->skyslug = $sky->slug;
+                $location->sky_id = $sky->id;
             }
         } else {
             $location->skyslug = "no";
@@ -796,6 +795,9 @@ class LocationsController extends Controller
         }
         $locationArray['category_icon'] = $location->category->cat_icon_svg;
         $locationArray['floors_locations'] = $etajlocations;
+        if (isset($sky)) {
+            $locationArray['sky_video'] = $sky->video;
+        }
 
         return $locationArray;
     }
