@@ -197,6 +197,11 @@ class HomeController extends Controller
         }
 
         $referer = '';
+        if ($location->information && $location->information->back_button_from_domain &&
+            isset($_SERVER['HTTP_REFERER']) &&
+            strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
+            $referer = $_SERVER['HTTP_REFERER'];
+        }
 
         return view('pages.index', [
             'location' => $location,

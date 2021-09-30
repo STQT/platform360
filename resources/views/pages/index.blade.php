@@ -25,7 +25,7 @@
                     </div>
                     <div class="dubai360-header__icons">
                         <div class="wrapper-button" id="hubviewlink"
-                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif>
+                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : null}})"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
                             <div class="dubai360-tooltip"><span>{{ trans('uzb360.hubrejim')}}</span></div>
                         </div>
@@ -181,14 +181,21 @@
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
                 <a href="{{$referer}}">
+                    @php
+                            $fontStyle = '';
+                            $fontStyle .= $location->information->back_button_font ?  ('font-family: "' . $location->information->back_button_font . '";') : '';
+                            $fontStyle .= $location->information->back_button_font_size ?  ('font-size: ' . $location->information->back_button_font_size . ';') : '';
+                            $fontStyle .= $location->information->back_button_font_color ?  ('color: ' . $location->information->back_button_font_color . ';') : '';
+                    @endphp
                     <div class="gobacktosite" style="background-color: {{ $location->information->back_button_background_color ? $location->information->back_button_background_color : 'yellow' }}">
-                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}"> <span>Назад на сайт</span>
+                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}">
+                        <span style="{{$fontStyle}}">Назад на сайт</span>
                     </div>
                 </a>
                 @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
-                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span>
+                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : null}})"@endif></span>
                     </div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon "
                                                       data-pannel="explorePannel"></span></div>
@@ -1652,12 +1659,19 @@
                         $('.currentlocationcordinates').data('lat', 'no');
                         $('.currentlocationcordinates').data('lng', 'no');
                     }
+                    let videoVal = null;
                     if (data.is_sky == "on") {
-                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "');");
-                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "');");
+                        if (video) {
+                            videoVal = "'" + video + "'";
+                        }
+                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
+                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     } else {
-                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "');");
-                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "');");
+                        if (data.sky_video) {
+                            videoVal = "'" + data.sky_video + "'";
+                        }
+                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo',  " + videoVal + ");");
+                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     }
                 });
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {

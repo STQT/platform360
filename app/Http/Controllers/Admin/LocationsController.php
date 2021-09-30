@@ -8,6 +8,7 @@ use App\Hotspot;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Location;
+use App\LocationInformation;
 use App\Sky;
 use App\Tag;
 use App\Video;
@@ -773,16 +774,15 @@ class LocationsController extends Controller
 
         if (empty($location->is_sky)) {
             if (!empty($location->sky_id)) {
-                $location->skyslug = Sky::where('id', $location->sky_id)->pluck('slug')->first();
+                $sky = Sky::where('id', $location->sky_id)->first();
+                $location->skyslug = $sky->slug;
             } else {
-                $location->skyslug = Sky::where([
+                $sky = Sky::where([
                     ['skymainforcity', 'on'],
                     ['city_id', $defaultlocation]
-                ])->pluck('slug')->first();
-                $location->sky_id = Sky::where([
-                    ['skymainforcity', 'on'],
-                    ['city_id', $defaultlocation]
-                ])->pluck('id')->first();
+                ])->first();
+                $location->skyslug = $sky->slug;
+                $location->sky_id = $sky->id;
             }
         } else {
             $location->skyslug = "no";
@@ -794,6 +794,9 @@ class LocationsController extends Controller
         }
         $locationArray['category_icon'] = $location->category->cat_icon_svg;
         $locationArray['floors_locations'] = $etajlocations;
+        if (isset($sky)) {
+            $locationArray['sky_video'] = $sky->video;
+        }
 
         return $locationArray;
     }
@@ -955,6 +958,7 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         Video::where('location_id', $id)->delete();
+        LocationInformation::where('location_id', $id)->delete();
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();
         Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
         Hotspot::where('location_id', $id)->delete();
@@ -1103,7 +1107,7 @@ class LocationsController extends Controller
         $openedCategory = null;
 
         $referer = '';
-        if ($location->information && $location->information && $location->information->back_button_from_domain &&
+        if ($location->information && $location->information->back_button_from_domain &&
             isset($_SERVER['HTTP_REFERER']) &&
             strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
             $referer = $_SERVER['HTTP_REFERER'];
