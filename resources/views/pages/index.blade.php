@@ -25,7 +25,7 @@
                     </div>
                     <div class="dubai360-header__icons">
                         <div class="wrapper-button" id="hubviewlink"
-                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : null}})"@endif>
+                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
                             <div class="dubai360-tooltip"><span>{{ trans('uzb360.hubrejim')}}</span></div>
                         </div>
@@ -195,7 +195,7 @@
                 @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
-                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : null}})"@endif></span>
+                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif></span>
                     </div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon "
                                                       data-pannel="explorePannel"></span></div>
