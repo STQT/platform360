@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+//use Spatie\Sluggable\HasTranslatableSlug;
 use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
     use LogsActivity;
     use HasTranslations;
+//    use HasTranslatableSlug;
 
     /**
      * The database table used by the model.
@@ -30,7 +32,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $translatable = ['name'];
+    protected $translatable = ['name', 'slug'];
     protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug'];
 
     public function locations()
@@ -55,9 +57,15 @@ class Category extends Model
     {
         return __CLASS__ . " model has been {$eventName}";
     }
-//    public function createUrl()
-//    {
-//        $baseName = request()->getSchemeAndHttpHost();
-//        return $baseName . '/' . \Lang::locale() . '/category/' . $this->slug;
-//    }
+
+    public function createUrl()
+    {
+        $baseName = request()->getSchemeAndHttpHost();
+        return $baseName . '/' . \Lang::locale() . '/category/' . $this->slug;
+    }
+
+    public function meta()
+    {
+        return $this->hasOne('App\Meta', 'id', 'meta_id');
+    }
 }

@@ -54,7 +54,7 @@ class HomeController extends Controller
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
                 $subdomainLocation = Location::where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
-                if (!Input::get('home')) {
+                if (!isset($_GET['home'])) {
                     Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
                 } else {

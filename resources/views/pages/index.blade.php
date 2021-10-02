@@ -386,7 +386,7 @@
                                                         </div>
                                                         <span class="icon-wrapper__text">
                                                             @if (!empty($category->slug))
-                                                                <a href="/ru/category/{{$category->slug}}">
+                                                                <a href="{{$category->createUrl()}}">
                                                             @endif
                                                             {{ $category->name }}
                                                             @if (!empty($category->slug))

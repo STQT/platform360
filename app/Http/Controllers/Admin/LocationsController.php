@@ -15,7 +15,6 @@ use App\Video;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -821,7 +820,7 @@ class LocationsController extends Controller
         $cities = Cities::all();
         $tags = Tag::pluck('name', 'id')->all();
 
-        $returnUrl = Input::get('returnUrl');
+        $returnUrl = $request->get('returnurl');
 
         if ($returnUrl) {
             $request->session()->put('returnUrl', $returnUrl);
@@ -977,7 +976,7 @@ class LocationsController extends Controller
             $defaultlocation = Cookie::get('city');
         } else {
             $defaultlocation = "1";
-            Cookie::queue(Cookie::forever('city', '1'));
+            Cookie::queue(Cookie::forever('city', $defaultlocation));
         }
 
         //Загрузка всех городов и координаты текущего города

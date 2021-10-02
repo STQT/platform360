@@ -67,9 +67,10 @@ task('clear_cache', function() {
     run('cd {{release_path}} && php artisan config:clear;
         php artisan cache:clear;
         php artisan view:clear;
-        php artisan route:clear;
     ');
 });
+
+task('artisan:optimize', function () {});
 
 after('deploy', 'reload:php-fpm');
 before('success', 'clear_cache');

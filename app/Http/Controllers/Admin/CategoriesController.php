@@ -50,37 +50,36 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-      app()->setLocale('ru');
+        app()->setLocale('ru');
         $this->validate($request, [
-			'name' => 'required',
+            'name' => 'required',
             'cat_icon' => 'required',
             'cat_icon_svg' => 'required'
-		]);
+        ]);
         $requestData = $request->all();
 
-$fileName = null;
+        $fileName = null;
 
-        if( request()->hasFile('cat_icon') && request()->file('cat_icon')->isValid()) {
-        $file = request()->file('cat_icon');
-        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-        $file->move(public_path() . '/storage/cat_icons/', $fileName);
-    }
-       if( request()->hasFile('cat_icon_svg') && request()->file('cat_icon_svg')->isValid()) {
-        $file2 = request()->file('cat_icon_svg');
-        $fileName2 = md5($file2->getClientOriginalName() . time()) . "." . $file2->getClientOriginalExtension();
-        $file2->move(public_path() . '/storage/cat_icons/', $fileName2);
-    }
+        if (request()->hasFile('cat_icon') && request()->file('cat_icon')->isValid()) {
+            $file = request()->file('cat_icon');
+            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+            $file->move(public_path() . '/storage/cat_icons/', $fileName);
+        }
+        if (request()->hasFile('cat_icon_svg') && request()->file('cat_icon_svg')->isValid()) {
+            $file2 = request()->file('cat_icon_svg');
+            $fileName2 = md5($file2->getClientOriginalName() . time()) . "." . $file2->getClientOriginalExtension();
+            $file2->move(public_path() . '/storage/cat_icons/', $fileName2);
+        }
 
+        $category = Category::create([
+            'name' => request()->get('name'),
+            'cat_icon' => $fileName,
+            'cat_icon_svg' => $fileName2,
+        ]);
 
-
- Category::create([
-        'name' => request()->get('name'),
-        'cat_icon' => $fileName,
-    'cat_icon_svg' => $fileName2,
-
-    ]);
-
-
+        $meta = \App\Meta::create($requestData['meta']);
+        $category->meta_id = $meta->id;
+        $category->save();
 
         return redirect('admin/categories')->with('flash_message', 'Category added!');
     }
@@ -125,31 +124,38 @@ $fileName = null;
      */
     public function update(Request $request, $id, $language)
     {
-      $this->validate($request, [
-			'name' => 'required',
-      'cat_icon' => 'sometimes | required',
-      'cat_icon_svg' => 'sometimes | required'
-		]);
+        $this->validate($request, [
+            'name' => 'required',
+            'cat_icon' => 'sometimes | required',
+            'cat_icon_svg' => 'sometimes | required'
+        ]);
         $requestData = $request->all();
 
+        if (!empty($requestData['cat_icon']) && request()->hasFile('cat_icon') && request()->file('cat_icon')->isValid()) {
+            $file = request()->file('cat_icon');
+            $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+            $file->move(public_path() . '/storage/cat_icons/', $fileName);
+            $requestData['cat_icon'] = $fileName;
+        }
+        if (!empty($requestData['cat_icon_svg']) && request()->hasFile('cat_icon_svg') && request()->file('cat_icon_svg')->isValid()) {
+            $file2 = request()->file('cat_icon_svg');
+            $fileName2 = md5($file2->getClientOriginalName() . time()) . "." . $file2->getClientOriginalExtension();
+            $file2->move(public_path() . '/storage/cat_icons/', $fileName2);
+            $requestData['cat_icon_svg'] = $fileName2;
+        }
 
-
-    if( !empty($requestData['cat_icon']) && request()->hasFile('cat_icon') && request()->file('cat_icon')->isValid()) {
-        $file = request()->file('cat_icon');
-        $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-        $file->move(public_path() . '/storage/cat_icons/', $fileName);
-        $requestData['cat_icon'] = $fileName;
-    }
-       if(!empty($requestData['cat_icon_svg']) && request()->hasFile('cat_icon_svg') && request()->file('cat_icon_svg')->isValid()) {
-        $file2 = request()->file('cat_icon_svg');
-        $fileName2 = md5($file2->getClientOriginalName() . time()) . "." . $file2->getClientOriginalExtension();
-        $file2->move(public_path() . '/storage/cat_icons/', $fileName2);
-        $requestData['cat_icon_svg'] = $fileName2;
-    }
-
-       app()->setLocale($language);
+        app()->setLocale($language);
 
         $category = Category::findOrFail($id);
+        if (!$category->meta) {
+            $meta = \App\Meta::create($requestData['meta']);
+            $meta->save();
+            $category->meta_id = $meta->id;
+            $category->save();
+        } else {
+            $meta = $category->meta;
+            $meta->update($requestData['meta']);
+        }
         $category->update($requestData);
 
         return redirect('admin/categories')->with('flash_message', 'Category updated!');
