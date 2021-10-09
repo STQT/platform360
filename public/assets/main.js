@@ -243,7 +243,7 @@ $(function() {
                         var img = '/storage/panoramas/preview/' + data[i].preview;
                     }
 
-                    let videoFile = data[i].video ? ("'" + data[i].video + "'") : null;
+                    let videoFile = data[i].video ? ("'" + data[i].video + "'") : 'null';
                     if (screen.width >= 1024) {
                         searchItem += `
                       <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', null, null, null, ` + videoFile + `)">
@@ -293,7 +293,7 @@ $(function() {
             }
         }
 
-        if (_this.val() == '') {
+        if ($('.search-input').val() == '') {
             $('.searchPanel__results span').text('Объект не найден');
             $('.searchPanel__button').text('Объект не найден');
 
@@ -341,13 +341,13 @@ $(function() {
 
                 $('.searchPanel__resultscontainer').hide();
                 $('.searchPanel__results span').text('Объект не найден');
-                $('.searchPanel__button').text('Объект не найден');
+                $('.searchPanel__button').html('Объект не найден');
             } else {
-                if (screen.width <= 1024) {
-                    $('.searchPanel__results span').text('Результат: ' + data.length + '');
-                } else {
-                    $('.searchPanel__button').text('Результаты: ' + data.length + '');
-                }
+                // if (screen.width <= 1024) {
+                //     $('.searchPanel__results span').text('Результат: ' + data.length + '');
+                // } else {
+                    $('.searchPanel__button').html('Результаты: ' + data.length + '');
+                // }
 
                 var searchItem = "";
                 var img = "";
@@ -361,7 +361,7 @@ $(function() {
                         var img = '/storage/panoramas/preview/' + data[i].preview;
                     }
 
-                    let videoFile = data[i].video ? ("'" + data[i].video + "'") : null;
+                    let videoFile = data[i].video ? ("'" + data[i].video + "'") : 'null';
                     if (screen.width >= 1024) {
                         searchItem += `
                       <div class="listItem-wrapper" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + ` ', null, null, null, ` + videoFile +`)">
@@ -378,7 +378,7 @@ $(function() {
                   `;
                     } else {
                         searchItem += `
-                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + `', ` + videoFile + `)">
+                      <div class="listItem-wrapper" style="height: 208px; width: 186px;" onclick="loadpano('uzbekistan:` + data[i].id + `', ` + i + `, '` + data[i].slug + ` ', null, null, null, ` + videoFile + `)">
                               <div class="listItem" style="width: 170px; height: 192px;">
                                 <div class="listItem__img"><img src="` + img + `" class="listItem__img--scene"></div>
                                 <div class="listItem__icon-category">

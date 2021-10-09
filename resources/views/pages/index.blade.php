@@ -1070,7 +1070,6 @@
         @if ($location->videos)
         $('#playaudio').off('click');
         $('#playaudio').on('click', function () {
-            console.log('toggle sound');
             @foreach ($location->videos as $vKey => $video)
             if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
                 krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
@@ -1624,7 +1623,6 @@
                         $('#playaudio').show();
                         $('#playaudio').off('click');
                         $('#playaudio').on('click', function () {
-                            console.log('toggle sound dynamic');
                             $.each(data.videos, function (key) {
                                 if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                     krpano.set('hotspot[video' + key + '].volume', '1.0');
