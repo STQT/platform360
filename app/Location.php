@@ -105,7 +105,6 @@ class Location extends Model
     public function toArray22()
     {
         $attributes = parent::toArray();
-
         foreach ($this->getTranslatableAttributes() as $name) {
             $attributes[$name] = $this->getTranslation($name, app()->getLocale());
         }

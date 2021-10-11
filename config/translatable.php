@@ -7,8 +7,8 @@ return [
      */
     'fallback_locale' => 'ru',
     'locales' => [
-    'ru' => 'Russian',
-    'en' => 'English',
-    'uzb' => 'Uzbek',
-],
+        'ru' => 'Russian',
+        'en' => 'English',
+        'uzb' => 'Uzbek',
+    ],
 ];

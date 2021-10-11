@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', 'HomeController@getIndex');
 
-Route::get('lang/{locale}', 'HomeController@changelanguage');
 Route::get('/clear', function() {
     Artisan::call('view:clear');
     Artisan::call('optimize');

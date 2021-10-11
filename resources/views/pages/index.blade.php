@@ -704,7 +704,7 @@
                         </li>
 
                         <li class="socialnetwork-icon telegram">
-                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : 'https://t.me/' . str_replace('@', '', $location->telegram)}}" id="locationsocialtg" target="_blank" rel="nofollow">
+                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : ('https://t.me/' . str_replace('@', '', $location->telegram))}}" id="locationsocialtg" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/telegram.png" alt="telegram share"/>
                                 </div>
