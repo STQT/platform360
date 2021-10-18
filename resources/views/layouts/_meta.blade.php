@@ -2,10 +2,16 @@
     @php
         $title = !empty($location->seo_title) ? $location->seo_title : $location->name;
     @endphp
-    @if (Route::currentRouteAction() == 'App\Http\Controllers\HomeController@getIndex')
+    @if (Route::currentRouteAction() == 'App\Http\Controllers\HomeController@getIndex' && !$openedCategory)
         <title>Виртуальный тур по Узбекистану: увидеть панорамные и 3D фото, совершить интерактивный тур по Ташкенту и другим городам Узбекистана можно на Uzbekistan360.Uz</title>
         <meta name="description" content="Виртуальный тур по городам Узбекистана. Где можно найти 3D фотографии и VR панорамы интересных мест Ташкента и Узбекистана? Сайт Uzbekistan360.Uz предоставляет возможность посещения популярных мест и достопримечательностей Узбекистана в режиме 3D! Здесь можно совершить интерактивный тур по самым популярным местам и увидеть потрясающие панорамные виды городов Узбекистана с возможностью обзора 360 градусов!">
         <meta name="keywords" content="3д фото городов узбекистана, 3d фото городов узбекистана, панорамные фото городов узбекистана, фото 360 градусов городов узбекистана, панорамные снимки узбекистана, панорамы городов узбекистана, виртуальные туры узбекистан, 3d снимки узбекистан, панорамы улиц ташкента, панорамные фотографии ташкента, панорамные фото узбекистана, 3d узбекистан, увидеть виртуальный ташкент">
+    @elseif ($openedCategory)
+        @if ($openedCategory->meta)
+            <title>{{ $openedCategory->meta->title }}</title>
+            <meta name="description" content="{{ $openedCategory->meta->description }}">
+            <meta name="keywords" content="{{ $openedCategory->meta->keywords }}">
+        @endif
     @elseif ((empty($location->description) && $location->podlocparent_id !== null) || $location->podlocparent_id === null)
         @if (isset($location->meta->title) && $location->meta->title != '')
             <title>{{ $location->meta->title }}</title>
