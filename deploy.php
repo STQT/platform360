@@ -14,7 +14,7 @@ set('repository', 'git@git.makegood.uz:makegood/uzbekistan360.git');
 
 // Shared files/dirs between deploys
 add('shared_files', ['.env', 'public/robots.txt']);
-add('shared_dirs', ['storage', 'vendor']);
+add('shared_dirs', ['storage', 'vendor', 'public/screenshots']);
 
 // Writable dirs by web server
 //add('writable_dirs', ['vendor', 'storage']);
