@@ -1347,6 +1347,10 @@ template {
   }
   #mobilelanguage {
     display: block !important;
+    padding-right: 3px;
+    font-size: unset;
+    position: absolute;
+    right: 10px;
   }
 }
 

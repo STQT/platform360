@@ -171,13 +171,11 @@
             onexitfullscreen.fullscreensupport="set(layer[skin_btn_fullscreen].crop, '0|576|64|64');"
     />
 
-
     <!-- skin layout -->
 
     <style name="skintext" type="text" background="false" border="false" css="calc:skin_settings.design_text_css + ' text-align:left; font-style:italic; font-size:12px;'" textshadow="get:skin_settings.design_text_shadow" />
     <style name="skintext_sel" css="calc:skin_settings.design_text_css + ' text-align:left; font-style:italic; font-size:12px; text-decoration:underline;'" />
     <style name="settingsitem" type="container" align="lefttop" x="0" y="8" width="100%" height="20" bgcolor="0xFFFFFF" bgalpha="0.0" bgcapture="true" onover="set(bgalpha,0.25);" onout="set(bgalpha,0.0);" ondown.touch="onover();" onup.touch="onout();" children="false" />
-
 
     <layer name="skin_layer" keep="true" type="container" align="top" width="get:skin_settings.layout_width" maxwidth="get:skin_settings.layout_maxwidth" height="100%" maskchildren="true" xvisible="false" bgcapture="false" zorder="1">
 

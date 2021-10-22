@@ -10,6 +10,7 @@ use DB;
 use App\Sky;
 use App\Hotspot;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Mail;
 use Illuminate\Support\Facades\Cookie;
@@ -53,7 +54,7 @@ class HomeController extends Controller
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
                 $subdomainLocation = Location::where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
-                if (!Input::get('home')) {
+                if (!isset($_GET['home'])) {
                     Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
                 } else {
@@ -139,7 +140,8 @@ class HomeController extends Controller
         }
 
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $location->id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки
@@ -194,6 +196,12 @@ class HomeController extends Controller
             $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
         }
 
+        $referer = '';
+        if ($location->information && $location->information->back_button_from_domain &&
+            isset($_SERVER['HTTP_REFERER']) &&
+            strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
+            $referer = $_SERVER['HTTP_REFERER'];
+        }
 
         return view('pages.index', [
             'location' => $location,
@@ -210,6 +218,7 @@ class HomeController extends Controller
             'isnew' => $isnew,
             'etaji' => $etaji,
             'etajlocations' => $etajlocations,
+            'referer' => $referer
         ]);
     }
 
@@ -255,7 +264,7 @@ class HomeController extends Controller
             if (count($cities) > 0) {
                 $cityid = json_encode($cities[0]->id);
                 Cookie::queue(Cookie::forever('city', $cityid));
-                return redirect('http://' . request()->getHost() . '/');
+                return redirect('http://' . request()->getHost() . '/' . Lang::locale() . '/?home=1');
             } else {
                 return redirect('/');
             }
@@ -269,10 +278,12 @@ class HomeController extends Controller
     {
         $location = Location::find($id);
         $view = $location->video ? 'video' : 'xml';
-        return view('partials.' . $view, [
+
+        return response(view('partials.' . $view, [
             'location' => $location,
             'index' => $index
-        ]);
+        ]));
+//        ->header('Content-type', 'text/plain');
     }
 
     //Krpano panoramic video

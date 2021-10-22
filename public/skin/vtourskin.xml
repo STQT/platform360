@@ -1,7 +1,20 @@
 ﻿<krpano>
 
 
+<!--<action name="configura" autorun="onstart">-->
+<!--    <scene>-->
+<!--        -->
+<!--    </scene>-->
+<!--    removelayer('skin_layer',false);-->
+<!--</action>-->
 
+<!--    <action name="configura" autorun="onstart">-->
+<!--        set("registrocon","no"); set(layer[intro].bgcolor, calc(configpano.colorbase)); set(layer[select_social2].bgcolor, calc(configpano.colorbase)); set(layer[select_socialemail].bgcolor, calc(configpano.colorbase)); set(layer[welcome].html,calc(configlang.bienvenida_eng)); set(layer[bienvenida].html, calc(configlang.bienvenida_esp)); set(layer[fecha].html, calc(configpano.fecha)); set(layer[privacy1_eng].html, calc(configlang.priv1_eng+'-->
+<!--        <br/>-->
+<!--        '+configlang.priv2_eng)); set(layer[privacy1_esp].html, calc(configlang.priv1_esp+'-->
+<!--        <br/>-->
+<!--        '+configlang.priv2_esp)); set(layer[privacy2_eng].html, calc(configlang.priv3_eng)); set(layer[privacy2_esp].html, calc(configlang.priv3_esp)); if (lang EQ "eng", set(layer[intro].visible,false); configura2(); set(layer[help].visible,true); removelayer('intro',true); , if (lang EQ "esp", set(layer[intro].visible,false);configura2(); set(layer[help].visible,true); removelayer('intro',true); , set(layer[intro].visible,true); ); ); if (configpano.logocliver EQ "1", set(layer[skin_logo_for].visible,true); , set(layer[skin_logo_for].visible,false); ); if (configpano.etiquetate EQ "1", set(configpano.captura,"0"), set(configpano.captura,"1") ); if (configpano.etiquetate EQ "1", set(layer[tag].visible,true); , set(layer[tag].visible,false); ); if (configpano.captura EQ "1", set(layer[snap].visible,true); , set(layer[snap].visible,false); ); if (configpano.postal EQ "1", set(layer[postal].visible,true); , set(layer[postal].visible,false); ); if (configpano.favorito EQ "1", set(layer[fav].visible,true); , set(layer[fav].visible,false); ); if (configpano.fotocuadrante EQ "1", set(layer[fotocuadrante].visible,true); , set(layer[fotocuadrante].visible,false); ); if (configpano.concurso EQ "1", set(layer[concurso].visible,true); , set(layer[concurso].visible,false); );-->
+<!--    </action>-->
 
 
 

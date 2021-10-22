@@ -293,6 +293,11 @@ class Location extends Model
         return $this->hasOne('App\Meta', 'id', 'meta_id');
     }
 
+    public function information()
+    {
+        return $this->hasOne('App\LocationInformation', 'location_id', 'id');
+    }
+
     public function tags()
     {
         return $this->belongsToMany('App\Tag');

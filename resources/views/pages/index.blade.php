@@ -25,7 +25,7 @@
                     </div>
                     <div class="dubai360-header__icons">
                         <div class="wrapper-button" id="hubviewlink"
-                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif>
+                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
                             <div class="dubai360-tooltip"><span>{{ trans('uzb360.hubrejim')}}</span></div>
                         </div>
@@ -141,27 +141,34 @@
                     <div class="dubai360-header__logo-languaje">
                     <span class="wrapper-button__icon" data-pannel="cityPannel" id="mobilelanguage"
                           style="display:none">
-      <svg version="1.1" id="Layer_1" class="wrappersvg" xmlns="http://www.w3.org/2000/svg"
-           xmlns:xlink="http://www.w3.org/1999/xlink"
-           viewBox="0 0 511.999 511.999" style="width: 28px;
-    position: absolute;
-    top: 11px;
-  " fill="#1a90d2">
+
+<svg
+   width="20.520086"
+   height="28">
+  <g
+     transform="scale(0.33678133)"
+     style="fill:#1a90d2;fill-opacity:1"
+     id="g6">
+    <g
+       style="fill:#1a90d2;fill-opacity:1"
+       id="g4">
+      <path
+         class="cls-1"
+         d="M 30.47,83.14 A 7.55,7.55 0 0 1 24.64,80.32 C 18.85,73.22 0,48.87 0,33.23 0,14.91 13.67,0 30.47,0 c 16.8,0 30.46,14.91 30.46,33.23 0,15.64 -18.85,40 -24.62,47.08 a 7.59,7.59 0 0 1 -5.84,2.83 z m 0,-77.47 C 16.79,5.67 5.67,18 5.67,33.23 c 0,11 12.58,30.28 23.36,43.5 a 1.83,1.83 0 0 0 2.89,0 C 42.68,63.51 55.26,44.18 55.26,33.23 55.26,18 44.14,5.67 30.47,5.67 Z"
+         id="path909"
+         style="fill:#1a90d2;fill-opacity:1" />
+      <circle
+         class="cls-1"
+         cx="30.469999"
+         cy="31.530001"
+         r="11.24"
+         id="circle911"
+         style="fill:#1a90d2;fill-opacity:1" />
+    </g>
+  </g>
+</svg>
 
 
-  <g>
-                <path d="M207.904,468.1c-48.9-83.2-132.1-233-132.1-299.6c0-92.6,75.9-168.5,168.5-168.5s168.5,75.9,168.5,168.5
-                    c0,66.6-83.2,216.4-132.1,299.6C261.704,497.6,223.104,493.2,207.904,468.1z M244.304,40.5c-70.7,0-128,57.2-128,128
-                    c0,40.6,46.8,144.6,126.9,278.8c0,1,2.1,1,2.1,0c79.1-134.2,127-238.3,127-278.8C372.304,97.7,315.004,40.5,244.304,40.5z"/>
-            </g>
-            <g>
-                <path d="M244.304,226.7c-38.5,0-69.7-31.2-69.7-69.7s31.2-68.7,69.7-68.7s69.7,31.2,69.7,69.7S282.804,226.7,244.304,226.7z
-                     M244.304,128.9c-15.6,0-29.1,12.5-29.1,29.1s12.5,29.1,29.1,29.1s29.1-12.5,29.1-29.1S259.904,128.9,244.304,128.9z"/>
-            </g>
-
-
-
-      </svg>
     </span>
 
                         <div class="language-switcher">
@@ -179,9 +186,23 @@
                 </header>
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
+                @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
+                <a href="{{$referer}}">
+                    @php
+                            $fontStyle = '';
+                            $fontStyle .= $location->information->back_button_font ?  ('font-family: "' . $location->information->back_button_font . '";') : '';
+                            $fontStyle .= $location->information->back_button_font_size ?  ('font-size: ' . $location->information->back_button_font_size . ';') : '';
+                            $fontStyle .= $location->information->back_button_font_color ?  ('color: ' . $location->information->back_button_font_color . ';') : '';
+                    @endphp
+                    <div class="gobacktosite" style="background-color: {{ $location->information->back_button_background_color ? $location->information->back_button_background_color : 'yellow' }}">
+                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}">
+                        <span style="{{$fontStyle}}">Назад на сайт</span>
+                    </div>
+                </a>
+                @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
-                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}')"@endif></span>
+                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif></span>
                     </div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon "
                                                       data-pannel="explorePannel"></span></div>
@@ -372,7 +393,7 @@
                                                         </div>
                                                         <span class="icon-wrapper__text">
                                                             @if (!empty($category->slug))
-                                                                <a href="/ru/category/{{$category->slug}}">
+                                                                <a href="{{$category->createUrl()}}">
                                                             @endif
                                                             {{ $category->name }}
                                                             @if (!empty($category->slug))
@@ -651,7 +672,7 @@
                         <div class="numberr" id="website_box">
                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
                             <span id="website"><a href="{{ strpos($location->website, 'http://') !== false ? $location->website : 'http://' . $location->website }}"
-                                                  target="_blank">{{$location->website }}</a></span>
+                                                  target="_blank" rel="nofollow">{{$location->website }}</a></span>
                         </div>
                     </div>
                 <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
@@ -682,7 +703,7 @@
                     </div>
                     <ul class="sharePanel__social__icons" style="    width: 200px;">
                         <li class="socialnetwork-icon facebook">
-                            <a href="{{$location->facebook}}" id="locationsocialfb" target="_blank">
+                            <a href="{{strpos($location->facebook, 'http') !== false ? $location->facebook : 'https://facebook.com/' . str_replace('@', '', $location->facebook)}}" id="locationsocialfb" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/facebook.png" alt="facebook share"/>
                                 </div>
@@ -690,7 +711,7 @@
                         </li>
 
                         <li class="socialnetwork-icon telegram">
-                            <a href="{{$location->telegram}}" id="locationsocialtg" target="_blank">
+                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : 'https://t.me/' . str_replace('@', '', $location->telegram)}}" id="locationsocialtg" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/telegram.png" alt="telegram share"/>
                                 </div>
@@ -698,7 +719,7 @@
                         </li>
 
                         <li class="socialnetwork-icon instagram">
-                            <a href="{{$location->instagram}}" id="locationsocialig" target="_blank">
+                            <a href="{{strpos($location->instagram, 'http') !== false ? $location->instagram : 'https://instagram.com/' . str_replace('@', '', $location->instagram)}}" id="locationsocialig" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/instagram.png" alt="whatsapp share"/>
                                 </div>
@@ -711,7 +732,7 @@
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
                                     <div class="listItem-wrapper"
-                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, $otherlocation->video)">
+                                         onclick="loadpano('uzbekistan:{{$otherlocation->id}}', {{$i}}, '{{$otherlocation->slug}}', null, null, null, {{$otherlocation->video ? "'" . $otherlocation->video . "'" : 'null'}})">
                                         <div class="listItem">
                                             @if($otherlocation->preview)
                                                 <div class="listItem__img">
@@ -1056,7 +1077,6 @@
         @if ($location->videos)
         $('#playaudio').off('click');
         $('#playaudio').on('click', function () {
-            console.log('toggle sound');
             @foreach ($location->videos as $vKey => $video)
             if (krpano.get('hotspot[video{{ $vKey }}].volume') == 0) {
                 krpano.set('hotspot[video{{ $vKey }}].volume', '1.0');
@@ -1369,7 +1389,8 @@
                 var tmp = xmlname;
                 xmlname = "/{{ app()->getLocale() }}/krpano/" + index + '/' + xmlname;
                 remove_all_hotspots();
-                if (!video) {
+                if (video === null || video === '') {
+                    krpano.call("removelayer('skin_layer', true)");
                     krpano.call("loadpano(" + xmlname + ", null, MERGE|KEEPBASE|KEEPHOTSPOTS, ZOOMBLEND(1,2,easeInQuad));");
                     krpano.call("loadscene('scene1', null, MERGE|KEEPBASE, ZOOMBLEND(1,2,easeInQuad));");
                 } else {
@@ -1382,9 +1403,8 @@
                     }
                     @endphp
                     let xmlVideo = $.get('{{$protocolName . request()->getHost()}}' + xmlname, function (response) {
-                        videoXml = response;
-                        krpano.call("loadxml(" + videoXml + ")");
-                        krpano.call("loadscene('scene1', null, MERGE, ZOOMBLEND(1,2))");
+                        krpano.call("loadxml(" + response + ")");
+                        krpano.call("loadscene('scene2', null, MERGE, ZOOMBLEND(1,2))");
                     });
                 }
 
@@ -1610,7 +1630,6 @@
                         $('#playaudio').show();
                         $('#playaudio').off('click');
                         $('#playaudio').on('click', function () {
-                            console.log('toggle sound dynamic');
                             $.each(data.videos, function (key) {
                                 if (krpano.get('hotspot[video' + key + '].volume') == 0) {
                                     krpano.set('hotspot[video' + key + '].volume', '1.0');
@@ -1645,12 +1664,19 @@
                         $('.currentlocationcordinates').data('lat', 'no');
                         $('.currentlocationcordinates').data('lng', 'no');
                     }
+                    let videoVal = null;
                     if (data.is_sky == "on") {
-                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "');");
-                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "');");
+                        if (video) {
+                            videoVal = "'" + video + "'";
+                        }
+                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
+                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     } else {
-                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "');");
-                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "');");
+                        if (data.sky_video) {
+                            videoVal = "'" + data.sky_video + "'";
+                        }
+                        document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo',  " + videoVal + ");");
+                        document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     }
                 });
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {

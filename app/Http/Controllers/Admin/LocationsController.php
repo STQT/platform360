@@ -8,13 +8,13 @@ use App\Hotspot;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Location;
+use App\LocationInformation;
 use App\Sky;
 use App\Tag;
 use App\Video;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -34,6 +34,7 @@ class LocationsController extends Controller
         $keyword = $request->get('search');
         $category = $request->get('category');
         $city = $request->get('city');
+        $video = $request->get('video');
         $perPage = 25;
 
         $totalLocations = Location::withoutGlobalScope('published')->count();
@@ -45,7 +46,7 @@ class LocationsController extends Controller
         if (!empty($keyword)) {
             $locations = Location::where('is_sky', '!=', 'on')
                 ->whereNull('podlocparent_id')
-                ->where(function ($query) use ($keyword, $category, $city) {
+                ->where(function ($query) use ($keyword, $category, $city, $video) {
                     $query->where('name', 'LIKE', "%$keyword%")
                         ->orWhere('address', 'LIKE', "%$keyword%")
                         ->orWhere('number', 'LIKE', "%$keyword%")
@@ -61,12 +62,15 @@ class LocationsController extends Controller
                     if ($category) {
                         $query->where('category_id', $category);
                     }
+                    if ($video) {
+                        $query->where('video', '!=', '');
+                    }
                 }
                 )
                 ->latest()
                 ->paginate($perPage);
         } else {
-            $locations = Location::where(function ($query) use ($category, $city, $perPage) {
+            $locations = Location::where(function ($query) use ($category, $city, $perPage, $video) {
                 $query->where('is_sky', '!=', 'on')
                     ->whereNull('podlocparent_id');
                 if ($city) {
@@ -74,6 +78,9 @@ class LocationsController extends Controller
                 }
                 if ($category) {
                     $query->where('category_id', $category);
+                }
+                if ($video) {
+                    $query->where('video', '!=', '');
                 }
             })->withoutGlobalScope('published')
                 ->latest()
@@ -668,33 +675,45 @@ class LocationsController extends Controller
 
             $requestData['audio'] = $fullName;
         }
-        if (!empty($panoramas)) {
-            $requestData['panorama'] = json_encode($panoramas);
+        if (!empty($panoramas) || !empty($filenameVideo)) {
+            $requestData['preview'] = '';
+            if (!empty($panoramas)) {
+                $requestData['panorama'] = json_encode($panoramas);
+            }
+            if (!empty($filenameVideo)) {
+                $requestData['video'] = $filenameVideo;
+                if (isset($filename)) {
+                    $requestData['preview'] = $filename;
+                }
+            }
             $location = Location::create($requestData);
             $meta = \App\Meta::create($requestData['meta']);
             $location->meta_id = $meta->id;
             $location->save();
+
+            if (isset($requestData['information']['back_button_file']) && $requestData['information']['back_button_file']) {
+                $randomStr = Str::random(40);
+                $extension = $requestData['information']['back_button_file']->getClientOriginalExtension();
+                $fullName = $randomStr . '.' . $extension;
+                $file = $requestData['information']['back_button_file']->move(public_path('storage/locations_information'),
+                    $fullName);
+
+                $requestData['information']['back_button_image'] = $fullName;
+            }
+
+
+            if (isset($requestData['information'])) {
+                $information = \App\LocationInformation::create($requestData['information']);
+                $information->location_id = $location->id;
+                $information->save();
+            }
 
             if (isset($requestData['tags'])) {
                 $tagIds = $requestData['tags'];
                 $location->tags()->sync($tagIds);
             }
 
-            return redirect('admin/locations')->with('flash_message', 'Location added!');
-        } elseif (!empty($filenameVideo)) {
-            $requestData['video'] = $filenameVideo;
-            $requestData['preview'] = $filename;
-            $location = Location::create($requestData);
-            $meta = \App\Meta::create($requestData['meta']);
-            $location->meta_id = $meta->id;
-            $location->save();
-
-            if (isset($requestData['tags'])) {
-                $tagIds = $requestData['tags'];
-                $location->tags()->sync($tagIds);
-            }
-
-            return redirect('admin/locations')->with('flash_message', 'Location added!');
+            return redirect('admin/locations')->with('flash_message', 'Локация добавлена');
         } else {
             return redirect()->back()->withErrors('Корректно заполните форму ниже');
         }
@@ -755,16 +774,15 @@ class LocationsController extends Controller
 
         if (empty($location->is_sky)) {
             if (!empty($location->sky_id)) {
-                $location->skyslug = Sky::where('id', $location->sky_id)->pluck('slug')->first();
+                $sky = Sky::where('id', $location->sky_id)->first();
+                $location->skyslug = $sky->slug;
             } else {
-                $location->skyslug = Sky::where([
+                $sky = Sky::where([
                     ['skymainforcity', 'on'],
                     ['city_id', $defaultlocation]
-                ])->pluck('slug')->first();
-                $location->sky_id = Sky::where([
-                    ['skymainforcity', 'on'],
-                    ['city_id', $defaultlocation]
-                ])->pluck('id')->first();
+                ])->first();
+                $location->skyslug = $sky->slug;
+                $location->sky_id = $sky->id;
             }
         } else {
             $location->skyslug = "no";
@@ -776,6 +794,9 @@ class LocationsController extends Controller
         }
         $locationArray['category_icon'] = $location->category->cat_icon_svg;
         $locationArray['floors_locations'] = $etajlocations;
+        if (isset($sky)) {
+            $locationArray['sky_video'] = $sky->video;
+        }
 
         return $locationArray;
     }
@@ -799,7 +820,7 @@ class LocationsController extends Controller
         $cities = Cities::all();
         $tags = Tag::pluck('name', 'id')->all();
 
-        $returnUrl = Input::get('returnUrl');
+        $returnUrl = $request->get('returnurl');
 
         if ($returnUrl) {
             $request->session()->put('returnUrl', $returnUrl);
@@ -898,6 +919,24 @@ class LocationsController extends Controller
                 $meta = $location->meta;
                 $meta->update($requestData['meta']);
             }
+
+            if (isset($requestData['information']['back_button_file']) && $requestData['information']['back_button_file']) {
+                $randomStr = Str::random(40);
+                $extension = $requestData['information']['back_button_file']->getClientOriginalExtension();
+                $fullName = $randomStr . '.' . $extension;
+                $file = $requestData['information']['back_button_file']->move(public_path('storage/locations_information'), $fullName);
+
+                $requestData['information']['back_button_image'] = $fullName;
+            }
+
+            if (!$location->information) {
+                $information = \App\LocationInformation::create($requestData['information']);
+                $information->location_id = $location->id;
+                $information->save();
+            } else {
+                $information = $location->information;
+                $information->update($requestData['information']);
+            }
             $location = Location::withoutGlobalScope('published')->with('meta')->findOrFail($id);
             if ($initialLocationTitle != $requestData['name']) {
                 $requestData['slug'] = Str::slug($requestData['name'], '-');
@@ -919,6 +958,7 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         Video::where('location_id', $id)->delete();
+        LocationInformation::where('location_id', $id)->delete();
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();
         Location::where('podlocparent_id', $id)->withoutGlobalScope('published')->delete();
         Hotspot::where('location_id', $id)->delete();
@@ -936,21 +976,16 @@ class LocationsController extends Controller
             $defaultlocation = Cookie::get('city');
         } else {
             $defaultlocation = "1";
-            Cookie::queue(Cookie::forever('city', '1'));
+            Cookie::queue(Cookie::forever('city', $defaultlocation));
         }
 
         //Загрузка всех городов и координаты текущего города
         $cities = Cities::all();
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
 
-        //Загрузка основноч точки
+        //Загрузка основной точки
         $location = Location::where('slug', $slug)->with('categorylocation')->firstOrFail();
 
-        /*if ($location->video) {
-            return view('partials.video', [
-                'location' => $location,
-            ]);
-        }*/
         //Загрузка этажей основной точки
         $etaji = $location->etaji;
         $etajlocations = "";
@@ -976,7 +1011,7 @@ class LocationsController extends Controller
             }
         } else {
             $sky = "no";
-        };
+        }
 
         //Координаты локаций
         $locationscordinate = Location::where('city_id', $defaultlocation)->where('onmap',
@@ -1020,7 +1055,8 @@ class LocationsController extends Controller
         }
 
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $location->id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $location->id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
@@ -1070,6 +1106,13 @@ class LocationsController extends Controller
 
         $openedCategory = null;
 
+        $referer = '';
+        if ($location->information && $location->information->back_button_from_domain &&
+            isset($_SERVER['HTTP_REFERER']) &&
+            strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
+            $referer = $_SERVER['HTTP_REFERER'];
+        }
+
         if ($location->count()) {
             return view('pages.index', [
                 'location' => $location,
@@ -1086,6 +1129,7 @@ class LocationsController extends Controller
                 'etaji' => $etaji,
                 'etajlocations' => $etajlocations,
                 'openedCategory' => $openedCategory,
+                'referer' => $referer
             ]);
         } else {
             return response()->json([]);
@@ -1221,7 +1265,8 @@ class LocationsController extends Controller
     public function apiHotspots($id)
     {
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::where('location_id', $id)->with('destination_locations')->get();
+        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $id)
+            ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки

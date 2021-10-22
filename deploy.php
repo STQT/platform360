@@ -10,15 +10,14 @@ set('application', 'uzbekistan360.uz');
 set('repository', 'git@git.makegood.uz:makegood/uzbekistan360.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+//set('git_tty', true);
 
-// Shared files/dirs between deploys 
-add('shared_files', ['.env']);
-add('shared_dirs', ['storage', 'vendor']);
+// Shared files/dirs between deploys
+add('shared_files', ['.env', 'public/robots.txt']);
+add('shared_dirs', ['storage', 'vendor', 'public/screenshots']);
 
-// Writable dirs by web server 
-add('writable_dirs', ['vendor', 'storage']);
-
+// Writable dirs by web server
+//add('writable_dirs', ['vendor', 'storage']);
 
 // Hosts
 
@@ -41,7 +40,15 @@ host('uzbekistan360.uz')
     ->forwardAgent(true)
     ->set('deploy_path', '/var/www/uzbekistan360.uz');
 
-    
+host('185.74.6.184')
+    ->stage('production_new')
+    ->user('deploy')
+    ->port(22)
+    ->configFile('~/.ssh/config')
+    ->identityFile('~/.ssh/id_rsa')
+    ->forwardAgent(true)
+    ->set('deploy_path', '/var/www/uzbekistan360.uz');
+
 // Tasks
 
 task('build', function () {
@@ -60,9 +67,10 @@ task('clear_cache', function() {
     run('cd {{release_path}} && php artisan config:clear;
         php artisan cache:clear;
         php artisan view:clear;
-        php artisan route:clear;
     ');
 });
+
+task('artisan:optimize', function () {});
 
 after('deploy', 'reload:php-fpm');
 before('success', 'clear_cache');
