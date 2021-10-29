@@ -82,10 +82,6 @@ body{
     }
 }
 
-.icon-ic_explore.wrapper-button__icon {
-    font-size: 3.3em;
-}
-
 .js-icon.icon-wrapper__icon a, .icon-wrapper--selected a {
     text-decoration: none;
     color: #2a2a2f;
