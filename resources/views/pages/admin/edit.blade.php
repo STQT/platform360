@@ -46,17 +46,36 @@
         <form id="information-form">
             <div class="row">
                 <div class="form-group">
+                    <a href="{{ url('/admin/locations/ru/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button">Русский</button></a>
+
+                    <a href="{{ url('/admin/locations/uzb/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button">Узбекский</button></a>
+                    <a href="{{ url('/admin/locations/en/' . $location->id) }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button">Английский</button></a>
+
+{{--                    <button data-lang="ru" class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button" value="Русский">Русский</button>--}}
+
+{{--                    <button data-lang="uzb" class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button" value="Узбекский">Узбекский</button>--}}
+{{--                    <button data-lang="en" class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button" value="Английский">Английский</button>--}}
+                </div>
+            </div>
+
+            <input type="hidden" class="hidden-create" name="create" value="">
+
+            <input type="hidden" class="hotspotid" name="hotspotid" value="">
+
+            <div class="row">
+                <div class="form-group">
                     <h4>Информация</h4>
                     <textarea name="information" id="information" cols="30" rows="10"></textarea>
                 </div>
             </div>
-
             <div class="form-group">
                 <label>Файл<input type="file" name="image"></label>
             </div>
             <div class="form-group">
                 <img src="" alt="" style="display: none" class="preview">
             </div>
+
+            <input type="hidden" name="hidden_lang" class="hidden-input-lang" value="">
 
             <div id="deleteinformation" onclick="deleteinformation()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
 
@@ -130,11 +149,14 @@
         $('body').on('submit', 'form#information-form', function (e) {
             e.preventDefault();
             var data = new FormData(this);
+            var formtest = $('#information-form');
+            console.log(this);
+            console.log(formtest);
             data.append('location', "{{ $location->id }}");
             data.append('h', hcoordinate);
             data.append('v', vcoordinate);
             $.ajax({
-                url: '/ru/api/locations/add-information',
+                url: '/ru/api/locations/add-information/{{ $language }}',
                 method: 'POST',
                 data: data,
                 // dataType: 'JSON',
@@ -161,6 +183,14 @@
             selectedCategory = _this.data('category');
             getLocations(selectedCategory);
         });
+
+        $('.lang').click(function () {
+            var locale = $(this).attr('data-lang');
+            var hiddenInput = $('.hidden-input-lang');
+            console.log('locale: ', locale);
+            console.log('hiddenInput: ', hiddenInput);
+            hiddenInput.val(locale);
+        })
     });
 
     function getLocations(category, query) {
@@ -291,6 +321,8 @@
                       vcoordinate = v;
                       if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                           $('#information-form textarea').val(information);
+                          $('.hotspotid').val(hotspotid);
+
                           if (image.length > 0) {
                               $('.preview').attr('src', '/storage/information/' + image);
                               $('.preview').show();
@@ -369,6 +401,8 @@
     }
 
     function add_information_hotspot() {
+        var create = $('.hidden-create');
+        create.val(true);
          $('body').dblclick(function() {
             if (krpano) {
                 var mx = krpano.get("mouse.x");

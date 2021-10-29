@@ -49,7 +49,7 @@
                                         <td>
                                             <a href="{{ url('/admin/floors/' . $item->id) }}" title="Этажи"><button class="btn btn-info btn-sm"><i class="fa fa-arrows-v" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/podloc/' . $item->id) }}" title="Подлокации"><button class="btn btn-info btn-sm"><i class="fa fa-map-marker" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/admin/locations/' . $item->id) }}" title="Установить точки"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/locations/ru/' . $item->id) }}" title="Установить точки"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/videos/' . $item->id) }}" title="Редактировать видео"><button class="btn btn-info btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/locations/' . $item->id . '/edit/ru?returnUrl=' . urlencode(url()->full())) }}" title="Edit Location"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             @if($item->panorama)

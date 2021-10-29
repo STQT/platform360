@@ -22,7 +22,8 @@ Route::get('admin/locations/main', 'Admin\LocationsController@main');
 Route::get('admin/locations/unpublished', 'Admin\LocationsController@unpublished');
 Route::get('admin/locations/featured', 'Admin\LocationsController@featured');
 Route::get('admin/locations/hub', 'Admin\LocationsController@hub');
-Route::resource('admin/locations', 'Admin\\LocationsController');
+Route::resource('admin/locations', 'Admin\\LocationsController')->except(['show']);
+Route::get('admin/locations/{lang}/{id}', 'Admin\LocationsController@show')->name('admin.locations.show');
 Route::get('admin/locations/{id}/video', 'Admin\LocationsController@showVideo')->name('admin.locations.video');
 
 //Небо

@@ -27,7 +27,7 @@ Route::get('/clear', function() {
 //разные страницы сайта
 Route::get('/how-to-use', 'PagesController@help');
 Route::get('/sitemap', 'PagesController@sitemap');
-Route::get('/help', 'PageController@help');
+Route::get('/help', 'PagesController@help');
 
 Route::get('/scene/{id}', 'HomeController@loadScene');
 Route::get('/city/{id}', 'HomeController@changeCity');
@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/locations/{id}', 'Admin\\LocationsController@apiLocations');
         Route::get('/sublocations/{id}', 'Admin\LocationsController@apiSublocations');
         Route::post('/locations/add', 'Admin\\LocationsController@apiAddhotspot');
-        Route::post('/locations/add-information', 'Admin\\LocationsController@apiAddInformationhotspot');
+        Route::post('/locations/add-information/{lang}', 'Admin\\LocationsController@apiAddInformationhotspot');
         Route::post('/locations/upload-video', 'Admin\\LocationsController@uploadVideo');
         Route::get('/deletehotspot/{id}', 'Admin\\HotspotsController@deletehotspot');
         Route::get('/deleteinformation/{id}', 'Admin\\HotspotsController@deleteinformation');

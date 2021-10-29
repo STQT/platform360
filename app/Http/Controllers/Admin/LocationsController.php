@@ -15,6 +15,7 @@ use App\Video;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -729,14 +730,20 @@ class LocationsController extends Controller
     }
 
     //Просмотр локации
-    public function show($id)
+    public function show($language, $id)
     {
+        app()->setLocale($language);
+
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
         $locations = Location::withoutGlobalScope('published')->get()->all();
 
         $categories = Category::all();
         return view('pages.admin.edit',
-            ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
+            [
+                'location' => $location, 'locations' => $locations,
+                'categories' => $categories, 'language' => $language
+            ]
+        );
     }
 
     //API Локация
@@ -941,6 +948,7 @@ class LocationsController extends Controller
             if ($initialLocationTitle != $requestData['name']) {
                 $requestData['slug'] = Str::slug($requestData['name'], '-');
             }
+
             $location->update($requestData);
             $returnUrl = $request->session()->get('returnUrl');
 
@@ -1192,8 +1200,9 @@ class LocationsController extends Controller
         return 'ok';
     }
 
-    public function apiAddInformationhotspot(Request $request)
+    public function apiAddInformationhotspot(Request $request, $lang)
     {
+        app()->setLocale($lang);
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [
@@ -1206,18 +1215,46 @@ class LocationsController extends Controller
             $image->move(public_path('storage/information'), $newName);
         }
 
-        $hotspot = new Hotspot();
-        $hotspot->location_id = $data['location'];
-        $hotspot->destination_id = $data['location'];
-        $hotspot->h = $data['h'];
-        $hotspot->v = $data['v'];
-        $hotspotInformation = $data['information'];
-        $hotspot->information = $hotspotInformation;
-        if (isset($image)) {
-            $hotspot->image = $newName;
+        if ($data['create'] == true){
+            $hotspot = new Hotspot();
+            $hotspot->location_id = $data['location'];
+            $hotspot->destination_id = $data['location'];
+            $hotspot->h = $data['h'];
+            $hotspot->v = $data['v'];
+
+            $hotspotInformation = $data['information'];
+            $hotspot->information = $hotspotInformation;
+            if (isset($image)) {
+                $hotspot->image = $newName;
+            }
+            $hotspot->type = Hotspot::TYPE_INFORMATION;
+
+            $hotspot->save();
+        } elseif ($data['hotspotid'] != null) {
+            $hotspot = Hotspot::find($data['hotspotid']);
+            $hotspot->location_id = $data['location'];
+            $hotspot->destination_id = $data['location'];
+            $hotspot->h = $data['h'];
+            $hotspot->v = $data['v'];
+            $hotspot->information = $data['information'];
+
+            if (isset($image)) {
+                $hotspot->image = $newName;
+            }
+            $hotspot->type = Hotspot::TYPE_INFORMATION;
+
+            $hotspot->save();
         }
-        $hotspot->type = Hotspot::TYPE_INFORMATION;
-        $hotspot->save();
+
+
+        //        $currentInformation = json_decode($hotspot->information, true);
+//        dd($hotspot);
+//
+//        $hotspotInformation = [
+//            $data['hidden_lang'] => $data['information']
+//        ];
+//
+//        $hotspot->information = json_encode($hotspotInformation);
     }
 
     public function uploadVideo(Request $request)
