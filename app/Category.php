@@ -33,7 +33,7 @@ class Category extends Model
      * @var array
      */
     protected $translatable = ['name', 'slug'];
-    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug', 'parent_id'];
+    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug', 'parent_id', 'information'];
 
     public function locations()
     {

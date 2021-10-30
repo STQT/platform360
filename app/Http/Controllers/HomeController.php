@@ -37,6 +37,12 @@ class HomeController extends Controller
             Cookie::queue(Cookie::forever('city', '1'));
         }
 
+        $openedCategory = null;
+
+        if (!empty($category)) {
+            $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
+        }
+
         //Загрузка всех городов и координаты текущего города
         $cities = Cities::all();
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
@@ -65,6 +71,11 @@ class HomeController extends Controller
                     ])->with('categorylocation')->firstOrFail();
                 }
             }
+        } elseif ($openedCategory) {
+            $location = Location::where([
+                ['category_id', $openedCategory->id],
+                ['city_id', $defaultlocation]
+            ])->with('categorylocation')->firstOrFail();
         } else {
             $location = Location::where([
                 ['isDefault', '1'],
@@ -189,12 +200,6 @@ class HomeController extends Controller
             $q->where('published', 1);
             $q->whereNull('podlocparent_id');
         })->orderBy('id', 'ASC')->get();
-
-        $openedCategory = null;
-
-        if (!empty($category)) {
-            $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
-        }
 
         $referer = '';
         if ($location->information && $location->information->back_button_from_domain &&

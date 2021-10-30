@@ -654,7 +654,7 @@
                              style="background-color: {{$location->categorylocation->color}}"><img
                                     src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
                         <div class="clock_time">
-                            <div class="infoPanel__title" id="location_name2"><h1>{{ $location->name }}</h1></div>
+                            <div class="infoPanel__title" id="location_name2"><h1>{{ isset($openedCategory) && $openedCategory ? $openedCategory->name : $location->name }}</h1></div>
                         </div>
                     </div>
                     <div class="time_data">
@@ -680,7 +680,7 @@
 
                     <div class="infoPanel__description">
                         <div class="infoPanel__description__message">
-                            <span id="location_description">{{$location->description}}</span>
+                            <span id="location_description">{{isset($openedCategory) && $openedCategory ? $openedCategory->information : $location->description}}</span>
                         </div>
                         <div class="dotsss">
                             <div class="svg_blockk">
