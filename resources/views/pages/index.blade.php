@@ -421,9 +421,16 @@
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
                                             @if (isset($openedCategory))
                                                 @foreach($openedCategory->locations as $categoryLocation)
-                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}')">
+                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
-                                                            <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$categoryLocation->folderName()}}/thumb.jpg" class="listItem__img--scene"></div>
+                                                            @php
+                                                            if ($categoryLocation->video) {
+                                                                $preview = 'preview/' . $categoryLocation->preview;
+                                                            } else {
+                                                                $preview = 'unpacked/' . $categoryLocation->folderName() . '/thumb.jpg';
+                                                            }
+                                                            @endphp
+                                                            <div class="listItem__img"><img src="/storage/panoramas/{{$preview}}" class="listItem__img--scene"></div>
                                                             <div class="listItem__icon-category">
                                                                   <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$openedCategory->color}};"><img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}"></div>
                                                             </div>
