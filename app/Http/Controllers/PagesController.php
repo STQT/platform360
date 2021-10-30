@@ -10,10 +10,9 @@ class PagesController extends Controller
 {
     public function sitemap()
     {
-        $location = [];
-        $sitemap = $this->generateSiteMap();
+        $data = $this->generateSiteMap();
 
-        return view('pages.sitemap', ['sitemap' => $sitemap]);
+        return view('pages.sitemap', ['data' => $data]);
     }
 
     public function help()
@@ -29,17 +28,19 @@ class PagesController extends Controller
     //TODO: вынести генерацию карты сайта в отдельный сервис
     private function generateSiteMap()
     {
-        $baseName = $_SERVER['HTTP_HOST'];
-        $links = [];
-        $links[$baseName] = ucfirst($baseName);
+        $locationsArray = [];
+        $categoriesArray = [];
         $locations = Location::get();
         $categories = Category::whereNotNull('slug')->get();
         foreach($locations as $location) {
-            $links[$baseName . '/ru/location/' . $location->slug] = $location->name;
+            $locationsArray[] = $location;
         }
         foreach($categories as $category) {
-            $links[$baseName . '/ru/category/' . $location->slug] = $category->name;
+            $categoriesArray[] = $category;
         }
-        return $links;
+        return [
+            'locations' => $locationsArray,
+            'categories' => $categoriesArray
+        ];
     }
 }

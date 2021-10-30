@@ -43,6 +43,12 @@
 
                   {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
             </div>
+
+          <div class="form-group{{ $errors->has('parent_id') ? 'has-error' : '' }}">
+              {{Form::label('parent_id', 'Родительская категория', ['class' => 'control-label'])}}
+
+              {{Form::select('parent_id', $categories->pluck('name', 'id')->prepend('',''), null, array('name'=>'parent_id', 'class' => 'form-control'))}}
+          </div>
       </div>
       <div class="tab-pane fade" id="meta" role="tabpanel" aria-labelledby="profile-tab">
             @include ('admin.categories.meta', [])

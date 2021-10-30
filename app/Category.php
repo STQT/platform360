@@ -33,7 +33,7 @@ class Category extends Model
      * @var array
      */
     protected $translatable = ['name', 'slug'];
-    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug'];
+    protected $fillable = ['name', 'cat_icon', 'cat_icon_svg', 'color', 'slug', 'parent_id'];
 
     public function locations()
     {
@@ -67,5 +67,10 @@ class Category extends Model
     public function meta()
     {
         return $this->hasOne('App\Meta', 'id', 'meta_id');
+    }
+
+    public function subcategories()
+    {
+        return $this->hasMany('App\Category', 'parent_id');
     }
 }
