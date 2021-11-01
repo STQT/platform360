@@ -1245,20 +1245,12 @@ class LocationsController extends Controller
 
             $hotspot->save();
         }
-
-
-        //        $currentInformation = json_decode($hotspot->information, true);
-//        dd($hotspot);
-//
-//        $hotspotInformation = [
-//            $data['hidden_lang'] => $data['information']
-//        ];
-//
-//        $hotspot->information = json_encode($hotspotInformation);
     }
 
-    public function uploadVideo(Request $request)
+    public function uploadVideo(Request $request, $lang)
     {
+        app()->setLocale($lang);
+
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [

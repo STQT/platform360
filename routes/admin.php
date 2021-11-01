@@ -51,7 +51,8 @@ Route::resource('admin/tags', 'Admin\\TagsController');
 Route::get('admin/videos/{id}', [
     'uses' => 'Admin\\VideosController@index'
 ])->name('admin.videos');
-Route::resource('admin/videos', 'Admin\\VideosController');
+Route::resource('admin/videos', 'Admin\\VideosController')->except(['edit']);
+Route::get('admin/videos/{id}/edit/{lang}', 'Admin\\VideosController@edit');
 
 //Подлокации
 Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');

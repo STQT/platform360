@@ -92,6 +92,14 @@
         <span class="modal-close">x</span>
         <div>
             <form method="post" enctype="multipart/form-data" id="upload-video">
+                <div class="form-group">
+                    <a href="{{ url('/admin/locations/ru/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button">Русский</button></a>
+
+                    <a href="{{ url('/admin/locations/uzb/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button">Узбекский</button></a>
+                    <a href="{{ url('/admin/locations/en/' . $location->id) }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button">Английский</button></a>
+                </div>
+
+                <br>
                 {{ csrf_field() }}
                 <div class="form-group">Видео: <input type="file" name="video"></div>
                 
@@ -448,7 +456,7 @@
         $('form#upload-video').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
-                url: '/ru/api/locations/upload-video',
+                url: '/ru/api/locations/upload-video/{{ $language }}',
                 method: 'POST',
                 data: new FormData(this),
                 dataType: 'JSON',

@@ -75,11 +75,13 @@ class VideosController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $lang)
     {
-        $videos = Video::findOrFail($id);
+        app()->setLocale($lang);
 
-        return view('admin.videos.edit', compact('videos'));
+        $video = Video::findOrFail($id);
+
+        return view('admin.videos.edit', compact('video', 'lang'));
     }
 
     /**
@@ -92,21 +94,33 @@ class VideosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
+//        $this->validate($request, [
+//            'name' => 'required',
+//        ]);
         $data = $request->all();
+        app()->setLocale($data['lang']);
 
         $requestData = $request->all();
+
          if(!empty($data['is_default'])) {
             $requestData['is_default'] = 1;
          } else {
              $requestData['is_default'] = 0;
          }
-        $videos = Video::findOrFail($id);
-        $videos->update($requestData);
 
-        return redirect('admin/videos')->with('flash_message', 'Video updated!');
+        $videoFile = $request->file('video');
+        $newName = rand() . '.' . $videoFile->getClientOriginalExtension();
+        $videoFile->move(public_path('storage/videos'), $newName);
+
+        $video = Video::findOrFail($id);
+        $video->hfov = str_replace(',', '.', $data['hfov']);
+        $video->yaw = str_replace(',', '.', $data['yaw']);
+        $video->pitch = str_replace(',', '.', $data['pitch']);
+        $video->roll = str_replace(',', '.', $data['roll']);
+        $video->video = $newName;
+        $video->save();
+
+        return redirect('admin/videos/' . $video->location->id)->with('flash_message', 'Video updated!');
     }
 
     /**
