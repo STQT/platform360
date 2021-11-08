@@ -1281,7 +1281,7 @@ template {
 
 .wrapper-button__icon {
   color: #1a90d2;
-  font-size: 48px;
+  font-size: 36px;
   cursor: pointer;
 }
 
@@ -5226,11 +5226,6 @@ height: 192px;
 .icon-ic_info:before {
   content: '\E927';
 }
-
-.icon-ic_info {
-  font-size: 56px;
-}
-
 .icon-ic_link:before {
   content: '\E928';
 }
