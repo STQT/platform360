@@ -115,7 +115,6 @@ class HomeController extends Controller
             'on')->with('categorylocation')->get();
         if ($locationscordinate->isNotEmpty()) {
             $sss = Location::folderNames($locationscordinate);
-            Log::info(print_r($sss, true));
             foreach ($locationscordinate as $key2 => $value2) {
                 $locationscordinate[$key2]->img = $sss[$key2];
             }
@@ -190,7 +189,6 @@ class HomeController extends Controller
             $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
         $sss = Location::folderNames($otherlocations);
         foreach ($otherlocations as $key2 => $value2) {
-            Log::info($otherlocations[$key2]);
             $otherlocations[$key2]->img = $sss[$key2];
         }
 
