@@ -393,7 +393,7 @@
                                                         </div>
                                                         <span class="icon-wrapper__text">
                                                             @if (!empty($category->slug))
-                                                                <a href="{{$category->createUrl()}}">
+                                                                <a href="{{$category->createUrl()}}" data-title="{{$category->name}}">
                                                             @endif
                                                             {{ $category->name }}
                                                             @if (!empty($category->slug))
@@ -423,6 +423,11 @@
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr; position: relative; will-change: transform;">
+                                        @if (isset($openedCategory))
+                                            <div class="category-name">
+                                                <h1>{{$openedCategory->name}}</h1>
+                                            </div>
+                                        @endif
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
@@ -449,6 +454,11 @@
                                                 @endforeach
                                             @endif
                                         </div>
+                                        @if (isset($openedCategory))
+                                            <div class="category-information">
+                                                <p>{{$openedCategory->information}}</p>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="resize-triggers">
@@ -661,7 +671,13 @@
                              style="background-color: {{$location->categorylocation->color}}"><img
                                     src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
                         <div class="clock_time">
-                            <div class="infoPanel__title" id="location_name2"><h1>{{ isset($openedCategory) && $openedCategory ? $openedCategory->name : $location->name }}</h1></div>
+                            <div class="infoPanel__title" id="location_name2">
+                                @if (isset($openedCategory))
+                                    <h2>{{ $location->name }}</h2>
+                                    @else
+                                    <h1>{{ $location->name }}</h1>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="time_data">
