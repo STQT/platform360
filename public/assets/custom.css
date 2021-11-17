@@ -155,3 +155,9 @@ body{
     width: 24px;
     height: 24px;
 }
+.category-name {
+    padding: 0 0 15px 10px;
+}
+.category-information {
+    padding: 15px 0 0 10px;
+}

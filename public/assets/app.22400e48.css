@@ -2357,7 +2357,7 @@ screen and (max-height: 600px) {
   padding-bottom: 18px;
 }
 
-.infoPanel__title h1 {
+.infoPanel__title h1, .infoPanel__title h2 {
   letter-spacing: 1px;
   color: #c23691;
   font-size: 1.4em;

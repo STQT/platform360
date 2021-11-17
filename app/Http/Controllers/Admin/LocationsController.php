@@ -971,7 +971,7 @@ class LocationsController extends Controller
     //Генерация панорамы
     public function generatePano($slug)
     {
-        //Проверка куков на город
+        //Проверка кук на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
         } else {

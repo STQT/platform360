@@ -301,6 +301,16 @@ $(function() {
 
             $('.searchPanel__resultscontainer').hide();
         }
+
+        $('.category-name').hide();
+        $('.category-information').hide();
+
+        let link = $(this).find('a');
+        if (link.length) {
+            history.pushState({
+                id: 'category'
+            }, link.data('title'), link.attr('href'));
+        }
     });
     // КОНЕЦ При клике на категории :: ПОИСК
 

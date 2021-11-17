@@ -38,7 +38,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::all();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -107,11 +108,12 @@ class CategoriesController extends Controller
      */
     public function edit($id, $language)
     {
-      app()->setLocale($language);
+        app()->setLocale($language);
 
         $category = Category::findOrFail($id);
+        $categories = Category::where('id', '!=', $category->id)->get();
 
-        return view('admin.categories.edit', compact('category', 'language'));
+        return view('admin.categories.edit', compact('category', 'language', 'categories'));
     }
 
     /**

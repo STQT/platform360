@@ -39,10 +39,23 @@
 
             <div class="form-group{{ $errors->has('slug') ? 'has-error' : ''}}">
                   {!! Form::label('slug', 'Slug', ['class' => 'control-label']) !!}
-                  {!! Form::text('slug', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                  {!! Form::text('slug', null, ['class' => 'form-control']) !!}
 
                   {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
             </div>
+
+            <div class="form-group{{ $errors->has('information') ? 'has-error' : ''}}">
+                  {!! Form::label('information', 'Информация', ['class' => 'control-label']) !!}
+                  {!! Form::textarea('information', null, ['class' => 'form-control']) !!}
+
+                  {!! $errors->first('information', '<p class="help-block">:message</p>') !!}
+            </div>
+
+          <div class="form-group{{ $errors->has('parent_id') ? 'has-error' : '' }}">
+              {{Form::label('parent_id', 'Родительская категория', ['class' => 'control-label'])}}
+
+              {{Form::select('parent_id', $categories->pluck('name', 'id')->prepend('',''), null, array('name'=>'parent_id', 'class' => 'form-control'))}}
+          </div>
       </div>
       <div class="tab-pane fade" id="meta" role="tabpanel" aria-labelledby="profile-tab">
             @include ('admin.categories.meta', [])

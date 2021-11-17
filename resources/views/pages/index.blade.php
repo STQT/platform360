@@ -393,7 +393,7 @@
                                                         </div>
                                                         <span class="icon-wrapper__text">
                                                             @if (!empty($category->slug))
-                                                                <a href="{{$category->createUrl()}}">
+                                                                <a href="{{$category->createUrl()}}" data-title="{{$category->name}}">
                                                             @endif
                                                             {{ $category->name }}
                                                             @if (!empty($category->slug))
@@ -423,14 +423,26 @@
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr; position: relative; will-change: transform;">
+                                        @if (isset($openedCategory))
+                                            <div class="category-name">
+                                                <h1>{{$openedCategory->name}}</h1>
+                                            </div>
+                                        @endif
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
                                             @if (isset($openedCategory))
                                                 @foreach($openedCategory->locations as $categoryLocation)
-                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}')">
+                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
-                                                            <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$categoryLocation->folderName()}}/thumb.jpg" class="listItem__img--scene"></div>
+                                                            @php
+                                                            if ($categoryLocation->video) {
+                                                                $preview = 'preview/' . $categoryLocation->preview;
+                                                            } else {
+                                                                $preview = 'unpacked/' . $categoryLocation->folderName() . '/thumb.jpg';
+                                                            }
+                                                            @endphp
+                                                            <div class="listItem__img"><img src="/storage/panoramas/{{$preview}}" class="listItem__img--scene"></div>
                                                             <div class="listItem__icon-category">
                                                                   <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$openedCategory->color}};"><img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}"></div>
                                                             </div>
@@ -442,6 +454,11 @@
                                                 @endforeach
                                             @endif
                                         </div>
+                                        @if (isset($openedCategory))
+                                            <div class="category-information">
+                                                <p>{{$openedCategory->information}}</p>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="resize-triggers">
@@ -567,8 +584,8 @@
                         </div>
                     </div>
                     <div class="sitemap-block section-help">
-                        <div><a href="/how-to-use" class="site-map">Как пользоваться сайтом</a></div>
-                        <div><a href="/sitemap" class="site-map">Карта сайта</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/how-to-use" class="site-map">Как пользоваться сайтом</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/sitemap" class="site-map">Карта сайта</a></div>
                     </div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
@@ -654,7 +671,13 @@
                              style="background-color: {{$location->categorylocation->color}}"><img
                                     src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
                         <div class="clock_time">
-                            <div class="infoPanel__title" id="location_name2"><h1>{{ $location->name }}</h1></div>
+                            <div class="infoPanel__title" id="location_name2">
+                                @if (isset($openedCategory))
+                                    <h2>{{ $location->name }}</h2>
+                                    @else
+                                    <h1>{{ $location->name }}</h1>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="time_data">
@@ -680,7 +703,7 @@
 
                     <div class="infoPanel__description">
                         <div class="infoPanel__description__message">
-                            <span id="location_description">{{$location->description}}</span>
+                            <span id="location_description">{{isset($openedCategory) && $openedCategory ? $openedCategory->information : $location->description}}</span>
                         </div>
                         <div class="dotsss">
                             <div class="svg_blockk">
@@ -711,7 +734,7 @@
                         </li>
 
                         <li class="socialnetwork-icon telegram">
-                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : 'https://t.me/' . str_replace('@', '', $location->telegram)}}" id="locationsocialtg" target="_blank" rel="nofollow">
+                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : ('https://t.me/' . str_replace('@', '', $location->telegram))}}" id="locationsocialtg" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/telegram.png" alt="telegram share"/>
                                 </div>
