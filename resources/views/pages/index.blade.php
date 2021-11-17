@@ -2108,7 +2108,7 @@
                 });
 
                 google.maps.event.addDomListener(marker, 'click', function () {
-                    loadpano('uzbekistan:' + value.id, '1', value.slug);
+                    loadpano('uzbekistan:' + value.id, '1', value.slug, '', '', 'nooo', value.video);
                     setTimeout(function () {
                         $('.icon-ic_close').trigger('click')
                     }, 100);

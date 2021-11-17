@@ -558,16 +558,16 @@ $(function() {
         var id = $(this).children(":selected").attr("id");
         var lang = $(this).children(":selected").data('my-var');
         var pathname = window.location.pathname;
-        if (pathname.indexOf("/ru") >= 0) {
-          pathname =  pathname.replace("/ru", id);
+        if (pathname.indexOf("/ru/") >= 0) {
+          pathname =  pathname.replace("/ru/", id + '/');
           document.location.href = '/' + pathname;
         }
-        if (pathname.indexOf("/uzb") >= 0) {
-        pathname =  pathname.replace("/uzb", id);
+        if (pathname.indexOf("/uzb/") >= 0) {
+        pathname =  pathname.replace("/uzb/", id + '/');
           document.location.href = '/' + pathname;
         }
-        if (pathname.indexOf("/en") >= 0) {
-        pathname =  pathname.replace("/en", id);
+        if (pathname.indexOf("/en/") >= 0) {
+        pathname =  pathname.replace("/en/",  id + '/');
           document.location.href = '/' + pathname;
         }
     });
