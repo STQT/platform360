@@ -29,13 +29,13 @@
                 <ul>
                     @foreach ($data['locations'] as $location)
                         <li><a href="{{ $location->createUrl() }}">{{ $location->name }}</a>
-                            @if ($location->sublocations)
-                                <ul>
-                                    @foreach($location->sublocations as $sublocation)
-                                        <li><a href="{{ $sublocation->createUrl() }}">{{ $sublocation->name }}</a></li>
-                                    @endforeach
-                                </ul>
-                            @endif
+{{--                            @if ($location->sublocations)--}}
+{{--                                <ul>--}}
+{{--                                    @foreach($location->sublocations as $sublocation)--}}
+{{--                                        <li><a href="{{ $sublocation->createUrl() }}">{{ $sublocation->name }}</a></li>--}}
+{{--                                    @endforeach--}}
+{{--                                </ul>--}}
+{{--                            @endif--}}
                         </li>
                     @endforeach
                 </ul>
