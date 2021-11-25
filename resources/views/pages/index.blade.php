@@ -853,11 +853,13 @@
                                 @foreach($etaji as $i => $floor)
                                     <div id="floorplan-tab{{ $i }}" class="floorplan-tab" tabindex="-1"
                                          style="display: none;">
+                                        <?php if (file_exists('storage/floors/' . $floor->image)) { ?>
                                         <div class="plan">
                                             <img class="planClass" id="floorid{{$floor->id}}" data-width="{{getimagesize('storage/floors/' . $floor->image)[0]}}" data-height="{{getimagesize('storage/floors/' . $floor->image)[1]}}"
                                                  src="/storage/floors/{{$floor->image}}">
                                             <span></span>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 @endforeach
                             </div>
@@ -1151,7 +1153,6 @@
                             {!! $etaj->code !!}
                         });
                     }, 500);
-                    {{--console.log('existing code:' + "{{$etaj->code}}");--}}
                 });
             @endif
         @endforeach
@@ -1569,7 +1570,7 @@
                         for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
                             let floorLocationItem = data.floors_locations[floorLocation];
                             $('#multifloor-other-locations').append('<div class="listItem-wrapper" style="height: 260px;"\
-                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\')">\
+                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'nooo\', '+ (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
                                 <div class="listItem" style="width: 224px; height: 244px;">\
                                     <div class="listItem__img"><img\
                                                 src="/storage/panoramas/unpacked/' + floorLocationItem.img + '/thumb.jpg"\

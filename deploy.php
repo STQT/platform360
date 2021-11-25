@@ -40,6 +40,15 @@ host('uzbekistan360.uz')
     ->forwardAgent(true)
     ->set('deploy_path', '/var/www/uzbekistan360.uz');
 
+host('213.226.71.194')
+    ->stage('demo')
+    ->user('deploy')
+    ->port(22)
+    ->configFile('~/.ssh/config')
+    ->identityFile('~/.ssh/id_rsa')
+    ->forwardAgent(true)
+    ->set('deploy_path', '/var/www/uzbekistan360.uz');
+
 host('185.74.6.184')
     ->stage('production_new')
     ->user('deploy')
