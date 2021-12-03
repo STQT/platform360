@@ -32,6 +32,7 @@ class HomeController extends Controller
         //Проверка кук на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
+//            die(var_dump('ok', $defaultlocation));
         } else {
             $defaultlocation = "1";
             Cookie::queue(Cookie::forever('city', '1'));
@@ -59,7 +60,8 @@ class HomeController extends Controller
                 ])->with('categorylocation')->firstOrFail();
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
-                $subdomainLocation = Location::where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
+                $subdomainLocation = Location::where('subdomain', $subdomain)
+                    ->with('categorylocation')->firstOrFail();
                 if (!isset($_GET['home'])) {
                     Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
@@ -67,7 +69,7 @@ class HomeController extends Controller
                     //панорама по умолчанию для города
                     $location = Location::where([
                         ['isDefault', '1'],
-                        ['city_id', $subdomainLocation->city_id]
+                        ['city_id', $defaultlocation]
                     ])->with('categorylocation')->firstOrFail();
                 }
             }
