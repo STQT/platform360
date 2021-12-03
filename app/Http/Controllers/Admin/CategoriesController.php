@@ -74,6 +74,7 @@ class CategoriesController extends Controller
 
         $category = Category::create([
             'name' => request()->get('name'),
+            'color' => request()->get('color'),
             'cat_icon' => $fileName,
             'cat_icon_svg' => $fileName2,
         ]);

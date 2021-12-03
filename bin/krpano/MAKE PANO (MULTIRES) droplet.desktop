@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=MAKE PANO (MULTIRES) droplet
+Exec="/opt/krpano/krpanotools" makepano -config=templates/multires.config %F
+Path=/opt/krpano/
+Icon=/opt/krpano/.makepanoicon
+Terminal=true
+Type=Application
+Categories=Application;Graphics;
+StartupNotify=false

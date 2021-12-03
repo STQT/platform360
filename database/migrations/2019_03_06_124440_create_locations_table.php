@@ -27,6 +27,20 @@ class CreateLocationsTable extends Migration
             $table->tinyInteger('isDefault')->default(0);
             $table->text('panorama')->nullable();
             $table->text('xmllocation');
+            $table->string('is_sky')->nullable();
+            $table->string('podlocparent_id')->nullable();
+            $table->string('sky_id')->nullable();
+            $table->integer('category_id');
+            $table->longText('floors')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('icon_svg')->nullable();
+            $table->string('isfeatured')->nullable();
+            $table->tinyInteger('isFloor')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
+            $table->string('onmap')->nullable();
+            $table->string('skymainforcity')->nullable();
+            $table->string('slug');
             });
     }
 

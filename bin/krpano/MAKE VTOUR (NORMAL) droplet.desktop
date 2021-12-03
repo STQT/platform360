@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=MAKE VTOUR (NORMAL) droplet
+Exec="/opt/krpano/krpanotools" makepano -config=templates/vtour-normal.config %F
+Path=/opt/krpano/
+Icon=/opt/krpano/.makepanoicon
+Terminal=true
+Type=Application
+Categories=Application;Graphics;
+StartupNotify=false
