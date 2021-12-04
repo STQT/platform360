@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=ENCRYPT XML droplet
-Exec="/opt/krpano/krpanotools" encrypt -h5 -z %F
-Path=/opt/krpano/
-Icon=/opt/krpano/.encrypticon
-Terminal=true
-Type=Application
-Categories=Application;Graphics;
-StartupNotify=false

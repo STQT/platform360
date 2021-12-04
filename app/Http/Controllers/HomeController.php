@@ -32,7 +32,6 @@ class HomeController extends Controller
         //Проверка кук на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
-//            die(var_dump('ok', $defaultlocation));
         } else {
             $defaultlocation = "1";
             Cookie::queue(Cookie::forever('city', '1'));
