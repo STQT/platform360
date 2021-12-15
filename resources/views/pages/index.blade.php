@@ -201,8 +201,12 @@
                 </a>
                 @endif
                 <footer class="dubai360-footer">
-                    <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
-                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif></span>
+                    <div class="wrapper-button">
+                        @if(isset($sky) && $sky != "no")
+                            <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', '',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"></span>
+                        @else
+                            <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"></span>
+                        @endif
                     </div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon "
                                                       data-pannel="explorePannel"></span></div>
@@ -1405,6 +1409,9 @@
 
         function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl, video) {
             if (krpano) {
+{{--                @php--}}
+{{--                    $prevLocation = \App\Location::where('slug', prevsceneslug)->first();--}}
+{{--                @endphp--}}
                 originalxmlnam = xmlname;
                 originalxmlname = originalxmlnam.match(/\d/g);
                 originalxmlname = originalxmlname.join("");
@@ -1690,9 +1697,9 @@
                     }
                     let videoVal = null;
                     if (data.is_sky == "on") {
-                        if (video) {
-                            videoVal = "'" + video + "'";
-                        }
+                        // if (video) {
+                        //     videoVal = "'" + video + "'";
+                        // }
                         document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                         document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     } else {
