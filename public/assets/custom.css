@@ -159,5 +159,10 @@ body{
     padding: 0 0 15px 10px;
 }
 .category-information {
-    padding: 15px 0 0 10px;
+    max-height: 192px;
+    overflow: scroll;
+    color: #666;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 0.8em;
 }

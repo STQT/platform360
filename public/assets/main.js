@@ -306,10 +306,20 @@ $(function() {
         $('.category-information').hide();
 
         let link = $(this).find('a');
+        let categoryWrapper = $(this).find('.icon-wrapper__text');
         if (link.length) {
             history.pushState({
                 id: 'category'
-            }, link.data('title'), link.attr('href'));
+            }, categoryWrapper.data('title'), link.attr('href'));
+        }
+        let categoryTitle = '';
+        let categoryInformation = '';
+        categoryTitle = categoryWrapper.data('title');
+        categoryInformation = categoryWrapper.data('information');
+        document.title = categoryTitle;
+        $('.category-name').html('<h1>' + categoryTitle + '</h1>').show();
+        if (categoryInformation) {
+            $('.category-information').html('<p>' + categoryInformation + '</p>').show();
         }
     });
     // КОНЕЦ При клике на категории :: ПОИСК

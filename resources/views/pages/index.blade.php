@@ -395,9 +395,9 @@
                                                              style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;">
                                                             <img src="/storage/cat_icons/{{$category->cat_icon_svg}}">
                                                         </div>
-                                                        <span class="icon-wrapper__text">
+                                                        <span class="icon-wrapper__text" data-title="{{$category->name}}" data-information="{{strip_tags($category->information)}}">
                                                             @if (!empty($category->slug))
-                                                                <a href="{{$category->createUrl()}}" data-title="{{$category->name}}">
+                                                                <a href="{{$category->createUrl()}}">
                                                             @endif
                                                             {{ $category->name }}
                                                             @if (!empty($category->slug))
@@ -427,11 +427,11 @@
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr; position: relative; will-change: transform;">
-                                        @if (isset($openedCategory))
                                             <div class="category-name">
+                                                @if (isset($openedCategory))
                                                 <h1>{{$openedCategory->name}}</h1>
+                                                @endif
                                             </div>
-                                        @endif
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
@@ -458,11 +458,11 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        @if (isset($openedCategory))
-                                            <div class="category-information">
+                                        <div class="category-information">
+                                            @if (isset($openedCategory))
                                                 <p>{{$openedCategory->information}}</p>
-                                            </div>
-                                        @endif
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="resize-triggers">
