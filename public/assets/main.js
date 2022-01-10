@@ -568,17 +568,34 @@ $(function() {
         var id = $(this).children(":selected").attr("id");
         var lang = $(this).children(":selected").data('my-var');
         var pathname = window.location.pathname;
+
+        /**
+         * Редирект языков
+         * @param path
+         */
+        function redirectLang (path)
+        {
+            pathname = '/' + path;
+            // Если эта главная страница то убираем ru для русской версии
+            pathname = pathname.replace(/^\/ru\/$/mg, '/');
+            document.location.href = pathname;
+        }
+
+        if (pathname == '/') {
+            pathname =  pathname.replace("/", id + '/');
+            redirectLang(pathname);
+        }
         if (pathname.indexOf("/ru/") >= 0) {
-          pathname =  pathname.replace("/ru/", id + '/');
-          document.location.href = '/' + pathname;
+            pathname =  pathname.replace("/ru/", id + '/');
+            redirectLang(pathname);
         }
         if (pathname.indexOf("/uzb/") >= 0) {
-        pathname =  pathname.replace("/uzb/", id + '/');
-          document.location.href = '/' + pathname;
+            pathname =  pathname.replace("/uzb/", id + '/');
+            redirectLang(pathname);
         }
         if (pathname.indexOf("/en/") >= 0) {
-        pathname =  pathname.replace("/en/",  id + '/');
-          document.location.href = '/' + pathname;
+            pathname =  pathname.replace("/en/",  id + '/');
+            redirectLang(pathname);
         }
     });
 

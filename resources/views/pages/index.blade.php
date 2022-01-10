@@ -170,18 +170,17 @@
 
 
     </span>
-
-                        <div class="language-switcher">
-                            <div class="dropdown-wrapper">
-                                <select name="select" class="dropdown">
-                                    <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
-                                    <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
-                                    <option value="uzb" id="uzb" @if(Lang::locale()=='uzb') selected @endif>UZB</option>
-                                </select>
-                                <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
-                                     class="dropdown-chevronImg">
+                            <div class="language-switcher">
+                                <div class="dropdown-wrapper">
+                                        <select name="select" class="dropdown">
+                                            <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
+                                            <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
+                                            <option value="uzb" id="uzb" @if(Lang::locale()=='uzb') selected @endif>UZB</option>
+                                        </select>
+                                    <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
+                                         class="dropdown-chevronImg">
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </header>
                 <div id="pano" style="width:100%;height:100%;"></div>
