@@ -25,7 +25,7 @@ Route::get('/clear', function() {
 //разные страницы сайта
 Route::get('/how-to-use', 'PagesController@help');
 Route::get('/sitemap', 'PagesController@sitemap');
-Route::get('/help', 'PageController@help');
+Route::get('/help', 'PagesController@help');
 
 Route::get('/scene/{id}', 'HomeController@loadScene');
 Route::get('/city/{id}', 'HomeController@changeCity');
