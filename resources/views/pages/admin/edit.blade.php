@@ -75,13 +75,13 @@
             <form method="post" enctype="multipart/form-data" id="upload-video">
                 {{ csrf_field() }}
                 <div class="form-group">Видео: <input type="file" name="video"></div>
-                
+
                 <div class="form-group">hfov: <input type="text" name="hfov"></div>
-                
+
                 <div class="form-group">yaw: <input type="text" name="yaw"></div>
-                
+
                 <div class="form-group">pitch: <input type="text" name="pitch"></div>
-                
+
                 <div class="form-group">roll: <input type="text" name="roll"></div>
 
                 <select name="play_type">
@@ -91,9 +91,9 @@
                 </select>
 
                 <input type="hidden" name="location" value={{ $location->id }} >
-                
+
                 <div><button type="submit" class="btn btn-primary">Добавить</button></div>
-                
+
             </form>
         </div>
     </div>

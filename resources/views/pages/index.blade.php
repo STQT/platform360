@@ -1850,6 +1850,17 @@
             }
         }
 
+        function openModal() {
+            $.fancybox.open(
+                $('#information-modal'),
+                {
+                    type: 'iframe',
+                    src: 'https://rerroevi.sirv.com/Website/Home%20Goods/OrangeChair/OrangeChair.spin',
+                    touch: false
+                }
+            );
+        }
+
         function initMap() {
             var location = new google.maps.LatLng({{$curlocation->lat}},{{$curlocation->lng}});
             var map = new google.maps.Map(document.getElementById('map'), {

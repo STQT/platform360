@@ -52,6 +52,8 @@
                        design_text_shadow="1"
         />
 
+    <style name="roomspot" alpha="0.0" capture="false" />
+
     <action name="startup" autorun="onstart">
         if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
         loadscene(get(startscene), null, MERGE);
@@ -216,5 +218,13 @@
                        />
                 @endforeach
             @endif
+        @if ($location->id === 2902)
+            <hotspot name="hs6743011" style="roomspot" onclick="jscall(openModal())" capture="false" keep="true" distorted="true">
+                <point ath="-96.96143802703745" atv="51.32877678672017"/>
+                <point ath="-81.5753480063168" atv="22.726754354525138"/>
+                <point ath="-30.894497859844762" atv="14.935667837521573"/>
+                <point ath="-16.40020051741334" atv="30.611091008703376"/>
+            </hotspot>
+        @endif
     </scene>
 </krpano>
