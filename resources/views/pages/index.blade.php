@@ -1855,7 +1855,7 @@
                 $('#information-modal'),
                 {
                     type: 'iframe',
-                    src: 'https://rerroevi.sirv.com/Website/Home%20Goods/OrangeChair/OrangeChair.spin',
+                    src: 'https://rerroevi.sirv.com/Website/Footwear/BrownDressShoe/BrownDressShoe.spin',
                     touch: false
                 }
             );
