@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Uzbekistan360 admin</title>
-    
+
     <link href="/css/app.css" rel="stylesheet">
     <style>
         ::-webkit-input-placeholder {
@@ -191,6 +191,17 @@
             top: 25px;
             background: rgba(0,0,0,0.5);
             left: 500px;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+
+        #addPolygon {
+            position: absolute;
+            top: 25px;
+            background: rgba(0,0,0,0.5);
+            left: 733px;
             color: #fff;
             border: none;
             padding: 10px 25px;

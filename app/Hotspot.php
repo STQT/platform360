@@ -11,6 +11,7 @@ class Hotspot extends Model
 
     const TYPE_MARKER = 1;
     const TYPE_INFORMATION = 2;
+    const TYPE_POLYGON = 3;
 
     /**
      * The database table used by the model.
@@ -31,7 +32,7 @@ class Hotspot extends Model
      *
      * @var array
      */
-    protected $fillable = ['location_id', 'destination_id', 'h', 'v', 'information', 'image'];
+    protected $fillable = ['location_id', 'destination_id', 'h', 'v', 'information', 'image', 'html_code'];
 
     public function location()
     {
@@ -47,6 +48,12 @@ class Hotspot extends Model
     {
 
         return $this->hasMany('App\Location', 'id', 'destination_id');
+    }
+
+    public function polygons()
+    {
+
+        return $this->hasMany('App\HotspotPolygon', 'hotspot_id', 'id');
     }
 
     public function destinationlocation()

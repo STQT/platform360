@@ -1850,12 +1850,12 @@
             }
         }
 
-        function openModal() {
+        function openModal(frame) {
             $.fancybox.open(
                 $('#information-modal'),
                 {
                     type: 'iframe',
-                    src: 'https://rerroevi.sirv.com/Website/Footwear/BrownDressShoe/BrownDressShoe.spin',
+                    src: frame,
                     touch: false
                 }
             );

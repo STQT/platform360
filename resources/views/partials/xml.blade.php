@@ -218,13 +218,15 @@
                        />
                 @endforeach
             @endif
-        @if ($location->id === 2902)
-            <hotspot name="hs6743011" style="roomspot" onclick="jscall(openModal())" capture="false" keep="true" distorted="true">
-                <point ath="-96.96143802703745" atv="51.32877678672017"/>
-                <point ath="-81.5753480063168" atv="22.726754354525138"/>
-                <point ath="-30.894497859844762" atv="14.935667837521573"/>
-                <point ath="-16.40020051741334" atv="30.611091008703376"/>
-            </hotspot>
-        @endif
+        @foreach ($location->hotspots as $hotspot)
+            @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
+                <hotspot name="hs{{$hotspot->id}}" style="roomspot" onclick="jscall(openModal('{{$hotspot->html_code}}'))"
+                         capture="false" keep="true" distorted="true">
+                    @foreach ($hotspot->polygons as $polygon)
+                        <point ath="{{$polygon->h}}" atv="{{$polygon->v}}"/>
+                    @endforeach
+                </hotspot>
+            @endif
+        @endforeach
     </scene>
 </krpano>

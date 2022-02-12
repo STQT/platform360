@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Cities;
 use App\Hotspot;
+use App\HotspotPolygon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Location;
@@ -1218,6 +1219,35 @@ class LocationsController extends Controller
         }
         $hotspot->type = Hotspot::TYPE_INFORMATION;
         $hotspot->save();
+    }
+
+    public function apiAddPolygonhotspot(Request $request)
+    {
+        $data = $request->all();
+
+        $hotspot = new Hotspot();
+        $hotspot->location_id = $data['location'];
+        $hotspot->destination_id = $data['location'];
+        $hotspot->h = $data['h'];
+        $hotspot->v = $data['v'];
+        $hotspotInformation = $data['html_code'];
+        $hotspot->html_code = $hotspotInformation;
+        $hotspotInformation = $data['information'];
+        $hotspot->information = $hotspotInformation;
+        $hotspot->url = $data['url'];
+        $hotspot->type = Hotspot::TYPE_POLYGON;
+        $hotspot->save();
+
+        if (isset($data['polygons'])) {
+            $polygons = json_decode('[' . $data['polygons'] . ']');
+            foreach ($polygons as $polygon) {
+                $pol = new HotspotPolygon();
+                $pol->hotspot_id = $hotspot->id;
+                $pol->h = $polygon->x;
+                $pol->v = $polygon->y;
+                $pol->save();
+            }
+        }
     }
 
     public function uploadVideo(Request $request)
