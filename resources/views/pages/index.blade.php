@@ -1249,6 +1249,11 @@
             krpano = krpano_interface;
             setTimeout(function () {
                 @foreach($krhotspots as $index => $hotspot)
+                        @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
+                            @php
+                                continue;
+                            @endphp
+                        @endif
                 @php
                 $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));
                 $informationText = str_replace('"', '\"', $informationText);
