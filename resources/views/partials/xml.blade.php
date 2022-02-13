@@ -220,7 +220,7 @@
             @endif
         @foreach ($location->hotspots as $hotspot)
             @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
-                <hotspot name="hs{{$hotspot->id}}" style="roomspot" onclick="jscall(openModal('{{$hotspot->html_code}}'))"
+                <hotspot name="hs{{$hotspot->id}}" style="roomspot" onclick="jscall(openModal('{{$hotspot->html_code}}', '{{$hotspot->information}}', '{{$hotspot->url}}'))"
                          capture="false" keep="true" distorted="true">
                     @foreach ($hotspot->polygons as $polygon)
                         <point ath="{{$polygon->h}}" atv="{{$polygon->v}}"/>

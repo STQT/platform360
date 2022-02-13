@@ -1855,13 +1855,14 @@
             }
         }
 
-        function openModal(frame) {
+        function openModal(frame, text, link) {
             $.fancybox.open(
                 $('#information-modal'),
                 {
                     type: 'iframe',
-                    src: frame,
-                    touch: false
+                    src: '/{{ app()->getLocale() }}/ajax-modal?frame=' + frame + '&text=' + text + '&link=' + link,
+                    touch: false,
+                    width: 460
                 }
             );
         }
