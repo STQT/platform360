@@ -24,7 +24,7 @@ class AddPolygonHotspotColumn extends Migration
 
         Schema::table('hotspots', function (Blueprint $table) {
             $table->text('html_code')->nullable();
-            $table->string('url');
+            $table->string('url')->nullable();
         });
     }
 
