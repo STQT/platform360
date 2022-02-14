@@ -1862,7 +1862,8 @@
                     type: 'iframe',
                     src: '/{{ app()->getLocale() }}/ajax-modal?frame=' + frame + '&text=' + text + '&link=' + link,
                     touch: false,
-                    width: 460
+                    width: 460,
+                    autoDimensions: false
                 }
             );
         }

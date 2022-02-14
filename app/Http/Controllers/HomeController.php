@@ -334,9 +334,15 @@ class HomeController extends Controller
 
     public function ajaxModal()
     {
+        $text = '';
+        $link = '';
         $iframe = $_GET['frame'];
-        $text = $_GET['text'];
-        $link = $_GET['link'];
+        if (isset($_GET['text'])) {
+            $text = $_GET['text'];
+        }
+        if (isset($_GET['link'])) {
+            $link = $_GET['link'];
+        }
         return (String) view('ajax-modal', [
             'iframe' => $iframe,
             'text' => $text,

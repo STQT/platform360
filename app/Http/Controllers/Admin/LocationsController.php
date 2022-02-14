@@ -1303,6 +1303,9 @@ class LocationsController extends Controller
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
             foreach ($krhotspotinfo as $key2 => $value2) {
+                if ($krhotspotinfo[$key2]->type == App\Hotspot::TYPE_POLYGON) {
+                    continue;
+                }
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     if ($krhotspotinfo[$key2]->video) {
                         $krhotspots[$key]->img = $krhotspotinfo[$key2]->preview;
