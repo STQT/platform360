@@ -460,7 +460,7 @@
 
                 var hs_name = "hs" + ((Date.now() + Math.random()) | 0);    // create unique/randome name
                 krpano.call("addhotspot(" + hs_name + ")");
-                krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_hotspots.png");
+                krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_mapspotactive.png");
                 krpano.set("hotspot[" + hs_name + "].ath", pt.x);
                 krpano.set("hotspot[" + hs_name + "].atv", pt.y);
                 krpano.set("hotspot[" + hs_name + "].distorted", true);

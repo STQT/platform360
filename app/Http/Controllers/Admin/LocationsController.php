@@ -1062,6 +1062,9 @@ class LocationsController extends Controller
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
+            if ($krhotspots[$key]->type == \App\Hotspot::TYPE_POLYGON) {
+                continue;
+            }
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     if ($krhotspotinfo[$key2]->video) {
