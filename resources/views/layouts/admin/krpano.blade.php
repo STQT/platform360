@@ -378,7 +378,6 @@
 @yield('content')
 
 <script src="/krpano.js"></script>
-
 @yield('scripts')
 
 </body>

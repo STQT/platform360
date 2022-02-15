@@ -43,11 +43,12 @@
     <div class="overlay"></div>
     <div class="modal-wrap">
         <span class="modal-close">x</span>
-        <form id="information-form">
+        <form id="information-form" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="form-group">
                     <h4>Информация</h4>
-                    <textarea name="information" id="information" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" id="information" name="information"></textarea>
                 </div>
             </div>
 
@@ -107,6 +108,13 @@
 
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('information', {
+        filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form'
+    });
+</script>
 
 <script>
     var hcoordinate;
