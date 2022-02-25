@@ -1409,7 +1409,7 @@ function(){try{"title"===event.propertyName&&(e.document.title=k.title)}catch(a)
 
               $('.icon-ic_close').trigger('click');
 
-              loadpano('uzbekistan:'+locationid+'', 0, locationslug);
+              loadpano('uzbekistan:'+locationid+'', 0, locationslug, '', '', 'nooo', null);
             });
 
             $(self.obj_spot).on('touchend', function(e) {
