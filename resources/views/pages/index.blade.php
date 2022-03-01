@@ -1824,6 +1824,7 @@
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+                            information = information.replaceAll('\\"', '"');
                             $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');

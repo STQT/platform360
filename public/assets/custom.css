@@ -166,3 +166,8 @@ body{
     padding-top: 10px;
     font-size: 0.8em;
 }
+@media only screen and (max-width: 600px) {
+    .fancybox-container .content img {
+        width: 100%;
+    }
+}
