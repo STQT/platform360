@@ -332,4 +332,22 @@ class HomeController extends Controller
         }
     }
 
+    public function ajaxModal()
+    {
+        $text = '';
+        $link = '';
+        $iframe = $_GET['frame'];
+        if (isset($_GET['text'])) {
+            $text = $_GET['text'];
+        }
+        if (isset($_GET['link'])) {
+            $link = $_GET['link'];
+        }
+        return (String) view('ajax-modal', [
+            'iframe' => $iframe,
+            'text' => $text,
+            'link' => $link,
+        ]);
+    }
+
 }

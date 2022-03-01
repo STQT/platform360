@@ -1249,6 +1249,11 @@
             krpano = krpano_interface;
             setTimeout(function () {
                 @foreach($krhotspots as $index => $hotspot)
+                        @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
+                            @php
+                                continue;
+                            @endphp
+                        @endif
                 @php
                 $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));
                 $informationText = str_replace('"', '\"', $informationText);
@@ -1849,6 +1854,20 @@
                     }.bind(null, hs_name));
                 }
             }
+        }
+
+        function openModal(frame, text, link) {
+            $.fancybox.open(
+                $('#information-modal'),
+                {
+                    type: 'iframe',
+                    src: '/{{ app()->getLocale() }}/ajax-modal?frame=' + frame + '&text=' + text + '&link=' + link,
+                    touch: false,
+                    width: 460,
+                    height: 'auto',
+                    autoDimensions: true
+                }
+            );
         }
 
         function initMap() {

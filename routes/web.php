@@ -39,6 +39,7 @@ Auth::routes();
 Route::get('/krpano/video/{id}', 'HomeController@krpanoVideo');
 Route::get('/krpano/{index}/{id}', 'HomeController@krpano');
 Route::post('/savescreenshot', 'HomeController@savescreenshot');
+Route::get('/ajax-modal', 'HomeController@ajaxModal');
 
 Route::group(['prefix' => 'api'], function() {
     Route::get('/location/{id}', 'Admin\\LocationsController@show2');
@@ -51,6 +52,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/sublocations/{id}', 'Admin\LocationsController@apiSublocations');
         Route::post('/locations/add', 'Admin\\LocationsController@apiAddhotspot');
         Route::post('/locations/add-information', 'Admin\\LocationsController@apiAddInformationhotspot');
+        Route::post('/locations/add-polygon', 'Admin\\LocationsController@apiAddPolygonhotspot');
         Route::post('/locations/upload-video', 'Admin\\LocationsController@uploadVideo');
         Route::get('/deletehotspot/{id}', 'Admin\\HotspotsController@deletehotspot');
         Route::get('/deleteinformation/{id}', 'Admin\\HotspotsController@deleteinformation');

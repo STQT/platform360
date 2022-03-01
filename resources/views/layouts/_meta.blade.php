@@ -69,14 +69,16 @@
                 $urlCanonical = $location->createUrl();
             @endphp
         @else
-            @if ($location->parent->description === $location->description || $location->description == '')
-                @php
-                    $urlCanonical = $location->parent->createUrl();
-                @endphp
-            @else
-                @php
-                    $urlCanonical = $location->createUrl();
-                @endphp
+            @if ($location->parent)
+                @if ($location->parent->description === $location->description || $location->description == '')
+                    @php
+                        $urlCanonical = $location->parent->createUrl();
+                    @endphp
+                @else
+                    @php
+                        $urlCanonical = $location->createUrl();
+                    @endphp
+                @endif
             @endif
         @endif
     @endif
