@@ -958,6 +958,10 @@ class LocationsController extends Controller
     //Удаление локации
     public function destroy($id)
     {
+        if (!auth()->user()->hasRole('Admin')) {
+            return redirect('admin/locations')->with('flash_message', 'У вас нет прав для удаление!');
+        }
+
         Video::where('location_id', $id)->delete();
         LocationInformation::where('location_id', $id)->delete();
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();

@@ -71,12 +71,14 @@
                                                 'url' => ['/admin/locations', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
-                                                    'type' => 'submit',
-                                                    'class' => 'btn btn-danger btn-sm',
-                                                    'title' => 'Delete Location',
-                                                    'onclick'=>'return confirm("Confirm delete?")'
-                                            )) !!}
+                                            @if(auth()->user()->hasRole('Admin'))
+                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
+                                                        'type' => 'submit',
+                                                        'class' => 'btn btn-danger btn-sm',
+                                                        'title' => 'Delete Location',
+                                                        'onclick'=>'return confirm("Confirm delete?")'
+                                                )) !!}
+                                            @endif
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
