@@ -39,4 +39,5 @@ return [
   'vashemail' => 'Siznig email',
   'vashesoobshenie' => 'Xabaringiz',
   'bad_connection' => 'Bad Internet connection',
+  'browser_not_support_audio_element' => 'Sizning brauzeringiz audio elementlarni qo\'llab-quvvatlamaydi.',
 ];

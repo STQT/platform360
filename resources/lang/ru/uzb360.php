@@ -39,4 +39,5 @@ return [
   'vashemail' => 'Ваш email-адрес',
   'vashesoobshenie' => 'Ваше сообщение',
   'bad_connection' => 'Неполадки с интернетом/Слабое подключение с интернетом',
+  'browser_not_support_audio_element' => 'Ваш браузер не поддерживает аудио элементы.',
 ];
