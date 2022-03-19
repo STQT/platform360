@@ -12,7 +12,7 @@ return [
   'search' => 'Izlash',
   'feedback'=>"Qayta a'loqa",
   'help' => 'Yordam',
-  'etaji' => 'Qavatlar',
+  'etaji' => 'Reja',
   'fullscreen' => "To'liq ekran",
   'rejimprosmotra' => "Ko'rish rejimlari",
   'filtr' => 'Filtrlash',

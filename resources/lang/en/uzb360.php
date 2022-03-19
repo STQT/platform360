@@ -12,7 +12,7 @@ return [
   'search' => 'Search',
   'feedback'=>'Feedback',
   'help' => 'Help',
-  'etaji' => 'Floors',
+  'etaji' => 'Plan',
   'fullscreen' => 'Full Screen',
   'rejimprosmotra' => 'View Modes',
   'filtr' => 'Filter',

@@ -12,7 +12,7 @@ return [
   'search' => 'Поиск',
   'feedback'=>'Обратная связь',
   'help' => 'Помощь',
-  'etaji' => 'Этажи',
+  'etaji' => 'План',
   'fullscreen' => 'Полный экран',
   'rejimprosmotra' => 'Режимы просмотра',
   'filtr' => 'Фильтр',
