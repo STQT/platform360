@@ -574,12 +574,11 @@
                 <div class="helpPanel" style="overflow: hidden;">
                     <div id="tab1" class="section-help">
                         <div class="section-help__content">
-                            <span class="section-help__content__title"><span>Welcome</span></span>
+                            <span class="section-help__content__title"><span>{{ trans('help.welcome') }}</span></span>
                             <div class="section-help__content__message">
                                 <div class="section-help__content__message__text">
-                                    <p><span>Вращайте и масштабируйте изображение с помощью элементов управления внизу, мыши или сенсорного экрана.
-                                        </span></p>
-                                    <p><span>Используйте горячие точки на изображении для навигации между различными фотографиями и видео. Вы также можете перемещаться с помощью карты или категорий.</span>
+                                    <p><span>{{ trans('help.rotate_and_scale') }}</span></p>
+                                    <p><span>{{ trans('help.use_hotspots') }}</span>
                                     </p>
                                 </div>
                                 <img src="/assets/image_mouse.cec9e28c.png">
@@ -587,57 +586,57 @@
                         </div>
                     </div>
                     <div class="sitemap-block section-help">
-                        <div><a href="/{{ app()->getLocale() }}/how-to-use" class="site-map">Как пользоваться сайтом</a></div>
-                        <div><a href="/{{ app()->getLocale() }}/sitemap" class="site-map">Карта сайта</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/how-to-use" class="site-map">{{ trans('help.how_to_use_site') }}</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/sitemap" class="site-map">{{ trans('help.map_site') }}</a></div>
                     </div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
-                            <span class="section-help__content__title"><span>Подсказки</span></span>
+                            <span class="section-help__content__title"><span>{{ trans('help.help') }}</span></span>
                             <div class="category-wrapper-mobile">
                                 <div class="section-help__content__icons--controls">
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_aerial icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Перейти к небу города</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_sky') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_explore icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Перейти в карту города</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_map') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_share icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Поделиться своим видом</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.share_your_view') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_configuration icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Change video quality and speed</span>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.video_quality_speed') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_comment icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span> Оставьте свои пожелания или отзыв</span>
+                                        <div class="icon-wrapper__text"><span> {{ trans('help.leave_wish_or_feedback') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_glass icon-wrapper__icon--controls"></span>
                                         <div class="icon-wrapper__text">
-                                            <span>Поиск панорам по названию или категории</span></div>
+                                            <span>{{ trans('help.search_panoramas_by_name_or_category') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_info icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Показать информацию</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.show_information') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_autoplay icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Включить автоматический режим тура</span>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.enable_automatic_tour_mode') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_eye icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Изменить вид проекции</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.change_projection_view') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_floorplan icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Посмотреть план этажей</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.view_floor_plan') }}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -1073,7 +1072,7 @@
 
     <audio controls style="" id="audio">
         <source src="" type="audio/mpeg">
-        Your browser does not support the audio element.
+        {{ trans('uzb360.browser_not_support_audio_element') }}
     </audio>
 
     <div class="information-modal" id="information-modal" style="display: none">

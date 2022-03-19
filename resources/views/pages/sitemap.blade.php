@@ -4,14 +4,14 @@
     <div class="row jumbotron">
         <div class="container">
             <header>
-                <h1>Карта сайта</h1>
+                <h1>{{ trans('sitemap.sitemap') }}</h1>
             </header>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3>Категории</h3>
+                <h3>{{ trans('sitemap.categories') }}</h3>
                 <ul>
                     @foreach ($data['categories'] as $category)
                         <li><a href="{{ $category->createUrl() }}">{{ $category->name }}</a>
@@ -25,7 +25,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <h3>Локации</h3>
+                <h3>{{ trans('sitemap.locations') }}</h3>
                 <ul>
                     @foreach ($data['locations'] as $location)
                         <li><a href="{{ $location->createUrl() }}">{{ $location->name }}</a>

@@ -39,4 +39,5 @@ return [
   'vashemail' => 'Your email',
   'vashesoobshenie' => 'Your message',
   'bad_connection' => 'Bad Internet connection',
+  'browser_not_support_audio_element' => 'Your browser does not support audio elements.'
 ];
