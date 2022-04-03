@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use ZipArchive;
 
 class LocationsController extends Controller
 {
@@ -1233,12 +1234,34 @@ class LocationsController extends Controller
         $hotspot->destination_id = $data['location'];
         $hotspot->h = $data['h'];
         $hotspot->v = $data['v'];
-        $hotspotInformation = $data['html_code'];
-        $hotspot->html_code = $hotspotInformation;
+//        $hotspotInformation = $data['html_code'];
+//        $hotspot->html_code = $hotspotInformation;
         $hotspotInformation = $data['information'];
         $hotspot->information = $hotspotInformation;
         $hotspot->url = $data['url'];
         $hotspot->type = Hotspot::TYPE_POLYGON;
+        if (!empty($data['model'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['model']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['model']->move(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr), $fullName);
+            $zipFile = public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr)
+                . DIRECTORY_SEPARATOR . $fullName;
+
+            $zip = new ZipArchive;
+            $res = $zip->open($zipFile);
+            if ($res === true) {
+                $zip->extractTo(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr));
+                $zip->close();
+            }
+            unlink($zipFile);
+            $files = scandir(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr));
+            foreach ($files as $file) {
+                if (strpos($file, '.html') !== false) {
+                    $hotspot->model_path = $randomStr . DIRECTORY_SEPARATOR . $file;
+                }
+            }
+        }
         $hotspot->save();
 
         if (isset($data['polygons'])) {

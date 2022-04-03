@@ -10,7 +10,7 @@ class ProcessCase {
     public function handle($request, Closure $next)
     {
         if (!$request->isMethod('post')) {
-            if (preg_match('/[A-Z]/', $request->getRequestUri())) {
+            if (preg_match('/[A-Z]/', $request->getRequestUri()) && strpos($request->getRequestUri(), 'ajax') === false) {
                 return redirect(strtolower($request->getRequestUri()), 301);
             }
         }

@@ -78,9 +78,13 @@
                     <textarea name="information" id="information" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
-                    <h4>HTML код</h4>
-                    <textarea name="html_code" id="html_code" cols="30" rows="10"></textarea>
+                    <h4>Файл с 3D фото</h4>
+                    <label>Файл<input type="file" name="model"></label>
                 </div>
+{{--                <div class="form-group">--}}
+{{--                    <h4>HTML код</h4>--}}
+{{--                    <textarea name="html_code" id="html_code" cols="30" rows="10"></textarea>--}}
+{{--                </div>--}}
                 <div class="form-group">
                     <h4>Url</h4>
                     <input type="text" name="url">
