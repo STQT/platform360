@@ -1202,13 +1202,22 @@ class LocationsController extends Controller
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [
-            'image' => 'required|file|max:150000'
+            'image' => 'file|max:150000',
+            'file' => 'file|max:150000',
         ]);
 
         if ($validation->passes()) {
             $image = $request->file('image');
-            $newName = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/information'), $newName);
+            if ($image) {
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+            }
+
+            $file = $request->file('file');
+            if ($file) {
+                $fileName = rand() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('storage/information'), $fileName);
+            }
         }
 
         $hotspot = new Hotspot();
@@ -1220,6 +1229,9 @@ class LocationsController extends Controller
         $hotspot->information = $hotspotInformation;
         if (isset($image)) {
             $hotspot->image = $newName;
+        }
+        if (isset($file)) {
+            $hotspot->file = $fileName;
         }
         $hotspot->type = Hotspot::TYPE_INFORMATION;
         $hotspot->save();
@@ -1353,6 +1365,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
+                    $krhotspots[$key]->file = $krhotspots[$key]->file;
                     $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);

@@ -53,10 +53,14 @@
             </div>
 
             <div class="form-group">
-                <label>Файл<input type="file" name="image"></label>
+                <label>Фото<input type="file" name="image"></label>
             </div>
             <div class="form-group">
                 <img src="" alt="" style="display: none" class="preview">
+            </div>
+
+            <div class="form-group">
+                <label>Текстура<input type="file" name="file"></label>
             </div>
 
             <div id="deleteinformation" onclick="deleteinformation()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>

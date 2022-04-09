@@ -1076,6 +1076,7 @@
     </audio>
 
     <div class="information-modal" id="information-modal" style="display: none">
+        <div class="information-buttons"></div>
         <div class="image-block"></div>
         <div class="content"></div>
     </div>
@@ -1272,7 +1273,8 @@
                     "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
                     "{!! $informationText !!}",
                     "{{ $hotspot->image }}",
-                    "{{ $hotspot->destinationlocation->video }}"
+                    "{{ $hotspot->destinationlocation->video }}",
+                    {file: "{{ $hotspot->file }}"}
                 );
                 @endforeach
             }, 3000);
@@ -1729,13 +1731,14 @@
                             data[i].information,
                             data[i].image,
                             data[i].video,
+                            {file: data[i].file}
                         );
                     }
                 });
             }
         }
 
-        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video) {
+        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video, informationOptions) {
             hs_name = hs_name + ':' + index;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
@@ -1836,6 +1839,12 @@
                             } else {
                                 $('.image-block').html('');
                             }
+                            if (informationOptions.file) {
+                                $('.information-buttons').html('<a class="btn texture-button">{{ trans('uzb360.download_texture')}}</a>');
+                                $('.information-buttons a').attr('href', '/storage/information/' + informationOptions.file);
+                            } else {
+                                $('.information-buttons').html('');
+                            }
                             $.fancybox.open(
                                 $('#information-modal'),
                                 {
@@ -1867,6 +1876,12 @@
                     autoDimensions: true
                 }
             );
+
+            $('iframe').load(function () {
+                $('iframe#threed-model').contents().find('body').hide();
+                $('iframe#threed-model').contents().find("head")
+                    .append($("<style type='text/css'>.items {margin: 0 auto; width: 600px;}</style>"));
+            });
         }
 
         function initMap() {

@@ -166,6 +166,12 @@ body{
     padding-top: 10px;
     font-size: 0.8em;
 }
+.texture-button {
+    background: gray;
+    border-radius: 5px;
+    color: white;
+    padding: 15px;
+}
 @media only screen and (max-width: 600px) {
     .fancybox-container .content img {
         width: 100%;
