@@ -1271,6 +1271,9 @@ class LocationsController extends Controller
             foreach ($files as $file) {
                 if (strpos($file, '.html') !== false) {
                     $hotspot->model_path = $randomStr . DIRECTORY_SEPARATOR . $file;
+                    $htmlFile = file_get_contents(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr . DIRECTORY_SEPARATOR . $file));
+                    $htmlFile = str_replace('</head>', '<style type=\'text/css\'>.item {margin: 0 auto;}</style></head>', $htmlFile);
+                    file_put_contents(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr . DIRECTORY_SEPARATOR . $file), $htmlFile);
                 }
             }
         }

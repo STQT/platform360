@@ -1876,12 +1876,6 @@
                     autoDimensions: true
                 }
             );
-
-            $('iframe').load(function () {
-                $('iframe#threed-model').contents().find('body').hide();
-                $('iframe#threed-model').contents().find("head")
-                    .append($("<style type='text/css'>.items {margin: 0 auto; width: 600px;}</style>"));
-            });
         }
 
         function initMap() {
