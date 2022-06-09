@@ -1,4 +1,4 @@
-<iframe src="<?= $iframe ?>" frameborder="0" width="100%" height="400px"></iframe>
+<iframe src="/storage/models/{{$iframe}}" frameborder="0" width="100%" height="800px" id="threed-model"></iframe>
 <?php if ($text) { ?>
     <h3><?= $text ?></h3>
 <?php } ?>

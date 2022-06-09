@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use ZipArchive;
 
 class LocationsController extends Controller
 {
@@ -1201,13 +1202,22 @@ class LocationsController extends Controller
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [
-            'image' => 'required|file|max:150000'
+            'image' => 'file|max:150000',
+            'file' => 'file|max:150000',
         ]);
 
         if ($validation->passes()) {
             $image = $request->file('image');
-            $newName = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/information'), $newName);
+            if ($image) {
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+            }
+
+            $file = $request->file('file');
+            if ($file) {
+                $fileName = rand() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('storage/information'), $fileName);
+            }
         }
 
         $hotspot = new Hotspot();
@@ -1219,6 +1229,9 @@ class LocationsController extends Controller
         $hotspot->information = $hotspotInformation;
         if (isset($image)) {
             $hotspot->image = $newName;
+        }
+        if (isset($file)) {
+            $hotspot->file = $fileName;
         }
         $hotspot->type = Hotspot::TYPE_INFORMATION;
         $hotspot->save();
@@ -1233,12 +1246,37 @@ class LocationsController extends Controller
         $hotspot->destination_id = $data['location'];
         $hotspot->h = $data['h'];
         $hotspot->v = $data['v'];
-        $hotspotInformation = $data['html_code'];
-        $hotspot->html_code = $hotspotInformation;
+//        $hotspotInformation = $data['html_code'];
+//        $hotspot->html_code = $hotspotInformation;
         $hotspotInformation = $data['information'];
         $hotspot->information = $hotspotInformation;
         $hotspot->url = $data['url'];
         $hotspot->type = Hotspot::TYPE_POLYGON;
+        if (!empty($data['model'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['model']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['model']->move(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr), $fullName);
+            $zipFile = public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr)
+                . DIRECTORY_SEPARATOR . $fullName;
+
+            $zip = new ZipArchive;
+            $res = $zip->open($zipFile);
+            if ($res === true) {
+                $zip->extractTo(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr));
+                $zip->close();
+            }
+            unlink($zipFile);
+            $files = scandir(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr));
+            foreach ($files as $file) {
+                if (strpos($file, '.html') !== false) {
+                    $hotspot->model_path = $randomStr . DIRECTORY_SEPARATOR . $file;
+                    $htmlFile = file_get_contents(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr . DIRECTORY_SEPARATOR . $file));
+                    $htmlFile = str_replace('</head>', '<style type=\'text/css\'>.item {margin: 0 auto;}</style></head>', $htmlFile);
+                    file_put_contents(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr . DIRECTORY_SEPARATOR . $file), $htmlFile);
+                }
+            }
+        }
         $hotspot->save();
 
         if (isset($data['polygons'])) {
@@ -1330,6 +1368,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
+                    $krhotspots[$key]->file = $krhotspots[$key]->file;
                     $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);

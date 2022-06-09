@@ -53,10 +53,14 @@
             </div>
 
             <div class="form-group">
-                <label>Файл<input type="file" name="image"></label>
+                <label>Фото<input type="file" name="image"></label>
             </div>
             <div class="form-group">
                 <img src="" alt="" style="display: none" class="preview">
+            </div>
+
+            <div class="form-group">
+                <label>Текстура<input type="file" name="file"></label>
             </div>
 
             <div id="deleteinformation" onclick="deleteinformation()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
@@ -78,9 +82,13 @@
                     <textarea name="information" id="information" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
-                    <h4>HTML код</h4>
-                    <textarea name="html_code" id="html_code" cols="30" rows="10"></textarea>
+                    <h4>Файл с 3D фото</h4>
+                    <label>Файл<input type="file" name="model"></label>
                 </div>
+{{--                <div class="form-group">--}}
+{{--                    <h4>HTML код</h4>--}}
+{{--                    <textarea name="html_code" id="html_code" cols="30" rows="10"></textarea>--}}
+{{--                </div>--}}
                 <div class="form-group">
                     <h4>Url</h4>
                     <input type="text" name="url">
