@@ -291,11 +291,7 @@
                                     <div class="dot2"></div>
                                 </div>
                             </div>
-                            @if(!empty($location->preview))
-                                <img src="{{ '/storage/panoramas/preview/' .$location->preview }}" id="location-preview"></div>
-                            @else
-                                <img src="" id="krpanoscreenshot" style="display: none"></div>
-                            @endif
+                            <img src="" id="krpanoscreenshot" style="display: none"></div>
                         <div class="sharePanel__social">
                             <ul class="sharePanel__social__icons">
                                 <li class="socialnetwork-icon" onclick="uzbsharefb()">
