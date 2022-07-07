@@ -212,7 +212,9 @@ class HomeController extends Controller
             $openedCategoryLocations = Location::where([
                 ['category_id', $openedCategory->id],
                 ['city_id', $defaultlocation]
-            ])->get();
+            ])->where(function ($query) {
+                $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+            })->get();
         }
 
         return view('pages.index', [
