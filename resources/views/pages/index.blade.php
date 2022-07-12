@@ -291,7 +291,6 @@
                                     <div class="dot2"></div>
                                 </div>
                             </div>
-
                             <img src="" id="krpanoscreenshot" style="display: none"></div>
                         <div class="sharePanel__social">
                             <ul class="sharePanel__social__icons">

@@ -59,7 +59,11 @@
     <meta name="twitter:image:src" content="/assets/socialpreview.jpg">
     <meta property="og:title" content="{{ $location->name }}">
     <meta property="og:url" content="{{ request()->root() }}">
-    <meta property="og:image" content="/assets/socialpreview.jpg">
+    @if($location && !empty($location->getThumb()))
+        <meta property="og:image" content="{{ request()->root() . $location->getThumb() }}">
+    @else
+        <meta property="og:image" content="/assets/socialpreview.jpg">
+    @endif
     <meta property="og:description" content="{{ !empty($location->description) ? $location->description : 'Самый большой и качественный интерактивный тур по Узбекистану' }}">
     <meta property="og:site_name" content="{{ $location->name }}">
     @if (strpos(request()->url(), '/location/') !== false)
