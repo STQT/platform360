@@ -68,6 +68,7 @@
 <script src="/assets/slick-carousel/slick.min.js"></script>
 <script src="/assets/google-maps.js"></script>
 <script src="/assets/js/jquery.fancybox.min.js"></script>
+<script src="/assets/js/lity.min.js"></script>
 <script src="/assets/main.js"></script>
 <script src="/assets/custom.js"></script>
 <script src="/js/mediaelement-and-player.min.js"></script>

@@ -207,6 +207,16 @@ class HomeController extends Controller
             $referer = $_SERVER['HTTP_REFERER'];
         }
 
+        $openedCategoryLocations = null;
+        if (isset($openedCategory)) {
+            $openedCategoryLocations = Location::where([
+                ['category_id', $openedCategory->id],
+                ['city_id', $defaultlocation]
+            ])->where(function ($query) {
+                $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+            })->get();
+        }
+
         return view('pages.index', [
             'location' => $location,
             'categories' => $categories,
@@ -222,7 +232,8 @@ class HomeController extends Controller
             'isnew' => $isnew,
             'etaji' => $etaji,
             'etajlocations' => $etajlocations,
-            'referer' => $referer
+            'referer' => $referer,
+            'openedCategoryLocations' => $openedCategoryLocations
         ]);
     }
 

@@ -433,8 +433,8 @@
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
-                                            @if (isset($openedCategory))
-                                                @foreach($openedCategory->locations as $categoryLocation)
+                                            @if (isset($openedCategory) && $openedCategoryLocations)
+                                                @foreach($openedCategoryLocations as $categoryLocation)
                                                     <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
                                                             @php
@@ -1864,17 +1864,7 @@
         }
 
         function openModal(frame, text, link) {
-            $.fancybox.open(
-                $('#information-modal'),
-                {
-                    type: 'iframe',
-                    src: '/{{ app()->getLocale() }}/ajax-modal?frame=' + frame + '&text=' + text + '&link=' + link,
-                    touch: false,
-                    width: 460,
-                    height: 'auto',
-                    autoDimensions: true
-                }
-            );
+            var lightbox = lity('/{{ app()->getLocale() }}/ajax-modal?frame=' + frame + '&text=' + text + '&link=' + link);
         }
 
         function initMap() {

@@ -106,6 +106,7 @@
     <link href="/assets/slick-carousel/slick-theme.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/flooreditor/css/annotator-pro.min.css">
     <link rel="stylesheet" href="/assets/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/assets/css/lity.min.css">
     <link href="/assets/custom.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicons/apple-icon-60x60.png">

@@ -3,6 +3,8 @@ namespace Deployer;
 
 require 'recipe/laravel.php';
 
+set('default_timeout', 3000);
+
 // Project name
 set('application', 'uzbekistan360.uz');
 
