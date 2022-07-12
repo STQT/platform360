@@ -59,8 +59,8 @@
     <meta name="twitter:image:src" content="/assets/socialpreview.jpg">
     <meta property="og:title" content="{{ $location->name }}">
     <meta property="og:url" content="{{ request()->root() }}">
-    @if($location && !empty($location->preview))
-        <meta property="og:image" content="{{ '/storage/panoramas/preview/' .$location->preview }}">
+    @if($location && !empty($location->getThumb()))
+        <meta property="og:image" content="{{ request()->root() . $location->getThumb() }}">
     @else
         <meta property="og:image" content="/assets/socialpreview.jpg">
     @endif
