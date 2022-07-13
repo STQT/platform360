@@ -46,18 +46,20 @@
                                                 }
                                             @endphp
                                             <a href="{{ $originalPano }}" title="Оригинал"><button class="btn btn-info btn-sm"><i class="fa fa-image" aria-hidden="true"></i></button></a>
+                                            @if(auth()->user()->hasRole('Admin'))
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/locations', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-sm',
                                                         'title' => 'Delete sky',
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
+                                            @endif
                                         </td>
                                         <td>
                                             <img src="/storage/panoramas/unpacked/{{\App\Location::folderNames([$item])[0]}}/thumb.jpg" width="150">

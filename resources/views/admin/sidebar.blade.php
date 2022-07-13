@@ -9,6 +9,9 @@
                 <div class="card-body">
                     <ul class="nav flex-column" role="tablist">
                         @foreach($section->items as $menu)
+                            @if(property_exists($menu, 'perm') && $menu->perm && !auth()->user()->hasRole('Admin'))
+                                @continue
+                            @endif
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" href="{{ url($menu->url) }}">
                                     {{ $menu->title }}

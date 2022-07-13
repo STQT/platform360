@@ -118,6 +118,10 @@ class VideosController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->hasRole('Admin')) {
+            return redirect('admin/locations')->with('flash_message', 'У вас нет прав для удаление!');
+        }
+
         $video = Video::find($id);
         @unlink(public_path('storage/videos/') . $video->video);
         Video::destroy($id);

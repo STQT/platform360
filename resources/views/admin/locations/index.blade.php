@@ -66,18 +66,20 @@
                                             @if($item->video)
                                                 <a href="{{ route('admin.locations.video', $item->id) }}" title="Show Video"><button class="btn btn-info btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i></button></a>
                                             @endif
+                                            @if(auth()->user()->hasRole('Admin'))
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/locations', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
-                                                    'type' => 'submit',
-                                                    'class' => 'btn btn-danger btn-sm',
-                                                    'title' => 'Delete Location',
-                                                    'onclick'=>'return confirm("Confirm delete?")'
-                                            )) !!}
+                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
+                                                        'type' => 'submit',
+                                                        'class' => 'btn btn-danger btn-sm',
+                                                        'title' => 'Delete Location',
+                                                        'onclick'=>'return confirm("Confirm delete?")'
+                                                )) !!}
                                             {!! Form::close() !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
