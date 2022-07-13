@@ -41,6 +41,7 @@
                                         <td>
                                             <a href="{{ url('/admin/locations/' . $item->id) }}" title="View sky"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
                                             <a href="{{ url('/admin/sky/' . $item->id . '/edit/ru') }}" title="Edit sky"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            @if(auth()->user()->hasRole('Admin'))
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/sky', $item->id],
@@ -53,6 +54,7 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
