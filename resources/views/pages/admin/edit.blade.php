@@ -60,6 +60,10 @@
             </div>
 
             <div class="form-group">
+                <label>URL<input type="text" name="url" id="url"></label>
+            </div>
+
+            <div class="form-group">
                 <label>Текстура<input type="file" name="file"></label>
             </div>
 
@@ -327,7 +331,8 @@
                     {{$hotspot->id}},
                     {{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}},
                     "{{ str_replace("\r", "\\\r", $hotspot->information) }}",
-                    "{{ $hotspot->image}}"
+                    "{{ $hotspot->image}}",
+                    "{{ $hotspot->url}}"
             );
             @endforeach
         }, 3000);

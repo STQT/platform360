@@ -32,7 +32,7 @@ class Hotspot extends Model
      *
      * @var array
      */
-    protected $fillable = ['location_id', 'destination_id', 'h', 'v', 'information', 'image', 'html_code'];
+    protected $fillable = ['location_id', 'destination_id', 'h', 'v', 'information', 'image', 'html_code', 'url'];
 
     public function location()
     {

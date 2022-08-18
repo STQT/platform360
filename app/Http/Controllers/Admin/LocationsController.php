@@ -1229,6 +1229,7 @@ class LocationsController extends Controller
         $hotspot->destination_id = $data['location'];
         $hotspot->h = $data['h'];
         $hotspot->v = $data['v'];
+        $hotspot->url = $data['url'];
         $hotspotInformation = $data['information'];
         $hotspot->information = $hotspotInformation;
         if (isset($image)) {
