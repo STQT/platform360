@@ -1830,7 +1830,6 @@
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         var showModal = true;
-                        console.log(informationOptions);
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                             if (informationOptions.hasOwnProperty('url')) {
                                 if (informationOptions.url != '') {
