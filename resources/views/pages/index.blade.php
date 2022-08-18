@@ -1273,7 +1273,7 @@
                     "{!! $informationText !!}",
                     "{{ $hotspot->image }}",
                     "{{ $hotspot->destinationlocation->video }}",
-                    {file: "{{ $hotspot->file }}"}
+                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}
                 );
                 @endforeach
             }, 3000);
@@ -1730,7 +1730,7 @@
                             data[i].information,
                             data[i].image,
                             data[i].video,
-                            {file: data[i].file}
+                            {url: data[i].url, file: data[i].file}
                         );
                     }
                 });
@@ -1829,7 +1829,15 @@
 
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                        var showModal = true;
+                        console.log(informationOptions);
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+                            if (informationOptions.hasOwnProperty('url')) {
+                                if (informationOptions.url != '') {
+                                    window.location.href = informationOptions.url;
+                                    showModal = false;
+                                }
+                            }
                             information = information.replaceAll('\\"', '"');
                             $('#information-modal .content').html(information);
                             if (image) {
@@ -1844,13 +1852,15 @@
                             } else {
                                 $('.information-buttons').html('');
                             }
-                            $.fancybox.open(
-                                $('#information-modal'),
-                                {
-                                    // type: 'html',
-                                    touch: false
-                                }
-                            );
+                            if (showModal) {
+                                $.fancybox.open(
+                                    $('#information-modal'),
+                                    {
+                                        // type: 'html',
+                                        touch: false
+                                    }
+                                );
+                            }
                         } else {
                             krpano.call("moveto("+h+","+v+",linear(45))");
                             setTimeout(function() {
