@@ -19,9 +19,9 @@ public function boot(Request $request)
       }
 
       Schema::defaultStringLength(191);
+        view()->share('allTranslations', \App\Models\LcTranslation::all()->pluck('value','key'));
 
-       app()->setLocale($request->segment(1));
-    
+       app()->setLocale($request->segment(1) );
     }
 
     /**

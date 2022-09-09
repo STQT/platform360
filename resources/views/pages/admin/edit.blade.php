@@ -38,42 +38,50 @@
         </div>
     </div>
 </div>
+<style>
+    #tabs-nav li.active {
+        background-color: #08E;
+    }
+</style>
 
 <div id="informationModal" style="display: none;" class="modal">
     <div class="overlay"></div>
     <div class="modal-wrap">
         <span class="modal-close">x</span>
         <form id="information-form">
-            <div class="row">
-                <div class="form-group">
-                    <a href="{{ url('/admin/locations/ru/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button">Русский</button></a>
 
-                    <a href="{{ url('/admin/locations/uzb/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button">Узбекский</button></a>
-                    <a href="{{ url('/admin/locations/en/' . $location->id) }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button">Английский</button></a>
+            <div class="tabs my-tabs1">
+                <div id="tabs-nav" class="nav">
+                    <li><a href="#tab1" class="nav-link">Русский</a></li>
+                    <li><a href="#tab2" class="nav-link">Узбекский</a></li>
+                    <li><a href="#tab3" class="nav-link">Английский</a></li>
+                </div> <!-- END tabs-nav -->
+                <div id="tabs-content">
+                    @php
+                        $locales = ['ru','uzb','en']
+                    @endphp
 
-{{--                    <button data-lang="ru" class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button" value="Русский">Русский</button>--}}
+                    @for ($i = 0; $i < count($locales); $i++)
+                        <div id="{{'tab'. ($i+1) }}" class="tab-content">
+                            <div class="form-group">
+                                <label>Информация</label>
+                                <textarea class="form-control" rows="3" name="{{"lang" . "[$locales[$i]]" ."[information]"}}" id="{{'information_' . $locales[$i]}}" ></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Файл<input type="file" class="form-control-file" name="{{"lang" . "[$locales[$i]]" ."[image]"}}"></label>
+                            </div>
+                            <div class="form-group">
+                                <img src="" alt="" style="display: none" class="{{'preview_' . $locales[$i]}}">
+                            </div>
+                        </div>
+                    @endfor
 
-{{--                    <button data-lang="uzb" class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button" value="Узбекский">Узбекский</button>--}}
-{{--                    <button data-lang="en" class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button" value="Английский">Английский</button>--}}
-                </div>
-            </div>
 
+                </div> <!-- END tabs-content -->
+            </div> <!-- END tabs -->
             <input type="hidden" class="hidden-create" name="create" value="">
 
             <input type="hidden" class="hotspotid" name="hotspotid" value="">
-
-            <div class="row">
-                <div class="form-group">
-                    <h4>Информация</h4>
-                    <textarea name="information" id="information" cols="30" rows="10"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Файл<input type="file" name="image"></label>
-            </div>
-            <div class="form-group">
-                <img src="" alt="" style="display: none" class="preview">
-            </div>
 
             <input type="hidden" name="hidden_lang" class="hidden-input-lang" value="">
 
@@ -136,6 +144,25 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
+
+
+    // Show the first tab and hide the rest
+    $('.my-tabs1 #tabs-nav li:first-child').addClass('active');
+    $('.my-tabs1 .tab-content').hide();
+    $('.my-tabs1 .tab-content:first').show();
+
+    // Click function
+    $('.my-tabs1 #tabs-nav li').click(function(){
+        $('.my-tabs1 #tabs-nav li').removeClass('active');
+        $(this).addClass('active');
+        $('.my-tabs1 .tab-content').hide();
+
+        var activeTab = $(this).find('a').attr('href');
+        $(activeTab).fadeIn();
+        return false;
+    });
+
+
     var hcoordinate;
     var vcoordinate;
     var hotspotid;
@@ -291,19 +318,30 @@
 
         setTimeout(function() {
             @foreach($location->hotspots as $hotspot)
+
             add_exist_hotspot(
                     {{ $hotspot->h }},
                     {{ $hotspot->v }},
                     {{$hotspot->id}},
                     {{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}},
-                    "{{ str_replace("\r", "\\\r", $hotspot->information) }}",
-                    "{{ $hotspot->image}}"
+                    "{{ str_replace("\r", "\\\r", $hotspot->getTranslation('information', 'ru')) }}",
+                    "{{ $hotspot->getTranslation('image', 'ru')}}",
+                    "{{ str_replace("\r", "\\\r", $hotspot->getTranslation('information', 'uzb')) }}",
+                    "{{ $hotspot->getTranslation('image', 'uzb')}}",
+                    "{{ str_replace("\r", "\\\r", $hotspot->getTranslation('information', 'en')) }}",
+                    "{{ $hotspot->getTranslation('image', 'en')}}",
             );
             @endforeach
         }, 3000);
     }
 
-    function add_exist_hotspot(h, v, id, type, information, image) {
+
+    function add_exist_hotspot(h, v, id, type,
+                               information_ru,  image_ru,
+                               information_uzb, image_uzb,
+                               information_en, image_en,) {
+
+
         if (krpano) {
             var hs_name = "hs" + ((Date.now() + Math.random()) | 0);
 
@@ -316,8 +354,8 @@
             krpano.set("hotspot[" + hs_name + "].ath", h);
             krpano.set("hotspot[" + hs_name + "].atv", v);
             krpano.set("hotspot[" + hs_name + "].type", type);
-            krpano.set("hotspot[" + hs_name + "].information", information);
-            krpano.set("hotspot[" + hs_name + "].image", image);
+            krpano.set("hotspot[" + hs_name + "].information", information_ru);
+            krpano.set("hotspot[" + hs_name + "].image", image_ru);
             krpano.set("hotspot[" + hs_name + "].distorted", true);
 
             if (krpano.get("device.html5")) {
@@ -328,12 +366,22 @@
                       hcoordinate = h;
                       vcoordinate = v;
                       if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                          $('#information-form textarea').val(information);
+                          $('#information-form textarea#information_uzb').val(information_uzb);
+                          $('#information-form textarea#information_ru').val(information_ru);
+                          $('#information-form textarea#information_en').val(information_en);
                           $('.hotspotid').val(hotspotid);
 
-                          if (image.length > 0) {
-                              $('.preview').attr('src', '/storage/information/' + image);
-                              $('.preview').show();
+                          if (image_ru.length > 0) {
+                              $('.preview_ru').attr('src', '/storage/information/' + image_ru);
+                              $('.preview_ru').show();
+                          }
+                          if (image_uzb.length > 0) {
+                              $('.preview_uzb').attr('src', '/storage/information/' + image_uzb);
+                              $('.preview_uzb').show();
+                          }
+                          if (image_en.length > 0) {
+                              $('.preview_en').attr('src', '/storage/information/' + image_en);
+                              $('.preview_en').show();
                           }
                           $('#informationModal').fadeIn();
                       } else {
@@ -472,7 +520,8 @@
     });
 </script>
 
-    <style>
+    <style >
+
         .cotegory-info {
             overflow: scroll;
         }

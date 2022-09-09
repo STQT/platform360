@@ -1205,46 +1205,35 @@ class LocationsController extends Controller
         app()->setLocale($lang);
         $data = $request->all();
 
-        $validation = Validator::make($request->all(), [
-            'image' => 'required|file|max:150000'
-        ]);
-
-        if ($validation->passes()) {
-            $image = $request->file('image');
-            $newName = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/information'), $newName);
-        }
-
         if ($data['create'] == true){
             $hotspot = new Hotspot();
             $hotspot->location_id = $data['location'];
             $hotspot->destination_id = $data['location'];
             $hotspot->h = $data['h'];
             $hotspot->v = $data['v'];
-
-            $hotspotInformation = $data['information'];
-            $hotspot->information = $hotspotInformation;
-            if (isset($image)) {
-                $hotspot->image = $newName;
-            }
             $hotspot->type = Hotspot::TYPE_INFORMATION;
 
-            $hotspot->save();
         } elseif ($data['hotspotid'] != null) {
             $hotspot = Hotspot::find($data['hotspotid']);
             $hotspot->location_id = $data['location'];
             $hotspot->destination_id = $data['location'];
             $hotspot->h = $data['h'];
             $hotspot->v = $data['v'];
-            $hotspot->information = $data['information'];
-
-            if (isset($image)) {
-                $hotspot->image = $newName;
-            }
             $hotspot->type = Hotspot::TYPE_INFORMATION;
 
-            $hotspot->save();
         }
+
+        foreach ($request->lang as $lang => $items) {
+            if (isset($items['image']) && $items['image'] !== null) {
+                $image = $items['image'];
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+
+                $hotspot->setTranslation('image', $lang, $newName);
+            }
+            $hotspot->setTranslation('information', $lang, $items['information']);
+        }
+        $hotspot->save();
     }
 
     public function uploadVideo(Request $request, $lang)
