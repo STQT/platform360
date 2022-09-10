@@ -2,6 +2,11 @@
 
 @section('content')
     <meta name="csrf-token" content="{!! csrf_token() !!}">
+    <style>
+        .wrapper-panel.top {
+            z-index: 100;
+        }
+    </style>
     <div class="loading">
         <div class="loader">
             <div class="dot"></div>
