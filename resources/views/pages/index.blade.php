@@ -170,18 +170,17 @@
 
 
     </span>
-
-                        <div class="language-switcher">
-                            <div class="dropdown-wrapper">
-                                <select name="select" class="dropdown">
-                                    <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
-                                    <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
-                                    <option value="uzb" id="uzb" @if(Lang::locale()=='uzb') selected @endif>UZB</option>
-                                </select>
-                                <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
-                                     class="dropdown-chevronImg">
+                            <div class="language-switcher">
+                                <div class="dropdown-wrapper">
+                                        <select name="select" class="dropdown">
+                                            <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
+                                            <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
+                                            <option value="uzb" id="uzb" @if(Lang::locale()=='uzb') selected @endif>UZB</option>
+                                        </select>
+                                    <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
+                                         class="dropdown-chevronImg">
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </header>
                 <div id="pano" style="width:100%;height:100%;"></div>
@@ -201,8 +200,12 @@
                 </a>
                 @endif
                 <footer class="dubai360-footer">
-                    <div class="wrapper-button"><span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
-                                                      @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif></span>
+                    <div class="wrapper-button">
+                        @if(isset($sky) && $sky != "no")
+                            <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', '',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"></span>
+                        @else
+                            <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"></span>
+                        @endif
                     </div>
                     <div class="wrapper-button"><span class="icon-ic_explore wrapper-button__icon "
                                                       data-pannel="explorePannel"></span></div>
@@ -288,7 +291,6 @@
                                     <div class="dot2"></div>
                                 </div>
                             </div>
-
                             <img src="" id="krpanoscreenshot" style="display: none"></div>
                         <div class="sharePanel__social">
                             <ul class="sharePanel__social__icons">
@@ -391,7 +393,7 @@
                                                              style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;">
                                                             <img src="/storage/cat_icons/{{$category->cat_icon_svg}}">
                                                         </div>
-                                                        <span class="icon-wrapper__text">
+                                                        <span class="icon-wrapper__text" data-title="{{$category->name}}" data-information="{{strip_tags($category->information)}}">
                                                             @if (!empty($category->slug))
                                                                 <a href="{{$category->createUrl()}}">
                                                             @endif
@@ -423,14 +425,26 @@
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr; position: relative; will-change: transform;">
+                                            <div class="category-name">
+                                                @if (isset($openedCategory))
+                                                <h1>{{$openedCategory->name}}</h1>
+                                                @endif
+                                            </div>
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
-                                            @if (isset($openedCategory))
-                                                @foreach($openedCategory->locations as $categoryLocation)
-                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}')">
+                                            @if (isset($openedCategory) && $openedCategoryLocations)
+                                                @foreach($openedCategoryLocations as $categoryLocation)
+                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
-                                                            <div class="listItem__img"><img src="/storage/panoramas/unpacked/{{$categoryLocation->folderName()}}/thumb.jpg" class="listItem__img--scene"></div>
+                                                            @php
+                                                            if ($categoryLocation->video) {
+                                                                $preview = 'preview/' . $categoryLocation->preview;
+                                                            } else {
+                                                                $preview = 'unpacked/' . $categoryLocation->folderName() . '/thumb.jpg';
+                                                            }
+                                                            @endphp
+                                                            <div class="listItem__img"><img src="/storage/panoramas/{{$preview}}" class="listItem__img--scene"></div>
                                                             <div class="listItem__icon-category">
                                                                   <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$openedCategory->color}};"><img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}"></div>
                                                             </div>
@@ -440,6 +454,11 @@
                                                       </div>
                                                   </div>
                                                 @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="category-information">
+                                            @if (isset($openedCategory))
+                                                <p>{{$openedCategory->information}}</p>
                                             @endif
                                         </div>
                                     </div>
@@ -554,12 +573,11 @@
                 <div class="helpPanel" style="overflow: hidden;">
                     <div id="tab1" class="section-help">
                         <div class="section-help__content">
-                            <span class="section-help__content__title"><span>Welcome</span></span>
+                            <span class="section-help__content__title"><span>{{ trans('help.welcome') }}</span></span>
                             <div class="section-help__content__message">
                                 <div class="section-help__content__message__text">
-                                    <p><span>Вращайте и масштабируйте изображение с помощью элементов управления внизу, мыши или сенсорного экрана.
-                                        </span></p>
-                                    <p><span>Используйте горячие точки на изображении для навигации между различными фотографиями и видео. Вы также можете перемещаться с помощью карты или категорий.</span>
+                                    <p><span>{{ trans('help.rotate_and_scale') }}</span></p>
+                                    <p><span>{{ trans('help.use_hotspots') }}</span>
                                     </p>
                                 </div>
                                 <img src="/assets/image_mouse.cec9e28c.png">
@@ -567,57 +585,57 @@
                         </div>
                     </div>
                     <div class="sitemap-block section-help">
-                        <div><a href="/how-to-use" class="site-map">Как пользоваться сайтом</a></div>
-                        <div><a href="/sitemap" class="site-map">Карта сайта</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/how-to-use" class="site-map">{{ trans('help.how_to_use_site') }}</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/sitemap" class="site-map">{{ trans('help.map_site') }}</a></div>
                     </div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
-                            <span class="section-help__content__title"><span>Подсказки</span></span>
+                            <span class="section-help__content__title"><span>{{ trans('help.help') }}</span></span>
                             <div class="category-wrapper-mobile">
                                 <div class="section-help__content__icons--controls">
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_aerial icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Перейти к небу города</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_sky') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_explore icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Перейти в карту города</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_map') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_share icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Поделиться своим видом</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.share_your_view') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_configuration icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Change video quality and speed</span>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.video_quality_speed') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_comment icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span> Оставьте свои пожелания или отзыв</span>
+                                        <div class="icon-wrapper__text"><span> {{ trans('help.leave_wish_or_feedback') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_glass icon-wrapper__icon--controls"></span>
                                         <div class="icon-wrapper__text">
-                                            <span>Поиск панорам по названию или категории</span></div>
+                                            <span>{{ trans('help.search_panoramas_by_name_or_category') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_info icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Показать информацию</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.show_information') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_autoplay icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Включить автоматический режим тура</span>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.enable_automatic_tour_mode') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_eye icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Изменить вид проекции</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.change_projection_view') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_floorplan icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>Посмотреть план этажей</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.view_floor_plan') }}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -654,7 +672,13 @@
                              style="background-color: {{$location->categorylocation->color}}"><img
                                     src="/storage/cat_icons/{{$location->categorylocation->cat_icon_svg}}"></div>
                         <div class="clock_time">
-                            <div class="infoPanel__title" id="location_name2"><h1>{{ $location->name }}</h1></div>
+                            <div class="infoPanel__title" id="location_name2">
+                                @if (isset($openedCategory))
+                                    <h2>{{ $location->name }}</h2>
+                                    @else
+                                    <h1>{{ $location->name }}</h1>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="time_data">
@@ -680,7 +704,7 @@
 
                     <div class="infoPanel__description">
                         <div class="infoPanel__description__message">
-                            <span id="location_description">{{$location->description}}</span>
+                            <span id="location_description">{{isset($openedCategory) && $openedCategory ? $openedCategory->information : $location->description}}</span>
                         </div>
                         <div class="dotsss">
                             <div class="svg_blockk">
@@ -711,7 +735,7 @@
                         </li>
 
                         <li class="socialnetwork-icon telegram">
-                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : 'https://t.me/' . str_replace('@', '', $location->telegram)}}" id="locationsocialtg" target="_blank" rel="nofollow">
+                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : ('https://t.me/' . str_replace('@', '', $location->telegram))}}" id="locationsocialtg" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/telegram.png" alt="telegram share"/>
                                 </div>
@@ -830,11 +854,13 @@
                                 @foreach($etaji as $i => $floor)
                                     <div id="floorplan-tab{{ $i }}" class="floorplan-tab" tabindex="-1"
                                          style="display: none;">
+                                        <?php if (file_exists('storage/floors/' . $floor->image)) { ?>
                                         <div class="plan">
                                             <img class="planClass" id="floorid{{$floor->id}}" data-width="{{getimagesize('storage/floors/' . $floor->image)[0]}}" data-height="{{getimagesize('storage/floors/' . $floor->image)[1]}}"
                                                  src="/storage/floors/{{$floor->image}}">
                                             <span></span>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 @endforeach
                             </div>
@@ -1045,10 +1071,11 @@
 
     <audio controls style="" id="audio">
         <source src="" type="audio/mpeg">
-        Your browser does not support the audio element.
+        {{ trans('uzb360.browser_not_support_audio_element') }}
     </audio>
 
     <div class="information-modal" id="information-modal" style="display: none">
+        <div class="information-buttons"></div>
         <div class="image-block"></div>
         <div class="content"></div>
     </div>
@@ -1128,7 +1155,6 @@
                             {!! $etaj->code !!}
                         });
                     }, 500);
-                    {{--console.log('existing code:' + "{{$etaj->code}}");--}}
                 });
             @endif
         @endforeach
@@ -1222,6 +1248,11 @@
             krpano = krpano_interface;
             setTimeout(function () {
                 @foreach($krhotspots as $index => $hotspot)
+                        @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
+                            @php
+                                continue;
+                            @endphp
+                        @endif
                 @php
                 $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));
                 $informationText = str_replace('"', '\"', $informationText);
@@ -1241,7 +1272,8 @@
                     "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
                     "{!! $informationText !!}",
                     "{{ $hotspot->image }}",
-                    "{{ $hotspot->destinationlocation->video }}"
+                    "{{ $hotspot->destinationlocation->video }}",
+                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}
                 );
                 @endforeach
             }, 3000);
@@ -1381,6 +1413,9 @@
 
         function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl, video) {
             if (krpano) {
+{{--                @php--}}
+{{--                    $prevLocation = \App\Location::where('slug', prevsceneslug)->first();--}}
+{{--                @endphp--}}
                 originalxmlnam = xmlname;
                 originalxmlname = originalxmlnam.match(/\d/g);
                 originalxmlname = originalxmlname.join("");
@@ -1546,7 +1581,7 @@
                         for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
                             let floorLocationItem = data.floors_locations[floorLocation];
                             $('#multifloor-other-locations').append('<div class="listItem-wrapper" style="height: 260px;"\
-                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\')">\
+                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'nooo\', '+ (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
                                 <div class="listItem" style="width: 224px; height: 244px;">\
                                     <div class="listItem__img"><img\
                                                 src="/storage/panoramas/unpacked/' + floorLocationItem.img + '/thumb.jpg"\
@@ -1666,9 +1701,9 @@
                     }
                     let videoVal = null;
                     if (data.is_sky == "on") {
-                        if (video) {
-                            videoVal = "'" + video + "'";
-                        }
+                        // if (video) {
+                        //     videoVal = "'" + video + "'";
+                        // }
                         document.getElementById("hubviewlink").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                         document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + prevsceneid + "', '0', '" + prevsceneslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     } else {
@@ -1695,13 +1730,14 @@
                             data[i].information,
                             data[i].image,
                             data[i].video,
+                            {url: data[i].url, file: data[i].file}
                         );
                     }
                 });
             }
         }
 
-        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video) {
+        function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video, informationOptions) {
             hs_name = hs_name + ':' + index;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
@@ -1793,7 +1829,15 @@
 
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                        var showModal = true;
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+                            if (informationOptions.hasOwnProperty('url')) {
+                                if (informationOptions.url != '') {
+                                    window.location.href = informationOptions.url;
+                                    showModal = false;
+                                }
+                            }
+                            information = information.replaceAll('\\"', '"');
                             $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
@@ -1801,13 +1845,21 @@
                             } else {
                                 $('.image-block').html('');
                             }
-                            $.fancybox.open(
-                                $('#information-modal'),
-                                {
-                                    // type: 'html',
-                                    touch: false
-                                }
-                            );
+                            if (informationOptions.file) {
+                                $('.information-buttons').html('<a class="btn texture-button">{{ trans('uzb360.download_texture')}}</a>');
+                                $('.information-buttons a').attr('href', '/storage/information/' + informationOptions.file);
+                            } else {
+                                $('.information-buttons').html('');
+                            }
+                            if (showModal) {
+                                $.fancybox.open(
+                                    $('#information-modal'),
+                                    {
+                                        // type: 'html',
+                                        touch: false
+                                    }
+                                );
+                            }
                         } else {
                             krpano.call("moveto("+h+","+v+",linear(45))");
                             setTimeout(function() {
@@ -1818,6 +1870,10 @@
                     }.bind(null, hs_name));
                 }
             }
+        }
+
+        function openModal(frame, text, link) {
+            var lightbox = lity('/{{ app()->getLocale() }}/ajax-modal?frame=' + frame + '&text=' + text + '&link=' + link);
         }
 
         function initMap() {
@@ -2085,7 +2141,7 @@
                 });
 
                 google.maps.event.addDomListener(marker, 'click', function () {
-                    loadpano('uzbekistan:' + value.id, '1', value.slug);
+                    loadpano('uzbekistan:' + value.id, '1', value.slug, '', '', 'nooo', value.video);
                     setTimeout(function () {
                         $('.icon-ic_close').trigger('click')
                     }, 100);

@@ -108,4 +108,23 @@ class Podloc extends Model
     {
         return $this->belongsTo('\App\Location', 'podlocparent_id');
     }
+
+    public static function xmlName($xml)
+    {
+        try {
+            $dirs = scandir(public_path() . '/storage/panoramas/unpacked/' . $xml);
+        } catch (\Exception $e) {
+            $dirs = [];
+        }
+
+        $filename = null;
+
+        foreach ($dirs as $item) {
+            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $xml . '/' . $item)) {
+                $filename = $xml . '/' . $item;
+            }
+        }
+
+        return $filename;
+    }
 }

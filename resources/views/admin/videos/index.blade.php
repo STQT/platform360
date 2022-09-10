@@ -35,12 +35,14 @@
                                                 'url' => ['/admin/videos', $video->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
+                                            @if(auth()->user()->hasRole('Admin'))
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-sm',
                                                         'title' => 'Delete video',
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
+                                            @endif
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>

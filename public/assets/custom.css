@@ -82,10 +82,6 @@ body{
     }
 }
 
-.icon-ic_explore.wrapper-button__icon {
-    font-size: 3.3em;
-}
-
 .js-icon.icon-wrapper__icon a, .icon-wrapper--selected a {
     text-decoration: none;
     color: #2a2a2f;
@@ -158,4 +154,26 @@ body{
 .gobacktosite img {
     width: 24px;
     height: 24px;
+}
+.category-name {
+    padding: 0 0 15px 10px;
+}
+.category-information {
+    max-height: 192px;
+    overflow: scroll;
+    color: #666;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 0.8em;
+}
+.texture-button {
+    background: gray;
+    border-radius: 5px;
+    color: white;
+    padding: 15px;
+}
+@media only screen and (max-width: 600px) {
+    .fancybox-container .content img {
+        width: 100%;
+    }
 }

@@ -52,6 +52,8 @@
                        design_text_shadow="1"
         />
 
+    <style name="roomspot" alpha="0.0" capture="false" />
+
     <action name="startup" autorun="onstart">
         if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
         loadscene(get(startscene), null, MERGE);
@@ -216,5 +218,15 @@
                        />
                 @endforeach
             @endif
+        @foreach ($location->hotspots as $hotspot)
+            @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
+                <hotspot name="hs{{$hotspot->id}}" style="roomspot" onclick="jscall(openModal('{{$hotspot->model_path}}', '{{$hotspot->information}}', '{{$hotspot->url}}'))"
+                         capture="false" keep="true" distorted="true">
+                    @foreach ($hotspot->polygons as $polygon)
+                        <point ath="{{$polygon->h}}" atv="{{$polygon->v}}"/>
+                    @endforeach
+                </hotspot>
+            @endif
+        @endforeach
     </scene>
 </krpano>

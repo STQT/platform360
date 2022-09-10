@@ -12,7 +12,7 @@ return [
   'search' => 'Search',
   'feedback'=>'Feedback',
   'help' => 'Help',
-  'etaji' => 'Floors',
+  'etaji' => 'Plan',
   'fullscreen' => 'Full Screen',
   'rejimprosmotra' => 'View Modes',
   'filtr' => 'Filter',
@@ -39,4 +39,5 @@ return [
   'vashemail' => 'Your email',
   'vashesoobshenie' => 'Your message',
   'bad_connection' => 'Bad Internet connection',
+  'browser_not_support_audio_element' => 'Your browser does not support audio elements.'
 ];

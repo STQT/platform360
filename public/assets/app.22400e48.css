@@ -1281,7 +1281,7 @@ template {
 
 .wrapper-button__icon {
   color: #1a90d2;
-  font-size: 48px;
+  font-size: 36px;
   cursor: pointer;
 }
 
@@ -2357,7 +2357,7 @@ screen and (max-height: 600px) {
   padding-bottom: 18px;
 }
 
-.infoPanel__title h1 {
+.infoPanel__title h1, .infoPanel__title h2 {
   letter-spacing: 1px;
   color: #c23691;
   font-size: 1.4em;
@@ -5226,11 +5226,6 @@ height: 192px;
 .icon-ic_info:before {
   content: '\E927';
 }
-
-.icon-ic_info {
-  font-size: 56px;
-}
-
 .icon-ic_link:before {
   content: '\E928';
 }

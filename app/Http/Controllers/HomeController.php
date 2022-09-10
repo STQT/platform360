@@ -37,6 +37,12 @@ class HomeController extends Controller
             Cookie::queue(Cookie::forever('city', '1'));
         }
 
+        $openedCategory = null;
+
+        if (!empty($category)) {
+            $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
+        }
+
         //Загрузка всех городов и координаты текущего города
         $cities = Cities::all();
         $curlocation = Cities::where('id', $defaultlocation)->firstOrFail();
@@ -53,7 +59,8 @@ class HomeController extends Controller
                 ])->with('categorylocation')->firstOrFail();
                 Cookie::queue(Cookie::forever('city', $city->id));
             } else {
-                $subdomainLocation = Location::where('subdomain', $subdomain)->with('categorylocation')->firstOrFail();
+                $subdomainLocation = Location::where('subdomain', $subdomain)
+                    ->with('categorylocation')->firstOrFail();
                 if (!isset($_GET['home'])) {
                     Cookie::queue(Cookie::forever('city', '1'));
                     $location = $subdomainLocation;
@@ -61,10 +68,15 @@ class HomeController extends Controller
                     //панорама по умолчанию для города
                     $location = Location::where([
                         ['isDefault', '1'],
-                        ['city_id', $subdomainLocation->city_id]
+                        ['city_id', $defaultlocation]
                     ])->with('categorylocation')->firstOrFail();
                 }
             }
+        } elseif ($openedCategory) {
+            $location = Location::where([
+                ['category_id', $openedCategory->id],
+                ['city_id', $defaultlocation]
+            ])->with('categorylocation')->firstOrFail();
         } else {
             $location = Location::where([
                 ['isDefault', '1'],
@@ -104,7 +116,6 @@ class HomeController extends Controller
             'on')->with('categorylocation')->get();
         if ($locationscordinate->isNotEmpty()) {
             $sss = Location::folderNames($locationscordinate);
-            Log::info(print_r($sss, true));
             foreach ($locationscordinate as $key2 => $value2) {
                 $locationscordinate[$key2]->img = $sss[$key2];
             }
@@ -179,7 +190,6 @@ class HomeController extends Controller
             $defaultlocation)->inRandomOrder()->limit(7)->with('categorylocation')->get();
         $sss = Location::folderNames($otherlocations);
         foreach ($otherlocations as $key2 => $value2) {
-            Log::info($otherlocations[$key2]);
             $otherlocations[$key2]->img = $sss[$key2];
         }
 
@@ -190,17 +200,21 @@ class HomeController extends Controller
             $q->whereNull('podlocparent_id');
         })->orderBy('id', 'ASC')->get();
 
-        $openedCategory = null;
-
-        if (!empty($category)) {
-            $openedCategory = Category::where('slug', 'LIKE', "%$category%")->whereNotNull('slug')->first();
-        }
-
         $referer = '';
         if ($location->information && $location->information->back_button_from_domain &&
             isset($_SERVER['HTTP_REFERER']) &&
             strpos($_SERVER['HTTP_REFERER'], $location->information->back_button_from_domain) !== false) {
             $referer = $_SERVER['HTTP_REFERER'];
+        }
+
+        $openedCategoryLocations = null;
+        if (isset($openedCategory)) {
+            $openedCategoryLocations = Location::where([
+                ['category_id', $openedCategory->id],
+                ['city_id', $defaultlocation]
+            ])->where(function ($query) {
+                $query->whereNull('podlocparent_id')->orWhere('show_sublocation', 1);
+            })->get();
         }
 
         return view('pages.index', [
@@ -218,7 +232,8 @@ class HomeController extends Controller
             'isnew' => $isnew,
             'etaji' => $etaji,
             'etajlocations' => $etajlocations,
-            'referer' => $referer
+            'referer' => $referer,
+            'openedCategoryLocations' => $openedCategoryLocations
         ]);
     }
 
@@ -326,6 +341,24 @@ class HomeController extends Controller
                     $message->to('sherzod.nosirov@gmail.com');
                 });
         }
+    }
+
+    public function ajaxModal()
+    {
+        $text = '';
+        $link = '';
+        $iframe = $_GET['frame'];
+        if (isset($_GET['text'])) {
+            $text = $_GET['text'];
+        }
+        if (isset($_GET['link'])) {
+            $link = $_GET['link'];
+        }
+        return (String) view('ajax-modal', [
+            'iframe' => $iframe,
+            'text' => $text,
+            'link' => $link,
+        ]);
     }
 
 }

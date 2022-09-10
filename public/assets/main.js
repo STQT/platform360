@@ -301,6 +301,26 @@ $(function() {
 
             $('.searchPanel__resultscontainer').hide();
         }
+
+        $('.category-name').hide();
+        $('.category-information').hide();
+
+        let link = $(this).find('a');
+        let categoryWrapper = $(this).find('.icon-wrapper__text');
+        if (link.length) {
+            history.pushState({
+                id: 'category'
+            }, categoryWrapper.data('title'), link.attr('href'));
+        }
+        let categoryTitle = '';
+        let categoryInformation = '';
+        categoryTitle = categoryWrapper.data('title');
+        categoryInformation = categoryWrapper.data('information');
+        document.title = categoryTitle;
+        $('.category-name').html('<h1>' + categoryTitle + '</h1>').show();
+        if (categoryInformation) {
+            $('.category-information').html('<p>' + categoryInformation + '</p>').show();
+        }
     });
     // КОНЕЦ При клике на категории :: ПОИСК
 
@@ -548,17 +568,34 @@ $(function() {
         var id = $(this).children(":selected").attr("id");
         var lang = $(this).children(":selected").data('my-var');
         var pathname = window.location.pathname;
-        if (pathname.indexOf("/ru") >= 0) {
-          pathname =  pathname.replace("/ru", id);
-          document.location.href = '/' + pathname;
+
+        /**
+         * Редирект языков
+         * @param path
+         */
+        function redirectLang (path)
+        {
+            pathname = '/' + path;
+            // Если эта главная страница то убираем ru для русской версии
+            pathname = pathname.replace(/^\/ru\/$/mg, '/');
+            document.location.href = pathname;
         }
-        if (pathname.indexOf("/uzb") >= 0) {
-        pathname =  pathname.replace("/uzb", id);
-          document.location.href = '/' + pathname;
+
+        if (pathname == '/') {
+            pathname =  pathname.replace("/", id + '/');
+            redirectLang(pathname);
         }
-        if (pathname.indexOf("/en") >= 0) {
-        pathname =  pathname.replace("/en", id);
-          document.location.href = '/' + pathname;
+        if (pathname.indexOf("/ru/") >= 0) {
+            pathname =  pathname.replace("/ru/", id + '/');
+            redirectLang(pathname);
+        }
+        if (pathname.indexOf("/uzb/") >= 0) {
+            pathname =  pathname.replace("/uzb/", id + '/');
+            redirectLang(pathname);
+        }
+        if (pathname.indexOf("/en/") >= 0) {
+            pathname =  pathname.replace("/en/",  id + '/');
+            redirectLang(pathname);
         }
     });
 

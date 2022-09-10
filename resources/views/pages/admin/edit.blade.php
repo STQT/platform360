@@ -43,7 +43,8 @@
     <div class="overlay"></div>
     <div class="modal-wrap">
         <span class="modal-close">x</span>
-        <form id="information-form">
+        <form id="information-form" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="form-group">
                     <a href="{{ url('/admin/locations/ru/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button">Русский</button></a>
@@ -65,11 +66,11 @@
             <div class="row">
                 <div class="form-group">
                     <h4>Информация</h4>
-                    <textarea name="information" id="information" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" id="information" name="information"></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label>Файл<input type="file" name="image"></label>
+                <label>Фото<input type="file" name="image"></label>
             </div>
             <div class="form-group">
                 <img src="" alt="" style="display: none" class="preview">
@@ -77,7 +78,48 @@
 
             <input type="hidden" name="hidden_lang" class="hidden-input-lang" value="">
 
+            <div class="form-group">
+                <label>URL<input type="text" name="url" id="url"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Текстура<input type="file" name="file"></label>
+            </div>
+
+
             <div id="deleteinformation" onclick="deleteinformation()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="hotspotPolygonModal" style="display: none;" class="modal">
+    <div class="overlay"></div>
+    <div class="modal-wrap">
+        <span class="modal-close">x</span>
+        <form id="polygon-form">
+            <div class="row">
+                <div class="form-group">
+                    <h4>Описание</h4>
+                    <textarea name="information" id="information" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <h4>Файл с 3D фото</h4>
+                    <label>Файл<input type="file" name="model"></label>
+                </div>
+{{--                <div class="form-group">--}}
+{{--                    <h4>HTML код</h4>--}}
+{{--                    <textarea name="html_code" id="html_code" cols="30" rows="10"></textarea>--}}
+{{--                </div>--}}
+                <div class="form-group">
+                    <h4>Url</h4>
+                    <input type="text" name="url">
+                </div>
+            </div>
+
+            <div id="deleteinformation" onclick="deletehotspot()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -102,13 +144,13 @@
                 <br>
                 {{ csrf_field() }}
                 <div class="form-group">Видео: <input type="file" name="video"></div>
-                
+
                 <div class="form-group">hfov: <input type="text" name="hfov"></div>
-                
+
                 <div class="form-group">yaw: <input type="text" name="yaw"></div>
-                
+
                 <div class="form-group">pitch: <input type="text" name="pitch"></div>
-                
+
                 <div class="form-group">roll: <input type="text" name="roll"></div>
 
                 <select name="play_type">
@@ -118,9 +160,9 @@
                 </select>
 
                 <input type="hidden" name="location" value={{ $location->id }} >
-                
+
                 <div><button type="submit" class="btn btn-primary">Добавить</button></div>
-                
+
             </form>
         </div>
     </div>
@@ -129,16 +171,25 @@
 <button id="addHotspot" onclick="add_hotspot();">Добавить точку</button>
 <button id="addVideo" onclick="add_video();">Добавить видео</button>
 <button id="addInformation" onclick="add_information_hotspot();">Добавить информацию</button>
+<button id="addPolygon" onclick="add_polygon();">Добавить область</button>
 <a id="adminbackurl" href="{{ url()->previous() }}">Назад</a>
 @endsection
 
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('information', {
+        filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form'
+    });
+</script>
 
 <script>
     var hcoordinate;
     var vcoordinate;
     var hotspotid;
+    var polygons = [];
     var hotspot_type = {{ \App\Hotspot::TYPE_MARKER }};
     var hotspotname;
     var selectedCategory = null;
@@ -174,6 +225,28 @@
                 success: function(data)
                 {
                     $('#informationModal').fadeOut();
+                }
+            });
+        });
+
+        $('body').on('submit', 'form#polygon-form', function (e) {
+            e.preventDefault();
+            var data = new FormData(this);
+            data.append('location', "{{ $location->id }}");
+            data.append('h', hcoordinate);
+            data.append('v', vcoordinate);
+            data.append('polygons', polygons);
+            $.ajax({
+                url: '/ru/api/locations/add-polygon',
+                method: 'POST',
+                data: data,
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data)
+                {
+                    $('#hotspotPolygonModal').fadeOut();
                 }
             });
         });
@@ -297,7 +370,8 @@
                     {{$hotspot->id}},
                     {{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}},
                     "{{ str_replace("\r", "\\\r", $hotspot->information) }}",
-                    "{{ $hotspot->image}}"
+                    "{{ $hotspot->image}}",
+                    "{{ $hotspot->url}}"
             );
             @endforeach
         }, 3000);
@@ -439,6 +513,37 @@
         });
     }
 
+    function add_polygon() {
+         $('body').dblclick(function() {
+            if (krpano) {
+                var mx = krpano.get("mouse.x");
+                var my = krpano.get("mouse.y");
+                var pt = krpano.screentosphere(mx, my);
+
+                polygons.push(['{"x": "' + pt.x + '", "y": "' + pt.y + '"}']);
+
+                var hs_name = "hs" + ((Date.now() + Math.random()) | 0);    // create unique/randome name
+                krpano.call("addhotspot(" + hs_name + ")");
+                krpano.set("hotspot[" + hs_name + "].url", "/skin/vtourskin_mapspotactive.png");
+                krpano.set("hotspot[" + hs_name + "].ath", pt.x);
+                krpano.set("hotspot[" + hs_name + "].atv", pt.y);
+                krpano.set("hotspot[" + hs_name + "].distorted", true);
+
+                if (krpano.get("device.html5")) {
+                    // for HTML5 it's possible to assign JS functions directly to krpano events
+                    krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                      hotspotid =  'new';
+                      hotspot_type = {{ \App\Hotspot::TYPE_POLYGON }};
+                      hotspotname =  hs_name;
+                      hcoordinate = pt.x;
+                      vcoordinate = pt.y;
+                      $('#hotspotPolygonModal').fadeIn();
+                  }.bind(null, hs_name));
+                }
+            }
+        });
+    }
+
     function add_video() {
         $('#videoModal').fadeIn();
     }
@@ -498,6 +603,10 @@
 
         #information-form img {
             width: 120px;
+        }
+
+        #polygon-form h4 {
+            color: black;
         }
     </style>
 @endsection

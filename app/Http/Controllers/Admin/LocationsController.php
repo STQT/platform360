@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Cities;
 use App\Hotspot;
+use App\HotspotPolygon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Location;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use ZipArchive;
 
 class LocationsController extends Controller
 {
@@ -965,6 +967,10 @@ class LocationsController extends Controller
     //Удаление локации
     public function destroy($id)
     {
+        if (!auth()->user()->hasRole('Admin')) {
+            return redirect('admin/locations')->with('flash_message', 'У вас нет прав для удаление!');
+        }
+
         Video::where('location_id', $id)->delete();
         LocationInformation::where('location_id', $id)->delete();
         Location::withoutGlobalScope('published')->findOrFail($id)->delete();
@@ -979,7 +985,7 @@ class LocationsController extends Controller
     //Генерация панорамы
     public function generatePano($slug)
     {
-        //Проверка куков на город
+        //Проверка кук на город
         if (Cookie::has('city')) {
             $defaultlocation = Cookie::get('city');
         } else {
@@ -1069,6 +1075,9 @@ class LocationsController extends Controller
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
+//            if ($krhotspots[$key]->type == \App\Hotspot::TYPE_POLYGON) {
+//                continue;
+//            }
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     if ($krhotspotinfo[$key2]->video) {
@@ -1206,44 +1215,99 @@ class LocationsController extends Controller
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [
-            'image' => 'required|file|max:150000'
+            'image' => 'file|max:150000',
+            'file' => 'file|max:150000',
         ]);
 
         if ($validation->passes()) {
             $image = $request->file('image');
-            $newName = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/information'), $newName);
+            if ($image) {
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+            }
+
+            $file = $request->file('file');
+            if ($file) {
+                $fileName = rand() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('storage/information'), $fileName);
+            }
         }
 
         if ($data['create'] == true){
             $hotspot = new Hotspot();
-            $hotspot->location_id = $data['location'];
-            $hotspot->destination_id = $data['location'];
-            $hotspot->h = $data['h'];
-            $hotspot->v = $data['v'];
-
-            $hotspotInformation = $data['information'];
-            $hotspot->information = $hotspotInformation;
-            if (isset($image)) {
-                $hotspot->image = $newName;
-            }
-            $hotspot->type = Hotspot::TYPE_INFORMATION;
-
-            $hotspot->save();
         } elseif ($data['hotspotid'] != null) {
             $hotspot = Hotspot::find($data['hotspotid']);
-            $hotspot->location_id = $data['location'];
-            $hotspot->destination_id = $data['location'];
-            $hotspot->h = $data['h'];
-            $hotspot->v = $data['v'];
-            $hotspot->information = $data['information'];
+        }
 
-            if (isset($image)) {
-                $hotspot->image = $newName;
+        $hotspot->location_id = $data['location'];
+        $hotspot->destination_id = $data['location'];
+        $hotspot->h = $data['h'];
+        $hotspot->v = $data['v'];
+
+        $hotspotInformation = $data['information'];
+        $hotspot->information = $hotspotInformation;
+        if (isset($image)) {
+            $hotspot->image = $newName;
+        }
+        if (isset($file)) {
+            $hotspot->file = $fileName;
+        }
+        $hotspot->type = Hotspot::TYPE_INFORMATION;
+
+        $hotspot->save();
+    }
+
+    public function apiAddPolygonhotspot(Request $request)
+    {
+        $data = $request->all();
+
+        $hotspot = new Hotspot();
+        $hotspot->location_id = $data['location'];
+        $hotspot->destination_id = $data['location'];
+        $hotspot->h = $data['h'];
+        $hotspot->v = $data['v'];
+//        $hotspotInformation = $data['html_code'];
+//        $hotspot->html_code = $hotspotInformation;
+        $hotspotInformation = $data['information'];
+        $hotspot->information = $hotspotInformation;
+        $hotspot->url = $data['url'];
+        $hotspot->type = Hotspot::TYPE_POLYGON;
+        if (!empty($data['model'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['model']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['model']->move(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr), $fullName);
+            $zipFile = public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr)
+                . DIRECTORY_SEPARATOR . $fullName;
+
+            $zip = new ZipArchive;
+            $res = $zip->open($zipFile);
+            if ($res === true) {
+                $zip->extractTo(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr));
+                $zip->close();
             }
-            $hotspot->type = Hotspot::TYPE_INFORMATION;
+            unlink($zipFile);
+            $files = scandir(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr));
+            foreach ($files as $file) {
+                if (strpos($file, '.html') !== false) {
+                    $hotspot->model_path = $randomStr . DIRECTORY_SEPARATOR . $file;
+                    $htmlFile = file_get_contents(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr . DIRECTORY_SEPARATOR . $file));
+                    $htmlFile = str_replace('</head>', '<style type=\'text/css\'>.item {margin: 0 auto;}</style></head>', $htmlFile);
+                    file_put_contents(public_path('storage/models' . DIRECTORY_SEPARATOR . $randomStr . DIRECTORY_SEPARATOR . $file), $htmlFile);
+                }
+            }
+        }
+        $hotspot->save();
 
-            $hotspot->save();
+        if (isset($data['polygons'])) {
+            $polygons = json_decode('[' . $data['polygons'] . ']');
+            foreach ($polygons as $polygon) {
+                $pol = new HotspotPolygon();
+                $pol->hotspot_id = $hotspot->id;
+                $pol->h = $polygon->x;
+                $pol->v = $polygon->y;
+                $pol->save();
+            }
         }
     }
 
@@ -1302,6 +1366,9 @@ class LocationsController extends Controller
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
             foreach ($krhotspotinfo as $key2 => $value2) {
+                if ($krhotspotinfo[$key2]->type == \App\Hotspot::TYPE_POLYGON) {
+                    continue;
+                }
                 if (json_encode($krhotspots[$key]->destination_id) == json_encode($krhotspotinfo[$key2]->id)) {
                     if ($krhotspotinfo[$key2]->video) {
                         $krhotspots[$key]->img = $krhotspotinfo[$key2]->preview;
@@ -1323,6 +1390,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->audio = $krhotspotinfo[$key2]->audio;
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
+                    $krhotspots[$key]->file = $krhotspots[$key]->file;
                     $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);

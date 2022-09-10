@@ -102,10 +102,14 @@ class Location extends Model
         return $filename;
     }
 
+    public function getThumb()
+    {
+        return '/storage/panoramas/unpacked/' . $this->folderName() . '/thumb.jpg';
+    }
+
     public function toArray22()
     {
         $attributes = parent::toArray();
-
         foreach ($this->getTranslatableAttributes() as $name) {
             $attributes[$name] = $this->getTranslation($name, app()->getLocale());
         }

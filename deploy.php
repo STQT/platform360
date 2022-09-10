@@ -3,6 +3,8 @@ namespace Deployer;
 
 require 'recipe/laravel.php';
 
+set('default_timeout', 3000);
+
 // Project name
 set('application', 'uzbekistan360.uz');
 
@@ -31,17 +33,17 @@ host('dev.uzbekistan360.uz')
     ->set('deploy_path', '/var/www/dev.uzbekistan360.uz');
 
 
-host('uzbekistan360.uz')
-    ->stage('production')
-    ->user('www-data')
-    ->port(50800)
+host('213.226.71.194')
+    ->stage('demo')
+    ->user('deploy')
+    ->port(22)
     ->configFile('~/.ssh/config')
     ->identityFile('~/.ssh/id_rsa')
     ->forwardAgent(true)
     ->set('deploy_path', '/var/www/uzbekistan360.uz');
 
 host('185.74.6.184')
-    ->stage('production_new')
+    ->stage('production')
     ->user('deploy')
     ->port(22)
     ->configFile('~/.ssh/config')

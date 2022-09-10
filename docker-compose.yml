@@ -12,6 +12,7 @@ services:
             - ./logs/error.log:/opt/bitnami/nginx/logs/error.log
             - ./docker/nginx/app.conf:/opt/bitnami/nginx/conf/server_blocks/app.conf
             - ./:/myapps
+            - ./bin/krpano:/opt/krpano
 #            - /media/skey/Elements/panoramas:/myapps/storage/app/public/panoramas
     phpfpm:
         image: 'bitnami/php-fpm:7.4'

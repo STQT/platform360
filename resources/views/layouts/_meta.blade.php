@@ -2,10 +2,16 @@
     @php
         $title = !empty($location->seo_title) ? $location->seo_title : $location->name;
     @endphp
-    @if (Route::currentRouteAction() == 'App\Http\Controllers\HomeController@getIndex')
+    @if (Route::currentRouteAction() == 'App\Http\Controllers\HomeController@getIndex' && !$openedCategory)
         <title>Виртуальный тур по Узбекистану: увидеть панорамные и 3D фото, совершить интерактивный тур по Ташкенту и другим городам Узбекистана можно на Uzbekistan360.Uz</title>
         <meta name="description" content="Виртуальный тур по городам Узбекистана. Где можно найти 3D фотографии и VR панорамы интересных мест Ташкента и Узбекистана? Сайт Uzbekistan360.Uz предоставляет возможность посещения популярных мест и достопримечательностей Узбекистана в режиме 3D! Здесь можно совершить интерактивный тур по самым популярным местам и увидеть потрясающие панорамные виды городов Узбекистана с возможностью обзора 360 градусов!">
         <meta name="keywords" content="3д фото городов узбекистана, 3d фото городов узбекистана, панорамные фото городов узбекистана, фото 360 градусов городов узбекистана, панорамные снимки узбекистана, панорамы городов узбекистана, виртуальные туры узбекистан, 3d снимки узбекистан, панорамы улиц ташкента, панорамные фотографии ташкента, панорамные фото узбекистана, 3d узбекистан, увидеть виртуальный ташкент">
+    @elseif ($openedCategory)
+        @if ($openedCategory->meta)
+            <title>{{ $openedCategory->meta->title }}</title>
+            <meta name="description" content="{{ $openedCategory->meta->description }}">
+            <meta name="keywords" content="{{ $openedCategory->meta->keywords }}">
+        @endif
     @elseif ((empty($location->description) && $location->podlocparent_id !== null) || $location->podlocparent_id === null)
         @if (isset($location->meta->title) && $location->meta->title != '')
             <title>{{ $location->meta->title }}</title>
@@ -52,8 +58,12 @@
     <meta name="twitter:description" content="{{ !empty($location->description) ? $location->description : 'Самый большой и качественный интерактивный тур по Узбекистану' }}">
     <meta name="twitter:image:src" content="/assets/socialpreview.jpg">
     <meta property="og:title" content="{{ $location->name }}">
-    <meta property="og:url" content="{{ request()->root() }}">
-    <meta property="og:image" content="/assets/socialpreview.jpg">
+    <meta property="og:url" content="{{ \Request::url() }}">
+    @if($location && !empty($location->getThumb()))
+        <meta property="og:image" content="{{ request()->root() . $location->getThumb() }}">
+    @else
+        <meta property="og:image" content="/assets/socialpreview.jpg">
+    @endif
     <meta property="og:description" content="{{ !empty($location->description) ? $location->description : 'Самый большой и качественный интерактивный тур по Узбекистану' }}">
     <meta property="og:site_name" content="{{ $location->name }}">
     @if (strpos(request()->url(), '/location/') !== false)
@@ -63,14 +73,16 @@
                 $urlCanonical = $location->createUrl();
             @endphp
         @else
-            @if ($location->parent->description === $location->description || $location->description == '')
-                @php
-                    $urlCanonical = $location->parent->createUrl();
-                @endphp
-            @else
-                @php
-                    $urlCanonical = $location->createUrl();
-                @endphp
+            @if ($location->parent)
+                @if ($location->parent->description === $location->description || $location->description == '')
+                    @php
+                        $urlCanonical = $location->parent->createUrl();
+                    @endphp
+                @else
+                    @php
+                        $urlCanonical = $location->createUrl();
+                    @endphp
+                @endif
             @endif
         @endif
     @endif
@@ -94,6 +106,7 @@
     <link href="/assets/slick-carousel/slick-theme.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/flooreditor/css/annotator-pro.min.css">
     <link rel="stylesheet" href="/assets/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/assets/css/lity.min.css">
     <link href="/assets/custom.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicons/apple-icon-60x60.png">

@@ -12,7 +12,7 @@ return [
   'search' => 'Izlash',
   'feedback'=>"Qayta a'loqa",
   'help' => 'Yordam',
-  'etaji' => 'Qavatlar',
+  'etaji' => 'Reja',
   'fullscreen' => "To'liq ekran",
   'rejimprosmotra' => "Ko'rish rejimlari",
   'filtr' => 'Filtrlash',
@@ -39,4 +39,5 @@ return [
   'vashemail' => 'Siznig email',
   'vashesoobshenie' => 'Xabaringiz',
   'bad_connection' => 'Bad Internet connection',
+  'browser_not_support_audio_element' => 'Sizning brauzeringiz audio elementlarni qo\'llab-quvvatlamaydi.',
 ];

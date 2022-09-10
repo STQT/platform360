@@ -75,9 +75,9 @@ Route::post('admin/floors/tochki/{id}', 'Admin\\FloorsController@tochkiupdate');
 
 Route::get('/admin/krpano/{id}', 'Admin\\LocationsController@krpano');
 Route::get('admin', 'Admin\AdminController@index');
-Route::resource('admin/roles', 'Admin\RolesController');
-Route::resource('admin/permissions', 'Admin\PermissionsController');
-Route::resource('admin/users', 'Admin\UsersController');
+Route::resource('admin/roles', 'Admin\RolesController')->middleware('admin');
+Route::resource('admin/permissions', 'Admin\PermissionsController')->middleware('admin');
+Route::resource('admin/users', 'Admin\UsersController')->middleware('admin');
 Route::resource('admin/pages', 'Admin\PagesController');
 Route::resource('admin/activitylogs', 'Admin\ActivityLogsController')->only([
         'index', 'show', 'destroy'
@@ -85,6 +85,8 @@ Route::resource('admin/activitylogs', 'Admin\ActivityLogsController')->only([
 Route::resource('admin/settings', 'Admin\SettingsController');
 Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
 Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
+
+Route::post('admin/ckeditor/upload', 'Admin\CkeditorController@upload')->name('ckeditor.upload');
 });
 
 ?>

@@ -12,7 +12,7 @@ return [
   'search' => 'Поиск',
   'feedback'=>'Обратная связь',
   'help' => 'Помощь',
-  'etaji' => 'Этажи',
+  'etaji' => 'План',
   'fullscreen' => 'Полный экран',
   'rejimprosmotra' => 'Режимы просмотра',
   'filtr' => 'Фильтр',
@@ -39,4 +39,6 @@ return [
   'vashemail' => 'Ваш email-адрес',
   'vashesoobshenie' => 'Ваше сообщение',
   'bad_connection' => 'Неполадки с интернетом/Слабое подключение с интернетом',
+  'browser_not_support_audio_element' => 'Ваш браузер не поддерживает аудио элементы.',
+  'download_texture' => 'Скачать текстуру',
 ];

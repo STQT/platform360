@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', 'HomeController@getIndex');
 
-Route::get('lang/{locale}', 'HomeController@changelanguage');
 Route::get('/clear', function() {
     Artisan::call('view:clear');
     Artisan::call('optimize');
@@ -41,6 +39,7 @@ Auth::routes();
 Route::get('/krpano/video/{id}', 'HomeController@krpanoVideo');
 Route::get('/krpano/{index}/{id}', 'HomeController@krpano');
 Route::post('/savescreenshot', 'HomeController@savescreenshot');
+Route::get('/ajax-modal', 'HomeController@ajaxModal');
 
 Route::group(['prefix' => 'api'], function() {
     Route::get('/location/{id}', 'Admin\\LocationsController@show2');
@@ -54,6 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/locations/add', 'Admin\\LocationsController@apiAddhotspot');
         Route::post('/locations/add-information/{lang}', 'Admin\\LocationsController@apiAddInformationhotspot');
         Route::post('/locations/upload-video/{lang}', 'Admin\\LocationsController@uploadVideo');
+        Route::post('/locations/add-polygon', 'Admin\\LocationsController@apiAddPolygonhotspot');
         Route::get('/deletehotspot/{id}', 'Admin\\HotspotsController@deletehotspot');
         Route::get('/deleteinformation/{id}', 'Admin\\HotspotsController@deleteinformation');
         Route::get('/getcitydefaultlocation/{id}', 'Admin\\LocationsController@getcitydefaultlocation');
@@ -62,3 +62,4 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 Route::get('/sitemap.xml', 'SitemapController@sitemap');
+

@@ -1,0 +1,32 @@
+a, a:visited, a:hover {
+    color: #1857b2 !important;
+}
+.logo {
+    height: 34px;
+}
+
+.navbar-expand-md {
+    background: #fff;
+    box-shadow: black 0 0 3px;
+}
+
+main {
+    padding-top: 60px;
+}
+
+.navbar-expand-md .navbar-nav .nav-link {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+footer {
+    padding-top: 20px;
+}
+
+.jumbotron {
+    padding: 30px 0;
+    color: white;
+    text-align: center;
+    background-image: radial-gradient(circle at 50% 0,#004789,#00294e);
+    margin-bottom: 20px;
+}

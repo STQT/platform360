@@ -5,7 +5,18 @@
       "items": [
         {
           "title": "Пользователи",
-          "url": "\/admin\/users"
+          "url": "\/admin\/users",
+          "perm": true
+        },
+        {
+          "title": "Роли",
+          "url": "\/admin\/roles",
+          "perm": true
+        },
+        {
+          "title": "Привилегии",
+          "url": "\/admin\/permissions",
+          "perm": true
         },
         {
           "title": "Страницы",
