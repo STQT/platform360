@@ -361,7 +361,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand">
+                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand" style="z-index: 110">
                     <img class="wrapper-panel-close"
                          src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="searchPanel">
@@ -512,7 +512,7 @@
                 </div>
                 </span>
             </div>
-            <div class="wrapper-panel feedbackPannel top left hidden expand">
+            <div class="wrapper-panel feedbackPannel top left hidden expand" style="z-index: 100">
                 <img class="wrapper-panel-close"
                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                 <form id="feedbackForm" class="feedbackPanel" novalidate="">
@@ -567,7 +567,7 @@
                     </div>
                 </form>
             </div>
-            <div class="wrapper-panel  top left helpPannel hidden expand">
+            <div class="wrapper-panel  top left helpPannel hidden expand" style="z-index: 100">
                 <img class="wrapper-panel-close"
                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                 <div class="helpPanel" style="overflow: hidden;">
@@ -927,7 +927,7 @@
             </div>
             <span class="">
             <div class="kak2 sad" style="opacity: 1;">
-              <div class="wrapper-panel explorePannel top left hidden fullScreenPanel">
+              <div class="wrapper-panel explorePannel top left hidden fullScreenPanel" style="z-index: 100">
                 <div class="SplitPane  horizontal "
                      style="display: flex; flex: 1 1 0%; height: 100%; position: absolute; outline: none; overflow: hidden; user-select: text; bottom: 0px; flex-direction: column; min-height: 100%; top: 0px; width: 100%;">
                   <div class="Pane horizontal Pane1  ">
