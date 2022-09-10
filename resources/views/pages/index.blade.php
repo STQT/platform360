@@ -789,7 +789,7 @@
                     </div>
                 </div>
             </div>
-            <div class="wrapper-panel  top left floorplanPanel hidden expand">
+            <div class="wrapper-panel  top left floorplanPanel hidden expand" style="z-index: 100">
                 <div class="wrapper-panel--main-container">
                     <div class="floorplan fade--in">
                         <span class="floorplan__recommended__title"><span>{{ trans('uzb360.obekty')}}</span></span>
@@ -1759,7 +1759,7 @@
                 });
 
                 krpano.set("hotspot[" + hs_name + "].type", type);
-                krpano.set("hotspot[" + hs_name + "].zorder", '999');
+                krpano.set("hotspot[" + hs_name + "].zorder", '99');
                 krpano.set("hotspot[" + hs_name + "].onover", function () {
                     if (type == {{ \App\Hotspot::TYPE_INFORMATION }})
                         return false;
