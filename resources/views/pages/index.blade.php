@@ -1759,7 +1759,7 @@
                 });
 
                 krpano.set("hotspot[" + hs_name + "].type", type);
-
+                krpano.set("hotspot[" + hs_name + "].zorder", '999');
                 krpano.set("hotspot[" + hs_name + "].onover", function () {
                     if (type == {{ \App\Hotspot::TYPE_INFORMATION }})
                         return false;
