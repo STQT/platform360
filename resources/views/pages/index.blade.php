@@ -16,7 +16,7 @@
                 <div style="opacity:0" class="currentlocationcordinates"
                      @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}"
                      @else data-map="no" @endif ></div>
-                <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
+                <div class="searchPanel__button" style="display: none;">{{ $allTranslations['noresult'] ?? trans('uzb360.noresult')}}</div>
                 <header class="dubai360-header">
                     <div class="dubai360-header__logo-languaje dubai360-header__logo-slider"
                          onclick="location.href='/{{ Lang::locale() }}?home=1';">
@@ -27,23 +27,23 @@
                         <div class="wrapper-button" id="hubviewlink"
                              @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.hubrejim')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['hubrejim'] ?? trans('uzb360.hubrejim')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.map')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['map'] ?? trans('uzb360.map')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_glass wrapper-button__icon " data-pannel="search"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.search')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['search'] ?? trans('uzb360.search')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_comment wrapper-button__icon " data-pannel="feedbackPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.feedback')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_question wrapper-button__icon " data-pannel="helpPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.help')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['help'] ?? trans('uzb360.help')}}</span></div>
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{$allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{$allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -92,15 +92,15 @@
                         <!-- **************************************** -->
                         <div class="wrapper-button">
                             <span class="icon-ic_info wrapper-button__icon " data-pannel="infoPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.information')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['information'] ?? trans('uzb360.information')}}</span></div>
                         </div>
                         <div class="wrapper-button" onclick="krpanoscreenshot();">
                             <span class="icon-ic_share wrapper-button__icon " data-pannel="sharePannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.share')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
                         </div>
                         <div class="wrapper-button" id="autotourbutton" onclick="krpanoautorotate();">
                             <span class="icon-ic_autoplay wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.tourrejim')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['tourrejim'] ?? trans('uzb360.tourrejim')}}</span></div>
                         </div>
                         <div class="wrapper-button" id="ipadcity" style="display:none">
                           <span class="wrapper-button__icon" data-pannel="cityPannel">
@@ -130,12 +130,12 @@
                         </div>
                         <div class="wrapper-button" onclick="krpanofullscreen()">
                             <span class="icon-ic_fullscreen wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.fullscreen')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['fullscreen'] ?? trans('uzb360.fullscreen')}}</span></div>
                         </div>
 
                         <div class="wrapper-button">
                             <span class="icon-ic_eye wrapper-button__icon " data-pannel="ProjectionsPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.rejimprosmotra')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['rejimprosmotra'] ?? trans('uzb360.rejimprosmotra')}}</span></div>
                         </div>
                     </div>
                     <div class="dubai360-header__logo-languaje">
@@ -259,7 +259,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{ $allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +269,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{ $allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                     <img class="wrapper-panel-close"
                          src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="sharePanel">
-                        <div class="sharePanel__title"><span>{{ trans('uzb360.share')}}</span></div>
+                        <div class="sharePanel__title"><span>{{$allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
 
                         <div class="sharePanel__screenshot">
                             <div class="loading2" id="loading2">
@@ -367,7 +367,7 @@
                     <div class="searchPanel">
                         <div class="searchPanel__input" id="search_adress">
                             <input type="text" class="dubai360-input search-input"
-                                   placeholder="{{ trans('uzb360.search')}}">
+                                   placeholder="{{$allTranslations['search'] ?? trans('uzb360.search')}}">
                             <span class="clear-field" style="display: none"></span>
                         </div>
                         <div class="searchPanel__filtered ">
@@ -416,7 +416,7 @@
 
                         @if (!isset($openedCategory))
                         <div class="searchPanel__results"><span
-                                    class="color-opacity">{{ trans('uzb360.noresult')}}</span></div>
+                                    class="color-opacity">{{$allTranslations['noresult'] ?? trans('uzb360.noresult')}}</span></div>
                         @endif
                         <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
                         <div class="searchPanel__resultscontainer">
@@ -478,7 +478,7 @@
                                 <img class="wrapper-panel-close search-close"
                                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                                 <div class="resultsPanel">
-                                    <div class="resultsPanel__tittle"><span>{{ trans('uzb360.rezultatipoiska')}}:</span></div>
+                                    <div class="resultsPanel__tittle"><span>{{$allTranslations['rezultatipoiska'] ?? trans('uzb360.rezultatipoiska')}}:</span></div>
                                     <div class="resultsPanel__resultsContainer" style="position: relative;">
                                         <div style="overflow: visible; height: 0px;">
                                             <div class="virtualizedGrid__content " style="position: relative;">
@@ -517,8 +517,8 @@
                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                 <form id="feedbackForm" class="feedbackPanel" novalidate="">
                     {{ csrf_field() }}
-                    <div class="feedbackPanel__title"><span>{{ trans('uzb360.feedback')}}</span></div>
-                    <div class="feedbackPanel__message"><span>{{ trans('uzb360.rasskajitenam')}}</span></div>
+                    <div class="feedbackPanel__title"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
+                    <div class="feedbackPanel__message"><span>{{$allTranslations['rasskajitenam'] ?? trans('uzb360.rasskajitenam')}}</span></div>
                     <div class="feedbackPanel__message"><p><span>По вопросам сотрудничества:<br>
                         +998971310023
                         </span></p></div>
@@ -526,10 +526,10 @@
                         <div class="feedbackPanel__wrapper-inputs--dropdown">
                             <div class="dropdown-wrapper">
                                 <select name="select" id="feedbackselect" class="dropdown">
-                                    <option value="BUG_REPORT">{{ trans('uzb360.oboshibke')}}</option>
-                                    <option value="PRESS_ENQUIRY">{{ trans('uzb360.presszapros')}}</option>
-                                    <option value="FEATURE_REQUEST">{{ trans('uzb360.pojelaniya')}}</option>
-                                    <option value="NEW_CONTENT_REQUEST">{{ trans('uzb360.drugayatema')}}</option>
+                                    <option value="BUG_REPORT">{{$allTranslations['oboshibke'] ?? trans('uzb360.oboshibke')}}</option>
+                                    <option value="PRESS_ENQUIRY">{{$allTranslations['presszapros'] ?? trans('uzb360.presszapros')}}</option>
+                                    <option value="FEATURE_REQUEST">{{$allTranslations['pojelaniya'] ?? trans('uzb360.pojelaniya')}}</option>
+                                    <option value="NEW_CONTENT_REQUEST">{{$allTranslations['drugayatema'] ?? trans('uzb360.drugayatema')}}</option>
 
                                 </select>
                                 <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
@@ -539,23 +539,23 @@
                     </div>
                     <div class="feedbackPanel__wrapper-inputs mail_inp">
                         <input type="email" id="mailll" name="email" class="feedbackPanel__wrapper-inputs--input"
-                               placeholder="{{ trans('uzb360.vashemail')}}" required>
+                               placeholder="{{$allTranslations['vashemail'] ??  trans('uzb360.vashemail')}}" required>
                     </div>
 
                     <div class="feedbackPanel__wrapper-inputs mail_inp2">
                         <textarea name="message" class="feedbackPanel__wrapper-inputs--textarea"
-                                  placeholder="{{ trans('uzb360.vashesoobshenie')}}" required
+                                  placeholder="{{$allTranslations['vashesoobshenie'] ??  trans('uzb360.vashesoobshenie')}}" required
                                   id="feedbacktext"></textarea>
                     </div>
                     <div class="feedbackPanel__buttons">
                             <span id="Feedbackstatus">
                             </span>
 
-                        <button type="submit" class="send_form_btn">{{ trans('uzb360.otpravit')}}</button>
+                        <button type="submit" class="send_form_btn">{{$allTranslations['otpravit'] ??  trans('uzb360.otpravit')}}</button>
 
                         <div class="block_thanks">
                             <div class="text_thks">
-                                <p>{{ trans('uzb360.vashotzivprinyat')}}</p>
+                                <p>{{$allTranslations['vashotzivprinyat'] ??  trans('uzb360.vashotzivprinyat')}}</p>
                             </div>
                             <div class="form_submit">
                                 <button type="button" id="sendinggg" class="btn btn--normal">
@@ -751,7 +751,7 @@
                         </li>
                     </ul>
                     <div class="virtualizedGrid__otherLocation">
-                        <div class="virtualizedGrid__title"><span>{{ trans('uzb360.drugielokasii')}}</span></div>
+                        <div class="virtualizedGrid__title"><span>{{$allTranslations['drugielokasii'] ?? trans('uzb360.drugielokasii')}}</span></div>
                         <div class="virtualizedGrid__listContainer">
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
@@ -792,7 +792,7 @@
             <div class="wrapper-panel  top left floorplanPanel hidden expand">
                 <div class="wrapper-panel--main-container">
                     <div class="floorplan fade--in">
-                        <span class="floorplan__recommended__title"><span>{{ trans('uzb360.obekty')}}</span></span>
+                        <span class="floorplan__recommended__title"><span>{{ $allTranslations['obekty'] ?? trans('uzb360.obekty')}}</span></span>
                         <div class="floorplan__listContainer">
                             <div class="virtualizedGrid__content "
                                  style="position: relative;overflow-y: scroll;overflow-x:hidden">
@@ -843,7 +843,7 @@
                             <div class="floorplan-viewer__header__actions">
                                 <div class="floorplan-viewer__header__img"><span
                                             class="icon-ic_mouse floorplan-viewer__header__img--icon"></span><span
-                                            class="floorplan-viewer__header__img--text"><span>{{ trans('uzb360.zoomkolesom')}}</span></span>
+                                            class="floorplan-viewer__header__img--text"><span>{{$allTranslations['zoomkolesom'] ??  trans('uzb360.zoomkolesom')}}</span></span>
                                 </div>
                                 <div class="icon-wrapper"><span class="icon-ic_close close"></span></div>
                             </div>
@@ -880,15 +880,15 @@
             </div>
             <div class="wrapper-panel  top right ProjectionsPannel hidden expand">
                 <div class="projection">
-                    <div class="title-projection"><span>{{ trans('uzb360.proektsiya')}}</span></div>
+                    <div class="title-projection"><span>{{ $allTranslations['proektsiya'] ?? trans('uzb360.proektsiya')}}</span></div>
                     <ul>
                         <li class="selected" onclick="skin_view_normal()">
-                            <span>{{ trans('uzb360.pryamolineyniy')}}</span></li>
-                        <li onclick="skin_view_littleplanet()"><span>{{ trans('uzb360.malenkayaplaneta')}}</span></li>
-                        <li onclick="skin_view_fisheye()"><span>{{ trans('uzb360.ribyglaz')}}</span></li>
-                        <li onclick="skin_view_panini()"><span>{{ trans('uzb360.panini')}}</span></li>
-                        <li onclick="skin_view_stereographic()"><span>{{ trans('uzb360.stereo')}}</span></li>
-                        <li onclick="skin_view_architectural()"><span>{{ trans('uzb360.archetek')}}</span></li>
+                            <span>{{ $allTranslations['pryamolineyniy'] ?? trans('uzb360.pryamolineyniy')}}</span></li>
+                        <li onclick="skin_view_littleplanet()"><span>{{ $allTranslations['malenkayaplaneta'] ?? trans('uzb360.malenkayaplaneta')}}</span></li>
+                        <li onclick="skin_view_fisheye()"><span>{{ $allTranslations['ribyglaz'] ?? trans('uzb360.ribyglaz')}}</span></li>
+                        <li onclick="skin_view_panini()"><span>{{ $allTranslations['panini'] ?? trans('uzb360.panini')}}</span></li>
+                        <li onclick="skin_view_stereographic()"><span>{{ $allTranslations['stereo'] ?? trans('uzb360.stereo')}}</span></li>
+                        <li onclick="skin_view_architectural()"><span>{{ $allTranslations['archetek'] ?? trans('uzb360.archetek')}}</span></li>
                     </ul>
                 </div>
             </div>
@@ -898,9 +898,9 @@
                 <div class="gyro">
                     <div class="gyro__message">
                         <ul class="mobilechooselang">
-                            <li><a href="#">Русский<a/></li>
-                            <li><a href="#">O'zbekcha<a/></li>
-                            <li><a href="#">English<a/></li>
+                            <li><a href="#">Русский</a></li>
+                            <li><a href="#">O'zbekcha</a></li>
+                            <li><a href="#">English</a></li>
                         </ul>
                     </div>
                 </div>
@@ -948,7 +948,7 @@
                       <div class="wrapper-slider__slider"><span class="icon-ic_arrow_up"></span><span
                                   class="icon-ic_arrow_down"></span></div>
                     </div>
-                    <div class="mybtn wrapper-button"><span>{{ trans('uzb360.filtr')}}</span></div>
+                    <div class="mybtn wrapper-button"><span>{{ $allTranslations['filtr'] ?? trans('uzb360.filtr')}}</span></div>
                   </div>
                   <div class="Pane horizontal Pane2  ">
                     <div class="explore__listContainer">
@@ -956,7 +956,7 @@
                         <div class="virtualizedGrid">
                           <span class="icon-ic_arrow_left_big slick-block2_left"></span>
                           <div class="virtualizedGrid__content " style="position: relative;">
-                            <div class="virtualizedGrid__otherLocation__title"><span>{{ trans('uzb360.izbrannielokasii')}}</span></div>
+                            <div class="virtualizedGrid__otherLocation__title"><span>{{$allTranslations['izbrannielokasii'] ?? trans('uzb360.izbrannielokasii')}}</span></div>
                             <div class="ReactVirtualized__Grid slick-block2">
                                 @foreach ($isfeatured as $i => $featured)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$featured->lat}}"
@@ -998,7 +998,7 @@
                         <div class="virtualizedGrid">
                           <span class="icon-ic_arrow_left_big slick-block3_left"></span>
                           <div class="virtualizedGrid__content " style="position: relative;">
-                            <div class="virtualizedGrid__otherLocation__title"><span>{{ trans('uzb360.novielokasii')}}</span></div>
+                            <div class="virtualizedGrid__otherLocation__title"><span>{{$allTranslations['novielokasii'] ?? trans('uzb360.novielokasii')}}</span></div>
                             <div class="ReactVirtualized__Grid slick-block3">
                               @foreach ($isnew as $i => $new)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$new->lat}}"
@@ -1046,14 +1046,14 @@
                            src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                       <div class="filterPanel">
                         <div class="filterPanel__title">
-                          <span>{{ trans('uzb360.filtr')}}</span>
+                          <span>{{ $allTranslations['filtr'] ??  trans('uzb360.filtr')}}</span>
                         </div>
                         <ul class="filterPanel__options">
                           <li class="active" data-tab="1">
-                            <span>{{ trans('uzb360.izbrannielokasii')}}</span>
+                            <span>{{ $allTranslations['izbrannielokasii'] ??  trans('uzb360.izbrannielokasii')}}</span>
                           </li>
                           <li class="" data-tab="2">
-                            <span>{{ trans('uzb360.novielokasii')}}</span>
+                            <span>{{ $allTranslations['novielokasii'] ??  trans('uzb360.novielokasii')}}</span>
                           </li>
 
                         </ul>

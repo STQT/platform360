@@ -86,7 +86,10 @@ Route::resource('admin/settings', 'Admin\SettingsController');
 Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
 Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 
+
 Route::post('admin/ckeditor/upload', 'Admin\CkeditorController@upload')->name('ckeditor.upload');
+
+Route::resource('admin/translations', 'Admin\TranslationsController');
 });
 
 ?>

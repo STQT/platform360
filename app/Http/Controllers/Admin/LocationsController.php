@@ -1214,29 +1214,28 @@ class LocationsController extends Controller
         app()->setLocale($lang);
         $data = $request->all();
 
-        $validation = Validator::make($request->all(), [
-            'image' => 'file|max:150000',
-            'file' => 'file|max:150000',
-        ]);
-
-        if ($validation->passes()) {
-            $image = $request->file('image');
-            if ($image) {
-                $newName = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/information'), $newName);
-            }
-
-            $file = $request->file('file');
-            if ($file) {
-                $fileName = rand() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('storage/information'), $fileName);
-            }
-        }
-
         if ($data['create'] == true){
             $hotspot = new Hotspot();
         } elseif ($data['hotspotid'] != null) {
             $hotspot = Hotspot::find($data['hotspotid']);
+        }
+
+        foreach ($request->lang as $lang => $items) {
+            if (isset($items['image']) && $items['image'] !== null) {
+                $image = $items['image'];
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+
+                $hotspot->setTranslation('image', $lang, $newName);
+            }
+            if (isset($items['file']) && $items['file'] !== null) {
+                $image = $items['file'];
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+
+                $hotspot->setTranslation('file', $lang, $newName);
+            }
+            $hotspot->setTranslation('information', $lang, $items['information']);
         }
 
         $hotspot->location_id = $data['location'];
@@ -1244,14 +1243,6 @@ class LocationsController extends Controller
         $hotspot->h = $data['h'];
         $hotspot->v = $data['v'];
 
-        $hotspotInformation = $data['information'];
-        $hotspot->information = $hotspotInformation;
-        if (isset($image)) {
-            $hotspot->image = $newName;
-        }
-        if (isset($file)) {
-            $hotspot->file = $fileName;
-        }
         $hotspot->type = Hotspot::TYPE_INFORMATION;
 
         $hotspot->save();
