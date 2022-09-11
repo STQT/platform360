@@ -204,7 +204,7 @@
                        onloaded="calc_pos_from_hfov_yaw_pitch_roll({{ $video->hfov }}, {{ $video->yaw }}, {{ $video->pitch }}, {{ $video->roll }});"
                        distorted="true"
                        alpha="1"
-                       zorder="100"
+                       zorder="98"
                        pausedonstart="{{ $playType }}"
                        loop="true"
                        directionalsound="true"
