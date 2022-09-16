@@ -17,6 +17,7 @@ public function boot(Request $request)
       if(config('app.env') === 'production') {
           \URL::forceScheme('https');
       }
+        app()->setLocale($request->segment(1) ?? $this->app->getLocale());
 
         try {
             $allTranslations = \App\Models\LcTranslation::all()->pluck('value', 'key');
@@ -27,7 +28,6 @@ public function boot(Request $request)
         view()->share('allTranslations', $allTranslations);
       Schema::defaultStringLength(191);
 
-       app()->setLocale($request->segment(1) );
     }
 
     /**

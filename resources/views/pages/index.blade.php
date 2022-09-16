@@ -1464,7 +1464,8 @@
                     }
                 }
 
-                //TODO: сделать сначала перевод камеры, а потом смену локации. Также нужно задавать в админку точку, на которой сразу будет показываться панорама
+                //TODO: сделать сначала перевод камеры, а потом смену локации.
+                // Также нужно задавать в админку точку, на которой сразу будет показываться панорама
                 // krpano.call("movecamera(0,0);");
                 if (nourl != "nooo") {
                     history.pushState({
@@ -1744,6 +1745,7 @@
 
         function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video, informationOptions) {
             hs_name = hs_name + ':' + index;
+            type = type == null ? 1 : type;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
                 krpano.set("hotspot[" + hs_name + "].keep", "true");
@@ -1836,13 +1838,22 @@
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         var showModal = true;
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
+
                             if (informationOptions.hasOwnProperty('url')) {
-                                if (informationOptions.url != '') {
+
+                                if (informationOptions.url) {
+                              //  if (informationOptions.url != '' ) {
                                     window.location.href = informationOptions.url;
                                     showModal = false;
                                 }
                             }
-                            information = information.replaceAll('\\"', '"');
+                            var getLocale = "{{app()->getLocale()}}";
+
+
+
+                            information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
+                            image = jQuery.type(image) === "string" ?  image : image[getLocale]
+
                             $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
