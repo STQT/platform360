@@ -17,9 +17,9 @@ public function boot(Request $request)
       if(config('app.env') === 'production') {
           \URL::forceScheme('https');
       }
-        app()->setLocale($request->segment(1) ?? $this->app->getLocale());
 
         try {
+            app()->setLocale($request->segment(1) ?? config('app.locale'));
             $allTranslations = \App\Models\LcTranslation::all()->pluck('value', 'key');
         } catch (\Exception $exception) {
             $allTranslations = [];
