@@ -1088,6 +1088,18 @@
 
 @section('scripts')
     <script>
+
+        let  percentHeight = 0.70, percentWidth = 0.77;
+
+        if ($(window).height() > $(window).width()) {
+            percentHeight = 0.65;
+            percentWidth = 0.70;
+        }
+        const    myHeight = Math.floor($(".floorplanPanel  .floorplan-viewer").height() *  percentHeight) + 'px',
+            myWidth = Math.floor($(".floorplanPanel  .floorplan-viewer").width() *  percentWidth) + 'px';
+
+
+
         @if (empty($location->number))
         $('#location_number_box').hide();
         @endif
@@ -1149,8 +1161,8 @@
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            frameWidth: frameWidth,
-                            frameHeight: frameHeight,
+                            frameWidth: myWidth,
+                            frameHeight: myHeight,
                             // frameHeight: $(window).height() - 300,
                             // frameWidth: "auto",
                             iconsize: "15px",
@@ -1570,8 +1582,8 @@
                                 maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth: frameWidth,
-                                frameHeight: frameHeight,
+                                frameWidth: myWidth,
+                                frameHeight: myHeight,
                                 fullscreen: true,
                                 iconsize: "15px",
                                 // rubberband: true
