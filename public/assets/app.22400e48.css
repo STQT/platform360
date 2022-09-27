@@ -5677,6 +5677,20 @@ height: 192px;
   }
 }
 
+@media screen and (max-width: 992px) {
+  .wrapper-panel--main-container {
+    display: none !important;
+  }
+  .floorplan-viewer__header__name {
+    min-width: auto;
+  }
+  .floorplan-viewer__header {
+    padding-right: 2px;
+  }
+  .responsivee {
+    width: 100% !important;
+  }
+}
 @media screen and (max-width: 600px) {
   .wrapper-panel--main-container {
     display: none !important;
