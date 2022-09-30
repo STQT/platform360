@@ -1395,4 +1395,22 @@ class LocationsController extends Controller
 
         return $krhotspots;
     }
+
+    public function updateHlookat(Request $request) {
+
+        $location  = Location::find($request->location);
+        if ($location) {
+            $location->hlookat = $request->hlookat;
+            $location->save();
+            return response()->json([
+                'message' => 'Success',
+                'class_name' => 'alert-success',
+            ]);
+
+        }
+        return response()->json([
+            'message' => 'not found',
+            'class_name' => 'alert-danger',
+        ]);
+    }
 }
