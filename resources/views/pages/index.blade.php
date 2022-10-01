@@ -1832,7 +1832,7 @@
                         var showModal = true;
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                             if (informationOptions.hasOwnProperty('url')) {
-                                if (informationOptions.url != '') {
+                                if (informationOptions.url != '' && informationOptions.url != null) {
                                     window.location.href = informationOptions.url;
                                     showModal = false;
                                 }
