@@ -42,6 +42,16 @@
     #tabs-nav li.active {
         background-color: #08E;
     }
+    #updateHlookat {
+        position: absolute;
+        top: 25px;
+        background: rgba(0,0,0,0.5);
+        left: 930px;
+        color: #fff;
+        border: none;
+        padding: 10px 25px;
+        cursor: pointer;
+    }
 </style>
 
 <div id="informationModal" style="display: none;" class="modal">
@@ -174,6 +184,27 @@
     </div>
 </div>
 
+<div id="updateHlookatModal" style="display: none;" class="modal">
+    <div class="overlay"></div>
+    <div class="modal-wrap" style="background: transparent">
+        <span class="modal-close" style=" color: white;    font-size: 34px;    font-weight: 900;">x</span>
+        <div class="modal-body">
+
+            <form method="post" enctype="multipart/form-data" id="upload-hlookat">
+                <br>
+                {{ csrf_field() }}
+                <input type="hidden" name="location" value={{ $location->id }} >
+                <br>
+                <label id="customRange2Lbl" for="customRange2">Градус: {{$location->hlookat}}</label>
+                <input type="range" class="custom-range" name="hlookat" value="{{$location->hlookat}}" min="0" max="360" id="customRange2">
+                <div><button type="submit" class="btn btn-primary">Сохранить</button></div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<button id="updateHlookat" onclick="updateHlookat();">Ракурс</button>
 <button id="addHotspot" onclick="add_hotspot();">Добавить точку</button>
 <button id="addVideo" onclick="add_video();">Добавить видео</button>
 <button id="addInformation" onclick="add_information_hotspot();">Добавить информацию</button>
@@ -595,6 +626,15 @@
         $('#videoModal').fadeIn();
     }
 
+    function updateHlookat() {
+        $('#updateHlookatModal').fadeIn();
+    }
+    $('#customRange2').on('change',function () {
+        var degree = $(this).val();
+        krpano.set('view.hlookat',degree);
+        $('#customRange2Lbl').text("Градус: " + degree)
+    })
+
     embedpano({target: "pano", id: "pano1", xml: "/admin/krpano/{{ $location->id }}", onready: krpano_onready_callback});
 
     $(document).ready(function() {
@@ -620,6 +660,31 @@
                     $('#videoModal').fadeOut();
                 }
             });
+
+        });
+
+        $('form#upload-hlookat').on('submit', function(e) {
+            e.preventDefault();
+            $('form#upload-hlookat .btn').fadeOut();
+            $.ajax({
+                url: '/ru/api/locations/updatehlookat',
+                method: 'POST',
+                data: new FormData(this),
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data)
+                {
+                    $('#updateHlookatModal').fadeOut();
+                    $('form#upload-hlookat .btn').fadeIn();
+                },
+                error: function () {
+                    $('form#upload-hlookat .btn').fadeIn();
+
+                }
+            });
+
         });
     });
 </script>

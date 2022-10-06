@@ -66,6 +66,15 @@
       set(view.hlookat, -45.0);
       tween(view.hlookat, 45.0, 2.0);
     </action>
+
+
+    <action name="hlookat" autorun="">
+        set(view.stereographic,true);
+        set(view.hlookat, {{$location->hlookat ?? 0}});
+    </action>
+
+    <events name="hlookat" keep="true" onxmlcomplete="hlookat();" />
+
   <action name="prevscene">
     if(%1 != findnext, sub(i,scene.count,1));
     txtadd(scenexml,'<krpano>',get(scene[%i].content),'</krpano>');

@@ -59,11 +59,20 @@
                    design_text_shadow="1"
     />
 
+    <action name="movecamera" autorun="">
+        set(view.stereographic,true);
+        set(view.hlookat, {{$location->hlookat ?? 0}});
+    </action>
+
+    <events name="videos" keep="true" onxmlcomplete="movecamera();" />
+
     <action name="startup" autorun="onstart">
         if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
         loadscene(get(startscene), null, MERGE);
         if(startactions !== null, startactions() );
     </action>
+
+
 
     <scene name="scene1" title="scene1" onstart="" thumburl="/storage/panoramas/unpacked/{{ $location->folderName() }}/thumb.jpg" lat="" lng="" heading="">
 
