@@ -65,6 +65,9 @@
         {
           "title": "Переводы",
           "url": "\/admin\/translations"
+        },
+        {"title":"Отчеты",
+          "url":"\/admin\/reports"
         }
       ]
     }

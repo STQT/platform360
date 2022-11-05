@@ -23,14 +23,14 @@ add('shared_dirs', ['storage', 'vendor', 'public/screenshots']);
 
 // Hosts
 
-host('dev.uzbekistan360.uz')
-    ->stage('staging')
-    ->user('www-data')
-    ->port(50800)
-    ->configFile('~/.ssh/config')
-    ->identityFile('~/.ssh/id_rsa')
-    ->forwardAgent(true)
-    ->set('deploy_path', '/var/www/dev.uzbekistan360.uz');
+//host('dev.uzbekistan360.uz')
+//    ->stage('staging')
+//    ->user('www-data')
+//    ->port(50800)
+//    ->configFile('~/.ssh/config')
+//    ->identityFile('~/.ssh/id_rsa')
+//    ->forwardAgent(true)
+//    ->set('deploy_path', '/var/www/dev.uzbekistan360.uz');
 
 
 host('213.226.71.194')
@@ -50,6 +50,15 @@ host('185.74.6.184')
     ->identityFile('~/.ssh/id_rsa')
     ->forwardAgent(true)
     ->set('deploy_path', '/var/www/uzbekistan360.uz');
+
+host('185.74.6.184')
+    ->stage('staging')
+    ->user('deploy')
+    ->port(22)
+    ->configFile('~/.ssh/config')
+    ->identityFile('~/.ssh/id_rsa')
+    ->forwardAgent(true)
+    ->set('deploy_path', '/var/www/dev3.uzbekistan360.uz');
 
 // Tasks
 

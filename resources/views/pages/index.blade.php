@@ -1865,8 +1865,7 @@
 
                             if (informationOptions.hasOwnProperty('url')) {
 
-                                if (informationOptions.url) {
-                              //  if (informationOptions.url != '' ) {
+                                if (informationOptions.url != '' && informationOptions.url != null) {
                                     window.location.href = informationOptions.url;
                                     showModal = false;
                                 }

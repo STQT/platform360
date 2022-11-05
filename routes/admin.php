@@ -90,6 +90,7 @@ Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\P
 Route::post('admin/ckeditor/upload', 'Admin\CkeditorController@upload')->name('ckeditor.upload');
 
 Route::resource('admin/translations', 'Admin\TranslationsController');
+Route::resource('admin/reports', 'Admin\ReportsController');
 });
 
 ?>
