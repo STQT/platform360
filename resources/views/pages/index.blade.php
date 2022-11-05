@@ -439,7 +439,7 @@
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
                                             @if (isset($openedCategory) && $openedCategoryLocations)
-                                                @foreach($openedCategoryLocations->sortBy('order') as $categoryLocation)
+                                                @foreach($openedCategoryLocations->where('visibility',1)->sortBy('order') as $categoryLocation)
                                                     <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
                                                             @php
@@ -1089,11 +1089,11 @@
 @section('scripts')
     <script>
 
-        let  percentHeight = 0.70, percentWidth = 0.77;
+        let  percentHeight = 0.63, percentWidth = 0.73;
 
         if ($(window).height() > $(window).width()) {
-            percentHeight = 0.65;
-            percentWidth = 0.70;
+            percentHeight = 0.58;
+            percentWidth = 0.65;
         }
         const    myHeight = Math.floor($(".floorplanPanel  .floorplan-viewer").height() *  percentHeight) + 'px',
             myWidth = Math.floor($(".floorplanPanel  .floorplan-viewer").width() *  percentWidth) + 'px';
@@ -1534,6 +1534,7 @@
                     } else {
                         $(".socialnetwork-icon.instagram").hide();
                     }
+
                     if (data.website) {
                         $("#website_box").show();
                         $("#website_box a").html(data.website);
@@ -1543,7 +1544,10 @@
                     }
 
                     if (data.etaji.length > 0) {
-                        $('.floorplan-viewer__header__name').html(data.name + ', ' + data.etaji[0].name.{{ Lang::locale()  }});
+                        var flName = data.etaji[0].name;
+                        flName = flName.{{ Lang::locale() }} === undefined ? flName.ru : flName.{{ Lang::locale() }};
+
+                        $('.floorplan-viewer__header__name').html(data.name + ', ' + flName);
                         var iFloor;
                         var floorId;
                         var floorObject;
@@ -1600,6 +1604,7 @@
                         $('#multifloor-other-locations').html('');
                         for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
                             let floorLocationItem = data.floors_locations[floorLocation];
+
                             $('#multifloor-other-locations').append('<div class="listItem-wrapper" style="height: 260px;"\
                                  onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'\', '+ (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
                                 <div class="listItem" style="width: 224px; height: 244px;">\
@@ -1625,12 +1630,17 @@
                         $("#floorid" + floorId).annotatorPro(
                             allFloors[0]
                         );
+
                         $('.floorplan-tab').eq(0).fadeIn();
                         $('.floorplan-viewer__footer li').eq(0).addClass(
                             'floorplan-viewer__footer__element--selected is-activated--categories');
+                        if ($( ".wrapper-panel.floorplanPanel" ).hasClass( "visible" )) {
+                            $('.icon-ic_close.close').click()
 
+                        }
                         //обработка нажатий кнопок выбора этажей
                         $('.floorplan-viewer__footer li').off('click');
+
                         $('.floorplan-viewer__footer li').on('click', function () {
                             var _this = $(this);
                             var curTab = $('#floorplan-tab' + _this.data('tab')).eq(0);
