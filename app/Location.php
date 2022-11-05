@@ -89,13 +89,16 @@ class Location extends Model
 
     public function folderName()
     {
-        $test = json_decode($this->panorama)[0]->panoramas[0]->panorama;
+        $filename = '';
+        if (!empty(json_decode($this->panorama))) {
+            $test = json_decode($this->panorama)[0]->panoramas[0]->panorama;
 
-        $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
-        foreach ($old as $item) {
-            if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
+            $old = scandir(public_path() . '/storage/panoramas/unpacked/' . $test);
+            foreach ($old as $item) {
+                if (is_dir(public_path() . '/storage/panoramas/unpacked/' . $test . '/' . $item)) {
 
-                $filename = $test . '/' . $item;
+                    $filename = $test . '/' . $item;
+                }
             }
         }
 
