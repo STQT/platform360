@@ -153,7 +153,11 @@
 
 @endsection
 @section('scripts')
+
     <style>
+        body {
+            font-family: sans-serif !important;
+        }
         table tr.red {
             background-color: #ff00008f !important;
             color: white;
