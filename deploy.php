@@ -51,14 +51,14 @@ host('185.74.6.184')
     ->forwardAgent(true)
     ->set('deploy_path', '/var/www/uzbekistan360.uz');
 
-host('185.74.6.184')
-    ->stage('staging')
-    ->user('deploy')
-    ->port(22)
-    ->configFile('~/.ssh/config')
-    ->identityFile('~/.ssh/id_rsa')
-    ->forwardAgent(true)
-    ->set('deploy_path', '/var/www/dev3.uzbekistan360.uz');
+//host('185.74.6.184')
+//    ->stage('staging')
+//    ->user('deploy')
+//    ->port(22)
+//    ->configFile('~/.ssh/config')
+//    ->identityFile('~/.ssh/id_rsa')
+//    ->forwardAgent(true)
+//    ->set('deploy_path', '/var/www/dev3.uzbekistan360.uz');
 
 // Tasks
 

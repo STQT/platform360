@@ -17,6 +17,7 @@
                      @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}"
                      @else data-map="no" @endif ></div>
                 <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
+                @if (!isset($_GET['embed']))
                 <header class="dubai360-header">
                     <div class="dubai360-header__logo-languaje dubai360-header__logo-slider"
                          onclick="location.href='/{{ Lang::locale() }}?home=1';">
@@ -183,6 +184,7 @@
                             </div>
                     </div>
                 </header>
+                @endif
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
