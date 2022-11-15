@@ -409,6 +409,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
+
                                                 @if($loop->last == true or $loop->iteration % 8 == 0)
                                             </div>
                                         @endif
@@ -1092,7 +1093,7 @@
         let  percentHeight = 0.63, percentWidth = 0.73;
 
         if ($(window).height() > $(window).width()) {
-            percentHeight = 0.58;
+            percentHeight = 0.54;
             percentWidth = 0.65;
         }
         const    myHeight = Math.floor($(".floorplanPanel  .floorplan-viewer").height() *  percentHeight) + 'px',
@@ -1276,6 +1277,10 @@
                 $informationText = str_replace("'", "\'", $informationText);
                 $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);
                 @endphp
+                {{--let info;--}}
+                {{--info = $.isString(data[i].information) ? data[i].information : data[i].information["{{app()->getLocale()}}"];--}}
+                {{--info = info !== '' ? info : data[i].information['ru'];--}}
+                    @if($informationText !== '' && $hotspot->type == 2 || $hotspot->type !== 2)
                 add_exist_hotspot(
                         {{ $hotspot->h }},
                         {{ $hotspot->v }},
@@ -1292,6 +1297,7 @@
                     "{{ $hotspot->destinationlocation->video }}",
                     {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}
                 );
+                @endif
                 @endforeach
             }, 3000);
         }
@@ -1489,7 +1495,6 @@
                     $("#location_name").text(data.name);
                     $("#location_name2 h1").text(data.name);
                     $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
-
                     $.fancybox.close();
 
                     if (data.working_hours) {
@@ -1634,10 +1639,7 @@
                         $('.floorplan-tab').eq(0).fadeIn();
                         $('.floorplan-viewer__footer li').eq(0).addClass(
                             'floorplan-viewer__footer__element--selected is-activated--categories');
-                        if ($( ".wrapper-panel.floorplanPanel" ).hasClass( "visible" )) {
-                            $('.icon-ic_close.close').click()
 
-                        }
                         //обработка нажатий кнопок выбора этажей
                         $('.floorplan-viewer__footer li').off('click');
 
@@ -1744,26 +1746,37 @@
                         document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     }
                 });
+                if ($( ".wrapper-panel.floorplanPanel" ).hasClass( "visible" )) {
+                    $('.icon-ic_close.close').click()
+                }
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
+
                     for (var i = 0; i < data.length; i++) {
-                        add_exist_hotspot(data[i].h,
-                            data[i].v,
-                            data[i].name,
-                            data[i].cat_icon_svg,
-                            data[i].cat_icon,
-                            data[i].img,
-                            "uzbekistan:" + data[i].destination_id,
-                            i,
-                            data[i].slug,
-                            data[i].color,
-                            data[i].type,
-                            data[i].information,
-                            data[i].image,
-                            data[i].video,
-                            {url: data[i].url, file: data[i].file}
-                        );
+                        let info;
+                        info = typeof data[i].information === "string" ? data[i].information : data[i].information["{{app()->getLocale()}}"];
+                        info = info !== '' ? info : data[i].information['ru'];
+                        if (info  !== '' && data[i].type == 2 || data[i].type !== 2) {
+                            add_exist_hotspot(data[i].h,
+                                data[i].v,
+                                data[i].name,
+                                data[i].cat_icon_svg,
+                                data[i].cat_icon,
+                                data[i].img,
+                                "uzbekistan:" + data[i].destination_id,
+                                i,
+                                data[i].slug,
+                                data[i].color,
+                                data[i].type,
+                                data[i].information,
+                                data[i].image,
+                                data[i].video,
+                                {url: data[i].url, file: data[i].file}
+                            );
+                        }
+
                     }
                 });
+
             }
         }
 
@@ -1872,11 +1885,8 @@
                             }
                             var getLocale = "{{app()->getLocale()}}";
 
-
-
                             information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
                             image = jQuery.type(image) === "string" ?  image : image[getLocale]
-
                             $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
