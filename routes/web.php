@@ -12,6 +12,43 @@
 */
 Route::get('/', 'HomeController@getIndex');
 
+Route::get('/script', function() {
+    $hotspots = \Illuminate\Support\Facades\DB::table('hotspots')->select(['information','destination_id', 'image','type','id'])
+        ->where('type', 2)->get();
+    $strings = [];
+    foreach ($hotspots as $key => $hotspot) {
+
+        if (!isJson($hotspot->information)) {
+            $strings[$key]['information'] = $hotspot->information;
+        }
+        if (!isJson($hotspot->image)) {
+            $strings[$key]['image'] = $hotspot->image;
+
+        }
+        if ( isset($strings[$key]) && array_key_exists('information',$strings[$key]) ||
+            isset($strings[$key]) && array_key_exists('image',$strings[$key])) {
+            $strings[$key]['id']  = $hotspot->id;
+            $strings[$key]['type']  = $hotspot->type;
+            $strings[$key]['destination_id']  = $hotspot->destination_id;
+
+            foreach ($strings[$key] as $key => $string) {
+
+                if ($key == 'image' || $key == 'information') {
+                    \Illuminate\Support\Facades\DB::table('hotspots')
+                        ->where('id', $hotspot->id)
+                        ->update([$key => json_encode(['ru' =>$string])]);
+                }
+            }
+        }
+
+
+    }
+    return 'sucess';
+});
+function isJson($string) {
+    json_decode($string);
+    return json_last_error() === JSON_ERROR_NONE;
+}
 Route::get('/clear', function() {
     Artisan::call('view:clear');
     Artisan::call('optimize');
