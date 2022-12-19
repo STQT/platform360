@@ -12,16 +12,63 @@
 */
 Route::get('/', 'HomeController@getIndex');
 
+Route::get('/video-script', function() {
+    $hotspots = \Illuminate\Support\Facades\DB::table('videos')->select(['id','video', 'hfov', 'yaw', 'pitch', 'roll'])
+        ->get()->toArray();
+    $strings = [];
+    foreach ($hotspots as $key => $hotspot) {
+        if (!isJson2($hotspot->video)) {
+            $strings[$key]['video'] = $hotspot->video;
+        }
+        if (!isJson2($hotspot->hfov)) {
+            $strings[$key]['hfov'] = $hotspot->hfov;
+        }
+        if (!isJson2($hotspot->yaw)) {
+            $strings[$key]['yaw'] = $hotspot->yaw;
+        }
+        if (!isJson2($hotspot->pitch)) {
+            $strings[$key]['pitch'] = $hotspot->pitch;
+        }
+        if (!isJson2($hotspot->roll)) {
+            $strings[$key]['roll'] = $hotspot->roll;
+        }
+
+        if (
+            isset($strings[$key]) && array_key_exists('video',$strings[$key]) ||
+            isset($strings[$key]) && array_key_exists('hfov',$strings[$key])||
+            isset($strings[$key]) && array_key_exists('yaw',$strings[$key])||
+            isset($strings[$key]) && array_key_exists('pitch',$strings[$key])||
+            isset($strings[$key]) && array_key_exists('roll',$strings[$key])
+        ) {
+            $strings[$key]['id']  = $hotspot->id;
+            foreach ($strings[$key] as $key => $string) {
+
+                if ($key == 'video' || $key == 'hfov'|| $key == 'yaw'|| $key == 'pitch'|| $key == 'roll') {
+                    \Illuminate\Support\Facades\DB::table('videos')
+                        ->where('id', $hotspot->id)
+                        ->update([$key => json_encode(['ru' =>$string])]);
+                }
+            }
+        }
+
+
+    }
+    return 'sucess';
+});
+function isJson2($str) {
+    $json = json_decode($str);
+    return $json && $str != $json;
+}
 Route::get('/script', function() {
     $hotspots = \Illuminate\Support\Facades\DB::table('hotspots')->select(['information','destination_id', 'image','type','id'])
         ->where('type', 2)->get();
     $strings = [];
     foreach ($hotspots as $key => $hotspot) {
 
-        if (!isJson($hotspot->information)) {
+        if (!isJson2($hotspot->information)) {
             $strings[$key]['information'] = $hotspot->information;
         }
-        if (!isJson($hotspot->image)) {
+        if (!isJson2($hotspot->image)) {
             $strings[$key]['image'] = $hotspot->image;
 
         }
@@ -45,6 +92,7 @@ Route::get('/script', function() {
     }
     return 'sucess';
 });
+
 function isJson($string) {
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
