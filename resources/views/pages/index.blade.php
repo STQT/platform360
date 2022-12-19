@@ -1264,42 +1264,74 @@
         //код выполняется, когда панорама загружена (preload)
         function krpano_onready_callback(krpano_interface) {
             krpano = krpano_interface;
-            setTimeout(function () {
-                @foreach($krhotspots as $index => $hotspot)
-                        @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
-                            @php
-                                continue;
-                            @endphp
-                        @endif
-                @php
-                $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));
-                $informationText = str_replace('"', '\"', $informationText);
-                $informationText = str_replace("'", "\'", $informationText);
-                $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);
-                @endphp
-                {{--let info;--}}
-                {{--info = $.isString(data[i].information) ? data[i].information : data[i].information["{{app()->getLocale()}}"];--}}
-                {{--info = info !== '' ? info : data[i].information['ru'];--}}
-                    @if($informationText !== '' && $hotspot->type == 2 || $hotspot->type !== 2)
-                add_exist_hotspot(
-                        {{ $hotspot->h }},
-                        {{ $hotspot->v }},
-                    "{!! str_replace('"', '\"', $hotspot->name) !!}",
-                    "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",
-                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",
-                    "uzbekistan:{{ $hotspot->destination_id }}",
-                        {{ $index }},
-                    "{{$hotspot->slug}}",
-                    "{{$hotspot->color}}",
-                    "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
-                    "{!! $informationText !!}",
-                    "{{ $hotspot->image }}",
-                    "{{ $hotspot->destinationlocation->video }}",
-                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}
-                );
+            // setTimeout(function () {
+                @if(isset($krhotspots[0]))
+                var tmp = "{{$krhotspots[0]['location_id']}}";
+                $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        let info;
+                        info = typeof data[i].information === "string" ? data[i].information : data[i].information["{{app()->getLocale()}}"];
+                        info = info !== '' ? info : data[i].information['ru'];
+                        if (info  !== '' && data[i].type == 2 || data[i].type !== 2) {
+                            add_exist_hotspot(data[i].h,
+                                data[i].v,
+                                data[i].name,
+                                data[i].cat_icon_svg,
+                                data[i].cat_icon,
+                                data[i].img,
+                                "uzbekistan:" + data[i].destination_id,
+                                i,
+                                data[i].slug,
+                                data[i].color,
+                                data[i].type,
+                                data[i].information,
+                                data[i].image,
+                                data[i].video,
+                                {url: data[i].url, file: data[i].file}
+                            );
+                        }
+
+                    }
+                });
+{{--                @else--}}
+{{--                @foreach($krhotspots as $index => $hotspot)--}}
+{{--                @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)--}}
+{{--                @php--}}
+{{--                    continue;--}}
+{{--                @endphp--}}
+{{--                @endif--}}
+{{--                @php--}}
+{{--                    $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));--}}
+{{--                    $informationText = str_replace('"', '\"', $informationText);--}}
+{{--                    $informationText = str_replace("'", "\'", $informationText);--}}
+{{--                    $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);--}}
+{{--                @endphp--}}
+{{--                --}}{{--let info;--}}
+{{--                --}}{{--info = $.isString(data[i].information) ? data[i].information : data[i].information["{{app()->getLocale()}}"];--}}
+{{--                --}}{{--info = info !== '' ? info : data[i].information['ru'];--}}
+{{--                @if($informationText !== '' && $hotspot->type == 2 || $hotspot->type !== 2)--}}
+
+{{--                add_exist_hotspot(--}}
+{{--                    "{{ $hotspot->h }}",--}}
+{{--                    "{{ $hotspot->v }}",--}}
+{{--                    "{!! str_replace('"', '\"', $hotspot->name) !!}",--}}
+{{--                    "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",--}}
+{{--                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",--}}
+{{--                    "uzbekistan:{{ $hotspot->destination_id }}",--}}
+{{--                        {{ $index }},--}}
+{{--                    "{{$hotspot->slug}}",--}}
+{{--                    "{{$hotspot->color}}",--}}
+{{--                    "{{$hotspot->type}}",--}}
+{{--                    { "{{app()->getLocale()}}": "{{$informationText}}"},--}}
+{{--                    {"{{app()->getLocale()}}": "{{$hotspot->image}}", en: "{{$hotspot->image}}", ru: "{{$hotspot->image}}"},--}}
+{{--                    "{{ $hotspot->destinationlocation->video }}",--}}
+{{--                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}--}}
+{{--                );--}}
+{{--                @endif--}}
+{{--                @endforeach--}}
                 @endif
-                @endforeach
-            }, 3000);
+            // }, 1000);
         }
 
         $(document).ready(function () {
