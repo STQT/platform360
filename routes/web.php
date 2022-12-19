@@ -55,10 +55,7 @@ Route::get('/video-script', function() {
     }
     return 'sucess';
 });
-function isJson2($str) {
-    $json = json_decode($str);
-    return $json && $str != $json;
-}
+
 Route::get('/script', function() {
     $hotspots = \Illuminate\Support\Facades\DB::table('hotspots')->select(['information','destination_id', 'image','type','id'])
         ->where('type', 2)->get();
@@ -92,7 +89,10 @@ Route::get('/script', function() {
     }
     return 'sucess';
 });
-
+function isJson2($str) {
+    $json = json_decode($str);
+    return $json && $str != $json;
+}
 function isJson($string) {
     json_decode($string);
     return json_last_error() === JSON_ERROR_NONE;
