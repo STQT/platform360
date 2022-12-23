@@ -1264,7 +1264,7 @@
         //код выполняется, когда панорама загружена (preload)
         function krpano_onready_callback(krpano_interface) {
             krpano = krpano_interface;
-            // setTimeout(function () {
+            setTimeout(function () {
                 @if(isset($krhotspots[0]))
                 var tmp = "{{$krhotspots[0]['location_id']}}";
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
@@ -1331,7 +1331,7 @@
 {{--                @endif--}}
 {{--                @endforeach--}}
                 @endif
-            // }, 1000);
+            }, 1000);
         }
 
         $(document).ready(function () {
