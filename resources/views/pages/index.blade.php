@@ -1270,10 +1270,7 @@
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
 
                     for (var i = 0; i < data.length; i++) {
-                        let info;
-                        info = typeof data[i].information === "string" ? data[i].information : data[i].information["{{app()->getLocale()}}"];
-                        info = info !== '' ? info : data[i].information['ru'];
-                        if (info  !== '' && data[i].type == 2 || data[i].type !== 2) {
+
                             add_exist_hotspot(data[i].h,
                                 data[i].v,
                                 data[i].name,
@@ -1290,7 +1287,6 @@
                                 data[i].video,
                                 {url: data[i].url, file: data[i].file}
                             );
-                        }
 
                     }
                 });
@@ -1784,10 +1780,7 @@
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
 
                     for (var i = 0; i < data.length; i++) {
-                        let info;
-                        info = typeof data[i].information === "string" ? data[i].information : data[i].information["{{app()->getLocale()}}"];
-                        info = info !== '' ? info : data[i].information['ru'];
-                        if (info  !== '' && data[i].type == 2 || data[i].type !== 2) {
+
                             add_exist_hotspot(data[i].h,
                                 data[i].v,
                                 data[i].name,
@@ -1804,7 +1797,6 @@
                                 data[i].video,
                                 {url: data[i].url, file: data[i].file}
                             );
-                        }
 
                     }
                 });
