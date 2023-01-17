@@ -1812,6 +1812,8 @@
                 krpano.set("hotspot[" + hs_name + "].keep", "true");
                 if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                     krpano.set("hotspot[" + hs_name + "].url", "/assets/icons/information-icon.png");
+                } else if (type == {{ \App\Hotspot::TYPE_POLYGON }}) {
+                    
                 } else {
                     krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/" + cat_icon + "");
                 }
