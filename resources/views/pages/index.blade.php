@@ -2,6 +2,11 @@
 
 @section('content')
     <meta name="csrf-token" content="{!! csrf_token() !!}">
+    <style>
+        .wrapper-panel.top {
+            z-index: 100;
+        }
+    </style>
     <div class="loading">
         <div class="loader">
             <div class="dot"></div>
@@ -16,7 +21,7 @@
                 <div style="opacity:0" class="currentlocationcordinates"
                      @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}"
                      @else data-map="no" @endif ></div>
-                <div class="searchPanel__button" style="display: none;">{{ trans('uzb360.noresult')}}</div>
+                <div class="searchPanel__button" style="display: none;">{{ $allTranslations['noresult'] ?? trans('uzb360.noresult')}}</div>
                 <header class="dubai360-header">
                     <div class="dubai360-header__logo-languaje dubai360-header__logo-slider"
                          onclick="location.href='/{{ Lang::locale() }}?home=1';">
@@ -27,23 +32,23 @@
                         <div class="wrapper-button" id="hubviewlink"
                              @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif>
                             <span class="icon-ic_aerial wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.hubrejim')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['hubrejim'] ?? trans('uzb360.hubrejim')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.map')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['map'] ?? trans('uzb360.map')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_glass wrapper-button__icon " data-pannel="search"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.search')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['search'] ?? trans('uzb360.search')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_comment wrapper-button__icon " data-pannel="feedbackPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.feedback')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
                         </div>
                         <div class="wrapper-button">
                             <span class="icon-ic_question wrapper-button__icon " data-pannel="helpPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.help')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{$allTranslations['help'] ?? trans('uzb360.help')}}</span></div>
                         </div>
                     </div>
 
@@ -53,7 +58,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{$allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +68,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{$allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -92,15 +97,15 @@
                         <!-- **************************************** -->
                         <div class="wrapper-button">
                             <span class="icon-ic_info wrapper-button__icon " data-pannel="infoPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.information')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['information'] ?? trans('uzb360.information')}}</span></div>
                         </div>
                         <div class="wrapper-button" onclick="krpanoscreenshot();">
                             <span class="icon-ic_share wrapper-button__icon " data-pannel="sharePannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.share')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
                         </div>
                         <div class="wrapper-button" id="autotourbutton" onclick="krpanoautorotate();">
                             <span class="icon-ic_autoplay wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.tourrejim')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['tourrejim'] ?? trans('uzb360.tourrejim')}}</span></div>
                         </div>
                         <div class="wrapper-button" id="ipadcity" style="display:none">
                           <span class="wrapper-button__icon" data-pannel="cityPannel">
@@ -130,12 +135,12 @@
                         </div>
                         <div class="wrapper-button" onclick="krpanofullscreen()">
                             <span class="icon-ic_fullscreen wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.fullscreen')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['fullscreen'] ?? trans('uzb360.fullscreen')}}</span></div>
                         </div>
 
                         <div class="wrapper-button">
                             <span class="icon-ic_eye wrapper-button__icon " data-pannel="ProjectionsPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ trans('uzb360.rejimprosmotra')}}</span></div>
+                            <div class="dubai360-tooltip"><span>{{ $allTranslations['rejimprosmotra'] ?? trans('uzb360.rejimprosmotra')}}</span></div>
                         </div>
                     </div>
                     <div class="dubai360-header__logo-languaje">
@@ -259,7 +264,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{ $allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +274,7 @@
                                 <span class="icon-ic_floorplan wrapper-button__icon"
                                       data-pannel="floorplanPanel"></span>
                                 <div class="dubai360-tooltip">
-                                    <span>{{ trans('uzb360.etaji')}}</span>
+                                    <span>{{ $allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +286,7 @@
                     <img class="wrapper-panel-close"
                          src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="sharePanel">
-                        <div class="sharePanel__title"><span>{{ trans('uzb360.share')}}</span></div>
+                        <div class="sharePanel__title"><span>{{$allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
 
                         <div class="sharePanel__screenshot">
                             <div class="loading2" id="loading2">
@@ -361,13 +366,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand">
+                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand" style="z-index: 110">
                     <img class="wrapper-panel-close"
                          src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="searchPanel">
                         <div class="searchPanel__input" id="search_adress">
                             <input type="text" class="dubai360-input search-input"
-                                   placeholder="{{ trans('uzb360.search')}}">
+                                   placeholder="{{$allTranslations['search'] ?? trans('uzb360.search')}}">
                             <span class="clear-field" style="display: none"></span>
                         </div>
                         <div class="searchPanel__filtered ">
@@ -404,6 +409,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
+
                                                 @if($loop->last == true or $loop->iteration % 8 == 0)
                                             </div>
                                         @endif
@@ -416,7 +422,7 @@
 
                         @if (!isset($openedCategory))
                         <div class="searchPanel__results"><span
-                                    class="color-opacity">{{ trans('uzb360.noresult')}}</span></div>
+                                    class="color-opacity">{{$allTranslations['noresult'] ?? trans('uzb360.noresult')}}</span></div>
                         @endif
                         <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
                         <div class="searchPanel__resultscontainer">
@@ -434,7 +440,7 @@
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
                                             @if (isset($openedCategory) && $openedCategoryLocations)
-                                                @foreach($openedCategoryLocations as $categoryLocation)
+                                                @foreach($openedCategoryLocations->where('visibility',1)->sortBy('order') as $categoryLocation)
                                                     <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
                                                             @php
@@ -478,7 +484,7 @@
                                 <img class="wrapper-panel-close search-close"
                                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                                 <div class="resultsPanel">
-                                    <div class="resultsPanel__tittle"><span>{{ trans('uzb360.rezultatipoiska')}}:</span></div>
+                                    <div class="resultsPanel__tittle"><span>{{$allTranslations['rezultatipoiska'] ?? trans('uzb360.rezultatipoiska')}}:</span></div>
                                     <div class="resultsPanel__resultsContainer" style="position: relative;">
                                         <div style="overflow: visible; height: 0px;">
                                             <div class="virtualizedGrid__content " style="position: relative;">
@@ -512,13 +518,13 @@
                 </div>
                 </span>
             </div>
-            <div class="wrapper-panel feedbackPannel top left hidden expand">
+            <div class="wrapper-panel feedbackPannel top left hidden expand" style="z-index: 100">
                 <img class="wrapper-panel-close"
                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                 <form id="feedbackForm" class="feedbackPanel" novalidate="">
                     {{ csrf_field() }}
-                    <div class="feedbackPanel__title"><span>{{ trans('uzb360.feedback')}}</span></div>
-                    <div class="feedbackPanel__message"><span>{{ trans('uzb360.rasskajitenam')}}</span></div>
+                    <div class="feedbackPanel__title"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
+                    <div class="feedbackPanel__message"><span>{{$allTranslations['rasskajitenam'] ?? trans('uzb360.rasskajitenam')}}</span></div>
                     <div class="feedbackPanel__message"><p><span>По вопросам сотрудничества:<br>
                         +998971310023
                         </span></p></div>
@@ -526,10 +532,10 @@
                         <div class="feedbackPanel__wrapper-inputs--dropdown">
                             <div class="dropdown-wrapper">
                                 <select name="select" id="feedbackselect" class="dropdown">
-                                    <option value="BUG_REPORT">{{ trans('uzb360.oboshibke')}}</option>
-                                    <option value="PRESS_ENQUIRY">{{ trans('uzb360.presszapros')}}</option>
-                                    <option value="FEATURE_REQUEST">{{ trans('uzb360.pojelaniya')}}</option>
-                                    <option value="NEW_CONTENT_REQUEST">{{ trans('uzb360.drugayatema')}}</option>
+                                    <option value="BUG_REPORT">{{$allTranslations['oboshibke'] ?? trans('uzb360.oboshibke')}}</option>
+                                    <option value="PRESS_ENQUIRY">{{$allTranslations['presszapros'] ?? trans('uzb360.presszapros')}}</option>
+                                    <option value="FEATURE_REQUEST">{{$allTranslations['pojelaniya'] ?? trans('uzb360.pojelaniya')}}</option>
+                                    <option value="NEW_CONTENT_REQUEST">{{$allTranslations['drugayatema'] ?? trans('uzb360.drugayatema')}}</option>
 
                                 </select>
                                 <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
@@ -539,23 +545,23 @@
                     </div>
                     <div class="feedbackPanel__wrapper-inputs mail_inp">
                         <input type="email" id="mailll" name="email" class="feedbackPanel__wrapper-inputs--input"
-                               placeholder="{{ trans('uzb360.vashemail')}}" required>
+                               placeholder="{{$allTranslations['vashemail'] ??  trans('uzb360.vashemail')}}" required>
                     </div>
 
                     <div class="feedbackPanel__wrapper-inputs mail_inp2">
                         <textarea name="message" class="feedbackPanel__wrapper-inputs--textarea"
-                                  placeholder="{{ trans('uzb360.vashesoobshenie')}}" required
+                                  placeholder="{{$allTranslations['vashesoobshenie'] ??  trans('uzb360.vashesoobshenie')}}" required
                                   id="feedbacktext"></textarea>
                     </div>
                     <div class="feedbackPanel__buttons">
                             <span id="Feedbackstatus">
                             </span>
 
-                        <button type="submit" class="send_form_btn">{{ trans('uzb360.otpravit')}}</button>
+                        <button type="submit" class="send_form_btn">{{$allTranslations['otpravit'] ??  trans('uzb360.otpravit')}}</button>
 
                         <div class="block_thanks">
                             <div class="text_thks">
-                                <p>{{ trans('uzb360.vashotzivprinyat')}}</p>
+                                <p>{{$allTranslations['vashotzivprinyat'] ??  trans('uzb360.vashotzivprinyat')}}</p>
                             </div>
                             <div class="form_submit">
                                 <button type="button" id="sendinggg" class="btn btn--normal">
@@ -567,7 +573,7 @@
                     </div>
                 </form>
             </div>
-            <div class="wrapper-panel  top left helpPannel hidden expand">
+            <div class="wrapper-panel  top left helpPannel hidden expand" style="z-index: 100">
                 <img class="wrapper-panel-close"
                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                 <div class="helpPanel" style="overflow: hidden;">
@@ -751,7 +757,7 @@
                         </li>
                     </ul>
                     <div class="virtualizedGrid__otherLocation">
-                        <div class="virtualizedGrid__title"><span>{{ trans('uzb360.drugielokasii')}}</span></div>
+                        <div class="virtualizedGrid__title"><span>{{$allTranslations['drugielokasii'] ?? trans('uzb360.drugielokasii')}}</span></div>
                         <div class="virtualizedGrid__listContainer">
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
@@ -789,10 +795,10 @@
                     </div>
                 </div>
             </div>
-            <div class="wrapper-panel  top left floorplanPanel hidden expand">
+            <div class="wrapper-panel  top left floorplanPanel hidden expand" style="z-index: 100">
                 <div class="wrapper-panel--main-container">
                     <div class="floorplan fade--in">
-                        <span class="floorplan__recommended__title"><span>{{ trans('uzb360.obekty')}}</span></span>
+                        <span class="floorplan__recommended__title"><span>{{ $allTranslations['obekty'] ?? trans('uzb360.obekty')}}</span></span>
                         <div class="floorplan__listContainer">
                             <div class="virtualizedGrid__content "
                                  style="position: relative;overflow-y: scroll;overflow-x:hidden">
@@ -843,7 +849,7 @@
                             <div class="floorplan-viewer__header__actions">
                                 <div class="floorplan-viewer__header__img"><span
                                             class="icon-ic_mouse floorplan-viewer__header__img--icon"></span><span
-                                            class="floorplan-viewer__header__img--text"><span>{{ trans('uzb360.zoomkolesom')}}</span></span>
+                                            class="floorplan-viewer__header__img--text"><span>{{$allTranslations['zoomkolesom'] ??  trans('uzb360.zoomkolesom')}}</span></span>
                                 </div>
                                 <div class="icon-wrapper"><span class="icon-ic_close close"></span></div>
                             </div>
@@ -880,15 +886,15 @@
             </div>
             <div class="wrapper-panel  top right ProjectionsPannel hidden expand">
                 <div class="projection">
-                    <div class="title-projection"><span>{{ trans('uzb360.proektsiya')}}</span></div>
+                    <div class="title-projection"><span>{{ $allTranslations['proektsiya'] ?? trans('uzb360.proektsiya')}}</span></div>
                     <ul>
                         <li class="selected" onclick="skin_view_normal()">
-                            <span>{{ trans('uzb360.pryamolineyniy')}}</span></li>
-                        <li onclick="skin_view_littleplanet()"><span>{{ trans('uzb360.malenkayaplaneta')}}</span></li>
-                        <li onclick="skin_view_fisheye()"><span>{{ trans('uzb360.ribyglaz')}}</span></li>
-                        <li onclick="skin_view_panini()"><span>{{ trans('uzb360.panini')}}</span></li>
-                        <li onclick="skin_view_stereographic()"><span>{{ trans('uzb360.stereo')}}</span></li>
-                        <li onclick="skin_view_architectural()"><span>{{ trans('uzb360.archetek')}}</span></li>
+                            <span>{{ $allTranslations['pryamolineyniy'] ?? trans('uzb360.pryamolineyniy')}}</span></li>
+                        <li onclick="skin_view_littleplanet()"><span>{{ $allTranslations['malenkayaplaneta'] ?? trans('uzb360.malenkayaplaneta')}}</span></li>
+                        <li onclick="skin_view_fisheye()"><span>{{ $allTranslations['ribyglaz'] ?? trans('uzb360.ribyglaz')}}</span></li>
+                        <li onclick="skin_view_panini()"><span>{{ $allTranslations['panini'] ?? trans('uzb360.panini')}}</span></li>
+                        <li onclick="skin_view_stereographic()"><span>{{ $allTranslations['stereo'] ?? trans('uzb360.stereo')}}</span></li>
+                        <li onclick="skin_view_architectural()"><span>{{ $allTranslations['archetek'] ?? trans('uzb360.archetek')}}</span></li>
                     </ul>
                 </div>
             </div>
@@ -898,9 +904,9 @@
                 <div class="gyro">
                     <div class="gyro__message">
                         <ul class="mobilechooselang">
-                            <li><a href="#">Русский<a/></li>
-                            <li><a href="#">O'zbekcha<a/></li>
-                            <li><a href="#">English<a/></li>
+                            <li><a href="#">Русский</a></li>
+                            <li><a href="#">O'zbekcha</a></li>
+                            <li><a href="#">English</a></li>
                         </ul>
                     </div>
                 </div>
@@ -927,7 +933,7 @@
             </div>
             <span class="">
             <div class="kak2 sad" style="opacity: 1;">
-              <div class="wrapper-panel explorePannel top left hidden fullScreenPanel">
+              <div class="wrapper-panel explorePannel top left hidden fullScreenPanel" style="z-index: 100">
                 <div class="SplitPane  horizontal "
                      style="display: flex; flex: 1 1 0%; height: 100%; position: absolute; outline: none; overflow: hidden; user-select: text; bottom: 0px; flex-direction: column; min-height: 100%; top: 0px; width: 100%;">
                   <div class="Pane horizontal Pane1  ">
@@ -948,7 +954,7 @@
                       <div class="wrapper-slider__slider"><span class="icon-ic_arrow_up"></span><span
                                   class="icon-ic_arrow_down"></span></div>
                     </div>
-                    <div class="mybtn wrapper-button"><span>{{ trans('uzb360.filtr')}}</span></div>
+                    <div class="mybtn wrapper-button"><span>{{ $allTranslations['filtr'] ?? trans('uzb360.filtr')}}</span></div>
                   </div>
                   <div class="Pane horizontal Pane2  ">
                     <div class="explore__listContainer">
@@ -956,7 +962,7 @@
                         <div class="virtualizedGrid">
                           <span class="icon-ic_arrow_left_big slick-block2_left"></span>
                           <div class="virtualizedGrid__content " style="position: relative;">
-                            <div class="virtualizedGrid__otherLocation__title"><span>{{ trans('uzb360.izbrannielokasii')}}</span></div>
+                            <div class="virtualizedGrid__otherLocation__title"><span>{{$allTranslations['izbrannielokasii'] ?? trans('uzb360.izbrannielokasii')}}</span></div>
                             <div class="ReactVirtualized__Grid slick-block2">
                                 @foreach ($isfeatured as $i => $featured)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$featured->lat}}"
@@ -998,7 +1004,7 @@
                         <div class="virtualizedGrid">
                           <span class="icon-ic_arrow_left_big slick-block3_left"></span>
                           <div class="virtualizedGrid__content " style="position: relative;">
-                            <div class="virtualizedGrid__otherLocation__title"><span>{{ trans('uzb360.novielokasii')}}</span></div>
+                            <div class="virtualizedGrid__otherLocation__title"><span>{{$allTranslations['novielokasii'] ?? trans('uzb360.novielokasii')}}</span></div>
                             <div class="ReactVirtualized__Grid slick-block3">
                               @foreach ($isnew as $i => $new)
                                     <div class="listItem-wrapper featuredloctionbox" data-lat="{{$new->lat}}"
@@ -1046,14 +1052,14 @@
                            src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                       <div class="filterPanel">
                         <div class="filterPanel__title">
-                          <span>{{ trans('uzb360.filtr')}}</span>
+                          <span>{{ $allTranslations['filtr'] ??  trans('uzb360.filtr')}}</span>
                         </div>
                         <ul class="filterPanel__options">
                           <li class="active" data-tab="1">
-                            <span>{{ trans('uzb360.izbrannielokasii')}}</span>
+                            <span>{{ $allTranslations['izbrannielokasii'] ??  trans('uzb360.izbrannielokasii')}}</span>
                           </li>
                           <li class="" data-tab="2">
-                            <span>{{ trans('uzb360.novielokasii')}}</span>
+                            <span>{{ $allTranslations['novielokasii'] ??  trans('uzb360.novielokasii')}}</span>
                           </li>
 
                         </ul>
@@ -1083,6 +1089,18 @@
 
 @section('scripts')
     <script>
+
+        let  percentHeight = 0.63, percentWidth = 0.73;
+
+        if ($(window).height() > $(window).width()) {
+            percentHeight = 0.54;
+            percentWidth = 0.65;
+        }
+        const    myHeight = Math.floor($(".floorplanPanel  .floorplan-viewer").height() *  percentHeight) + 'px',
+            myWidth = Math.floor($(".floorplanPanel  .floorplan-viewer").width() *  percentWidth) + 'px';
+
+
+
         @if (empty($location->number))
         $('#location_number_box').hide();
         @endif
@@ -1144,8 +1162,8 @@
                             maxZoom: 2,
                             navigator: false,
                             navigatorImagePreview: false,
-                            frameWidth: frameWidth,
-                            frameHeight: frameHeight,
+                            frameWidth: myWidth,
+                            frameHeight: myHeight,
                             // frameHeight: $(window).height() - 300,
                             // frameWidth: "auto",
                             iconsize: "15px",
@@ -1247,36 +1265,69 @@
         function krpano_onready_callback(krpano_interface) {
             krpano = krpano_interface;
             setTimeout(function () {
-                @foreach($krhotspots as $index => $hotspot)
-                        @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)
-                            @php
-                                continue;
-                            @endphp
-                        @endif
-                @php
-                $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));
-                $informationText = str_replace('"', '\"', $informationText);
-                $informationText = str_replace("'", "\'", $informationText);
-                $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);
-                @endphp
-                add_exist_hotspot(
-                        {{ $hotspot->h }},
-                        {{ $hotspot->v }},
-                    "{!! str_replace('"', '\"', $hotspot->name) !!}",
-                    "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",
-                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",
-                    "uzbekistan:{{ $hotspot->destination_id }}",
-                        {{ $index }},
-                    "{{$hotspot->slug}}",
-                    "{{$hotspot->color}}",
-                    "{{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}}",
-                    "{!! $informationText !!}",
-                    "{{ $hotspot->image }}",
-                    "{{ $hotspot->destinationlocation->video }}",
-                    {file: "{{ $hotspot->file }}"}
-                );
-                @endforeach
-            }, 3000);
+                @if(isset($krhotspots[0]))
+                var tmp = "{{$krhotspots[0]['location_id']}}";
+                $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
+
+                    for (var i = 0; i < data.length; i++) {
+
+                            add_exist_hotspot(data[i].h,
+                                data[i].v,
+                                data[i].name,
+                                data[i].cat_icon_svg,
+                                data[i].cat_icon,
+                                data[i].img,
+                                "uzbekistan:" + data[i].destination_id,
+                                i,
+                                data[i].slug,
+                                data[i].color,
+                                data[i].type,
+                                data[i].information,
+                                data[i].image,
+                                data[i].video,
+                                {url: data[i].url, file: data[i].file}
+                            );
+
+                    }
+                });
+{{--                @else--}}
+{{--                @foreach($krhotspots as $index => $hotspot)--}}
+{{--                @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)--}}
+{{--                @php--}}
+{{--                    continue;--}}
+{{--                @endphp--}}
+{{--                @endif--}}
+{{--                @php--}}
+{{--                    $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));--}}
+{{--                    $informationText = str_replace('"', '\"', $informationText);--}}
+{{--                    $informationText = str_replace("'", "\'", $informationText);--}}
+{{--                    $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);--}}
+{{--                @endphp--}}
+{{--                --}}{{--let info;--}}
+{{--                --}}{{--info = $.isString(data[i].information) ? data[i].information : data[i].information["{{app()->getLocale()}}"];--}}
+{{--                --}}{{--info = info !== '' ? info : data[i].information['ru'];--}}
+{{--                @if($informationText !== '' && $hotspot->type == 2 || $hotspot->type !== 2)--}}
+
+{{--                add_exist_hotspot(--}}
+{{--                    "{{ $hotspot->h }}",--}}
+{{--                    "{{ $hotspot->v }}",--}}
+{{--                    "{!! str_replace('"', '\"', $hotspot->name) !!}",--}}
+{{--                    "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",--}}
+{{--                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",--}}
+{{--                    "uzbekistan:{{ $hotspot->destination_id }}",--}}
+{{--                        {{ $index }},--}}
+{{--                    "{{$hotspot->slug}}",--}}
+{{--                    "{{$hotspot->color}}",--}}
+{{--                    "{{$hotspot->type}}",--}}
+{{--                    { "{{app()->getLocale()}}": "{{$informationText}}"},--}}
+{{--                    {"{{app()->getLocale()}}": "{{$hotspot->image}}", en: "{{$hotspot->image}}", ru: "{{$hotspot->image}}"},--}}
+{{--                    "{{ $hotspot->destinationlocation->video }}",--}}
+{{--                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}--}}
+{{--                );--}}
+{{--                @endif--}}
+{{--                @endforeach--}}
+                @endif
+            }, 1000);
         }
 
         $(document).ready(function () {
@@ -1459,7 +1510,8 @@
                     }
                 }
 
-                //TODO: сделать сначала перевод камеры, а потом смену локации. Также нужно задавать в админку точку, на которой сразу будет показываться панорама
+                //TODO: сделать сначала перевод камеры, а потом смену локации.
+                // Также нужно задавать в админку точку, на которой сразу будет показываться панорама
                 // krpano.call("movecamera(0,0);");
                 if (nourl != "nooo") {
                     history.pushState({
@@ -1471,7 +1523,6 @@
                     $("#location_name").text(data.name);
                     $("#location_name2 h1").text(data.name);
                     $('.infoPanel .infoPanel__current-categories .icon-wrapper__icon--category img').attr('src', '/storage/cat_icons/' + data.category_icon);
-
                     $.fancybox.close();
 
                     if (data.working_hours) {
@@ -1516,6 +1567,7 @@
                     } else {
                         $(".socialnetwork-icon.instagram").hide();
                     }
+
                     if (data.website) {
                         $("#website_box").show();
                         $("#website_box a").html(data.website);
@@ -1525,7 +1577,10 @@
                     }
 
                     if (data.etaji.length > 0) {
-                        $('.floorplan-viewer__header__name').html(data.name + ', ' + data.etaji[0].name.{{ Lang::locale()  }});
+                        var flName = data.etaji[0].name;
+                        flName = flName.{{ Lang::locale() }} === undefined ? flName.ru : flName.{{ Lang::locale() }};
+
+                        $('.floorplan-viewer__header__name').html(data.name + ', ' + flName);
                         var iFloor;
                         var floorId;
                         var floorObject;
@@ -1543,13 +1598,15 @@
                                 </div>\
                             </div>'
                             );
+                            var floorName = data.etaji[iFloor].name.{{ Lang::locale()  }}, localeFlo =  Object.keys(data.etaji[iFloor].name)[0];
+                            if (floorName === undefined)
+                                floorName = data.etaji[iFloor].name[localeFlo];
                             $('.floorplan-viewer__footer').append(
                                 '<li class="floorplan-viewer__footer__element buttonetaj' + iFloor + '" data-tab="' + iFloor + '">\
                                 <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">\
-                                <span class="floorplan-viewer__footer__element__name">' + data.name + ', ' + data.etaji[iFloor].name.{{ Lang::locale()  }}+ '</span>\
+                                <span class="floorplan-viewer__footer__element__name">' + data.name + ', ' + floorName+ '</span>\
                             </li>'
                             );
-
                             let initHeight = data.etaji[iFloor].height;
                             let frameHeight = initHeight > 1029 ? $(window).height() - 300 : initHeight;
                             let frameWidth = 'auto';
@@ -1564,8 +1621,8 @@
                                 maxZoom: 1,
                                 navigator: false,
                                 navigatorImagePreview: false,
-                                frameWidth: frameWidth,
-                                frameHeight: frameHeight,
+                                frameWidth: myWidth,
+                                frameHeight: myHeight,
                                 fullscreen: true,
                                 iconsize: "15px",
                                 // rubberband: true
@@ -1580,8 +1637,9 @@
                         $('#multifloor-other-locations').html('');
                         for (floorLocation = 0; floorLocation < data.floors_locations.length; ++floorLocation) {
                             let floorLocationItem = data.floors_locations[floorLocation];
+
                             $('#multifloor-other-locations').append('<div class="listItem-wrapper" style="height: 260px;"\
-                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'nooo\', '+ (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
+                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'\', '+ (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
                                 <div class="listItem" style="width: 224px; height: 244px;">\
                                     <div class="listItem__img"><img\
                                                 src="/storage/panoramas/unpacked/' + floorLocationItem.img + '/thumb.jpg"\
@@ -1605,12 +1663,14 @@
                         $("#floorid" + floorId).annotatorPro(
                             allFloors[0]
                         );
+
                         $('.floorplan-tab').eq(0).fadeIn();
                         $('.floorplan-viewer__footer li').eq(0).addClass(
                             'floorplan-viewer__footer__element--selected is-activated--categories');
 
                         //обработка нажатий кнопок выбора этажей
                         $('.floorplan-viewer__footer li').off('click');
+
                         $('.floorplan-viewer__footer li').on('click', function () {
                             var _this = $(this);
                             var curTab = $('#floorplan-tab' + _this.data('tab')).eq(0);
@@ -1714,31 +1774,39 @@
                         document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     }
                 });
+                if ($( ".wrapper-panel.floorplanPanel" ).hasClass( "visible" )) {
+                    $('.icon-ic_close.close').click()
+                }
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
+
                     for (var i = 0; i < data.length; i++) {
-                        add_exist_hotspot(data[i].h,
-                            data[i].v,
-                            data[i].name,
-                            data[i].cat_icon_svg,
-                            data[i].cat_icon,
-                            data[i].img,
-                            "uzbekistan:" + data[i].destination_id,
-                            i,
-                            data[i].slug,
-                            data[i].color,
-                            data[i].type,
-                            data[i].information,
-                            data[i].image,
-                            data[i].video,
-                            {file: data[i].file}
-                        );
+
+                            add_exist_hotspot(data[i].h,
+                                data[i].v,
+                                data[i].name,
+                                data[i].cat_icon_svg,
+                                data[i].cat_icon,
+                                data[i].img,
+                                "uzbekistan:" + data[i].destination_id,
+                                i,
+                                data[i].slug,
+                                data[i].color,
+                                data[i].type,
+                                data[i].information,
+                                data[i].image,
+                                data[i].video,
+                                {url: data[i].url, file: data[i].file}
+                            );
+
                     }
                 });
+
             }
         }
 
         function add_exist_hotspot(h, v, name, cat_icon_svg, cat_icon, img, hs_name, index, slug, color, type, information, image, video, informationOptions) {
             hs_name = hs_name + ':' + index;
+            type = type == null ? 1 : type;
             if (krpano) {
                 krpano.call("addhotspot(" + hs_name + ")");
                 krpano.set("hotspot[" + hs_name + "].keep", "true");
@@ -1759,7 +1827,7 @@
                 });
 
                 krpano.set("hotspot[" + hs_name + "].type", type);
-
+                krpano.set("hotspot[" + hs_name + "].zorder", '99');
                 krpano.set("hotspot[" + hs_name + "].onover", function () {
                     if (type == {{ \App\Hotspot::TYPE_INFORMATION }})
                         return false;
@@ -1829,8 +1897,20 @@
 
                 if (krpano.get("device.html5")) {
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
+                        var showModal = true;
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                            information = information.replaceAll('\\"', '"');
+
+                            if (informationOptions.hasOwnProperty('url')) {
+
+                                if (informationOptions.url != '' && informationOptions.url != null) {
+                                    window.location.href = informationOptions.url;
+                                    showModal = false;
+                                }
+                            }
+                            var getLocale = "{{app()->getLocale()}}";
+
+                            information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
+                            image = jQuery.type(image) === "string" ?  image : image[getLocale]
                             $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
@@ -1844,13 +1924,15 @@
                             } else {
                                 $('.information-buttons').html('');
                             }
-                            $.fancybox.open(
-                                $('#information-modal'),
-                                {
-                                    // type: 'html',
-                                    touch: false
-                                }
-                            );
+                            if (showModal) {
+                                $.fancybox.open(
+                                    $('#information-modal'),
+                                    {
+                                        // type: 'html',
+                                        touch: false
+                                    }
+                                );
+                            }
                         } else {
                             krpano.call("moveto("+h+","+v+",linear(45))");
                             setTimeout(function() {

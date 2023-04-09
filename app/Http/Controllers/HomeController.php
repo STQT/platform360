@@ -19,6 +19,87 @@ use Spatie\Translatable\HasTranslations;
 class HomeController extends Controller
 
 {
+
+    public function videoScript() {
+        $hotspots = \Illuminate\Support\Facades\DB::table('videos')->select(['id','video', 'hfov', 'yaw', 'pitch', 'roll'])
+            ->get()->toArray();
+        $strings = [];
+        foreach ($hotspots as $key => $hotspot) {
+            if (!$this->isJson2($hotspot->video)) {
+                $strings[$key]['video'] = $hotspot->video;
+            }
+            if (!$this->isJson2($hotspot->hfov)) {
+                $strings[$key]['hfov'] = $hotspot->hfov;
+            }
+            if (!$this->isJson2($hotspot->yaw)) {
+                $strings[$key]['yaw'] = $hotspot->yaw;
+            }
+            if (!$this->isJson2($hotspot->pitch)) {
+                $strings[$key]['pitch'] = $hotspot->pitch;
+            }
+            if (!$this->isJson2($hotspot->roll)) {
+                $strings[$key]['roll'] = $hotspot->roll;
+            }
+
+            if (
+                isset($strings[$key]) && array_key_exists('video',$strings[$key]) ||
+                isset($strings[$key]) && array_key_exists('hfov',$strings[$key])||
+                isset($strings[$key]) && array_key_exists('yaw',$strings[$key])||
+                isset($strings[$key]) && array_key_exists('pitch',$strings[$key])||
+                isset($strings[$key]) && array_key_exists('roll',$strings[$key])
+            ) {
+                $strings[$key]['id']  = $hotspot->id;
+                foreach ($strings[$key] as $key => $string) {
+
+                    if ($key == 'video' || $key == 'hfov'|| $key == 'yaw'|| $key == 'pitch'|| $key == 'roll') {
+                        \Illuminate\Support\Facades\DB::table('videos')
+                            ->where('id', $hotspot->id)
+                            ->update([$key => json_encode(['ru' =>$string])]);
+                    }
+                }
+            }
+
+
+        }
+        return 'sucess';
+    }
+    public function script() {
+        $hotspots = \Illuminate\Support\Facades\DB::table('hotspots')->select(['information','destination_id', 'image','type','id'])
+            ->where('type', 2)->get();
+        $strings = [];
+        foreach ($hotspots as $key => $hotspot) {
+
+            if (!$this->isJson2($hotspot->information)) {
+                $strings[$key]['information'] = $hotspot->information;
+            }
+            if (!$this->isJson2($hotspot->image)) {
+                $strings[$key]['image'] = $hotspot->image;
+
+            }
+            if ( isset($strings[$key]) && array_key_exists('information',$strings[$key]) ||
+                isset($strings[$key]) && array_key_exists('image',$strings[$key])) {
+                $strings[$key]['id']  = $hotspot->id;
+                $strings[$key]['type']  = $hotspot->type;
+                $strings[$key]['destination_id']  = $hotspot->destination_id;
+
+                foreach ($strings[$key] as $key => $string) {
+
+                    if ($key == 'image' || $key == 'information') {
+                        \Illuminate\Support\Facades\DB::table('hotspots')
+                            ->where('id', $hotspot->id)
+                            ->update([$key => json_encode(['ru' =>$string])]);
+                    }
+                }
+            }
+
+        }
+        return 'sucess';
+    }
+
+    public function isJson2($str) {
+        $json = json_decode($str);
+        return $json && $str != $json;
+    }
     /**
      * Show the application dashboard.
      *
@@ -50,7 +131,7 @@ class HomeController extends Controller
         //Загрузка основноч точки
         //обработка субдоменов и локация по умолчанию
         $subdomain = $this->getSubdomainName();
-        if ($subdomain && $subdomain != 'dev' && !is_numeric($subdomain)) {
+        if ($subdomain && $subdomain != 'dev' && $subdomain != 'dev2' &&  $subdomain != 'dev3' && !is_numeric($subdomain)) {
             $city = Cities::where('subdomain', $subdomain)->first();
             if ($city) {
                 $location = Location::where([

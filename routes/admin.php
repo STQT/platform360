@@ -22,7 +22,8 @@ Route::get('admin/locations/main', 'Admin\LocationsController@main');
 Route::get('admin/locations/unpublished', 'Admin\LocationsController@unpublished');
 Route::get('admin/locations/featured', 'Admin\LocationsController@featured');
 Route::get('admin/locations/hub', 'Admin\LocationsController@hub');
-Route::resource('admin/locations', 'Admin\\LocationsController');
+Route::resource('admin/locations', 'Admin\\LocationsController')->except(['show']);
+Route::get('admin/locations/{lang}/{id}', 'Admin\LocationsController@show')->name('admin.locations.show');
 Route::get('admin/locations/{id}/video', 'Admin\LocationsController@showVideo')->name('admin.locations.video');
 
 //Небо
@@ -50,7 +51,8 @@ Route::resource('admin/tags', 'Admin\\TagsController');
 Route::get('admin/videos/{id}', [
     'uses' => 'Admin\\VideosController@index'
 ])->name('admin.videos');
-Route::resource('admin/videos', 'Admin\\VideosController');
+Route::resource('admin/videos', 'Admin\\VideosController')->except(['edit']);
+Route::get('admin/videos/{id}/edit/{lang}', 'Admin\\VideosController@edit');
 
 //Подлокации
 Route::get('admin/podloc/{id}', 'Admin\\PodlocController@index');
@@ -84,7 +86,11 @@ Route::resource('admin/settings', 'Admin\SettingsController');
 Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
 Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 
+
 Route::post('admin/ckeditor/upload', 'Admin\CkeditorController@upload')->name('ckeditor.upload');
+
+Route::resource('admin/translations', 'Admin\TranslationsController');
+Route::resource('admin/reports', 'Admin\ReportsController');
 });
 
 ?>

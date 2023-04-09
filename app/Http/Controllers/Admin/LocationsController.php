@@ -16,6 +16,7 @@ use App\Video;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -731,14 +732,20 @@ class LocationsController extends Controller
     }
 
     //Просмотр локации
-    public function show($id)
+    public function show($language, $id)
     {
+        app()->setLocale($language);
+
         $location = Location::withoutGlobalScope('published')->findOrFail($id);
         $locations = Location::withoutGlobalScope('published')->get()->all();
 
         $categories = Category::all();
         return view('pages.admin.edit',
-            ['location' => $location, 'locations' => $locations, 'categories' => $categories]);
+            [
+                'location' => $location, 'locations' => $locations,
+                'categories' => $categories, 'language' => $language
+            ]
+        );
     }
 
     //API Локация
@@ -943,6 +950,7 @@ class LocationsController extends Controller
             if ($initialLocationTitle != $requestData['name']) {
                 $requestData['slug'] = Str::slug($requestData['name'], '-');
             }
+
             $location->update($requestData);
             $returnUrl = $request->session()->get('returnUrl');
 
@@ -1201,43 +1209,42 @@ class LocationsController extends Controller
         return 'ok';
     }
 
-    public function apiAddInformationhotspot(Request $request)
+    public function apiAddInformationhotspot(Request $request, $lang)
     {
+        app()->setLocale($lang);
         $data = $request->all();
 
-        $validation = Validator::make($request->all(), [
-            'image' => 'file|max:150000',
-            'file' => 'file|max:150000',
-        ]);
-
-        if ($validation->passes()) {
-            $image = $request->file('image');
-            if ($image) {
-                $newName = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/information'), $newName);
-            }
-
-            $file = $request->file('file');
-            if ($file) {
-                $fileName = rand() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('storage/information'), $fileName);
-            }
+        if ($data['create'] == true){
+            $hotspot = new Hotspot();
+        } elseif ($data['hotspotid'] != null) {
+            $hotspot = Hotspot::find($data['hotspotid']);
         }
 
-        $hotspot = new Hotspot();
+        foreach ($request->lang as $lang => $items) {
+            if (isset($items['image']) && $items['image'] !== null) {
+                $image = $items['image'];
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+
+                $hotspot->setTranslation('image', $lang, $newName);
+            }
+            if (isset($items['file']) && $items['file'] !== null) {
+                $image = $items['file'];
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+
+                $hotspot->setTranslation('file', $lang, $newName);
+            }
+            $hotspot->setTranslation('information', $lang, $items['information']);
+        }
+
         $hotspot->location_id = $data['location'];
         $hotspot->destination_id = $data['location'];
         $hotspot->h = $data['h'];
         $hotspot->v = $data['v'];
-        $hotspotInformation = $data['information'];
-        $hotspot->information = $hotspotInformation;
-        if (isset($image)) {
-            $hotspot->image = $newName;
-        }
-        if (isset($file)) {
-            $hotspot->file = $fileName;
-        }
+
         $hotspot->type = Hotspot::TYPE_INFORMATION;
+
         $hotspot->save();
     }
 
@@ -1295,8 +1302,10 @@ class LocationsController extends Controller
         }
     }
 
-    public function uploadVideo(Request $request)
+    public function uploadVideo(Request $request, $lang)
     {
+        app()->setLocale($lang);
+
         $data = $request->all();
 
         $validation = Validator::make($request->all(), [
@@ -1385,5 +1394,23 @@ class LocationsController extends Controller
         }
 
         return $krhotspots;
+    }
+
+    public function updateHlookat(Request $request) {
+
+        $location  = Location::find($request->location);
+        if ($location) {
+            $location->hlookat = $request->hlookat;
+            $location->save();
+            return response()->json([
+                'message' => 'Success',
+                'class_name' => 'alert-success',
+            ]);
+
+        }
+        return response()->json([
+            'message' => 'not found',
+            'class_name' => 'alert-danger',
+        ]);
     }
 }

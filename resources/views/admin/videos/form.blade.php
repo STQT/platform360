@@ -26,6 +26,10 @@
     {!! $errors->first('roll', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group">Видео: <input class="form-control-file" type="file" name="video"></div>
+
+<input type="hidden" name="lang" value="{{ $lang }}">
+
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>
