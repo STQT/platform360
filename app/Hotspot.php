@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Translatable\HasTranslations;
 
 class Hotspot extends Model
 {
     use LogsActivity;
+    use HasTranslations;
 
     const TYPE_MARKER = 1;
     const TYPE_INFORMATION = 2;
@@ -32,7 +34,38 @@ class Hotspot extends Model
      *
      * @var array
      */
+    protected $translatable = ['information', 'image'];
     protected $fillable = ['location_id', 'destination_id', 'h', 'v', 'information', 'image', 'html_code', 'url'];
+
+    public function toArray22()
+    {
+        $attributes = parent::toArray();
+
+        foreach ($this->getTranslatableAttributes() as $name) {
+            $attributes[$name] = $this->getTranslation($name, app()->getLocale());
+        }
+
+        return $attributes;
+    }
+
+    public function toArray33()
+    {
+        $attributes = parent::toArray();
+
+        foreach ($this->getTranslatableAttributes() as $name) {
+            $attributes[$name] = $this->getTranslation($name, app()->getLocale());
+        }
+
+        return $attributes;
+    }
+
+    public static function transl($massiv)
+    {
+        foreach ($massiv as $key => $massic) {
+            $massiv[$key] = $massic->toArray22();
+        }
+        return $massiv;
+    }
 
     public function location()
     {

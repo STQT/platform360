@@ -38,26 +38,61 @@
         </div>
     </div>
 </div>
+<style>
+    #tabs-nav li.active {
+        background-color: #08E;
+    }
+    #updateHlookat {
+        position: absolute;
+        top: 25px;
+        background: rgba(0,0,0,0.5);
+        left: 930px;
+        color: #fff;
+        border: none;
+        padding: 10px 25px;
+        cursor: pointer;
+    }
+</style>
 
 <div id="informationModal" style="display: none;" class="modal">
     <div class="overlay"></div>
     <div class="modal-wrap">
         <span class="modal-close">x</span>
-        <form id="information-form" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="form-group">
-                    <h4>Информация</h4>
-                    <textarea class="form-control" id="information" name="information"></textarea>
-                </div>
-            </div>
+        <form id="information-form">
+            <div class="tabs my-tabs1">
+                <div id="tabs-nav" class="nav">
+                    <li><a href="#tab1" class="nav-link">Русский</a></li>
+                    <li><a href="#tab2" class="nav-link">Узбекский</a></li>
+                    <li><a href="#tab3" class="nav-link">Английский</a></li>
+                </div> <!-- END tabs-nav -->
+                <div id="tabs-content">
+                    @php
+                        $locales = ['ru','uzb','en']
+//                    @endphp
 
-            <div class="form-group">
-                <label>Фото<input type="file" name="image"></label>
-            </div>
-            <div class="form-group">
-                <img src="" alt="" style="display: none" class="preview">
-            </div>
+                    @for ($i = 0; $i < count($locales); $i++)
+                        <div id="{{'tab'. ($i+1) }}" class="tab-content">
+                            <div class="form-group">
+                                <label>Информация</label>
+                                <textarea class="form-control" rows="3" name="{{"lang" . "[$locales[$i]]" ."[information]"}}" id="{{'information_' . $locales[$i]}}" ></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Файл<input type="file" class="form-control-file" name="{{"lang" . "[$locales[$i]]" ."[image]"}}"></label>
+                            </div>
+                            <div class="form-group">
+                                <img src="" alt="" style="display: none" class="{{'preview_' . $locales[$i]}}">
+                            </div>
+                        </div>
+                    @endfor
+
+
+                </div> <!-- END tabs-content -->
+            </div> <!-- END tabs -->
+            <input type="hidden" class="hidden-create" name="create" value="">
+
+            <input type="hidden" class="hotspotid" name="hotspotid" value="">
+
+            <input type="hidden" name="hidden_lang" class="hidden-input-lang" value="">
 
             <div class="form-group">
                 <label>URL<input type="text" name="url" id="url"></label>
@@ -66,6 +101,7 @@
             <div class="form-group">
                 <label>Текстура<input type="file" name="file"></label>
             </div>
+
 
             <div id="deleteinformation" onclick="deleteinformation()" data-id="" style="border:1px solid red;color:red;text-align:center;height:25px;margin-bottom:10px;cursor:pointer">Удалить точку</div>
 
@@ -114,6 +150,14 @@
         <span class="modal-close">x</span>
         <div>
             <form method="post" enctype="multipart/form-data" id="upload-video">
+                <div class="form-group">
+                    <a href="{{ url('/admin/locations/ru/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button">Русский</button></a>
+
+                    <a href="{{ url('/admin/locations/uzb/' . $location->id) }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button">Узбекский</button></a>
+                    <a href="{{ url('/admin/locations/en/' . $location->id) }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button">Английский</button></a>
+                </div>
+
+                <br>
                 {{ csrf_field() }}
                 <div class="form-group">Видео: <input type="file" name="video"></div>
 
@@ -140,6 +184,27 @@
     </div>
 </div>
 
+<div id="updateHlookatModal" style="display: none;" class="modal">
+    <div class="overlay"></div>
+    <div class="modal-wrap" style="background: transparent">
+        <span class="modal-close" style=" color: white;    font-size: 34px;    font-weight: 900;">x</span>
+        <div class="modal-body">
+
+            <form method="post" enctype="multipart/form-data" id="upload-hlookat">
+                <br>
+                {{ csrf_field() }}
+                <input type="hidden" name="location" value={{ $location->id }} >
+                <br>
+                <label id="customRange2Lbl" for="customRange2">Градус: {{$location->hlookat}}</label>
+                <input type="range" class="custom-range" name="hlookat" value="{{$location->hlookat}}" min="0" max="360" id="customRange2">
+                <div><button type="submit" class="btn btn-primary">Сохранить</button></div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<button id="updateHlookat" onclick="updateHlookat();">Ракурс</button>
 <button id="addHotspot" onclick="add_hotspot();">Добавить точку</button>
 <button id="addVideo" onclick="add_video();">Добавить видео</button>
 <button id="addInformation" onclick="add_information_hotspot();">Добавить информацию</button>
@@ -158,6 +223,25 @@
 </script>
 
 <script>
+
+
+    // Show the first tab and hide the rest
+    $('.my-tabs1 #tabs-nav li:first-child').addClass('active');
+    $('.my-tabs1 .tab-content').hide();
+    $('.my-tabs1 .tab-content:first').show();
+
+    // Click function
+    $('.my-tabs1 #tabs-nav li').click(function(){
+        $('.my-tabs1 #tabs-nav li').removeClass('active');
+        $(this).addClass('active');
+        $('.my-tabs1 .tab-content').hide();
+
+        var activeTab = $(this).find('a').attr('href');
+        $(activeTab).fadeIn();
+        return false;
+    });
+
+
     var hcoordinate;
     var vcoordinate;
     var hotspotid;
@@ -180,11 +264,14 @@
         $('body').on('submit', 'form#information-form', function (e) {
             e.preventDefault();
             var data = new FormData(this);
+            var formtest = $('#information-form');
+            console.log(this);
+            console.log(formtest);
             data.append('location', "{{ $location->id }}");
             data.append('h', hcoordinate);
             data.append('v', vcoordinate);
             $.ajax({
-                url: '/ru/api/locations/add-information',
+                url: '/ru/api/locations/add-information/{{ $language }}',
                 method: 'POST',
                 data: data,
                 // dataType: 'JSON',
@@ -233,6 +320,14 @@
             selectedCategory = _this.data('category');
             getLocations(selectedCategory);
         });
+
+        $('.lang').click(function () {
+            var locale = $(this).attr('data-lang');
+            var hiddenInput = $('.hidden-input-lang');
+            console.log('locale: ', locale);
+            console.log('hiddenInput: ', hiddenInput);
+            hiddenInput.val(locale);
+        })
     });
 
     function getLocations(category, query) {
@@ -325,20 +420,32 @@
 
         setTimeout(function() {
             @foreach($location->hotspots as $hotspot)
+
             add_exist_hotspot(
                     {{ $hotspot->h }},
                     {{ $hotspot->v }},
                     {{$hotspot->id}},
                     {{$hotspot->type ? $hotspot->type : \App\Hotspot::TYPE_MARKER}},
-                    "{{ str_replace("\r", "\\\r", $hotspot->information) }}",
-                    "{{ $hotspot->image}}",
-                    "{{ $hotspot->url}}"
+
+                    {{--"{{ $hotspot->url}}"--}}
+                    "{{ str_replace("\r", "\\\r", $hotspot->getTranslation('information', 'ru')) }}",
+                    "{{ $hotspot->getTranslation('image', 'ru')}}",
+                    "{{ str_replace("\r", "\\\r", $hotspot->getTranslation('information', 'uzb')) }}",
+                    "{{ $hotspot->getTranslation('image', 'uzb')}}",
+                    "{{ str_replace("\r", "\\\r", $hotspot->getTranslation('information', 'en')) }}",
+                    "{{ $hotspot->getTranslation('image', 'en')}}",
             );
             @endforeach
         }, 3000);
     }
 
-    function add_exist_hotspot(h, v, id, type, information, image) {
+
+    function add_exist_hotspot(h, v, id, type,
+                               information_ru,  image_ru,
+                               information_uzb, image_uzb,
+                               information_en, image_en,) {
+
+
         if (krpano) {
             var hs_name = "hs" + ((Date.now() + Math.random()) | 0);
 
@@ -351,8 +458,8 @@
             krpano.set("hotspot[" + hs_name + "].ath", h);
             krpano.set("hotspot[" + hs_name + "].atv", v);
             krpano.set("hotspot[" + hs_name + "].type", type);
-            krpano.set("hotspot[" + hs_name + "].information", information);
-            krpano.set("hotspot[" + hs_name + "].image", image);
+            krpano.set("hotspot[" + hs_name + "].information", information_ru);
+            krpano.set("hotspot[" + hs_name + "].image", image_ru);
             krpano.set("hotspot[" + hs_name + "].distorted", true);
 
             if (krpano.get("device.html5")) {
@@ -363,10 +470,22 @@
                       hcoordinate = h;
                       vcoordinate = v;
                       if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-                          $('#information-form textarea').val(information);
-                          if (image.length > 0) {
-                              $('.preview').attr('src', '/storage/information/' + image);
-                              $('.preview').show();
+                          $('#information-form textarea#information_uzb').val(information_uzb);
+                          $('#information-form textarea#information_ru').val(information_ru);
+                          $('#information-form textarea#information_en').val(information_en);
+                          $('.hotspotid').val(hotspotid);
+
+                          if (image_ru.length > 0) {
+                              $('.preview_ru').attr('src', '/storage/information/' + image_ru);
+                              $('.preview_ru').show();
+                          }
+                          if (image_uzb.length > 0) {
+                              $('.preview_uzb').attr('src', '/storage/information/' + image_uzb);
+                              $('.preview_uzb').show();
+                          }
+                          if (image_en.length > 0) {
+                              $('.preview_en').attr('src', '/storage/information/' + image_en);
+                              $('.preview_en').show();
                           }
                           $('#informationModal').fadeIn();
                       } else {
@@ -442,6 +561,8 @@
     }
 
     function add_information_hotspot() {
+        var create = $('.hidden-create');
+        create.val(true);
          $('body').dblclick(function() {
             if (krpano) {
                 var mx = krpano.get("mouse.x");
@@ -505,6 +626,15 @@
         $('#videoModal').fadeIn();
     }
 
+    function updateHlookat() {
+        $('#updateHlookatModal').fadeIn();
+    }
+    $('#customRange2').on('change',function () {
+        var degree = $(this).val();
+        krpano.set('view.hlookat',degree);
+        $('#customRange2Lbl').text("Градус: " + degree)
+    })
+
     embedpano({target: "pano", id: "pano1", xml: "/admin/krpano/{{ $location->id }}", onready: krpano_onready_callback});
 
     $(document).ready(function() {
@@ -518,7 +648,7 @@
         $('form#upload-video').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
-                url: '/ru/api/locations/upload-video',
+                url: '/ru/api/locations/upload-video/{{ $language }}',
                 method: 'POST',
                 data: new FormData(this),
                 dataType: 'JSON',
@@ -530,11 +660,37 @@
                     $('#videoModal').fadeOut();
                 }
             });
+
+        });
+
+        $('form#upload-hlookat').on('submit', function(e) {
+            e.preventDefault();
+            $('form#upload-hlookat .btn').fadeOut();
+            $.ajax({
+                url: '/ru/api/locations/updatehlookat',
+                method: 'POST',
+                data: new FormData(this),
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data)
+                {
+                    $('#updateHlookatModal').fadeOut();
+                    $('form#upload-hlookat .btn').fadeIn();
+                },
+                error: function () {
+                    $('form#upload-hlookat .btn').fadeIn();
+
+                }
+            });
+
         });
     });
 </script>
 
-    <style>
+    <style >
+
         .cotegory-info {
             overflow: scroll;
         }

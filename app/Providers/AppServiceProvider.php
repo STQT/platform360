@@ -18,10 +18,16 @@ public function boot(Request $request)
           \URL::forceScheme('https');
       }
 
+        try {
+            app()->setLocale($request->segment(1) ?? config('app.locale'));
+            $allTranslations = \App\Models\LcTranslation::all()->pluck('value', 'key');
+        } catch (\Exception $exception) {
+            $allTranslations = [];
+
+        }
+        view()->share('allTranslations', $allTranslations);
       Schema::defaultStringLength(191);
 
-       app()->setLocale($request->segment(1));
-    
     }
 
     /**

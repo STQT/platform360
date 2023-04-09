@@ -29,7 +29,7 @@
                                         <td>{{ $video->video }}</td>
                                         <td>{{ $video->created_at }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/videos/' . $video->id . '/edit') }}" title="Edit video"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/videos/' . $video->id . '/edit/ru') }}" title="Edit video"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/videos', $video->id],

@@ -202,6 +202,7 @@ $(function() {
         }
 
         var _this = $('.search-input');
+        var this_lang =  $('.language-switcher select').val();
         var categoryId =
             $('.js-icon.icon-wrapper--selected').map(function() {
                 return $(this).data('category');
@@ -212,7 +213,7 @@ $(function() {
                 _this.val('');
             } else {
                 $.get(
-                    "/ru/search/noresult/" + categoryId,
+                    "/"+this_lang+"/search/noresult/" + categoryId,
                     onAjaxSuccess
                 );
             }
@@ -335,6 +336,9 @@ $(function() {
 
     $('.search-input').bind('input', function() {
         var _this = $(this);
+        var this_lang =  $('.language-switcher select').val();
+
+
         if (_this.val() != '') {
             $('.clear-field').show();
         } else {
@@ -348,9 +352,9 @@ $(function() {
         if ($('.js-icon').hasClass('icon-wrapper--selected')) {
             $('.js-icon').addClass('icon-wrapper__icon').removeClass('icon-wrapper--selected');
         }
-        if (_this.val() != "") {
+        if (_this.val() != "" && _this.val().length >= 3) {
             $.get(
-                "/ru/search/" + _this.val() + '/0',
+              "/" + this_lang + "/search/" + _this.val() + '/0',
                 onAjaxSuccess
             );
         }

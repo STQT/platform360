@@ -61,6 +61,13 @@
         {
           "title": "Хаб",
           "url": "\/admin\/locations/hub"
+        },
+        {
+          "title": "Переводы",
+          "url": "\/admin\/translations"
+        },
+        {"title":"Отчеты",
+          "url":"\/admin\/reports"
         }
       ]
     }

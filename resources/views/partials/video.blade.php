@@ -10,7 +10,10 @@
     </action>
 
     @if($location->video)
-
+        <action name="stopVid">
+            plugin[video].stop()
+        </action>
+        <events name="videos" keep="true" onremovepano="stopVid();" />
     <scene name="scene2" title="">
 
         <!-- include the videoplayer interface / skin (with VR support) -->
