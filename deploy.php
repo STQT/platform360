@@ -6,10 +6,10 @@ require 'recipe/laravel.php';
 set('default_timeout', 3000);
 
 // Project name
-set('application', 'uzbekistan360.uz');
+set('application', 'platform360.com');
 
 // Project repository
-set('repository', 'git@git.makegood.uz:makegood/uzbekistan360.git');
+set('repository', 'git@git.makegood.uz:GraceProjects/platform360.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 //set('git_tty', true);
@@ -40,7 +40,7 @@ host('213.226.71.194')
     ->configFile('~/.ssh/config')
     ->identityFile('~/.ssh/id_rsa')
     ->forwardAgent(true)
-    ->set('deploy_path', '/var/www/uzbekistan360.uz');
+    ->set('deploy_path', '/var/www/platform360.com');
 
 host('185.74.6.184')
     ->stage('production')
@@ -49,7 +49,7 @@ host('185.74.6.184')
     ->configFile('~/.ssh/config')
     ->identityFile('~/.ssh/id_rsa')
     ->forwardAgent(true)
-    ->set('deploy_path', '/var/www/uzbekistan360.uz');
+    ->set('deploy_path', '/var/www/platform360.com');
 
 //host('185.74.6.184')
 //    ->stage('staging')

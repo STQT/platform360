@@ -131,7 +131,7 @@ class HomeController extends Controller
         //Загрузка основноч точки
         //обработка субдоменов и локация по умолчанию
         $subdomain = $this->getSubdomainName();
-        if ($subdomain && $subdomain != 'dev' && $subdomain != 'dev2' &&  $subdomain != 'dev3' && !is_numeric($subdomain)) {
+        if ($subdomain && $subdomain != 'dev' && $subdomain != 'dev2' &&  $subdomain != 'platform' && !is_numeric($subdomain)) {
             $city = Cities::where('subdomain', $subdomain)->first();
             if ($city) {
                 $location = Location::where([
