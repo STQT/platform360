@@ -50,7 +50,7 @@ host('185.74.6.184')
     ->identityFile('~/.ssh/id_rsa')
     ->forwardAgent(true)
     ->set('deploy_path', '/var/www/uzbekistan360.uz');
-//
+
 //host('185.74.6.184')
 //    ->stage('staging')
 //    ->user('deploy')
