@@ -46,16 +46,16 @@
         @endif
     @else
         <title>{{ $location->name }} - Uzbekistan 360</title>
-        <meta name="description" content="Самый большой и качественный интерактивный тур по Узбекистану">
+        <meta name="description" content="Виртуальный тур по самым знаменитым шоурумам мебели, стройматериалов и сантехники">
     @endif
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 
     <meta itemprop="name" content="{{ $location->name }}">
-    <meta itemprop="description" content="{{ !empty($location->description) ? $location->description : 'Самый большой и качественный интерактивный тур по Узбекистану' }}">
+    <meta itemprop="description" content="{{ !empty($location->description) ? $location->description : 'Виртуальный тур по самым знаменитым шоурумам мебели, стройматериалов и сантехники' }}">
     <meta itemprop="image" content="/assets/socialpreview.jpg">
     <meta name="twitter:site" content="@Uzbekistan360uz">
     <meta name="twitter:title" content="{{ $location->name }}">
-    <meta name="twitter:description" content="{{ !empty($location->description) ? $location->description : 'Самый большой и качественный интерактивный тур по Узбекистану' }}">
+    <meta name="twitter:description" content="{{ !empty($location->description) ? $location->description : 'Виртуальный тур по самым знаменитым шоурумам мебели, стройматериалов и сантехники' }}">
     <meta name="twitter:image:src" content="/assets/socialpreview.jpg">
     <meta property="og:title" content="{{ $location->name }}">
     <meta property="og:url" content="{{ \Request::url() }}">
@@ -64,7 +64,7 @@
     @else
         <meta property="og:image" content="/assets/socialpreview.jpg">
     @endif
-    <meta property="og:description" content="{{ !empty($location->description) ? $location->description : 'Самый большой и качественный интерактивный тур по Узбекистану' }}">
+    <meta property="og:description" content="{{ !empty($location->description) ? $location->description : 'Виртуальный тур по самым знаменитым шоурумам мебели, стройматериалов и сантехники' }}">
     <meta property="og:site_name" content="{{ $location->name }}">
     @if (strpos(request()->url(), '/location/') !== false)
         {{--    Мета теги для внутренних страниц    --}}
