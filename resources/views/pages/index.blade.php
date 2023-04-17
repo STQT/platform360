@@ -43,14 +43,14 @@
                             <span class="icon-ic_glass wrapper-button__icon " data-pannel="search"></span>
                             <div class="dubai360-tooltip"><span>{{$allTranslations['search'] ?? trans('uzb360.search')}}</span></div>
                         </div>
-                        <div class="wrapper-button">
-                            <span class="icon-ic_comment wrapper-button__icon " data-pannel="feedbackPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
-                        </div>
-                        <div class="wrapper-button">
-                            <span class="icon-ic_question wrapper-button__icon " data-pannel="helpPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{$allTranslations['help'] ?? trans('uzb360.help')}}</span></div>
-                        </div>
+{{--                        <div class="wrapper-button">--}}
+{{--                            <span class="icon-ic_comment wrapper-button__icon " data-pannel="feedbackPannel"></span>--}}
+{{--                            <div class="dubai360-tooltip"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>--}}
+{{--                        </div>--}}
+{{--                        <div class="wrapper-button">--}}
+{{--                            <span class="icon-ic_question wrapper-button__icon " data-pannel="helpPannel"></span>--}}
+{{--                            <div class="dubai360-tooltip"><span>{{$allTranslations['help'] ?? trans('uzb360.help')}}</span></div>--}}
+{{--                        </div>--}}
                     </div>
 
                     @if (is_array($etajlocations) || is_object($etajlocations))
