@@ -1922,6 +1922,7 @@
                             } else {
                                 $('.image-block').html('');
                             }
+                            console.log('file:', informationOptions.file);
                             if (informationOptions.file) {
                                 $('.information-buttons').html('<a class="btn texture-button">{{ trans('uzb360.download_texture')}}</a>');
                                 $('.information-buttons a').attr('href', '/storage/information/' + informationOptions.file);

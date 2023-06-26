@@ -1228,15 +1228,15 @@ class LocationsController extends Controller
 
                 $hotspot->setTranslation('image', $lang, $newName);
             }
-            if (isset($items['file']) && $items['file'] !== null) {
-                $image = $items['file'];
-                $newName = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/information'), $newName);
 
-                $hotspot->setTranslation('file', $lang, $newName);
-            }
             $hotspot->setTranslation('information', $lang, $items['information']);
         }
+        if (isset($data['file']) && $data['file'] !== null) {
+            $image = $data['file'];
+            $newName = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/information'), $newName);
+        }
+        $hotspot->file = $newName;
 
         $hotspot->location_id = $data['location'];
         $hotspot->destination_id = $data['location'];

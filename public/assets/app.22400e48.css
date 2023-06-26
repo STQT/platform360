@@ -5661,6 +5661,20 @@ height: 192px;
   overflow: auto !important;
 }
 
+.fancybox-bg {
+  background: #111;
+}
+
+.fancybox-content {
+  border-radius: 8px;
+  overflow: visible !important;
+}
+
+.information-buttons {
+  position: absolute;
+  right: -170px;
+  top: 518px;
+}
 
 
 @media screen and (max-width: 1250px) {

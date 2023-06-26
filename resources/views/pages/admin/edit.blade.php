@@ -99,7 +99,7 @@
             </div>
 
             <div class="form-group">
-                <label>Текстура<input type="file" name="file"></label>
+                <label>3D файл <input type="file" name="file"></label>
             </div>
 
 
