@@ -5676,6 +5676,9 @@ height: 192px;
   top: 518px;
 }
 
+.information-buttons a {
+  display: block;
+}
 
 @media screen and (max-width: 1250px) {
   .input_city {

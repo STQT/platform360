@@ -1903,14 +1903,6 @@
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         var showModal = true;
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-
-                            if (informationOptions.hasOwnProperty('url')) {
-
-                                if (informationOptions.url != '' && informationOptions.url != null) {
-                                    window.location.href = informationOptions.url;
-                                    showModal = false;
-                                }
-                            }
                             var getLocale = "{{app()->getLocale()}}";
 
                             information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
@@ -1922,12 +1914,19 @@
                             } else {
                                 $('.image-block').html('');
                             }
-                            console.log('file:', informationOptions.file);
                             if (informationOptions.file) {
-                                $('.information-buttons').html('<a class="btn texture-button">{{ trans('uzb360.download_texture')}}</a>');
+                                $('.information-buttons').append('<a class="btn texture-button">{{ trans('uzb360.download_3d_model')}}</a>');
                                 $('.information-buttons a').attr('href', '/storage/information/' + informationOptions.file);
                             } else {
                                 $('.information-buttons').html('');
+                            }
+
+                            if (informationOptions.hasOwnProperty('url')) {
+                                if (informationOptions.url != '' && informationOptions.url != null) {
+                                    console.log('url is ok', informationOptions.url);
+                                    $('.information-buttons').append('<a class="btn url-button">{{ trans('uzb360.website')}}</a>');
+                                    $('.information-buttons a.url-button').attr('href', informationOptions.url);
+                                }
                             }
                             if (showModal) {
                                 $.fancybox.open(

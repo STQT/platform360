@@ -1238,6 +1238,10 @@ class LocationsController extends Controller
         }
         $hotspot->file = $newName;
 
+        if (isset($data['url'])) {
+            $hotspot->url = $data['url'];
+        }
+
         $hotspot->location_id = $data['location'];
         $hotspot->destination_id = $data['location'];
         $hotspot->h = $data['h'];
