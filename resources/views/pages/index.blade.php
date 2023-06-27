@@ -1905,6 +1905,8 @@
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                             var getLocale = "{{app()->getLocale()}}";
 
+                            $('.information-buttons').html('');
+
                             information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
                             image = jQuery.type(image) === "string" ?  image : image[getLocale]
                             $('#information-modal .content').html(information);
@@ -1914,19 +1916,18 @@
                             } else {
                                 $('.image-block').html('');
                             }
-                            if (informationOptions.file) {
-                                $('.information-buttons').append('<a class="btn texture-button">{{ trans('uzb360.download_3d_model')}}</a>');
-                                $('.information-buttons a').attr('href', '/storage/information/' + informationOptions.file);
-                            } else {
-                                $('.information-buttons').html('');
-                            }
-
                             if (informationOptions.hasOwnProperty('url')) {
                                 if (informationOptions.url != '' && informationOptions.url != null) {
                                     console.log('url is ok', informationOptions.url);
-                                    $('.information-buttons').append('<a class="btn url-button">{{ trans('uzb360.website')}}</a>');
+                                    $('.information-buttons').append('<a class="btn url-button"><img src="{{asset('assets/icons/url.png')}}"/><br>{{ trans('uzb360.website')}}</a>');
                                     $('.information-buttons a.url-button').attr('href', informationOptions.url);
                                 }
+                            }
+                            if (informationOptions.file) {
+                                $('.information-buttons').append('<a class="btn texture-button"><img src="{{asset('assets/icons/3d-model.png')}}"/><br>{{ trans('uzb360.download_3d_model')}}</a>');
+                                $('.information-buttons a.texture-button').attr('href', '/storage/information/' + informationOptions.file);
+                            } else {
+                                $('.information-buttons').html('');
                             }
                             if (showModal) {
                                 $.fancybox.open(

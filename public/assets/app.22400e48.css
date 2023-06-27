@@ -5672,14 +5672,20 @@ height: 192px;
 
 .information-buttons {
   position: absolute;
-  right: -170px;
+  right: -145px;
   top: 518px;
 }
 
 .information-buttons a {
   display: block;
+  color: #fff;
+  height: 48px;
+  margin-bottom: 50px;
+  text-align: center;
 }
-
+.information-buttons img {
+  width: 48px;
+}
 @media screen and (max-width: 1250px) {
   .input_city {
     display: none !important;
