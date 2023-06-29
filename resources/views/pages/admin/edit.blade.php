@@ -99,6 +99,10 @@
             </div>
 
             <div class="form-group">
+                <label>Instagram<input type="text" name="instagram" id="instagram"></label>
+            </div>
+
+            <div class="form-group">
                 <label>3D файл <input type="file" name="file"></label>
             </div>
 

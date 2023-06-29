@@ -1235,11 +1235,15 @@ class LocationsController extends Controller
             $image = $data['file'];
             $newName = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('storage/information'), $newName);
+            $hotspot->file = $newName;
         }
-        $hotspot->file = $newName;
 
         if (isset($data['url'])) {
             $hotspot->url = $data['url'];
+        }
+
+        if (isset($data['instagram'])) {
+            $hotspot->instagram_url = $data['instagram'];
         }
 
         $hotspot->location_id = $data['location'];
@@ -1353,7 +1357,9 @@ class LocationsController extends Controller
     public function apiHotspots($id)
     {
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $id)
+        $krhotspots = Hotspot::with('destination_locations')
+            ->join('locations', 'locations.id', 'destination_id')
+            ->where('location_id', $id)
             ->where('locations.published', 1)->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
@@ -1386,6 +1392,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
                     $krhotspots[$key]->file = $krhotspots[$key]->file;
+                    $krhotspots[$key]->instagram_hotspot = $krhotspots[$key]->instagram_url;
                     $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);

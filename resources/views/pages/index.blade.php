@@ -1287,7 +1287,7 @@
                                 data[i].information,
                                 data[i].image,
                                 data[i].video,
-                                {url: data[i].url, file: data[i].file}
+                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot}
                             );
 
                     }
@@ -1797,7 +1797,7 @@
                                 data[i].information,
                                 data[i].image,
                                 data[i].video,
-                                {url: data[i].url, file: data[i].file}
+                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot}
                             );
 
                     }
@@ -1918,9 +1918,14 @@
                             }
                             if (informationOptions.hasOwnProperty('url')) {
                                 if (informationOptions.url != '' && informationOptions.url != null) {
-                                    console.log('url is ok', informationOptions.url);
-                                    $('.information-buttons').append('<a class="btn url-button"><img src="{{asset('assets/icons/url.png')}}"/><br>{{ trans('uzb360.website')}}</a>');
+                                    $('.information-buttons').append('<a class="btn url-button" target="_blank"><img src="{{asset('assets/icons/url.png')}}"/><br>{{ trans('uzb360.website')}}</a>');
                                     $('.information-buttons a.url-button').attr('href', informationOptions.url);
+                                }
+                            }
+                            if (informationOptions.hasOwnProperty('instagram')) {
+                                if (informationOptions.instagram != '' && informationOptions.instagram != null) {
+                                    $('.information-buttons').append('<a class="btn instagram-button" target="_blank"><img src="{{asset('assets/icons/instagram.png')}}"/><br>Instagram</a>');
+                                    $('.information-buttons a.instagram-button').attr('href', informationOptions.instagram);
                                 }
                             }
                             if (informationOptions.file) {
