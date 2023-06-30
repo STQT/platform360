@@ -5710,8 +5710,13 @@ height: 192px;
   text-align: center;
 }
 
+.image-block img {
+  width: 100%;
+}
+
 .heading {
   margin: 50px;
+  margin-top: 0;
   height: 50px;
 }
 
