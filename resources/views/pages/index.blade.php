@@ -1084,8 +1084,16 @@
 
     <div class="information-modal" id="information-modal" style="display: none">
         <div class="information-buttons"></div>
-        <div class="image-block"></div>
+        <div class="heading">
+            <div class="logo"></div>
+            <div class="text">
+                <div class="title"></div>
+                <div class="description"></div>
+            </div>
+        </div>
         <div class="content"></div>
+        <div class="image-block"></div>
+        <div class="images flexbin flexbin-margin"></div>
     </div>
 @endsection
 
@@ -1287,7 +1295,9 @@
                                 data[i].information,
                                 data[i].image,
                                 data[i].video,
-                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot}
+                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
+                                    images: data[i].images, title: data[i].title, description: data[i].information_description,
+                                    logo: data[i].logo}
                             );
 
                     }
@@ -1797,7 +1807,9 @@
                                 data[i].information,
                                 data[i].image,
                                 data[i].video,
-                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot}
+                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
+                                    images: data[i].images, title: data[i].title, description: data[i].information_description,
+                                    logo: data[i].logo}
                             );
 
                     }
@@ -1934,6 +1946,36 @@
                             } else {
                                 $('.information-buttons').html('');
                             }
+                            if (informationOptions.hasOwnProperty('title')) {
+                                if (informationOptions.title != '' && informationOptions.title != null) {
+                                    $('.heading .title').html('<h5>' + informationOptions.title + '</h5>');
+                                }
+                            } else {
+                                $('.heading .title').html('');
+                            }
+                            if (informationOptions.hasOwnProperty('description')) {
+                                if (informationOptions.description != '' && informationOptions.description != null) {
+                                    $('.heading .description').html(informationOptions.description);
+                                }
+                            } else {
+                                $('.heading .description').html('');
+                            }
+                            $('.heading .logo').html('');
+                            if (informationOptions.logo) {
+                                $('.heading .logo').html('<img src="/storage/information/' + informationOptions.logo + '"/>');
+                            } else {
+                                $('.heading .logo').html('');
+                            }
+
+                            $('#information-modal .images').html('');
+                            if (informationOptions.images) {
+                                $.each(informationOptions.images, function (key, value) {
+                                    $('#information-modal .images').append('<a href="#"><img src="/storage/information/' + value + '"/></a>');
+                                });
+                            } else {
+                                $('#information-modal .images').html('');
+                            }
+
                             if (showModal) {
                                 $.fancybox.open(
                                     $('#information-modal'),

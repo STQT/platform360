@@ -77,7 +77,7 @@
                                 <textarea class="form-control" rows="3" name="{{"lang" . "[$locales[$i]]" ."[information]"}}" id="{{'information_' . $locales[$i]}}" ></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Файл<input type="file" class="form-control-file" name="{{"lang" . "[$locales[$i]]" ."[image]"}}"></label>
+                                <label>Файл изображения<input type="file" class="form-control-file" name="{{"lang" . "[$locales[$i]]" ."[image]"}}"></label>
                             </div>
                             <div class="form-group">
                                 <img src="" alt="" style="display: none" class="{{'preview_' . $locales[$i]}}">
@@ -94,12 +94,31 @@
 
             <input type="hidden" name="hidden_lang" class="hidden-input-lang" value="">
 
+            <hr>
+            <div class="form-group">
+                <label>Заголовок<input type="text" name="title" id="title"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Описание<input type="text" name="description" id="description"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Лого <input type="file" name="logo"></label>
+            </div>
+
+            <hr>
+
             <div class="form-group">
                 <label>URL<input type="text" name="url" id="url"></label>
             </div>
 
             <div class="form-group">
                 <label>Instagram<input type="text" name="instagram" id="instagram"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Фото галерея <input type="file" name="photos[]" multiple></label>
             </div>
 
             <div class="form-group">

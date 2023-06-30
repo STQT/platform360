@@ -5668,6 +5668,8 @@ height: 192px;
 .fancybox-content {
   border-radius: 8px;
   overflow: visible !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .information-buttons {
@@ -5686,6 +5688,35 @@ height: 192px;
 .information-buttons img {
   width: 48px;
 }
+
+#information-modal .content {
+  padding: 44px;
+  text-align: center;
+}
+
+.heading {
+  margin: 50px;
+  height: 50px;
+}
+
+.heading .logo {
+  width: 105px;
+  float: left;
+  margin-right: 30px;
+}
+
+.heading .text {
+  float: left;
+}
+
+.heading .text .title {
+  font-size: 2.3em;
+}
+
+.heading .logo img {
+  width: 105px;
+}
+
 @media screen and (max-width: 1250px) {
   .input_city {
     display: none !important;

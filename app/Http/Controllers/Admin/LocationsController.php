@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Cities;
 use App\Hotspot;
+use App\HotspotImage;
 use App\HotspotPolygon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -1237,6 +1238,24 @@ class LocationsController extends Controller
             $image->move(public_path('storage/information'), $newName);
             $hotspot->file = $newName;
         }
+        if (isset($data['logo']) && $data['logo'] !== null) {
+            $image = $data['logo'];
+            $newName = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/information'), $newName);
+            $hotspot->information_logo = $newName;
+        }
+
+        if (isset($data['photos']) && $data['photos'] !== null) {
+            $images = $data['photos'];
+            foreach ($images as $image) {
+                $newName = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/information'), $newName);
+                $hotspotImage = new HotspotImage;
+                $hotspotImage->file = $newName;
+                $hotspotImage->hotspot_id = $hotspot->id;
+                $hotspotImage->save();
+            }
+        }
 
         if (isset($data['url'])) {
             $hotspot->url = $data['url'];
@@ -1244,6 +1263,12 @@ class LocationsController extends Controller
 
         if (isset($data['instagram'])) {
             $hotspot->instagram_url = $data['instagram'];
+        }
+        if (isset($data['title'])) {
+            $hotspot->information_title = $data['title'];
+        }
+        if (isset($data['description'])) {
+            $hotspot->information_description = $data['description'];
         }
 
         $hotspot->location_id = $data['location'];
@@ -1358,14 +1383,17 @@ class LocationsController extends Controller
     {
         //Загрузка хотспотов основной точки
         $krhotspots = Hotspot::with('destination_locations')
+            ->select('hotspots.*', 'hotspots.id as hotspotid', 'locations.*')
             ->join('locations', 'locations.id', 'destination_id')
             ->where('location_id', $id)
-            ->where('locations.published', 1)->get();
+            ->where('locations.published', 1)
+            ->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
+            $hotspotImages = HotspotImage::where('hotspot_id', $value->hotspotid)->get();
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if ($krhotspotinfo[$key2]->type == \App\Hotspot::TYPE_POLYGON) {
                     continue;
@@ -1394,12 +1422,20 @@ class LocationsController extends Controller
                     $krhotspots[$key]->file = $krhotspots[$key]->file;
                     $krhotspots[$key]->instagram_hotspot = $krhotspots[$key]->instagram_url;
                     $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
+                    $hotspotImagesArray = [];
+                    foreach ($hotspotImages as $hotspotImage) {
+                        $hotspotImagesArray[] = $hotspotImage->file;
+                    }
+                    $krhotspots[$key]->images = $hotspotImagesArray;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);
                     $hotspotInformation = str_replace('"', '\"', $hotspotInformation);
                     $hotspotInformation = str_replace("'", "\'", $hotspotInformation);
                     $hotspotInformation = str_replace("\r", '\\\r', $hotspotInformation);
                     $krhotspots[$key]->information = $hotspotInformation;
+
+                    $krhotspots[$key]->title = $krhotspots[$key]->information_title;
+                    $krhotspots[$key]->logo = $krhotspots[$key]->information_logo;
                 }
             }
         }
