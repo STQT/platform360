@@ -1245,18 +1245,6 @@ class LocationsController extends Controller
             $hotspot->information_logo = $newName;
         }
 
-        if (isset($data['photos']) && $data['photos'] !== null) {
-            $images = $data['photos'];
-            foreach ($images as $image) {
-                $newName = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/information'), $newName);
-                $hotspotImage = new HotspotImage;
-                $hotspotImage->file = $newName;
-                $hotspotImage->hotspot_id = $hotspot->id;
-                $hotspotImage->save();
-            }
-        }
-
         if (isset($data['url'])) {
             $hotspot->url = $data['url'];
         }
@@ -1278,7 +1266,19 @@ class LocationsController extends Controller
 
         $hotspot->type = Hotspot::TYPE_INFORMATION;
 
-        $hotspot->save();
+        if ($hotspot->save()) {
+            if (isset($data['photos']) && $data['photos'] !== null) {
+                $images = $data['photos'];
+                foreach ($images as $image) {
+                    $newName = rand() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('storage/information'), $newName);
+                    $hotspotImage = new HotspotImage;
+                    $hotspotImage->file = $newName;
+                    $hotspotImage->hotspot_id = $hotspot->id;
+                    $hotspotImage->save();
+                }
+            }
+        }
     }
 
     public function apiAddPolygonhotspot(Request $request)
