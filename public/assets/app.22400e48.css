@@ -5672,6 +5672,22 @@ height: 192px;
   padding-right: 0 !important;
 }
 
+.fancybox-slide--html .fancybox-close-small {
+  color: #b1b0b5 !important;
+}
+
+.fancybox-button.fancybox-close-small {
+  background: #f2f2f4;
+  border-radius: 50%;
+  padding-left: 0 !important;
+  top: 14px !important;
+}
+
+.fancybox-button.fancybox-close-small svg {
+  top: 0 !important;
+  position: absolute !important;
+}
+
 .information-buttons {
   position: absolute;
   right: -145px;
@@ -5715,6 +5731,15 @@ height: 192px;
 
 .heading .logo img {
   width: 105px;
+}
+
+.bottom-title {
+  margin-top: 40px;
+}
+
+.bottom-title h6 {
+  text-align: center;
+  font-size: 1.8em;
 }
 
 @media screen and (max-width: 1250px) {

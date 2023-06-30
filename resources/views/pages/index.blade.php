@@ -1094,6 +1094,7 @@
         <div class="content"></div>
         <div class="image-block"></div>
         <div class="images flexbin flexbin-margin"></div>
+        <div class="bottom-title"></div>
     </div>
 @endsection
 
@@ -1297,7 +1298,7 @@
                                 data[i].video,
                                 {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
                                     images: data[i].images, title: data[i].title, description: data[i].information_description,
-                                    logo: data[i].logo}
+                                    logo: data[i].logo, name: data[i].name}
                             );
 
                     }
@@ -1809,7 +1810,7 @@
                                 data[i].video,
                                 {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
                                     images: data[i].images, title: data[i].title, description: data[i].information_description,
-                                    logo: data[i].logo}
+                                    logo: data[i].logo, name: data[i].name}
                             );
 
                     }
@@ -1974,6 +1975,14 @@
                                 });
                             } else {
                                 $('#information-modal .images').html('');
+                            }
+
+                            if (informationOptions.hasOwnProperty('name')) {
+                                if (informationOptions.name != '' && informationOptions.name != null) {
+                                    $('.bottom-title').html('<h6>' + informationOptions.name + '</h6>');
+                                }
+                            } else {
+                                $('.heading .description').html('');
                             }
 
                             if (showModal) {
