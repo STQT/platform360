@@ -1950,6 +1950,8 @@
                             if (informationOptions.hasOwnProperty('title')) {
                                 if (informationOptions.title != '' && informationOptions.title != null) {
                                     $('.heading .title').html('<h5>' + informationOptions.title + '</h5>');
+                                } else {
+                                    $('.heading .title').html('');
                                 }
                             } else {
                                 $('.heading .title').html('');
@@ -1957,6 +1959,8 @@
                             if (informationOptions.hasOwnProperty('description')) {
                                 if (informationOptions.description != '' && informationOptions.description != null) {
                                     $('.heading .description').html(informationOptions.description);
+                                } else {
+                                    $('.heading .description').html('');
                                 }
                             } else {
                                 $('.heading .description').html('');
