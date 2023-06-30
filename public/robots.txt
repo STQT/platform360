@@ -1,6 +1,7 @@
 User-agent: *
 Disallow: /en/
 Disallow: /uzb/
+Disallow: /it/
 Disallow: /ru/krpano/
 Disallow: /ru/login
 Disallow: /login
