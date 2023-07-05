@@ -114,7 +114,11 @@ body{
 
 
 .information-modal {
-    width: 80%;
+    width: 49%;
+}
+
+.image-block {
+    margin-bottom: 8px;
 }
 
 .image-block img {
@@ -169,5 +173,9 @@ body{
 @media only screen and (max-width: 600px) {
     .fancybox-container .content img {
         width: 100%;
+    }
+
+    .information-modal {
+        width: 90%;
     }
 }

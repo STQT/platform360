@@ -5666,7 +5666,7 @@ height: 192px;
 }
 
 .fancybox-content {
-  border-radius: 8px;
+  border-radius: 14px;
   overflow: visible !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
@@ -5690,22 +5690,24 @@ height: 192px;
 
 .information-buttons {
   position: absolute;
-  right: -145px;
-  top: 268px;
+  right: -130px;
+  top: 351px;
 }
 
 .information-buttons a {
   display: block;
   color: #fff;
+  width: 136px;
   height: 48px;
-  margin-bottom: 50px;
+  margin-bottom: 85px;
   text-align: center;
 }
 .information-buttons img {
-  width: 48px;
+  width: 69px;
 }
 
 #information-modal .content {
+  margin-top: 6px;
   padding: 44px;
   text-align: center;
 }
@@ -5715,15 +5717,23 @@ height: 192px;
 }
 
 .heading {
-  margin: 50px;
   margin-top: 0;
+  margin-left: 31px;
   height: 50px;
 }
 
 .heading .logo {
   width: 105px;
   float: left;
-  margin-right: 30px;
+  margin-right: 19px;
+}
+
+.heading .title {
+  font-family: 'gothammedium';
+}
+
+.heading .description {
+  font-family: 'gothamlight';
 }
 
 .heading .text {
@@ -5738,6 +5748,10 @@ height: 192px;
   width: 105px;
 }
 
+.information-modal .content {
+  font-family: 'gothamlight';
+}
+
 .bottom-title {
   margin-top: 40px;
 }
@@ -5745,6 +5759,16 @@ height: 192px;
 .bottom-title h6 {
   text-align: center;
   font-size: 1.8em;
+}
+
+.flexbin > * {
+  margin-right: 12px !important;
+  margin-left: 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.flexbin.flexbin-margin {
+  margin-left: 0 !important;
 }
 
 @media screen and (max-width: 1250px) {
