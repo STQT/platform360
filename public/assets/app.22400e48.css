@@ -5707,7 +5707,7 @@ height: 192px;
 }
 
 #information-modal .content {
-  margin-top: 6px;
+  margin-top: 31px;
   padding: 44px;
   text-align: center;
 }
@@ -5737,7 +5737,7 @@ height: 192px;
 }
 
 .heading .text {
-  float: left;
+  /*float: left;*/
 }
 
 .heading .text .title {
