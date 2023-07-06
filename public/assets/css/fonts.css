@@ -1,15 +1,9 @@
 @font-face {
-    font-family: 'gothammedium';
-    src: url('/assets/css/fonts/gothammedium-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-
+    font-family: GothaProMed;
+    src: url("/assets/css/fonts/gothapromed.otf") format("opentype");
 }
 
 @font-face {
-    font-family: 'gothamlight';
-    src: url('fonts/gotham-light-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-
+    font-family: GothaProLig;
+    src: url("/assets/css/fonts/gothaprolig.otf") format("opentype");
 }

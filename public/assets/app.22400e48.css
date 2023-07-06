@@ -5728,12 +5728,12 @@ height: 192px;
   margin-right: 19px;
 }
 
-.heading .title {
-  font-family: 'gothammedium';
+.heading .title h5 {
+  font-family: 'GothaProMed';
 }
 
 .heading .description {
-  /*font-family: 'gothamlight';*/
+  font-family: 'GothaProLig';
 }
 
 .heading .text {
@@ -5749,7 +5749,7 @@ height: 192px;
 }
 
 .information-modal .content {
-  font-family: 'gothamlight';
+  font-family: 'GothaProLig';
 }
 
 .bottom-title {
