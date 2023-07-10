@@ -149,6 +149,14 @@
           </div>
       </div>
 
+      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+          <div class="form-group{{ $errors->has('logo') ? 'has-error' : ''}}">
+              {!! Form::label('logo', 'Логотип', ['class' => 'control-label']) !!}
+              {!! Form::file('logo', null, ['class' => 'form-control']) !!}
+              {!! $errors->first('logo', '<p class="help-block">:message</p>') !!}
+          </div>
+      </div>
+
       <hr>
 
       <div class="hasNo">

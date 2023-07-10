@@ -679,6 +679,14 @@ class LocationsController extends Controller
 
             $requestData['audio'] = $fullName;
         }
+        if (!empty($data['logo'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['logo']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['logo']->move(public_path('storage/locations'), $fullName);
+
+            $requestData['logo'] = $fullName;
+        }
         if (!empty($panoramas) || !empty($filenameVideo)) {
             $requestData['preview'] = '';
             if (!empty($panoramas)) {
@@ -916,6 +924,14 @@ class LocationsController extends Controller
             $file = $data['audio']->move(public_path('storage/audio'), $fullName);
 
             $requestData['audio'] = $fullName;
+        }
+        if (!empty($data['logo'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['logo']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['logo']->move(public_path('storage/locations'), $fullName);
+
+            $requestData['logo'] = $fullName;
         }
         if (!empty($requestData['name'])) {
             app()->setLocale($language);
