@@ -1094,8 +1094,7 @@
         <div class="centered-logo"></div>
         <div class="content"></div>
         <div class="image-block"></div>
-        <div class="images flexbin flexbin-margin"></div>
-        <div class="bottom-title"></div>
+        <div class="images"></div>
     </div>
 @endsection
 
@@ -1989,14 +1988,6 @@
                                 });
                             } else {
                                 $('#information-modal .images').html('');
-                            }
-
-                            if (informationOptions.hasOwnProperty('name')) {
-                                if (informationOptions.name != '' && informationOptions.name != null) {
-                                    $('.bottom-title').html('<h6>' + informationOptions.name + '</h6>');
-                                }
-                            } else {
-                                $('.heading .description').html('');
                             }
 
                             if (showModal) {
