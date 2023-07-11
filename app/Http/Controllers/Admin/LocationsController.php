@@ -1451,7 +1451,7 @@ class LocationsController extends Controller
                     $krhotspots[$key]->information = $hotspotInformation;
 
                     $krhotspots[$key]->title = $krhotspots[$key]->information_title;
-                    $krhotspots[$key]->logo = $krhotspots[$key]->information_logo;
+                    $krhotspots[$key]->information_logo = $krhotspots[$key]->information_logo;
                 }
             }
         }

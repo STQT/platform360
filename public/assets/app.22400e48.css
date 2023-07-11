@@ -5761,14 +5761,8 @@ height: 192px;
   font-size: 1.8em;
 }
 
-.flexbin > * {
-  margin-right: 12px !important;
-  margin-left: 0 !important;
-  margin-bottom: 15px !important;
-}
-
-.flexbin.flexbin-margin {
-  margin-left: 0 !important;
+.centered-logo {
+  text-align: center;
 }
 
 @media screen and (max-width: 1250px) {

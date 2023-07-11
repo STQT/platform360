@@ -1091,6 +1091,7 @@
                 <div class="description"></div>
             </div>
         </div>
+        <div class="centered-logo"></div>
         <div class="content"></div>
         <div class="image-block"></div>
         <div class="images flexbin flexbin-margin"></div>
@@ -1298,7 +1299,7 @@
                                 data[i].video,
                                 {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
                                     images: data[i].images, title: data[i].title, description: data[i].information_description,
-                                    logo: data[i].logo, name: data[i].name}
+                                    information_logo: data[i].information_logo, name: data[i].name, logo: data[i].logo}
                             );
 
                     }
@@ -1810,7 +1811,7 @@
                                 data[i].video,
                                 {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
                                     images: data[i].images, title: data[i].title, description: data[i].information_description,
-                                    logo: data[i].logo, name: data[i].name}
+                                    information_logo: data[i].information_logo, name: data[i].name, logo: data[i].logo}
                             );
 
                     }
@@ -1965,11 +1966,20 @@
                             } else {
                                 $('.heading .description').html('');
                             }
-                            $('.heading .logo').html('');
-                            if (informationOptions.logo) {
-                                $('.heading .logo').html('<img src="/storage/information/' + informationOptions.logo + '"/>');
+                            $('.heading .information_logo').html('');
+                            if (informationOptions.information_logo) {
+                                $('.heading .logo').html('<img src="/storage/information/' + informationOptions.information_logo + '"/>');
                             } else {
                                 $('.heading .logo').html('');
+                            }
+
+                            if (!informationOptions.title && !informationOptions.description && !informationOptions.information_logo) {
+                                $('.heading').hide();
+                                $('.centered-logo').html('<img src="/storage/locations/' + informationOptions.logo + '"/>');
+                                $('.centered-logo').show();
+                            } else {
+                                $('.heading').show();
+                                $('.centered-logo').hide();
                             }
 
                             $('#information-modal .images').html('');

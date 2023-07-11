@@ -37,7 +37,6 @@
         /*background-color: #000000;*/
         /*}*/
     </style>
-    <link rel="stylesheet" href="/assets/css/flexbin.css">
     <link rel="stylesheet" href="/assets/css/fonts.css">
 
     <!-- Facebook Pixel Code -->
