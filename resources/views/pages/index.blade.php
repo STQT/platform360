@@ -1083,7 +1083,6 @@
     </audio>
 
     <div class="information-modal" id="information-modal" style="display: none">
-        <div class="information-buttons"></div>
         <div class="heading">
             <div class="logo"></div>
             <div class="text">
@@ -1095,6 +1094,7 @@
         <div class="content"></div>
         <div class="image-block"></div>
         <div class="images"></div>
+        <div class="information-buttons"></div>
     </div>
 @endsection
 

@@ -5716,6 +5716,10 @@ height: 192px;
   width: 100%;
 }
 
+.images img {
+  width: 100%;
+}
+
 .heading {
   margin-top: 0;
   margin-left: 31px;
@@ -5808,5 +5812,17 @@ height: 192px;
   }
   .responsivee {
     width: 100% !important;
+  }
+
+  .information-buttons {
+    position: relative;
+    right: unset;
+    top: unset;
+  }
+  .information-buttons a {
+    float: left;
+    width: 109px;
+    color: #000;
+    height: unset;
   }
 }
