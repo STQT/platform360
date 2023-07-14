@@ -1973,6 +1973,7 @@
                             }
 
                             if (!informationOptions.title && !informationOptions.description && !informationOptions.information_logo) {
+                                console.log('information:', information, 'logo:', informationOptions);
                                 $('.heading').hide();
                                 $('.centered-logo').html('<img src="/storage/locations/' + informationOptions.logo + '"/>');
                                 $('.centered-logo').show();
