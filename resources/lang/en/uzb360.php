@@ -39,5 +39,8 @@ return [
   'vashemail' => 'Your email',
   'vashesoobshenie' => 'Your message',
   'bad_connection' => 'Bad Internet connection',
-  'browser_not_support_audio_element' => 'Your browser does not support audio elements.'
+  'browser_not_support_audio_element' => 'Your browser does not support audio elements.',
+  'download_texture' => 'Download texture',
+  'download_3d_model' => 'Download 3D model',
+  'website' => 'Web site',
 ];
