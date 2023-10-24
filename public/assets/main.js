@@ -597,6 +597,10 @@ $(function() {
             pathname =  pathname.replace("/uzb/", id + '/');
             redirectLang(pathname);
         }
+        if (pathname.indexOf("/it/") >= 0) {
+            pathname =  pathname.replace("/it/", id + '/');
+            redirectLang(pathname);
+        }
         if (pathname.indexOf("/en/") >= 0) {
             pathname =  pathname.replace("/en/",  id + '/');
             redirectLang(pathname);

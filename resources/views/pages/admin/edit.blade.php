@@ -62,12 +62,12 @@
             <div class="tabs my-tabs1">
                 <div id="tabs-nav" class="nav">
                     <li><a href="#tab1" class="nav-link">Русский</a></li>
-                    <li><a href="#tab2" class="nav-link">Узбекский</a></li>
+                    <li><a href="#tab2" class="nav-link">Итальянский</a></li>
                     <li><a href="#tab3" class="nav-link">Английский</a></li>
                 </div> <!-- END tabs-nav -->
                 <div id="tabs-content">
                     @php
-                        $locales = ['ru','uzb','en']
+                        $locales = ['ru','it','en']
 //                    @endphp
 
                     @for ($i = 0; $i < count($locales); $i++)
@@ -77,7 +77,7 @@
                                 <textarea class="form-control" rows="3" name="{{"lang" . "[$locales[$i]]" ."[information]"}}" id="{{'information_' . $locales[$i]}}" ></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Файл<input type="file" class="form-control-file" name="{{"lang" . "[$locales[$i]]" ."[image]"}}"></label>
+                                <label>Файл изображения<input type="file" class="form-control-file" name="{{"lang" . "[$locales[$i]]" ."[image]"}}"></label>
                             </div>
                             <div class="form-group">
                                 <img src="" alt="" style="display: none" class="{{'preview_' . $locales[$i]}}">
@@ -94,12 +94,35 @@
 
             <input type="hidden" name="hidden_lang" class="hidden-input-lang" value="">
 
+            <hr>
+            <div class="form-group">
+                <label>Заголовок<input type="text" name="title" id="title"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Описание<input type="text" name="description" id="description"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Лого <input type="file" name="logo"></label>
+            </div>
+
+            <hr>
+
             <div class="form-group">
                 <label>URL<input type="text" name="url" id="url"></label>
             </div>
 
             <div class="form-group">
-                <label>Текстура<input type="file" name="file"></label>
+                <label>Instagram<input type="text" name="instagram" id="instagram"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Фото галерея <input type="file" name="photos[]" multiple></label>
+            </div>
+
+            <div class="form-group">
+                <label>3D файл <input type="file" name="file"></label>
             </div>
 
 

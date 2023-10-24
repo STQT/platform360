@@ -17,7 +17,7 @@
                         <a href="{{ url('/admin/locations') }}" title="Назад"><button class="lang btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Назад</button></a>
                         <a href="{{ url('/admin/locations/'.$location->id.'/edit/ru') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}" type="button">Русский</button></a>
 
-                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/uzb') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}" type="button">Узбекский</button></a>
+                        <a href="{{ url('/admin/locations/'.$location->id.'/edit/it') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'it' ? 'current' : '' }}" type="button">Итальянский</button></a>
                         <a href="{{ url('/admin/locations/'.$location->id.'/edit/en') }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}" type="button">Английский</button></a>
 
                         <br />

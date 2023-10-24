@@ -5661,7 +5661,113 @@ height: 192px;
   overflow: auto !important;
 }
 
+.fancybox-bg {
+  background: #111;
+}
 
+.fancybox-content {
+  border-radius: 14px;
+  overflow: visible !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.fancybox-slide--html .fancybox-close-small {
+  color: #b1b0b5 !important;
+}
+
+.fancybox-button.fancybox-close-small {
+  background: #f2f2f4;
+  border-radius: 50%;
+  padding-left: 0 !important;
+  top: 14px !important;
+}
+
+.fancybox-button.fancybox-close-small svg {
+  top: 0 !important;
+  position: absolute !important;
+}
+
+.information-buttons {
+  position: absolute;
+  right: -130px;
+  top: 351px;
+}
+
+.information-buttons a {
+  display: block;
+  color: #fff;
+  width: 136px;
+  height: 48px;
+  margin-bottom: 85px;
+  text-align: center;
+}
+.information-buttons img {
+  width: 69px;
+}
+
+#information-modal .content {
+  padding: 44px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.image-block img {
+  width: 100%;
+}
+
+.images img {
+  width: 100%;
+}
+
+.heading {
+  margin-top: 0;
+  margin-left: 31px;
+  height: 50px;
+}
+
+.heading .logo {
+  width: 105px;
+  float: left;
+  margin-right: 19px;
+}
+
+.heading .title h5 {
+  font-family: 'GothaProMed';
+}
+
+.heading .description {
+  font-family: 'GothaProLig';
+}
+
+.heading .text {
+  /*float: left;*/
+}
+
+.heading .text .title {
+  font-size: 2.3em;
+}
+
+.heading .logo img {
+  width: 105px;
+}
+
+.information-modal .content {
+  font-family: 'GothaProLig';
+}
+
+.bottom-title {
+  margin-top: 40px;
+}
+
+.bottom-title h6 {
+  text-align: center;
+  font-size: 1.8em;
+}
+
+.centered-logo {
+  text-align: center;
+}
 
 @media screen and (max-width: 1250px) {
   .input_city {
@@ -5706,5 +5812,17 @@ height: 192px;
   }
   .responsivee {
     width: 100% !important;
+  }
+
+  .information-buttons {
+    position: relative;
+    right: unset;
+    top: unset;
+  }
+  .information-buttons a {
+    float: left;
+    width: 109px;
+    color: #000;
+    height: unset;
   }
 }

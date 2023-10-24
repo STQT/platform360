@@ -83,6 +83,11 @@ class Hotspot extends Model
         return $this->hasMany('App\Location', 'id', 'destination_id');
     }
 
+    public function images()
+    {
+        return $this->hasMany('App\HotspotImage', 'hotspot_id', 'id');
+    }
+
     public function polygons()
     {
 

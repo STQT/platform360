@@ -2,6 +2,21 @@
 <html>
 
 <head>
+  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPZCTVKFLT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-XPZCTVKFLT');
+    </script>
+
     @include('layouts/_meta')
 
     <style type="text/css">
@@ -37,6 +52,7 @@
         /*background-color: #000000;*/
         /*}*/
     </style>
+    <link rel="stylesheet" href="/assets/css/fonts.css">
 
     <!-- Facebook Pixel Code -->
     <script>

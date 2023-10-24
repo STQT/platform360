@@ -41,4 +41,6 @@ return [
   'bad_connection' => 'Неполадки с интернетом/Слабое подключение с интернетом',
   'browser_not_support_audio_element' => 'Ваш браузер не поддерживает аудио элементы.',
   'download_texture' => 'Скачать текстуру',
+  'download_3d_model' => 'Скачать 3D модель',
+  'website' => 'Веб-сайт',
 ];

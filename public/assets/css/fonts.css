@@ -1,0 +1,9 @@
+@font-face {
+    font-family: GothaProMed;
+    src: url("/assets/css/fonts/gothapromed.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GothaProLig;
+    src: url("/assets/css/fonts/gothaprolig.otf") format("opentype");
+}

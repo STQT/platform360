@@ -181,7 +181,7 @@
                                         <select name="select" class="dropdown">
                                             <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
                                             <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
-                                            <option value="uzb" id="uzb" @if(Lang::locale()=='uzb') selected @endif>UZB</option>
+                                            <option value="it" id="it" @if(Lang::locale()=='it') selected @endif>IT</option>
                                         </select>
                                     <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
                                          class="dropdown-chevronImg">
@@ -1083,9 +1083,18 @@
     </audio>
 
     <div class="information-modal" id="information-modal" style="display: none">
-        <div class="information-buttons"></div>
-        <div class="image-block"></div>
+        <div class="heading">
+            <div class="logo"></div>
+            <div class="text">
+                <div class="title"></div>
+                <div class="description"></div>
+            </div>
+        </div>
+        <div class="centered-logo"></div>
         <div class="content"></div>
+        <div class="image-block"></div>
+        <div class="images"></div>
+        <div class="information-buttons"></div>
     </div>
 @endsection
 
@@ -1287,7 +1296,9 @@
                                 data[i].information,
                                 data[i].image,
                                 data[i].video,
-                                {url: data[i].url, file: data[i].file}
+                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
+                                    images: data[i].images, title: data[i].title, description: data[i].information_description,
+                                    information_logo: data[i].information_logo, name: data[i].name, logo: data[i].logo}
                             );
 
                     }
@@ -1797,7 +1808,9 @@
                                 data[i].information,
                                 data[i].image,
                                 data[i].video,
-                                {url: data[i].url, file: data[i].file}
+                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
+                                    images: data[i].images, title: data[i].title, description: data[i].information_description,
+                                    information_logo: data[i].information_logo, name: data[i].name, logo: data[i].logo}
                             );
 
                     }
@@ -1903,15 +1916,9 @@
                     krpano.set("hotspot[" + hs_name + "].onclick", function (hs) {
                         var showModal = true;
                         if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
-
-                            if (informationOptions.hasOwnProperty('url')) {
-
-                                if (informationOptions.url != '' && informationOptions.url != null) {
-                                    window.location.href = informationOptions.url;
-                                    showModal = false;
-                                }
-                            }
                             var getLocale = "{{app()->getLocale()}}";
+
+                            $('.information-buttons').html('');
 
                             information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
                             image = jQuery.type(image) === "string" ?  image : image[getLocale]
@@ -1922,12 +1929,68 @@
                             } else {
                                 $('.image-block').html('');
                             }
+                            if (informationOptions.hasOwnProperty('url')) {
+                                if (informationOptions.url != '' && informationOptions.url != null) {
+                                    $('.information-buttons').append('<a class="btn url-button" target="_blank"><img src="{{asset('assets/icons/url.png')}}"/><br>{{ trans('uzb360.website')}}</a>');
+                                    $('.information-buttons a.url-button').attr('href', informationOptions.url);
+                                }
+                            }
+                            if (informationOptions.hasOwnProperty('instagram')) {
+                                if (informationOptions.instagram != '' && informationOptions.instagram != null) {
+                                    $('.information-buttons').append('<a class="btn instagram-button" target="_blank"><img src="{{asset('assets/icons/instagram.png')}}"/><br>Instagram</a>');
+                                    $('.information-buttons a.instagram-button').attr('href', informationOptions.instagram);
+                                }
+                            }
                             if (informationOptions.file) {
-                                $('.information-buttons').html('<a class="btn texture-button">{{ trans('uzb360.download_texture')}}</a>');
-                                $('.information-buttons a').attr('href', '/storage/information/' + informationOptions.file);
+                                $('.information-buttons').append('<a class="btn texture-button"><img src="{{asset('assets/icons/3d-model.png')}}"/><br>{{ trans('uzb360.download_3d_model')}}</a>');
+                                $('.information-buttons a.texture-button').attr('href', '/storage/information/' + informationOptions.file);
                             } else {
                                 $('.information-buttons').html('');
                             }
+                            if (informationOptions.hasOwnProperty('title')) {
+                                if (informationOptions.title != '' && informationOptions.title != null) {
+                                    $('.heading .title').html('<h5>' + informationOptions.title + '</h5>');
+                                } else {
+                                    $('.heading .title').html('');
+                                }
+                            } else {
+                                $('.heading .title').html('');
+                            }
+                            if (informationOptions.hasOwnProperty('description')) {
+                                if (informationOptions.description != '' && informationOptions.description != null) {
+                                    $('.heading .description').html(informationOptions.description);
+                                } else {
+                                    $('.heading .description').html('');
+                                }
+                            } else {
+                                $('.heading .description').html('');
+                            }
+                            $('.heading .information_logo').html('');
+                            if (informationOptions.information_logo) {
+                                $('.heading .logo').html('<img src="/storage/information/' + informationOptions.information_logo + '"/>');
+                            } else {
+                                $('.heading .logo').html('');
+                            }
+
+                            if (!informationOptions.title && !informationOptions.description && !informationOptions.information_logo) {
+                                console.log('information:', information, 'logo:', informationOptions);
+                                $('.heading').hide();
+                                $('.centered-logo').html('<img src="/storage/locations/' + informationOptions.logo + '"/>');
+                                $('.centered-logo').show();
+                            } else {
+                                $('.heading').show();
+                                $('.centered-logo').hide();
+                            }
+
+                            $('#information-modal .images').html('');
+                            if (informationOptions.images) {
+                                $.each(informationOptions.images, function (key, value) {
+                                    $('#information-modal .images').append('<a href="#"><img src="/storage/information/' + value + '"/></a>');
+                                });
+                            } else {
+                                $('#information-modal .images').html('');
+                            }
+
                             if (showModal) {
                                 $.fancybox.open(
                                     $('#information-modal'),

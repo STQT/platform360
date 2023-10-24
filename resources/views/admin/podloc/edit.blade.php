@@ -12,7 +12,7 @@
                         <a href="{{ url('/admin/podloc/'.$sky->podlocparent_id.'') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/ru') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'ru' ? 'current' : '' }}">Русский</button></a>
 
-                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/uzb') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'uzb' ? 'current' : '' }}">Узбекский</button></a>
+                        <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/it') }}" ><button class="lang btn btn-success btn-sm {{ Lang::locale() == 'it' ? 'current' : '' }}">Итальянский</button></a>
                         <a href="{{ url('/admin/podloc/edit/'.$sky->id.'/en') }}" ><button class="lang btn btn-info btn-sm {{ Lang::locale() == 'en' ? 'current' : '' }}">Английский</button></a>
                         <br />
                         <br />

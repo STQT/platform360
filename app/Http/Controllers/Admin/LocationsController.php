@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Cities;
 use App\Hotspot;
+use App\HotspotImage;
 use App\HotspotPolygon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -678,6 +679,14 @@ class LocationsController extends Controller
 
             $requestData['audio'] = $fullName;
         }
+        if (!empty($data['logo'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['logo']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['logo']->move(public_path('storage/locations'), $fullName);
+
+            $requestData['logo'] = $fullName;
+        }
         if (!empty($panoramas) || !empty($filenameVideo)) {
             $requestData['preview'] = '';
             if (!empty($panoramas)) {
@@ -915,6 +924,14 @@ class LocationsController extends Controller
             $file = $data['audio']->move(public_path('storage/audio'), $fullName);
 
             $requestData['audio'] = $fullName;
+        }
+        if (!empty($data['logo'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['logo']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['logo']->move(public_path('storage/locations'), $fullName);
+
+            $requestData['logo'] = $fullName;
         }
         if (!empty($requestData['name'])) {
             app()->setLocale($language);
@@ -1228,14 +1245,34 @@ class LocationsController extends Controller
 
                 $hotspot->setTranslation('image', $lang, $newName);
             }
-            if (isset($items['file']) && $items['file'] !== null) {
-                $image = $items['file'];
-                $newName = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('storage/information'), $newName);
 
-                $hotspot->setTranslation('file', $lang, $newName);
-            }
             $hotspot->setTranslation('information', $lang, $items['information']);
+        }
+        if (isset($data['file']) && $data['file'] !== null) {
+            $image = $data['file'];
+            $newName = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/information'), $newName);
+            $hotspot->file = $newName;
+        }
+        if (isset($data['logo']) && $data['logo'] !== null) {
+            $image = $data['logo'];
+            $newName = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/information'), $newName);
+            $hotspot->information_logo = $newName;
+        }
+
+        if (isset($data['url'])) {
+            $hotspot->url = $data['url'];
+        }
+
+        if (isset($data['instagram'])) {
+            $hotspot->instagram_url = $data['instagram'];
+        }
+        if (isset($data['title'])) {
+            $hotspot->information_title = $data['title'];
+        }
+        if (isset($data['description'])) {
+            $hotspot->information_description = $data['description'];
         }
 
         $hotspot->location_id = $data['location'];
@@ -1245,7 +1282,19 @@ class LocationsController extends Controller
 
         $hotspot->type = Hotspot::TYPE_INFORMATION;
 
-        $hotspot->save();
+        if ($hotspot->save()) {
+            if (isset($data['photos']) && $data['photos'] !== null) {
+                $images = $data['photos'];
+                foreach ($images as $image) {
+                    $newName = rand() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('storage/information'), $newName);
+                    $hotspotImage = new HotspotImage;
+                    $hotspotImage->file = $newName;
+                    $hotspotImage->hotspot_id = $hotspot->id;
+                    $hotspotImage->save();
+                }
+            }
+        }
     }
 
     public function apiAddPolygonhotspot(Request $request)
@@ -1349,13 +1398,18 @@ class LocationsController extends Controller
     public function apiHotspots($id)
     {
         //Загрузка хотспотов основной точки
-        $krhotspots = Hotspot::with('destination_locations')->join('locations', 'locations.id', 'destination_id')->where('location_id', $id)
-            ->where('locations.published', 1)->get();
+        $krhotspots = Hotspot::with('destination_locations')
+            ->select('hotspots.*', 'hotspots.id as hotspotid', 'locations.*')
+            ->join('locations', 'locations.id', 'destination_id')
+            ->where('location_id', $id)
+            ->where('locations.published', 1)
+            ->get();
         $array = $krhotspots->pluck('destination_locations.*.id')->flatten()->values();
 
         //Загрузка информации хотспотов основной точки
         $krhotspotinfo = Location::whereIn('id', $array)->with('categorylocation')->get();
         foreach ($krhotspots as $key => $value) {
+            $hotspotImages = HotspotImage::where('hotspot_id', $value->hotspotid)->get();
             foreach ($krhotspotinfo as $key2 => $value2) {
                 if ($krhotspotinfo[$key2]->type == \App\Hotspot::TYPE_POLYGON) {
                     continue;
@@ -1382,13 +1436,22 @@ class LocationsController extends Controller
                     $krhotspots[$key]->type = $krhotspots[$key]->type;
                     $krhotspots[$key]->image = $krhotspots[$key]->image;
                     $krhotspots[$key]->file = $krhotspots[$key]->file;
+                    $krhotspots[$key]->instagram_hotspot = $krhotspots[$key]->instagram_url;
                     $krhotspots[$key]->video = $krhotspotinfo[$key2]->video;
+                    $hotspotImagesArray = [];
+                    foreach ($hotspotImages as $hotspotImage) {
+                        $hotspotImagesArray[] = $hotspotImage->file;
+                    }
+                    $krhotspots[$key]->images = $hotspotImagesArray;
                     $hotspotInformation = $krhotspots[$key]->information;
                     $hotspotInformation = str_replace("\r", "<br>", $hotspotInformation);
                     $hotspotInformation = str_replace('"', '\"', $hotspotInformation);
                     $hotspotInformation = str_replace("'", "\'", $hotspotInformation);
                     $hotspotInformation = str_replace("\r", '\\\r', $hotspotInformation);
                     $krhotspots[$key]->information = $hotspotInformation;
+
+                    $krhotspots[$key]->title = $krhotspots[$key]->information_title;
+                    $krhotspots[$key]->information_logo = $krhotspots[$key]->information_logo;
                 }
             }
         }
