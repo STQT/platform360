@@ -9,6 +9,7 @@ return [
     'locales' => [
         'ru' => 'Russian',
         'en' => 'English',
-        'uzb' => 'Uzbek',
+        'es' => 'Spanish',
+        'tr' => 'Turkish',
     ],
 ];

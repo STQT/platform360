@@ -1,7 +1,7 @@
 User-agent: *
 Disallow: /en/
-Disallow: /uzb/
-Disallow: /it/
+Disallow: /tr/
+Disallow: /es/
 Disallow: /ru/krpano/
 Disallow: /ru/login
 Disallow: /login
@@ -9,7 +9,7 @@ Disallow: /ru/register
 Disallow: /register
 Disallow: /ru/password
 Disallow: /password
-Sitemap: https://uzbekistan360.uz/sitemap.xml
+Sitemap: http://plat-form360.com/sitemap.xml
 
 User-agent: Googlebot
 Disallow: /en/
@@ -26,7 +26,7 @@ Allow: /*.gif
 Allow: /*.png
 Allow: /*.js
 Allow: /*.css
-Sitemap: https://uzbekistan360.uz/sitemap.xml
+Sitemap: http://plat-form360.com/sitemap.xml
 
 User-agent: Yandex
 Disallow: /en/
@@ -38,4 +38,4 @@ Disallow: /ru/register
 Disallow: /register
 Disallow: /ru/password
 Disallow: /password
-Sitemap: https://uzbekistan360.uz/sitemap.xml
+Sitemap: http://plat-form360.com/sitemap.xml
