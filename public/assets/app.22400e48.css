@@ -5769,6 +5769,10 @@ height: 192px;
   text-align: center;
 }
 
+.centered-logo img {
+  max-width: 100%;
+}
+
 @media screen and (max-width: 1250px) {
   .input_city {
     display: none !important;

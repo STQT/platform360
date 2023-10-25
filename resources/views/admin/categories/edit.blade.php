@@ -11,8 +11,8 @@
                     <div class="card-body">
                         <a href="{{ url('/admin/categories') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/admin/categories/'.$category->id.'/edit/ru') }}" ><button class="btn btn-success btn-sm" type="button">Русский</button></a>
-
-                        <a href="{{ url('/admin/categories/'.$category->id.'/edit/uzb') }}" ><button class="btn btn-success btn-sm" type="button">Узбекский</button></a>
+                        <a href="{{ url('/admin/categories/'.$category->id.'/edit/es') }}" ><button class="btn btn-success btn-sm" type="button">Испанский</button></a>
+                        <a href="{{ url('/admin/categories/'.$category->id.'/edit/tr') }}" ><button class="btn btn-success btn-sm" type="button">Турецкий</button></a>
                         <a href="{{ url('/admin/categories/'.$category->id.'/edit/en') }}" ><button class="btn btn-info btn-sm" type="button">Английский</button></a>
                         <br />
                         <br />
