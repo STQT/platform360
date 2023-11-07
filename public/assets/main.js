@@ -593,12 +593,12 @@ $(function() {
             pathname =  pathname.replace("/ru/", id + '/');
             redirectLang(pathname);
         }
-        if (pathname.indexOf("/uzb/") >= 0) {
-            pathname =  pathname.replace("/uzb/", id + '/');
+        if (pathname.indexOf("/es/") >= 0) {
+            pathname =  pathname.replace("/es/", id + '/');
             redirectLang(pathname);
         }
-        if (pathname.indexOf("/it/") >= 0) {
-            pathname =  pathname.replace("/it/", id + '/');
+        if (pathname.indexOf("/tr/") >= 0) {
+            pathname =  pathname.replace("/tr/", id + '/');
             redirectLang(pathname);
         }
         if (pathname.indexOf("/en/") >= 0) {

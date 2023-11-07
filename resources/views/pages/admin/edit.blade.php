@@ -62,12 +62,13 @@
             <div class="tabs my-tabs1">
                 <div id="tabs-nav" class="nav">
                     <li><a href="#tab1" class="nav-link">Русский</a></li>
-                    <li><a href="#tab2" class="nav-link">Итальянский</a></li>
+                    <li><a href="#tab2" class="nav-link">Испанский</a></li>
                     <li><a href="#tab3" class="nav-link">Английский</a></li>
+                    <li><a href="#tab4" class="nav-link">Турецкий</a></li>
                 </div> <!-- END tabs-nav -->
                 <div id="tabs-content">
                     @php
-                        $locales = ['ru','it','en']
+                        $locales = ['ru','es','en', 'tr']
 //                    @endphp
 
                     @for ($i = 0; $i < count($locales); $i++)
