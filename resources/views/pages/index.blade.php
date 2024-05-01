@@ -21,196 +21,33 @@
                 <div style="opacity:0" class="currentlocationcordinates"
                      @if($location->onmap == 'on') data-lat="{{$location->lat}}" data-lng="{{$location->lng}}"
                      @else data-map="no" @endif ></div>
-                <div class="searchPanel__button" style="display: none;">{{ $allTranslations['noresult'] ?? trans('uzb360.noresult')}}</div>
+                <div class="searchPanel__button"
+                     style="display: none;">{{ $allTranslations['noresult'] ?? trans('uzb360.noresult')}}</div>
                 @if (!isset($_GET['embed']))
-                <header class="dubai360-header">
-                    <div class="dubai360-header__logo-languaje dubai360-header__logo-slider"
-                         onclick="location.href='/{{ Lang::locale() }}?home=1';">
-                        <div><img src="/assets/360.svg" id="logouzb360uz" class="" width="100%"></div>
-                        {{-- <div><img src="/assets/logo2.png" class="" width="100%"></div> --}}
-                    </div>
-                    <div class="dubai360-header__icons">
-                        <div class="wrapper-button" id="hubviewlink"
-                             @if(isset($sky) && $sky != "no") onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', 'nooo', {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"@endif>
-                            <span class="icon-ic_aerial wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ $allTranslations['hubrejim'] ?? trans('uzb360.hubrejim')}}</span></div>
-                        </div>
-                        <div class="wrapper-button">
-                            <span class="icon-ic_explore wrapper-button__icon " data-pannel="explorePannel"></span>
-                            <div class="dubai360-tooltip"><span>{{$allTranslations['map'] ?? trans('uzb360.map')}}</span></div>
-                        </div>
-                        <div class="wrapper-button">
-                            <span class="icon-ic_glass wrapper-button__icon " data-pannel="search"></span>
-                            <div class="dubai360-tooltip"><span>{{$allTranslations['search'] ?? trans('uzb360.search')}}</span></div>
-                        </div>
-{{--                        <div class="wrapper-button">--}}
-{{--                            <span class="icon-ic_comment wrapper-button__icon " data-pannel="feedbackPannel"></span>--}}
-{{--                            <div class="dubai360-tooltip"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>--}}
-{{--                        </div>--}}
-{{--                        <div class="wrapper-button">--}}
-{{--                            <span class="icon-ic_question wrapper-button__icon " data-pannel="helpPannel"></span>--}}
-{{--                            <div class="dubai360-tooltip"><span>{{$allTranslations['help'] ?? trans('uzb360.help')}}</span></div>--}}
-{{--                        </div>--}}
-                    </div>
-
-                    @if (is_array($etajlocations) || is_object($etajlocations))
-                        <div class="dubai360-header__aloneicon buttonetaj0 headermainetajicon">
-                            <div class="wrapper-button active">
-                                <span class="icon-ic_floorplan wrapper-button__icon"
-                                      data-pannel="floorplanPanel"></span>
-                                <div class="dubai360-tooltip">
-                                    <span>{{$allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        <div class="dubai360-header__aloneicon buttonetaj0 headermainetajicon" style="display:none">
-                            <div class="wrapper-button active">
-                                <span class="icon-ic_floorplan wrapper-button__icon"
-                                      data-pannel="floorplanPanel"></span>
-                                <div class="dubai360-tooltip">
-                                    <span>{{$allTranslations['etaji'] ?? trans('uzb360.etaji')}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    @endif
-                    <div class="dubai360-header__description">
-                        <div><span><span><span id="location_name">{{ $location->name }}</span></span><span
-                                        style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span>
-                        </div>
-                    </div>
-
-                    <div class="dubai360-header__icons">
-                        <!-- *********** TImberland Block *********** -->
-                        <div class="input_city">
-                            <div class="drop_down_city">
-                                <select>
-                                    @foreach($cities as $city)
-                                        <option id="{{$city->id}}" data-my-var="{{ app()->getLocale() }}"
-                                                @if($defaultlocation==$city->id || $location->city->id == $city->id) selected @endif>{{$city->name}}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <!-- **************************************** -->
-                        <div class="wrapper-button">
-                            <span class="icon-ic_info wrapper-button__icon " data-pannel="infoPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ $allTranslations['information'] ?? trans('uzb360.information')}}</span></div>
-                        </div>
-                        <div class="wrapper-button" onclick="krpanoscreenshot();">
-                            <span class="icon-ic_share wrapper-button__icon " data-pannel="sharePannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ $allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
-                        </div>
-                        <div class="wrapper-button" id="autotourbutton" onclick="krpanoautorotate();">
-                            <span class="icon-ic_autoplay wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ $allTranslations['tourrejim'] ?? trans('uzb360.tourrejim')}}</span></div>
-                        </div>
-                        <div class="wrapper-button" id="ipadcity" style="display:none">
-                          <span class="wrapper-button__icon" data-pannel="cityPannel">
-            <svg version="1.1" id="Layer_1" class="wrappersvg" xmlns="http://www.w3.org/2000/svg"
-                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                 viewBox="0 0 511.999 511.999" style="width: 28px;
-          position: absolute;
-          top: 11px;left:10px;
-        " fill="#1a90d2">
-
-
-        <g>
-                      <path d="M207.904,468.1c-48.9-83.2-132.1-233-132.1-299.6c0-92.6,75.9-168.5,168.5-168.5s168.5,75.9,168.5,168.5
-                          c0,66.6-83.2,216.4-132.1,299.6C261.704,497.6,223.104,493.2,207.904,468.1z M244.304,40.5c-70.7,0-128,57.2-128,128
-                          c0,40.6,46.8,144.6,126.9,278.8c0,1,2.1,1,2.1,0c79.1-134.2,127-238.3,127-278.8C372.304,97.7,315.004,40.5,244.304,40.5z"/>
-                  </g>
-                  <g>
-                      <path d="M244.304,226.7c-38.5,0-69.7-31.2-69.7-69.7s31.2-68.7,69.7-68.7s69.7,31.2,69.7,69.7S282.804,226.7,244.304,226.7z
-                           M244.304,128.9c-15.6,0-29.1,12.5-29.1,29.1s12.5,29.1,29.1,29.1s29.1-12.5,29.1-29.1S259.904,128.9,244.304,128.9z"/>
-                  </g>
-
-
-
-            </svg>
-          </span>
-
-                        </div>
-                        <div class="wrapper-button" onclick="krpanofullscreen()">
-                            <span class="icon-ic_fullscreen wrapper-button__icon "></span>
-                            <div class="dubai360-tooltip"><span>{{ $allTranslations['fullscreen'] ?? trans('uzb360.fullscreen')}}</span></div>
-                        </div>
-
-                        <div class="wrapper-button">
-                            <span class="icon-ic_eye wrapper-button__icon " data-pannel="ProjectionsPannel"></span>
-                            <div class="dubai360-tooltip"><span>{{ $allTranslations['rejimprosmotra'] ?? trans('uzb360.rejimprosmotra')}}</span></div>
-                        </div>
-                    </div>
-                    <div class="dubai360-header__logo-languaje">
-                    <span class="wrapper-button__icon" data-pannel="cityPannel" id="mobilelanguage"
-                          style="display:none">
-
-<svg
-   width="20.520086"
-   height="28">
-  <g
-     transform="scale(0.33678133)"
-     style="fill:#1a90d2;fill-opacity:1"
-     id="g6">
-    <g
-       style="fill:#1a90d2;fill-opacity:1"
-       id="g4">
-      <path
-         class="cls-1"
-         d="M 30.47,83.14 A 7.55,7.55 0 0 1 24.64,80.32 C 18.85,73.22 0,48.87 0,33.23 0,14.91 13.67,0 30.47,0 c 16.8,0 30.46,14.91 30.46,33.23 0,15.64 -18.85,40 -24.62,47.08 a 7.59,7.59 0 0 1 -5.84,2.83 z m 0,-77.47 C 16.79,5.67 5.67,18 5.67,33.23 c 0,11 12.58,30.28 23.36,43.5 a 1.83,1.83 0 0 0 2.89,0 C 42.68,63.51 55.26,44.18 55.26,33.23 55.26,18 44.14,5.67 30.47,5.67 Z"
-         id="path909"
-         style="fill:#1a90d2;fill-opacity:1" />
-      <circle
-         class="cls-1"
-         cx="30.469999"
-         cy="31.530001"
-         r="11.24"
-         id="circle911"
-         style="fill:#1a90d2;fill-opacity:1" />
-    </g>
-  </g>
-</svg>
-
-
-    </span>
-                            <div class="language-switcher">
-                                <div class="dropdown-wrapper">
-                                        <select name="select" class="dropdown">
-                                            <option value="ru" id="ru" @if(Lang::locale()=='ru') selected @endif>RU</option>
-                                            <option value="en" id="en" @if(Lang::locale()=='en') selected @endif>EN</option>
-                                            <option value="es" id="es" @if(Lang::locale()=='es') selected @endif>ES</option>
-                                            <option value="tr" id="tr" @if(Lang::locale()=='tr') selected @endif>TR</option>
-                                        </select>
-                                    <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jaGV2cm9uPC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTIgMTQgOSAxMSAxNSAxMSAxMiAxNCIvPjwvc3ZnPg=="
-                                         class="dropdown-chevronImg">
-                                </div>
-                            </div>
-                    </div>
-                </header>
+                    @component('pages.components.header', compact('sky','allTranslations','etajlocations','location','cities','defaultlocation')) @endcomponent
                 @endif
                 <div id="pano" style="width:100%;height:100%;"></div>
                 <button type="button" id="playaudio"><img src="/assets/icons/sound-off.svg"></button>
                 @if(isset($referer) && $referer && isset($location->information->back_button_from_domain) && $location->information->back_button_from_domain)
-                <a href="{{$referer}}">
-                    @php
+                    <a href="{{$referer}}">
+                        @php
                             $fontStyle = '';
                             $fontStyle .= $location->information->back_button_font ?  ('font-family: "' . $location->information->back_button_font . '";') : '';
                             $fontStyle .= $location->information->back_button_font_size ?  ('font-size: ' . $location->information->back_button_font_size . ';') : '';
                             $fontStyle .= $location->information->back_button_font_color ?  ('color: ' . $location->information->back_button_font_color . ';') : '';
-                    @endphp
-                    <div class="gobacktosite" style="background-color: {{ $location->information->back_button_background_color ? $location->information->back_button_background_color : 'yellow' }}">
-                        <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}">
-                        <span style="{{$fontStyle}}">Назад на сайт</span>
-                    </div>
-                </a>
+                        @endphp
+                        <div class="gobacktosite"
+                             style="background-color: {{ $location->information->back_button_background_color ? $location->information->back_button_background_color : 'yellow' }}">
+                            <img src="{{ (isset($location->information->back_button_image) && $location->information->back_button_image) ? '/storage/locations_information/' . $location->information->back_button_image : '/assets/icons/home.svg' }}">
+                            <span style="{{$fontStyle}}">Назад на сайт</span>
+                        </div>
+                    </a>
                 @endif
                 <footer class="dubai360-footer">
                     <div class="wrapper-button">
                         @if(isset($sky) && $sky != "no")
-                            <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2" onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', '',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"></span>
+                            <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"
+                                  onclick="loadpano('uzbekistan:{{$sky->id}}', 0, '{{$sky->slug}}', '{{$location->id}}', '{{$location->slug}}', '',  {{$sky->video ? ("'" . $sky->video . "'") : 'null'}})"></span>
                         @else
                             <span class="icon-ic_aerial wrapper-button__icon " id="hubviewlink2"></span>
                         @endif
@@ -224,7 +61,8 @@
                     <div class="wrapper-button"><span class="icon-ic_share wrapper-button__icon "
                                                       onclick="krpanoscreenshot();" data-pannel="sharePannel"></span>
                     </div>
-                    <div class="wrapper-button"><span class=" wrapper-button__icon " data-pannel="gyroPannel">
+                    <div class="wrapper-button">
+                        <span class=" wrapper-button__icon " data-pannel="gyroPannel">
                         <svg version="1.1" id="Layer_1" class="wrappersvg" xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink"
                              viewBox="0 0 511.999 511.999" style="width:25px;position: absolute; top: 12px;
@@ -258,6 +96,7 @@
                       </g>
 
                   </svg>
+                        </span>
                     </div>
 
 
@@ -289,7 +128,8 @@
                     <img class="wrapper-panel-close"
                          src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="sharePanel">
-                        <div class="sharePanel__title"><span>{{$allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
+                        <div class="sharePanel__title">
+                            <span>{{$allTranslations['share'] ?? trans('uzb360.share')}}</span></div>
 
                         <div class="sharePanel__screenshot">
                             <div class="loading2" id="loading2">
@@ -369,7 +209,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand" style="z-index: 110">
+                <div class="wrapper-panel top left search {{ !$openedCategory ? 'hidden' : '' }} expand"
+                     style="z-index: 110">
                     <img class="wrapper-panel-close"
                          src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                     <div class="searchPanel">
@@ -401,12 +242,14 @@
                                                              style="background-color:{{$category->color}}; margin-right: 10px; margin-left: 10px;">
                                                             <img src="/storage/cat_icons/{{$category->cat_icon_svg}}">
                                                         </div>
-                                                        <span class="icon-wrapper__text" data-title="{{$category->name}}" data-information="{{strip_tags($category->information)}}">
+                                                        <span class="icon-wrapper__text"
+                                                              data-title="{{$category->name}}"
+                                                              data-information="{{strip_tags($category->information)}}">
                                                             @if (!empty($category->slug))
                                                                 <a href="{{$category->createUrl()}}">
                                                             @endif
-                                                            {{ $category->name }}
-                                                            @if (!empty($category->slug))
+                                                                    {{ $category->name }}
+                                                                    @if (!empty($category->slug))
                                                                 </a>
                                                             @endif
                                                         </span>
@@ -424,44 +267,53 @@
                         </div>
 
                         @if (!isset($openedCategory))
-                        <div class="searchPanel__results"><span
-                                    class="color-opacity">{{$allTranslations['noresult'] ?? trans('uzb360.noresult')}}</span></div>
-                        @endif
-                        <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
+                            <div class="searchPanel__results"><span
+                                        class="color-opacity">{{$allTranslations['noresult'] ?? trans('uzb360.noresult')}}</span>
+                            </div>
+                    @endif
+                    <!-- <div class="searchPanel__button" style="display: none;">Найдено 0 результатов</div> -->
                         <div class="searchPanel__resultscontainer">
                             <div class="virtualizedGrid__content " style="position: relative;">
                                 <div style="overflow: visible; width: 0px;">
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr; position: relative; will-change: transform;">
-                                            <div class="category-name">
-                                                @if (isset($openedCategory))
+                                        <div class="category-name">
+                                            @if (isset($openedCategory))
                                                 <h1>{{$openedCategory->name}}</h1>
-                                                @endif
-                                            </div>
+                                            @endif
+                                        </div>
                                         <div id="searchContainer" class="ReactVirtualized__Grid__innerScrollContainer"
                                              role="rowgroup"
                                              style="position: relative; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; -webkit-flex-wrap: wrap; -moz-flex-wrap: wrap; -ms-flex-wrap: wrap; -o-flex-wrap: wrap; flex-wrap: wrap;">
                                             @if (isset($openedCategory) && $openedCategoryLocations)
                                                 @foreach($openedCategoryLocations->where('visibility',1)->sortBy('order') as $categoryLocation)
-                                                    <div class="listItem-wrapper" onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
+                                                    <div class="listItem-wrapper"
+                                                         onclick="loadpano('uzbekistan:{{$categoryLocation->id}}', 0, '{{$categoryLocation->slug}}', null, null, null, {{$categoryLocation->video ? "'" . $categoryLocation->video . "'" : 'null'}})">
                                                         <div class="listItem">
                                                             @php
-                                                            if ($categoryLocation->video) {
-                                                                $preview = 'preview/' . $categoryLocation->preview;
-                                                            } else {
-                                                                $preview = 'unpacked/' . $categoryLocation->folderName() . '/thumb.jpg';
-                                                            }
+                                                                if ($categoryLocation->video) {
+                                                                    $preview = 'preview/' . $categoryLocation->preview;
+                                                                } else {
+                                                                    $preview = 'unpacked/' . $categoryLocation->folderName() . '/thumb.jpg';
+                                                                }
                                                             @endphp
-                                                            <div class="listItem__img"><img src="/storage/panoramas/{{$preview}}" class="listItem__img--scene"></div>
+                                                            <div class="listItem__img"><img
+                                                                        src="/storage/panoramas/{{$preview}}"
+                                                                        class="listItem__img--scene"></div>
                                                             <div class="listItem__icon-category">
-                                                                  <div class="icon-wrapper__icon--category category-normal" style="background-color: {{$openedCategory->color}};"><img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}"></div>
+                                                                <div class="icon-wrapper__icon--category category-normal"
+                                                                     style="background-color: {{$openedCategory->color}};">
+                                                                    <img src="/storage/cat_icons/{{$openedCategory->cat_icon_svg}}">
+                                                                </div>
                                                             </div>
                                                             <div class="listItem__text">
-                                                            <div><span><span>{{$categoryLocation->name}}</span><span style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span></div>
+                                                                <div><span><span>{{$categoryLocation->name}}</span><span
+                                                                                style="position: fixed; visibility: hidden; top: 0px; left: 0px;">…</span></span>
+                                                                </div>
                                                             </div>
-                                                      </div>
-                                                  </div>
+                                                        </div>
+                                                    </div>
                                                 @endforeach
                                             @endif
                                         </div>
@@ -519,15 +371,16 @@
                                 </div>
                             </div>
                 </div>
-                </span>
             </div>
             <div class="wrapper-panel feedbackPannel top left hidden expand" style="z-index: 100">
                 <img class="wrapper-panel-close"
                      src="data:image/svg+xml;base64,PHN2ZyBpZD0iRXhwb3J0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiMyYTJhMmY7b3BhY2l0eTowLjU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pY19jbG9zZTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjIwLjQ4IDQuOTMgMTkuMDcgMy41MiAxMiAxMC41OSA0LjkzIDMuNTIgMy41MiA0LjkzIDEwLjU5IDEyIDMuNTIgMTkuMDcgNC45MyAyMC40OCAxMiAxMy40MSAxOS4wNyAyMC40OCAyMC40OCAxOS4wNyAxMy40MSAxMiAyMC40OCA0LjkzIi8+PC9zdmc+">
                 <form id="feedbackForm" class="feedbackPanel" novalidate="">
                     {{ csrf_field() }}
-                    <div class="feedbackPanel__title"><span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
-                    <div class="feedbackPanel__message"><span>{{$allTranslations['rasskajitenam'] ?? trans('uzb360.rasskajitenam')}}</span></div>
+                    <div class="feedbackPanel__title">
+                        <span>{{$allTranslations['feedback'] ?? trans('uzb360.feedback')}}</span></div>
+                    <div class="feedbackPanel__message">
+                        <span>{{$allTranslations['rasskajitenam'] ?? trans('uzb360.rasskajitenam')}}</span></div>
                     <div class="feedbackPanel__message"><p><span>По вопросам сотрудничества:<br>
                         +998971310023
                         </span></p></div>
@@ -553,14 +406,16 @@
 
                     <div class="feedbackPanel__wrapper-inputs mail_inp2">
                         <textarea name="message" class="feedbackPanel__wrapper-inputs--textarea"
-                                  placeholder="{{$allTranslations['vashesoobshenie'] ??  trans('uzb360.vashesoobshenie')}}" required
+                                  placeholder="{{$allTranslations['vashesoobshenie'] ??  trans('uzb360.vashesoobshenie')}}"
+                                  required
                                   id="feedbacktext"></textarea>
                     </div>
                     <div class="feedbackPanel__buttons">
                             <span id="Feedbackstatus">
                             </span>
 
-                        <button type="submit" class="send_form_btn">{{$allTranslations['otpravit'] ??  trans('uzb360.otpravit')}}</button>
+                        <button type="submit"
+                                class="send_form_btn">{{$allTranslations['otpravit'] ??  trans('uzb360.otpravit')}}</button>
 
                         <div class="block_thanks">
                             <div class="text_thks">
@@ -594,8 +449,10 @@
                         </div>
                     </div>
                     <div class="sitemap-block section-help">
-                        <div><a href="/{{ app()->getLocale() }}/how-to-use" class="site-map">{{ trans('help.how_to_use_site') }}</a></div>
-                        <div><a href="/{{ app()->getLocale() }}/sitemap" class="site-map">{{ trans('help.map_site') }}</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/how-to-use"
+                                class="site-map">{{ trans('help.how_to_use_site') }}</a></div>
+                        <div><a href="/{{ app()->getLocale() }}/sitemap"
+                                class="site-map">{{ trans('help.map_site') }}</a></div>
                     </div>
                     <div id="tab2" class="section-help" style="display: none;">
                         <div class="section-help__content">
@@ -604,24 +461,29 @@
                                 <div class="section-help__content__icons--controls">
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_aerial icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_sky') }}</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_sky') }}</span>
+                                        </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_explore icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_map') }}</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.go_to_city_map') }}</span>
+                                        </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_share icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.share_your_view') }}</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.share_your_view') }}</span>
+                                        </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_configuration icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.video_quality_speed') }}</span>
+                                        <div class="icon-wrapper__text">
+                                            <span>{{ trans('help.video_quality_speed') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_comment icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span> {{ trans('help.leave_wish_or_feedback') }}</span>
+                                        <div class="icon-wrapper__text">
+                                            <span> {{ trans('help.leave_wish_or_feedback') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
@@ -631,32 +493,36 @@
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_info icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.show_information') }}</span></div>
+                                        <div class="icon-wrapper__text">
+                                            <span>{{ trans('help.show_information') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_autoplay icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.enable_automatic_tour_mode') }}</span>
+                                        <div class="icon-wrapper__text">
+                                            <span>{{ trans('help.enable_automatic_tour_mode') }}</span>
                                         </div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_eye icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.change_projection_view') }}</span></div>
+                                        <div class="icon-wrapper__text">
+                                            <span>{{ trans('help.change_projection_view') }}</span></div>
                                     </div>
                                     <div class="icon-wrapper">
                                         <span class="icon-ic_floorplan icon-wrapper__icon--controls"></span>
-                                        <div class="icon-wrapper__text"><span>{{ trans('help.view_floor_plan') }}</span></div>
+                                        <div class="icon-wrapper__text"><span>{{ trans('help.view_floor_plan') }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-{{--                    <div id="tab3" class="section-help" style="display: none;">--}}
-{{--                        <div class="section-help__content">--}}
-{{--                            <span class="section-help__content__title"><span>Categories</span></span>--}}
-{{--                            <div class="category-wrapper-mobile">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div id="tab3" class="section-help" style="display: none;">--}}
+                    {{--                        <div class="section-help__content">--}}
+                    {{--                            <span class="section-help__content__title"><span>Categories</span></span>--}}
+                    {{--                            <div class="category-wrapper-mobile">--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                     {{--                        <div class="pagination">--}}
                     {{--                            <ul>--}}
                     {{--                                <li class="pagination__wrapper is-activated--categories" data-tab="tab1">--}}
@@ -684,7 +550,7 @@
                             <div class="infoPanel__title" id="location_name2">
                                 @if (isset($openedCategory))
                                     <h2>{{ $location->name }}</h2>
-                                    @else
+                                @else
                                     <h1>{{ $location->name }}</h1>
                                 @endif
                             </div>
@@ -704,8 +570,9 @@
 
                         <div class="numberr" id="website_box">
                             <div class="clock_icon"><img src="/storage/socialnetworks/www.png"></div>
-                            <span id="website"><a href="{{ strpos($location->website, 'http://') !== false ? $location->website : 'http://' . $location->website }}"
-                                                  target="_blank" rel="nofollow">{{$location->website }}</a></span>
+                            <span id="website"><a
+                                        href="{{ strpos($location->website, 'http://') !== false ? $location->website : 'http://' . $location->website }}"
+                                        target="_blank" rel="nofollow">{{$location->website }}</a></span>
                         </div>
                     </div>
                 <!--  <div class="infoPanel__title">{{ $location->name }}</div> -->
@@ -736,7 +603,8 @@
                     </div>
                     <ul class="sharePanel__social__icons" style="    width: 200px;">
                         <li class="socialnetwork-icon facebook">
-                            <a href="{{strpos($location->facebook, 'http') !== false ? $location->facebook : 'https://facebook.com/' . str_replace('@', '', $location->facebook)}}" id="locationsocialfb" target="_blank" rel="nofollow">
+                            <a href="{{strpos($location->facebook, 'http') !== false ? $location->facebook : 'https://facebook.com/' . str_replace('@', '', $location->facebook)}}"
+                               id="locationsocialfb" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/facebook.png" alt="facebook share"/>
                                 </div>
@@ -744,7 +612,8 @@
                         </li>
 
                         <li class="socialnetwork-icon telegram">
-                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : ('https://t.me/' . str_replace('@', '', $location->telegram))}}" id="locationsocialtg" target="_blank" rel="nofollow">
+                            <a href="{{strpos($location->telegram, 'http') !== false ? $location->telegram : ('https://t.me/' . str_replace('@', '', $location->telegram))}}"
+                               id="locationsocialtg" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/telegram.png" alt="telegram share"/>
                                 </div>
@@ -752,7 +621,8 @@
                         </li>
 
                         <li class="socialnetwork-icon instagram">
-                            <a href="{{strpos($location->instagram, 'http') !== false ? $location->instagram : 'https://instagram.com/' . str_replace('@', '', $location->instagram)}}" id="locationsocialig" target="_blank" rel="nofollow">
+                            <a href="{{strpos($location->instagram, 'http') !== false ? $location->instagram : 'https://instagram.com/' . str_replace('@', '', $location->instagram)}}"
+                               id="locationsocialig" target="_blank" rel="nofollow">
                                 <div style="width: 40px; height: 40px;">
                                     <img src="/storage/socialnetworks/instagram.png" alt="whatsapp share"/>
                                 </div>
@@ -760,7 +630,8 @@
                         </li>
                     </ul>
                     <div class="virtualizedGrid__otherLocation">
-                        <div class="virtualizedGrid__title"><span>{{$allTranslations['drugielokasii'] ?? trans('uzb360.drugielokasii')}}</span></div>
+                        <div class="virtualizedGrid__title">
+                            <span>{{$allTranslations['drugielokasii'] ?? trans('uzb360.drugielokasii')}}</span></div>
                         <div class="virtualizedGrid__listContainer">
                             <div class="virtualizedGrid__content slick-block" style="position: relative;">
                                 @foreach($otherlocations as $i=> $otherlocation)
@@ -770,7 +641,7 @@
                                             @if($otherlocation->preview)
                                                 <div class="listItem__img">
                                                     <img src="{{$otherlocation->preview}}"
-                                                            class="listItem__img--scene">
+                                                         class="listItem__img--scene">
                                                 </div>
                                             @else
                                                 <div class="listItem__img"><img
@@ -809,7 +680,8 @@
                                     <div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid"
                                          role="grid" tabindex="0"
                                          style="box-sizing: border-box; direction: ltr;  position: relative; width: 273px; will-change: transform; overflow: hidden auto;">
-                                        <div class="ReactVirtualized__Grid__innerScrollContainer" id="multifloor-other-locations" role="rowgroup"
+                                        <div class="ReactVirtualized__Grid__innerScrollContainer"
+                                             id="multifloor-other-locations" role="rowgroup"
                                              style="width: 240px; max-width: 240px; max-height: 3900px; overflow: hidden; position: relative;">
                                             @if (is_array($etajlocations) || is_object($etajlocations))
                                                 @foreach ($etajlocations as $key => $etajlocation)
@@ -865,7 +737,9 @@
                                          style="display: none;">
                                         <?php if (file_exists('storage/floors/' . $floor->image)) { ?>
                                         <div class="plan">
-                                            <img class="planClass" id="floorid{{$floor->id}}" data-width="{{getimagesize('storage/floors/' . $floor->image)[0]}}" data-height="{{getimagesize('storage/floors/' . $floor->image)[1]}}"
+                                            <img class="planClass" id="floorid{{$floor->id}}"
+                                                 data-width="{{getimagesize('storage/floors/' . $floor->image)[0]}}"
+                                                 data-height="{{getimagesize('storage/floors/' . $floor->image)[1]}}"
                                                  src="/storage/floors/{{$floor->image}}">
                                             <span></span>
                                         </div>
@@ -889,15 +763,22 @@
             </div>
             <div class="wrapper-panel  top right ProjectionsPannel hidden expand">
                 <div class="projection">
-                    <div class="title-projection"><span>{{ $allTranslations['proektsiya'] ?? trans('uzb360.proektsiya')}}</span></div>
+                    <div class="title-projection">
+                        <span>{{ $allTranslations['proektsiya'] ?? trans('uzb360.proektsiya')}}</span></div>
                     <ul>
                         <li class="selected" onclick="skin_view_normal()">
                             <span>{{ $allTranslations['pryamolineyniy'] ?? trans('uzb360.pryamolineyniy')}}</span></li>
-                        <li onclick="skin_view_littleplanet()"><span>{{ $allTranslations['malenkayaplaneta'] ?? trans('uzb360.malenkayaplaneta')}}</span></li>
-                        <li onclick="skin_view_fisheye()"><span>{{ $allTranslations['ribyglaz'] ?? trans('uzb360.ribyglaz')}}</span></li>
-                        <li onclick="skin_view_panini()"><span>{{ $allTranslations['panini'] ?? trans('uzb360.panini')}}</span></li>
-                        <li onclick="skin_view_stereographic()"><span>{{ $allTranslations['stereo'] ?? trans('uzb360.stereo')}}</span></li>
-                        <li onclick="skin_view_architectural()"><span>{{ $allTranslations['archetek'] ?? trans('uzb360.archetek')}}</span></li>
+                        <li onclick="skin_view_littleplanet()">
+                            <span>{{ $allTranslations['malenkayaplaneta'] ?? trans('uzb360.malenkayaplaneta')}}</span>
+                        </li>
+                        <li onclick="skin_view_fisheye()">
+                            <span>{{ $allTranslations['ribyglaz'] ?? trans('uzb360.ribyglaz')}}</span></li>
+                        <li onclick="skin_view_panini()">
+                            <span>{{ $allTranslations['panini'] ?? trans('uzb360.panini')}}</span></li>
+                        <li onclick="skin_view_stereographic()">
+                            <span>{{ $allTranslations['stereo'] ?? trans('uzb360.stereo')}}</span></li>
+                        <li onclick="skin_view_architectural()">
+                            <span>{{ $allTranslations['archetek'] ?? trans('uzb360.archetek')}}</span></li>
                     </ul>
                 </div>
             </div>
@@ -975,11 +856,11 @@
                                     <div class="listItem">
                                       <div class="listItem__img">
                                           @if ($featured->video && $featured->preview)
-                                          <img src="/storage/panoramas/preview/{{$featured->img}}"
-                                                  class="listItem__img--scene">
+                                              <img src="/storage/panoramas/preview/{{$featured->img}}"
+                                                   class="listItem__img--scene">
                                           @else
                                               <img src="/storage/panoramas/unpacked/{{$featured->img}}/thumb.jpg"
-                                                  class="listItem__img--scene">
+                                                   class="listItem__img--scene">
                                           @endif
                                       </div>
                                       <div class="listItem__icon-category">
@@ -1017,11 +898,11 @@
                                     <div class="listItem">
                                       <div class="listItem__img">
                                           @if ($new->video && $new->preview)
-                                          <img src="/storage/panoramas/preview/{{$new->img}}"
-                                                  class="listItem__img--scene">
+                                              <img src="/storage/panoramas/preview/{{$new->img}}"
+                                                   class="listItem__img--scene">
                                           @else
                                               <img src="/storage/panoramas/unpacked/{{$new->img}}/thumb.jpg"
-                                                  class="listItem__img--scene">
+                                                   class="listItem__img--scene">
                                           @endif
                                       </div>
                                       <div class="listItem__icon-category">
@@ -1103,15 +984,14 @@
 @section('scripts')
     <script>
 
-        let  percentHeight = 0.63, percentWidth = 0.73;
+        let percentHeight = 0.63, percentWidth = 0.73;
 
         if ($(window).height() > $(window).width()) {
             percentHeight = 0.54;
             percentWidth = 0.65;
         }
-        const    myHeight = Math.floor($(".floorplanPanel  .floorplan-viewer").height() *  percentHeight) + 'px',
-            myWidth = Math.floor($(".floorplanPanel  .floorplan-viewer").width() *  percentWidth) + 'px';
-
+        const myHeight = Math.floor($(".floorplanPanel  .floorplan-viewer").height() * percentHeight) + 'px',
+            myWidth = Math.floor($(".floorplanPanel  .floorplan-viewer").width() * percentWidth) + 'px';
 
 
         @if (empty($location->number))
@@ -1149,45 +1029,45 @@
         });
         @endif
         @if (empty($location->facebook))
-            $('.socialnetwork-icon.facebook').hide();
+        $('.socialnetwork-icon.facebook').hide();
         @endif
         @if (empty($location->telegram))
-            $('.socialnetwork-icon.telegram').hide();
+        $('.socialnetwork-icon.telegram').hide();
         @endif
         @if (empty($location->instagram))
-            $('.socialnetwork-icon.instagram').hide();
+        $('.socialnetwork-icon.instagram').hide();
         @endif
 
         @foreach ($etaji as $i => $etaj)
-            @if(!empty($etaj->code))
-                $(".buttonetaj{{$i}}").click(function () {
-                    setTimeout(function () {
-                        let initHeight = $("#floorid{{$etaj->id}}").data('height');
-                        let frameHeight = initHeight > 900 ? $(window).height() - 300 : initHeight;
-                        let frameWidth = 'auto';
-                        if (isMobile) {
-                            frameHeight = $(window).height() - 300;
-                        } else {
-                            frameWidth = $("#floorid{{$etaj->id}}").data('width') + 'px',
-                            frameHeight = frameHeight + 'px';
-                        }
-                        $("#floorid{{$etaj->id}}").annotatorPro({
-                            maxZoom: 2,
-                            navigator: false,
-                            navigatorImagePreview: false,
-                            frameWidth: myWidth,
-                            frameHeight: myHeight,
-                            // frameHeight: $(window).height() - 300,
-                            // frameWidth: "auto",
-                            iconsize: "15px",
-                            rubberband: false,
-                            // frameHeight: $(window).height() - 300,
-                            fullscreen: true,
-                            {!! $etaj->code !!}
-                        });
-                    }, 500);
+        @if(!empty($etaj->code))
+        $(".buttonetaj{{$i}}").click(function () {
+            setTimeout(function () {
+                let initHeight = $("#floorid{{$etaj->id}}").data('height');
+                let frameHeight = initHeight > 900 ? $(window).height() - 300 : initHeight;
+                let frameWidth = 'auto';
+                if (isMobile) {
+                    frameHeight = $(window).height() - 300;
+                } else {
+                    frameWidth = $("#floorid{{$etaj->id}}").data('width') + 'px',
+                        frameHeight = frameHeight + 'px';
+                }
+                $("#floorid{{$etaj->id}}").annotatorPro({
+                    maxZoom: 2,
+                    navigator: false,
+                    navigatorImagePreview: false,
+                    frameWidth: myWidth,
+                    frameHeight: myHeight,
+                    // frameHeight: $(window).height() - 300,
+                    // frameWidth: "auto",
+                    iconsize: "15px",
+                    rubberband: false,
+                    // frameHeight: $(window).height() - 300,
+                    fullscreen: true,
+                    {!! $etaj->code !!}
                 });
-            @endif
+            }, 500);
+        });
+        @endif
         @endforeach
 
         var isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
@@ -1284,63 +1164,71 @@
 
                     for (var i = 0; i < data.length; i++) {
 
-                            add_exist_hotspot(data[i].h,
-                                data[i].v,
-                                data[i].name,
-                                data[i].cat_icon_svg,
-                                data[i].cat_icon,
-                                data[i].img,
-                                "uzbekistan:" + data[i].destination_id,
-                                i,
-                                data[i].slug,
-                                data[i].color,
-                                data[i].type,
-                                data[i].information,
-                                data[i].image,
-                                data[i].video,
-                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
-                                    images: data[i].images, title: data[i].title, description: data[i].information_description,
-                                    information_logo: data[i].information_logo, name: data[i].name, logo: data[i].logo}
-                            );
+                        add_exist_hotspot(data[i].h,
+                            data[i].v,
+                            data[i].name,
+                            data[i].cat_icon_svg,
+                            data[i].cat_icon,
+                            data[i].img,
+                            "uzbekistan:" + data[i].destination_id,
+                            i,
+                            data[i].slug,
+                            data[i].color,
+                            data[i].type,
+                            data[i].information,
+                            data[i].image,
+                            data[i].video,
+                            {
+                                url: data[i].url,
+                                file: data[i].file,
+                                instagram: data[i].instagram_hotspot,
+                                images: data[i].images,
+                                title: data[i].title,
+                                description: data[i].information_description,
+                                information_logo: data[i].information_logo,
+                                name: data[i].name,
+                                logo: data[i].logo
+                            }
+                        );
 
                     }
                 });
-{{--                @else--}}
-{{--                @foreach($krhotspots as $index => $hotspot)--}}
-{{--                @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)--}}
-{{--                @php--}}
-{{--                    continue;--}}
-{{--                @endphp--}}
-{{--                @endif--}}
-{{--                @php--}}
-{{--                    $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));--}}
-{{--                    $informationText = str_replace('"', '\"', $informationText);--}}
-{{--                    $informationText = str_replace("'", "\'", $informationText);--}}
-{{--                    $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);--}}
-{{--                @endphp--}}
-{{--                --}}{{--let info;--}}
-{{--                --}}{{--info = $.isString(data[i].information) ? data[i].information : data[i].information["{{app()->getLocale()}}"];--}}
-{{--                --}}{{--info = info !== '' ? info : data[i].information['ru'];--}}
-{{--                @if($informationText !== '' && $hotspot->type == 2 || $hotspot->type !== 2)--}}
+                {{--                @else--}}
+                {{--                @foreach($krhotspots as $index => $hotspot)--}}
+                {{--                @if ($hotspot->type == App\Hotspot::TYPE_POLYGON)--}}
+                {{--                @php--}}
+                {{--                    continue;--}}
+                {{--                @endphp--}}
+                {{--                @endif--}}
+                {{--                @php--}}
+                {{--                    $informationText = str_replace("\r", "<br>", strip_tags($hotspot->information));--}}
+                {{--                    $informationText = str_replace('"', '\"', $informationText);--}}
+                {{--                    $informationText = str_replace("'", "\'", $informationText);--}}
+                {{--                    $informationText = str_replace(PHP_EOL, '\\' . PHP_EOL, $informationText);--}}
+                {{--                @endphp--}}
+                {{--                --}}{{--let info;--}}
+                {{--                --}}{{--info = $.isString(data[i].information) ? data[i].information : data[i].information["{{app()->getLocale()}}"];--}}
+                {{--                --}}{{--info = info !== '' ? info : data[i].information['ru'];--}}
+                {{--                @if($informationText !== '' && $hotspot->type == 2 || $hotspot->type !== 2)--}}
 
-{{--                add_exist_hotspot(--}}
-{{--                    "{{ $hotspot->h }}",--}}
-{{--                    "{{ $hotspot->v }}",--}}
-{{--                    "{!! str_replace('"', '\"', $hotspot->name) !!}",--}}
-{{--                    "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",--}}
-{{--                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",--}}
-{{--                    "uzbekistan:{{ $hotspot->destination_id }}",--}}
-{{--                        {{ $index }},--}}
-{{--                    "{{$hotspot->slug}}",--}}
-{{--                    "{{$hotspot->color}}",--}}
-{{--                    "{{$hotspot->type}}",--}}
-{{--                    { "{{app()->getLocale()}}": "{{$informationText}}"},--}}
-{{--                    {"{{app()->getLocale()}}": "{{$hotspot->image}}", en: "{{$hotspot->image}}", ru: "{{$hotspot->image}}"},--}}
-{{--                    "{{ $hotspot->destinationlocation->video }}",--}}
-{{--                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}--}}
-{{--                );--}}
-{{--                @endif--}}
-{{--                @endforeach--}}
+                {{--                add_exist_hotspot(--}}
+                {{--                    "{{ $hotspot->h }}",--}}
+                {{--                    "{{ $hotspot->v }}",--}}
+                {{--                    "{!! str_replace('"', '\"', $hotspot->name) !!}",--}}
+                {{--                    "{{$hotspot->cat_icon_svg}}", "{{$hotspot->cat_icon}}",--}}
+                {{--                    "{{$hotspot->mainlocation->video ? ('/panoramas/preview/' . $hotspot->mainlocation->preview) : $hotspot->img}}",--}}
+                {{--                    "uzbekistan:{{ $hotspot->destination_id }}",--}}
+                {{--                        {{ $index }},--}}
+                {{--                    "{{$hotspot->slug}}",--}}
+                {{--                    "{{$hotspot->color}}",--}}
+                {{--                    "{{$hotspot->type}}",--}}
+                {{--                    { "{{app()->getLocale()}}": "{{$informationText}}"},--}}
+                {{--                    {"{{app()->getLocale()}}": "{{$hotspot->image}}", en: "{{$hotspot->image}}", ru: "{{$hotspot->image}}"},--}}
+                {{--                    "{{ $hotspot->destinationlocation->video }}",--}}
+                {{--                    {url: "{{$hotspot->url}}", file: "{{ $hotspot->file }}"}--}}
+                {{--                );--}}
+                {{--                @endif--}}
+                {{--                @endforeach--}}
                 @endif
             }, 1000);
         }
@@ -1479,10 +1367,10 @@
 
         function loadpano(xmlname, index, url, prevsceneid, prevsceneslug, nourl, video) {
             if (krpano) {
-{{--                @php--}}
-{{--                    $prevLocation = \App\Location::where('slug', prevsceneslug)->first();--}}
-{{--                @endphp--}}
-                originalxmlnam = xmlname;
+                {{--                @php--}}
+                        {{--                    $prevLocation = \App\Location::where('slug', prevsceneslug)->first();--}}
+                        {{--                @endphp--}}
+                    originalxmlnam = xmlname;
                 originalxmlname = originalxmlnam.match(/\d/g);
                 originalxmlname = originalxmlname.join("");
 
@@ -1497,11 +1385,11 @@
                 } else {
                     let videoXml = '';
                     @php
-                    if(config('app.env') === 'production') {
-                        $protocolName = 'https://';
-                    } else {
-                        $protocolName = 'http://';
-                    }
+                        if(config('app.env') === 'production') {
+                            $protocolName = 'https://';
+                        } else {
+                            $protocolName = 'http://';
+                        }
                     @endphp
                     let xmlVideo = $.get('{{$protocolName . request()->getHost()}}' + xmlname, function (response) {
                         krpano.call("loadxml(" + response + ")");
@@ -1613,13 +1501,14 @@
                                 </div>\
                             </div>'
                             );
-                            var floorName = data.etaji[iFloor].name.{{ Lang::locale()  }}, localeFlo =  Object.keys(data.etaji[iFloor].name)[0];
+                            var floorName = data.etaji[iFloor].name.{{ Lang::locale()  }},
+                                localeFlo = Object.keys(data.etaji[iFloor].name)[0];
                             if (floorName === undefined)
                                 floorName = data.etaji[iFloor].name[localeFlo];
                             $('.floorplan-viewer__footer').append(
                                 '<li class="floorplan-viewer__footer__element buttonetaj' + iFloor + '" data-tab="' + iFloor + '">\
                                 <img class="floorplan-viewer__footer__element__icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjM0cHgiIGhlaWdodD0iMzNweCIgdmlld0JveD0iMCAwIDM0IDMzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNDguMiAoNDczMjcpIC0gaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoIC0tPg0KICAgIDx0aXRsZT5pY19sZXZlbDwvdGl0bGU+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJIb21lX0Zsb29ycGxhbl92MiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMi4wMDAwMDAsIC0xMDA4LjAwMDAwMCkiPg0KICAgICAgICA8ZyBpZD0iRmxvb3JwbGFuIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4LjAwMDAwMCwgNjQuMDAwMDAwKSIgZmlsbD0iI0ZGRkZGRiI+DQogICAgICAgICAgICA8ZyBpZD0ibGV2ZWxzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODguMDAwMDAwLCA5MzYuMDAwMDAwKSI+DQogICAgICAgICAgICAgICAgPGcgaWQ9ImxldmVsc19zZWxlY3QiPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMzMsMzguMTc0NSBDMjQuMDI3LDM4LjE3NDUgMTgsMzYuMTA2NSAxOCwzNC4xNzQ1IEMxOCwzMi40NzQ1IDIyLjY3NCwzMC42Njk1IDI5LjkxMiwzMC4yNjE1IEwzMywzMy4zNDk1IEwzNi4wODgsMzAuMjYxNSBDNDMuMzI2LDMwLjY2OTUgNDgsMzIuNDc0NSA0OCwzNC4xNzQ1IEM0OCwzNi4xMDY1IDQxLjk3MywzOC4xNzQ1IDMzLDM4LjE3NDUgTTMzLDEzLjk5OTUgQzM1LjQ4NSwxMy45OTk1IDM3LjUsMTYuMDE0NSAzNy41LDE4LjQ5OTUgQzM3LjUsMjAuOTg1NSAzNS40ODUsMjIuOTk5NSAzMywyMi45OTk1IEMzMC41MTUsMjIuOTk5NSAyOC41LDIwLjk4NTUgMjguNSwxOC40OTk1IEMyOC41LDE2LjAxNDUgMzAuNTE1LDEzLjk5OTUgMzMsMTMuOTk5NSBNMzcuOTU2LDI4LjM5MzUgTDQwLjQyNSwyNS45MjQ1IEM0NC41MiwyMS44MzA1IDQ0LjUyLDE1LjE2OTUgNDAuNDI1LDExLjA3NTUgQzM4LjQ0MSw5LjA5MjUgMzUuODA1LDcuOTk5NSAzMyw3Ljk5OTUgQzMwLjE5NSw3Ljk5OTUgMjcuNTU5LDkuMDkyNSAyNS41NzQsMTEuMDc1NSBDMjEuNDgsMTUuMTY5NSAyMS40OCwyMS44MzA1IDI1LjU3NSwyNS45MjQ1IEwyOC4wNDQsMjguMzkzNSBDMjEuNzU0LDI4Ljk1NDUgMTYsMzAuNjY0NSAxNiwzNC4xNzQ1IEMxNiwzOC42MDM1IDI1LjE1OCw0MC4xNzQ1IDMzLDQwLjE3NDUgQzQwLjg0Miw0MC4xNzQ1IDUwLDM4LjYwMzUgNTAsMzQuMTc0NSBDNTAsMzAuNjY0NSA0NC4yNDYsMjguOTU0NSAzNy45NTYsMjguMzkzNSIgaWQ9ImljX2xldmVsIj48L3BhdGg+DQogICAgICAgICAgICAgICAgPC9nPg0KICAgICAgICAgICAgPC9nPg0KICAgICAgICA8L2c+DQogICAgPC9nPg0KPC9zdmc+">\
-                                <span class="floorplan-viewer__footer__element__name">' + data.name + ', ' + floorName+ '</span>\
+                                <span class="floorplan-viewer__footer__element__name">' + data.name + ', ' + floorName + '</span>\
                             </li>'
                             );
                             let initHeight = data.etaji[iFloor].height;
@@ -1654,7 +1543,7 @@
                             let floorLocationItem = data.floors_locations[floorLocation];
 
                             $('#multifloor-other-locations').append('<div class="listItem-wrapper" style="height: 260px;"\
-                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'\', '+ (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
+                                 onclick="loadpano(\'uzbekistan:' + floorLocationItem.id + '\', ' + floorLocation + ', \'' + floorLocationItem.slug + '\', \'\', \'\', \'\', ' + (floorLocationItem.video ? '\'' + floorLocationItem.video + '\'' : 'null') + ')">\
                                 <div class="listItem" style="width: 224px; height: 244px;">\
                                     <div class="listItem__img"><img\
                                                 src="/storage/panoramas/unpacked/' + floorLocationItem.img + '/thumb.jpg"\
@@ -1789,31 +1678,39 @@
                         document.getElementById("hubviewlink2").setAttribute("onclick", "loadpano('uzbekistan:" + data.sky_id + "', '0', '" + data.skyslug + "', '" + originalxmlname + "','" + url + "', 'nooo', " + videoVal + ");");
                     }
                 });
-                if ($( ".wrapper-panel.floorplanPanel" ).hasClass( "visible" )) {
+                if ($(".wrapper-panel.floorplanPanel").hasClass("visible")) {
                     $('.icon-ic_close.close').click()
                 }
                 $.get('/{{ app()->getLocale() }}/api/hotspots/' + tmp).done(function (data) {
 
                     for (var i = 0; i < data.length; i++) {
 
-                            add_exist_hotspot(data[i].h,
-                                data[i].v,
-                                data[i].name,
-                                data[i].cat_icon_svg,
-                                data[i].cat_icon,
-                                data[i].img,
-                                "uzbekistan:" + data[i].destination_id,
-                                i,
-                                data[i].slug,
-                                data[i].color,
-                                data[i].type,
-                                data[i].information,
-                                data[i].image,
-                                data[i].video,
-                                {url: data[i].url, file: data[i].file, instagram: data[i].instagram_hotspot,
-                                    images: data[i].images, title: data[i].title, description: data[i].information_description,
-                                    information_logo: data[i].information_logo, name: data[i].name, logo: data[i].logo}
-                            );
+                        add_exist_hotspot(data[i].h,
+                            data[i].v,
+                            data[i].name,
+                            data[i].cat_icon_svg,
+                            data[i].cat_icon,
+                            data[i].img,
+                            "uzbekistan:" + data[i].destination_id,
+                            i,
+                            data[i].slug,
+                            data[i].color,
+                            data[i].type,
+                            data[i].information,
+                            data[i].image,
+                            data[i].video,
+                            {
+                                url: data[i].url,
+                                file: data[i].file,
+                                instagram: data[i].instagram_hotspot,
+                                images: data[i].images,
+                                title: data[i].title,
+                                description: data[i].information_description,
+                                information_logo: data[i].information_logo,
+                                name: data[i].name,
+                                logo: data[i].logo
+                            }
+                        );
 
                     }
                 });
@@ -1830,7 +1727,7 @@
                 if (type == {{ \App\Hotspot::TYPE_INFORMATION }}) {
                     krpano.set("hotspot[" + hs_name + "].url", "/assets/icons/information-icon.png");
                 } else if (type == {{ \App\Hotspot::TYPE_POLYGON }}) {
-                    
+
                 } else {
                     krpano.set("hotspot[" + hs_name + "].url", "/storage/cat_icons/" + cat_icon + "");
                 }
@@ -1922,8 +1819,8 @@
 
                             $('.information-buttons').html('');
 
-                            information = jQuery.type(information) === "string" ?  information.replaceAll('\\"', '"') : information[getLocale]
-                            image = jQuery.type(image) === "string" ?  image : image[getLocale]
+                            information = jQuery.type(information) === "string" ? information.replaceAll('\\"', '"') : information[getLocale]
+                            image = jQuery.type(image) === "string" ? image : image[getLocale]
                             $('#information-modal .content').html(information);
                             if (image) {
                                 $('.image-block').html('<img/>');
@@ -2002,8 +1899,8 @@
                                 );
                             }
                         } else {
-                            krpano.call("moveto("+h+","+v+",linear(45))");
-                            setTimeout(function() {
+                            krpano.call("moveto(" + h + "," + v + ",linear(45))");
+                            setTimeout(function () {
                                 loadpano(hs_name, index, slug, null, null, null, video);
                             }, 2000);
                         }
@@ -2018,7 +1915,7 @@
         }
 
         function initMap() {
-            var location = new google.maps.LatLng({{$curlocation->lat}},{{$curlocation->lng}});
+            var location = new google.maps.LatLng({{$curlocation->lat}}, {{$curlocation->lng}});
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: location,
                 streetViewControl: false,
@@ -2291,23 +2188,23 @@
         }
 
         @if($location->panorama)
-            embedpano({
-                target: "pano",
-                id: "pano1",
-                xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}",
-                passQueryParameters: true,
-                html5: "only+webgl",
-                onready: krpano_onready_callback
-            });
+        embedpano({
+            target: "pano",
+            id: "pano1",
+            xml: "/{{ app()->getLocale() }}/krpano/0/{{ $location->id }}",
+            passQueryParameters: true,
+            html5: "only+webgl",
+            onready: krpano_onready_callback
+        });
         @elseif($location->video)
-            embedpano({
-                target: "pano",
-                id: "pano1",
-                xml: "/{{ app()->getLocale() }}/krpano/video/{{ $location->id }}",
-                passQueryParameters: true,
-                html5: "only+webgl",
-                onready: krpano_onready_callback
-            });
+        embedpano({
+            target: "pano",
+            id: "pano1",
+            xml: "/{{ app()->getLocale() }}/krpano/video/{{ $location->id }}",
+            passQueryParameters: true,
+            html5: "only+webgl",
+            onready: krpano_onready_callback
+        });
         @endif
     </script>
 @endsection

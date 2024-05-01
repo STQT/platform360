@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->group(function () {
+    Route::get('categories', [\App\Http\Controllers\Api\v1\IndexController::class, 'categories']);
+    Route::get('locations', [\App\Http\Controllers\Api\v1\IndexController::class, 'locations']);
 });

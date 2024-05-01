@@ -138,14 +138,19 @@
                       {!! $errors->first('video', '<p class="help-block">:message</p>') !!}
                   </div>
               </div>
+          </div>
+      </div>
 
-              <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
-                  <div class="form-group{{ $errors->has('preview') ? 'has-error' : ''}}">
-                      {!! Form::label('preview', 'Обложка', ['class' => 'control-label']) !!}
-                      {!! Form::file('preview', null, ['class' => 'form-control']) !!}
-                      {!! $errors->first('preview', '<p class="help-block">:message</p>') !!}
-                  </div>
-              </div>
+      <hr>
+
+      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+          <div class="form-group{{ $errors->has('preview') ? 'has-error' : ''}}">
+              {!! Form::label('preview', 'Обложка', ['class' => 'control-label']) !!}
+              {!! Form::file('preview', null, ['class' => 'form-control']) !!}
+              @if(!empty($location->preview))
+                  <a style="margin-top: 3px; display: block" href="/storage/locations/{{ $location->preview }}" target="_blank">{{ $location->preview }}</a>
+              @endif
+              {!! $errors->first('preview', '<p class="help-block">:message</p>') !!}
           </div>
       </div>
 
@@ -153,11 +158,23 @@
           <div class="form-group{{ $errors->has('logo') ? 'has-error' : ''}}">
               {!! Form::label('logo', 'Логотип', ['class' => 'control-label']) !!}
               {!! Form::file('logo', null, ['class' => 'form-control']) !!}
+              @if(!empty($location->logo))
+                  <a style="margin-top: 3px; display: block" href="/storage/locations/{{ $location->logo }}" target="_blank">{{ $location->logo }}</a>
+              @endif
               {!! $errors->first('logo', '<p class="help-block">:message</p>') !!}
           </div>
       </div>
 
-      <hr>
+      <div class="hasNo" style="{{ isset($location) ? ($location->isFloor ? 'display: none;' : '') : '' }}">
+          <div class="form-group{{ $errors->has('store_photo') ? 'has-error' : ''}}">
+              {!! Form::label('store_photo', 'Фото магазина', ['class' => 'control-label']) !!}
+              {!! Form::file('store_photo', null, ['class' => 'form-control']) !!}
+              @if(!empty($location->store_photo))
+                  <a style="margin-top: 3px; display: block" href="/storage/locations/{{ $location->store_photo }}" target="_blank">{{ $location->store_photo }}</a>
+              @endif
+              {!! $errors->first('store_photo', '<p class="help-block">:message</p>') !!}
+          </div>
+      </div>
 
       <div class="hasNo">
           <div class="form-group{{ $errors->has('panorama') ? 'has-error' : ''}}">

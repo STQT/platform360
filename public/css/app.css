@@ -6616,6 +6616,15 @@ a.close.disabled {
   overflow: hidden;
   outline: 0;
 }
+
+.modal-wrap {
+  overflow-y: auto;
+}
+
+.modal-wrap button[type="submit"] {
+  margin-bottom: 30px;
+}
+
 #logo2 {
   cursor: pointer;
 }

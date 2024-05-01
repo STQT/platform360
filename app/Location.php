@@ -68,7 +68,8 @@ class Location extends Model
         'order',
         'video',
         'preview',
-        'logo'
+        'logo',
+        'store_photo'
     ];
 
     /**

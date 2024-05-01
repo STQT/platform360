@@ -661,8 +661,6 @@ class LocationsController extends Controller
 
         if (!empty($data['preview'])) {
             $randomStr = Str::random(10);
-            //$file = $data['video']->store($randomStr);
-
             $file = $data['preview'];
 
             $filename = $randomStr .$file->getClientOriginalName();
@@ -687,6 +685,16 @@ class LocationsController extends Controller
 
             $requestData['logo'] = $fullName;
         }
+
+        if (!empty($data['store_photo'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['store_photo']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['store_photo']->move(public_path('storage/locations'), $fullName);
+
+            $requestData['store_photo'] = $fullName;
+        }
+
         if (!empty($panoramas) || !empty($filenameVideo)) {
             $requestData['preview'] = '';
             if (!empty($panoramas)) {
@@ -933,6 +941,25 @@ class LocationsController extends Controller
 
             $requestData['logo'] = $fullName;
         }
+
+        if (!empty($data['preview'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['preview']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $data['preview']->move(public_path('/storage/panoramas/preview'), $fullName);
+
+            $requestData['preview'] = $fullName;
+        }
+
+        if (!empty($data['store_photo'])) {
+            $randomStr = Str::random(40);
+            $extension = $data['store_photo']->getClientOriginalExtension();
+            $fullName = $randomStr . '.' . $extension;
+            $file = $data['store_photo']->move(public_path('storage/locations'), $fullName);
+
+            $requestData['store_photo'] = $fullName;
+        }
+
         if (!empty($requestData['name'])) {
             app()->setLocale($language);
             $location = Location::withoutGlobalScope('published')->findOrFail($id);
