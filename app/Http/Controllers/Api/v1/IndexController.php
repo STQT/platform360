@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Category;
+use App\Cities;
 use App\Http\Controllers\Controller;
 use App\Location;
 use Illuminate\Http\Request;
@@ -22,6 +23,11 @@ class IndexController extends Controller
         });
 
         return $data;
+    }
+
+    public function cities()
+    {
+        return Cities::orderBy('position', 'asc')->get();
     }
 
     public function locations(Request $request)

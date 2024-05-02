@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::get('categories', [\App\Http\Controllers\Api\v1\IndexController::class, 'categories']);
     Route::get('locations', [\App\Http\Controllers\Api\v1\IndexController::class, 'locations']);
+    Route::get('cities', [\App\Http\Controllers\Api\v1\IndexController::class, 'cities']);
 });
